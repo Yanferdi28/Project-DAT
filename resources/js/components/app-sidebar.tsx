@@ -6,32 +6,7 @@ import { Link, usePage, router } from '@inertiajs/react';
 import { BookOpen, ChevronDown, Folder, LayoutGrid, LogOut, Sparkles, User, Users, UserCog } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Manajemen Pengguna',
-        href: usersRoutes.index().url,
-        icon: Users,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repositori',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Dokumentasi',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AppSidebarProps {
     isMobileOpen?: boolean;
@@ -48,10 +23,37 @@ export function AppSidebar({
 }: AppSidebarProps = {}) {
     const { auth } = usePage<SharedData>().props;
     const page = usePage();
+    const { t } = useLanguage();
     const [internalCollapsed, setInternalCollapsed] = useState(false);
     const [internalMobileOpen, setInternalMobileOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
     const profileMenuRef = useRef<HTMLDivElement>(null);
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: t('nav.dashboard'),
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        {
+            title: t('nav.userManagement'),
+            href: usersRoutes.index().url,
+            icon: Users,
+        },
+    ];
+
+    const footerNavItems: NavItem[] = [
+        {
+            title: t('nav.repository'),
+            href: 'https://github.com/laravel/react-starter-kit',
+            icon: Folder,
+        },
+        {
+            title: t('nav.documentation'),
+            href: 'https://laravel.com/docs/starter-kits#react',
+            icon: BookOpen,
+        },
+    ];
 
     const isMobileOpen = externalMobileOpen ?? internalMobileOpen;
     const setIsMobileOpen = externalSetMobileOpen ?? setInternalMobileOpen;
@@ -239,14 +241,14 @@ export function AppSidebar({
                                     className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
                                 >
                                     <UserCog className="h-4 w-4" />
-                                    <span>Edit Profil</span>
+                                    <span>{t('profile.editProfile')}</span>
                                 </Link>
                                 <button
                                     onClick={handleLogout}
                                     className="flex w-full items-center gap-3 px-4 py-3 text-sm text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
                                 >
                                     <LogOut className="h-4 w-4" />
-                                    <span>Logout</span>
+                                    <span>{t('common.logout')}</span>
                                 </button>
                             </div>
                         )}

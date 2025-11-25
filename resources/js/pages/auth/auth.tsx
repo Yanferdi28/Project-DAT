@@ -13,6 +13,7 @@ import { Form, Head } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TextLink from '@/components/text-link';
 import { useAppearance } from '@/hooks/use-appearance';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Moon, Sun, Eye, EyeOff } from 'lucide-react';
 
 interface AuthProps {
@@ -30,6 +31,7 @@ export default function Auth({
 }: AuthProps) {
     const [mode, setMode] = useState<'login' | 'register'>(defaultMode);
     const { appearance, updateAppearance } = useAppearance();
+    const { t } = useLanguage();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -51,14 +53,14 @@ export default function Auth({
 
     return (
         <AuthLayout
-            title={isLogin ? 'Masuk ke akun Anda' : 'Buat akun baru'}
+            title={isLogin ? t('auth.loginTitle') : t('auth.registerTitle')}
             description={
                 isLogin
-                    ? 'Masukkan email dan kata sandi Anda untuk masuk'
-                    : 'Masukkan detail Anda untuk membuat akun'
+                    ? t('auth.loginDesc')
+                    : t('auth.registerDesc')
             }
         >
-            <Head title={isLogin ? 'Masuk' : 'Daftar'} />
+            <Head title={isLogin ? t('auth.login') : t('auth.register')} />
 
             {/* Theme Toggle Button */}
             <div className="mb-4 flex justify-end">
@@ -105,7 +107,7 @@ export default function Auth({
                             : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
                     }`}
                 >
-                    Masuk
+                    {t('auth.login')}
                 </button>
                 <button
                     type="button"
@@ -117,7 +119,7 @@ export default function Auth({
                             : 'text-gray-600 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-400 dark:hover:text-gray-200'
                     }`}
                 >
-                    Daftar
+                    {t('auth.register')}
                 </button>
             </div>
 
@@ -141,7 +143,7 @@ export default function Auth({
                                         <div className="grid gap-6">
                                             <div className="grid gap-2">
                                                 <Label htmlFor="email">
-                                                    Alamat Email
+                                                    {t('auth.email')}
                                                 </Label>
                                                 <Input
                                                     id="email"
@@ -151,7 +153,7 @@ export default function Auth({
                                                     autoFocus
                                                     tabIndex={1}
                                                     autoComplete="email"
-                                                    placeholder="email@contoh.com"
+                                                    placeholder={t('auth.emailPlaceholder')}
                                                 />
                                                 <InputError message={errors.email} />
                                             </div>
@@ -159,7 +161,7 @@ export default function Auth({
                                             <div className="grid gap-2">
                                                 <div className="flex items-center">
                                                     <Label htmlFor="password">
-                                                        Kata Sandi
+                                                        {t('auth.password')}
                                                     </Label>
                                                     {canResetPassword && (
                                                         <TextLink
@@ -167,7 +169,7 @@ export default function Auth({
                                                             className="ml-auto text-sm"
                                                             tabIndex={5}
                                                         >
-                                                            Lupa kata sandi?
+                                                            {t('auth.forgotPassword')}
                                                         </TextLink>
                                                     )}
                                                 </div>
@@ -179,7 +181,7 @@ export default function Auth({
                                                         required
                                                         tabIndex={2}
                                                         autoComplete="current-password"
-                                                        placeholder="Kata Sandi"
+                                                        placeholder={t('auth.passwordPlaceholder')}
                                                         className="pr-10"
                                                     />
                                                     <button
@@ -207,7 +209,7 @@ export default function Auth({
                                                     tabIndex={3}
                                                 />
                                                 <Label htmlFor="remember">
-                                                    Ingat saya
+                                                    {t('auth.rememberMe')}
                                                 </Label>
                                             </div>
 
@@ -219,7 +221,7 @@ export default function Auth({
                                                 data-test="login-button"
                                             >
                                                 {processing && <Spinner />}
-                                                Masuk
+                                                {processing ? t('auth.loggingIn') : t('auth.login')}
                                             </Button>
                                         </div>
                                     </>
@@ -254,7 +256,7 @@ export default function Auth({
                                     <>
                                         <div className="grid gap-6">
                                             <div className="grid gap-2">
-                                                <Label htmlFor="name">Nama</Label>
+                                                <Label htmlFor="name">{t('auth.fullName')}</Label>
                                                 <Input
                                                     id="name"
                                                     type="text"
@@ -263,7 +265,7 @@ export default function Auth({
                                                     tabIndex={1}
                                                     autoComplete="name"
                                                     name="name"
-                                                    placeholder="Nama lengkap"
+                                                    placeholder={t('auth.fullNamePlaceholder')}
                                                 />
                                                 <InputError
                                                     message={errors.name}
@@ -273,7 +275,7 @@ export default function Auth({
 
                                             <div className="grid gap-2">
                                                 <Label htmlFor="email">
-                                                    Alamat Email
+                                                    {t('auth.email')}
                                                 </Label>
                                                 <Input
                                                     id="email"
@@ -282,14 +284,14 @@ export default function Auth({
                                                     tabIndex={2}
                                                     autoComplete="email"
                                                     name="email"
-                                                    placeholder="email@contoh.com"
+                                                    placeholder={t('auth.emailPlaceholder')}
                                                 />
                                                 <InputError message={errors.email} />
                                             </div>
 
                                             <div className="grid gap-2">
                                                 <Label htmlFor="password">
-                                                    Kata Sandi
+                                                    {t('auth.password')}
                                                 </Label>
                                                 <div className="relative">
                                                     <Input
@@ -299,7 +301,7 @@ export default function Auth({
                                                         tabIndex={3}
                                                         autoComplete="new-password"
                                                         name="password"
-                                                        placeholder="Kata Sandi"
+                                                        placeholder={t('auth.passwordPlaceholder')}
                                                         className="pr-10"
                                                     />
                                                     <button
@@ -322,7 +324,7 @@ export default function Auth({
 
                                             <div className="grid gap-2">
                                                 <Label htmlFor="password_confirmation">
-                                                    Konfirmasi Kata Sandi
+                                                    {t('auth.confirmPassword')}
                                                 </Label>
                                                 <div className="relative">
                                                     <Input
@@ -332,7 +334,7 @@ export default function Auth({
                                                         tabIndex={4}
                                                         autoComplete="new-password"
                                                         name="password_confirmation"
-                                                        placeholder="Konfirmasi Kata Sandi"
+                                                        placeholder={t('auth.confirmPasswordPlaceholder')}
                                                         className="pr-10"
                                                     />
                                                     <button
@@ -362,7 +364,7 @@ export default function Auth({
                                                 data-test="register-user-button"
                                             >
                                                 {processing && <Spinner />}
-                                                Buat Akun
+                                                {processing ? t('auth.signingUp') : t('auth.register')}
                                             </Button>
                                         </div>
                                     </>

@@ -5,6 +5,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { BarChart3, Users, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, UserCheck, Shield, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -37,33 +38,35 @@ interface Props {
 }
 
 export default function Dashboard({ stats, recentUsers }: Props) {
+    const { t, language } = useLanguage();
+    
     const statsCards = [
         {
-            title: 'Total Pengguna',
-            value: stats.totalUsers.toLocaleString('id-ID'),
+            title: t('dashboard.totalUsers'),
+            value: stats.totalUsers.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
             change: `${stats.userChange >= 0 ? '+' : ''}${stats.userChange}%`,
             trend: stats.userTrend,
             icon: Users,
             color: 'from-blue-500 to-cyan-500',
-            description: `${stats.usersThisMonth} user bulan ini`,
+            description: `${stats.usersThisMonth} ${t('dashboard.thisMonth')}`,
         },
         {
-            title: 'Terverifikasi',
-            value: stats.verifiedUsers.toLocaleString('id-ID'),
+            title: t('dashboard.verified'),
+            value: stats.verifiedUsers.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
             change: `${Math.round((stats.verifiedUsers / stats.totalUsers) * 100)}%`,
             trend: 'up' as const,
             icon: UserCheck,
             color: 'from-green-500 to-emerald-500',
-            description: 'Email terverifikasi',
+            description: t('dashboard.emailVerified'),
         },
         {
-            title: 'Administrator',
-            value: stats.adminUsers.toLocaleString('id-ID'),
+            title: t('dashboard.administrator'),
+            value: stats.adminUsers.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
             change: `${Math.round((stats.adminUsers / stats.totalUsers) * 100)}%`,
             trend: 'up' as const,
             icon: Shield,
             color: 'from-purple-500 to-pink-500',
-            description: 'Role admin',
+            description: t('dashboard.roleAdmin'),
         },
     ];
 
@@ -72,16 +75,16 @@ export default function Dashboard({ stats, recentUsers }: Props) {
         const created = new Date(date);
         const diffInMinutes = Math.floor((now.getTime() - created.getTime()) / (1000 * 60));
         
-        if (diffInMinutes < 1) return 'Baru saja';
-        if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`;
+        if (diffInMinutes < 1) return t('dashboard.justNow');
+        if (diffInMinutes < 60) return `${diffInMinutes} ${t('dashboard.minutesAgo')}`;
         
         const diffInHours = Math.floor(diffInMinutes / 60);
-        if (diffInHours < 24) return `${diffInHours} jam yang lalu`;
+        if (diffInHours < 24) return `${diffInHours} ${t('dashboard.hoursAgo')}`;
         
         const diffInDays = Math.floor(diffInHours / 24);
-        if (diffInDays < 7) return `${diffInDays} hari yang lalu`;
+        if (diffInDays < 7) return `${diffInDays} ${t('dashboard.daysAgo')}`;
         
-        return created.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        return created.toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' });
     };
 
     return (
@@ -105,10 +108,10 @@ export default function Dashboard({ stats, recentUsers }: Props) {
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex-1">
                                 <h1 className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                                    Selamat Datang Kembali!
+                                    {t('dashboard.welcome')}
                                 </h1>
                                 <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-600 dark:text-gray-400">
-                                    Berikut adalah ringkasan aktivitas Anda hari ini
+                                    {t('dashboard.summary')}
                                 </p>
                             </div>
                             <div className="hidden md:block">
@@ -176,11 +179,11 @@ export default function Dashboard({ stats, recentUsers }: Props) {
                         >
                             <div className="mb-4 flex items-center justify-between">
                                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                                    Statistik Bulanan
+                                    {t('dashboard.monthlyStats')}
                                 </h2>
                                 <div className="flex gap-2">
                                     <button className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-all hover:shadow-xl">
-                                        Bulan Ini
+                                        {t('dashboard.thisMonthBtn')}
                                     </button>
                                 </div>
                             </div>
@@ -190,7 +193,7 @@ export default function Dashboard({ stats, recentUsers }: Props) {
                                     <div className="text-center">
                                         <BarChart3 className="mx-auto h-16 w-16 text-gray-400 dark:text-gray-600" />
                                         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                            Grafik akan ditampilkan di sini
+                                            {t('dashboard.chartPlaceholder')}
                                         </p>
                                     </div>
                                 </div>
@@ -205,14 +208,14 @@ export default function Dashboard({ stats, recentUsers }: Props) {
                             className="rounded-2xl border border-white/20 bg-white/80 p-6 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80"
                         >
                             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                                Pengguna Terbaru
+                                {t('dashboard.recentUsers')}
                             </h2>
                             <div className="space-y-4">
                                 {recentUsers.length === 0 ? (
                                     <div className="text-center py-8">
                                         <Users className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-2" />
                                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                                            Belum ada pengguna terdaftar
+                                            {t('dashboard.noUsers')}
                                         </p>
                                     </div>
                                 ) : (

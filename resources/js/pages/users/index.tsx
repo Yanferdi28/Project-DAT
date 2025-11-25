@@ -13,6 +13,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import * as usersRoutes from '@/routes/users';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface User {
     id: number;
@@ -52,6 +53,7 @@ interface Props {
 }
 
 export default function UsersIndex({ users, filters, flash }: Props) {
+    const { language, t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [status, setStatus] = useState(filters.status || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
@@ -166,8 +168,8 @@ export default function UsersIndex({ users, filters, flash }: Props) {
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: 'Dashboard', href: '/dashboard' },
-                { title: 'Manajemen Pengguna', href: usersRoutes.index().url },
+                { title: t('nav.dashboard'), href: '/dashboard' },
+                { title: t('nav.userManagement'), href: usersRoutes.index().url },
             ]}
         >
             <div className="space-y-6">
@@ -187,16 +189,16 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            Manajemen Pengguna
+                            {t('users.title')}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            Total {users.total} pengguna terdaftar
+                            {t('users.total')} {users.total} {t('users.totalRegistered')}
                         </p>
                     </div>
                     <Link href={usersRoutes.create().url}>
                         <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                             <Plus className="h-4 w-4 mr-2" />
-                            Tambah Pengguna
+                            {t('users.addUser')}
                         </Button>
                     </Link>
                 </div>
@@ -204,7 +206,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                 {/* Show Entries & Search */}
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex items-center gap-3">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Tampilkan</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
                         <select
                             value={perPage}
                             onChange={(e) => handlePerPageChange(e.target.value)}
@@ -216,35 +218,35 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">data</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
                     </div>
                     <form onSubmit={handleSearch} className="flex gap-2 flex-1">
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                         <Input
                             type="text"
-                            placeholder="Cari nama atau email..."
+                            placeholder={t('users.searchPlaceholder')}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="pl-10"
                         />
                     </div>
-                    <Button type="submit">Cari</Button>
+                    <Button type="submit">{t('users.searchBtn')}</Button>
                 </form>
                 </div>
 
                 {/* Filter */}
                 <div className="flex items-center gap-3 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
                     <Filter className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filter:</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.filter')}:</span>
                     <select
                         value={status}
                         onChange={(e) => handleStatusChange(e.target.value)}
                         className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                     >
-                        <option value="">Semua Status</option>
-                        <option value="verified">Terverifikasi</option>
-                        <option value="unverified">Belum Verifikasi</option>
+                        <option value="">{t('users.allStatus')}</option>
+                        <option value="verified">{t('users.verified')}</option>
+                        <option value="unverified">{t('users.unverified')}</option>
                     </select>
                     {(search || status) && (
                         <Button
@@ -257,7 +259,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                 router.get(usersRoutes.index().url);
                             }}
                         >
-                            Reset
+                            {t('users.reset')}
                         </Button>
                     )}
                 </div>
@@ -269,14 +271,14 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        No
+                                        {t('users.no')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         <button
                                             onClick={() => handleSort('name')}
                                             className="flex items-center gap-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                                         >
-                                            Nama
+                                            {t('users.name')}
                                             {getSortIcon('name')}
                                         </button>
                                     </th>
@@ -285,27 +287,27 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                             onClick={() => handleSort('email')}
                                             className="flex items-center gap-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                                         >
-                                            Email
+                                            {t('users.email')}
                                             {getSortIcon('email')}
                                         </button>
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        Role
+                                        {t('users.role')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        Status
+                                        {t('users.status')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         <button
                                             onClick={() => handleSort('created_at')}
                                             className="flex items-center gap-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                                         >
-                                            Terdaftar
+                                            {t('users.registered')}
                                             {getSortIcon('created_at')}
                                         </button>
                                     </th>
                                     <th className="px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        Aksi
+                                        {t('users.actions')}
                                     </th>
                                 </tr>
                             </thead>
@@ -315,7 +317,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                         <td colSpan={7} className="px-6 py-12 text-center">
                                             <User className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                Tidak ada data pengguna
+                                                {t('users.noData')}
                                             </p>
                                         </td>
                                     </tr>
@@ -337,27 +339,27 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                             <td className="px-6 py-4">
                                                 {user.role === 'admin' ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
-                                                        Admin
+                                                        {t('users.admin')}
                                                     </span>
                                                 ) : (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
-                                                        User
+                                                        {t('users.user')}
                                                     </span>
                                                 )}
                                             </td>
                                             <td className="px-6 py-4">
                                                 {user.email_verified_at ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                                        Terverifikasi
+                                                        {t('users.verified')}
                                                     </span>
                                                 ) : (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
-                                                        Belum Verifikasi
+                                                        {t('users.unverified')}
                                                     </span>
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                                                {new Date(user.created_at).toLocaleDateString('id-ID')}
+                                                {new Date(user.created_at).toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US')}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-center gap-2">
@@ -419,7 +421,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    Menampilkan{' '}
+                                    {t('users.showing')}{' '}
                                     <span className="font-medium">
                                         {(users.current_page - 1) * users.per_page + 1}
                                     </span>{' '}
@@ -430,7 +432,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                             users.total
                                         )}
                                     </span>{' '}
-                                    dari <span className="font-medium">{users.total}</span> pengguna
+                                    {t('users.of')} <span className="font-medium">{users.total}</span> {t('users.totalRegistered')}
                                 </p>
                                 <div className="flex gap-2">
                                     {users.links.map((link, index) => {
@@ -470,7 +472,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                     <div className="px-6 py-3 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
                         <div className="flex items-center justify-between">
                             <span className="text-sm text-gray-600 dark:text-gray-400">
-                                Halaman {users.current_page} dari {users.last_page}
+                                {t('users.page')} {users.current_page} {t('users.of')} {users.last_page}
                             </span>
                             
                             <div className="flex gap-2">
@@ -485,7 +487,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                     className="flex items-center gap-2"
                                 >
                                     <ChevronLeft className="h-4 w-4" />
-                                    Sebelumnya
+                                    {t('users.previous')}
                                 </Button>
 
                                 <Button
@@ -498,7 +500,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                     disabled={users.current_page === users.last_page}
                                     className="flex items-center gap-2"
                                 >
-                                    Selanjutnya
+                                    {t('users.next')}
                                     <ChevronRight className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -511,11 +513,10 @@ export default function UsersIndex({ users, filters, flash }: Props) {
             <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, user: null })}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Konfirmasi Hapus Pengguna</DialogTitle>
+                        <DialogTitle>{t('users.deleteTitle')}</DialogTitle>
                         <DialogDescription>
-                            Apakah Anda yakin ingin menghapus pengguna{' '}
-                            <span className="font-semibold">{deleteDialog.user?.name}</span>? Tindakan
-                            ini tidak dapat dibatalkan.
+                            {t('users.deleteMessage')}{' '}
+                            <span className="font-semibold">{deleteDialog.user?.name}</span>? {t('users.deleteWarning')}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -524,14 +525,14 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                             onClick={() => setDeleteDialog({ open: false, user: null })}
                             disabled={isDeleting}
                         >
-                            Batal
+                            {t('common.cancel')}
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
-                            {isDeleting ? 'Menghapus...' : 'Hapus'}
+                            {isDeleting ? t('users.deleting') : t('users.delete')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -542,20 +543,18 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
-                            {verifyDialog.action === 'verify' ? 'Verifikasi Email Pengguna' : 'Batalkan Verifikasi Email'}
+                            {verifyDialog.action === 'verify' ? t('users.verifyTitle') : t('users.unverifyTitle')}
                         </DialogTitle>
                         <DialogDescription>
                             {verifyDialog.action === 'verify' ? (
                                 <>
-                                    Apakah Anda yakin ingin memverifikasi email pengguna{' '}
-                                    <span className="font-semibold">{verifyDialog.user?.name}</span>? 
-                                    Pengguna akan ditandai sebagai terverifikasi.
+                                    {t('users.verifyMessage')}{' '}
+                                    <span className="font-semibold">{verifyDialog.user?.name}</span>? {t('users.verifyNote')}
                                 </>
                             ) : (
                                 <>
-                                    Apakah Anda yakin ingin membatalkan verifikasi email pengguna{' '}
-                                    <span className="font-semibold">{verifyDialog.user?.name}</span>? 
-                                    Pengguna akan ditandai sebagai belum terverifikasi.
+                                    {t('users.unverifyMessage')}{' '}
+                                    <span className="font-semibold">{verifyDialog.user?.name}</span>? {t('users.unverifyNote')}
                                 </>
                             )}
                         </DialogDescription>
@@ -566,14 +565,14 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                             onClick={() => setVerifyDialog({ open: false, user: null, action: null })}
                             disabled={isVerifying}
                         >
-                            Batal
+                            {t('common.cancel')}
                         </Button>
                         <Button
                             onClick={handleVerify}
                             disabled={isVerifying}
                             className={verifyDialog.action === 'verify' ? 'bg-green-600 hover:bg-green-700' : 'bg-yellow-600 hover:bg-yellow-700'}
                         >
-                            {isVerifying ? 'Memproses...' : verifyDialog.action === 'verify' ? 'Verifikasi' : 'Batalkan Verifikasi'}
+                            {isVerifying ? t('users.processing') : verifyDialog.action === 'verify' ? t('users.verify') : t('users.unverify')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
