@@ -2,6 +2,8 @@ import AppLogoIcon from '@/components/app-logo-icon';
 import { home } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/button';
 
 interface AuthLayoutProps {
     name?: string;
@@ -14,8 +16,27 @@ export default function AuthSimpleLayout({
     title,
     description,
 }: PropsWithChildren<AuthLayoutProps>) {
+    const { language, setLanguage } = useLanguage();
+
+    const toggleLanguage = () => {
+        setLanguage(language === 'id' ? 'en' : 'id');
+    };
+
     return (
         <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 overflow-hidden p-6 md:p-10">
+            {/* Language Toggle Button - Top Right */}
+            <div className="absolute right-6 top-6 z-10">
+                <Button
+                    onClick={toggleLanguage}
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3 font-semibold bg-white/80 backdrop-blur-sm hover:bg-white dark:bg-gray-900/80 dark:hover:bg-gray-900"
+                    title={language === 'id' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'}
+                >
+                    {language === 'id' ? 'EN' : 'ID'}
+                </Button>
+            </div>
+
             {/* Animated gradient background */}
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950 dark:via-indigo-950 dark:to-purple-950">
                 {/* Animated orbs */}

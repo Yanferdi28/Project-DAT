@@ -371,7 +371,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                                                 setVerifyDialog({ open: true, user, action: 'unverify' })
                                                             }
                                                             className="hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-300 dark:hover:bg-yellow-950 dark:hover:text-yellow-400 dark:hover:border-yellow-700"
-                                                            title="Batalkan Verifikasi"
+                                                            title={t('users.unverify')}
                                                         >
                                                             <XCircle className="h-4 w-4" />
                                                         </Button>
@@ -383,7 +383,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                                                 setVerifyDialog({ open: true, user, action: 'verify' })
                                                             }
                                                             className="hover:bg-green-50 hover:text-green-600 hover:border-green-300 dark:hover:bg-green-950 dark:hover:text-green-400 dark:hover:border-green-700"
-                                                            title="Verifikasi Email"
+                                                            title={t('users.verify')}
                                                         >
                                                             <CheckCircle className="h-4 w-4" />
                                                         </Button>
@@ -393,6 +393,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                                             variant="outline"
                                                             size="sm"
                                                             className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
+                                                            title={t('users.edit')}
                                                         >
                                                             <Edit className="h-4 w-4" />
                                                         </Button>
@@ -404,6 +405,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                                             setDeleteDialog({ open: true, user })
                                                         }
                                                         className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
+                                                        title={t('users.delete')}
                                                     >
                                                         <Trash2 className="h-4 w-4" />
                                                     </Button>
