@@ -3,7 +3,7 @@ import * as usersRoutes from '@/routes/users';
 import * as myprofileRoutes from '@/routes/myprofile';
 import { type NavItem } from '@/types';
 import { Link, usePage, router } from '@inertiajs/react';
-import { BookOpen, ChevronDown, Folder, LayoutGrid, LogOut, Sparkles, User, Users, UserCog } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, Sparkles, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -27,6 +27,8 @@ export function AppSidebar({
     const [internalCollapsed, setInternalCollapsed] = useState(false);
     const [internalMobileOpen, setInternalMobileOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+    const [isMasterOpen, setIsMasterOpen] = useState(false);
+    const [isLaporanOpen, setIsLaporanOpen] = useState(false);
     const profileMenuRef = useRef<HTMLDivElement>(null);
 
     const mainNavItems: NavItem[] = [
@@ -36,9 +38,37 @@ export function AppSidebar({
             icon: LayoutGrid,
         },
         {
+            title: t('nav.arsipUnit'),
+            href: '/arsip-unit',
+            icon: FileText,
+        },
+        {
+            title: t('nav.berkasArsip'),
+            href: '/berkas-arsip',
+            icon: Folder,
+        },
+    ];
+
+    const masterSubItems = [
+        {
             title: t('nav.userManagement'),
             href: usersRoutes.index().url,
-            icon: Users,
+        },
+        {
+            title: t('nav.kodeKlasifikasi'),
+            href: '/kode-klasifikasi',
+        },
+        {
+            title: t('nav.unitPengolah'),
+            href: '/unit-pengolah',
+        },
+        {
+            title: t('nav.kategori'),
+            href: '/kategori',
+        },
+        {
+            title: t('nav.subKategori'),
+            href: '/sub-kategori',
         },
     ];
 
@@ -148,15 +178,7 @@ export function AppSidebar({
                         <p className={'mb-2 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 ' + (isCollapsed ? 'text-center' : 'px-3')}>
                             {isCollapsed ? '•' : 'Menu'}
                         </p>
-                        {mainNavItems
-                            .filter((item) => {
-                                // Hide user management for non-admin users
-                                if (item.href === usersRoutes.index().url && auth.user?.role !== 'admin') {
-                                    return false;
-                                }
-                                return true;
-                            })
-                            .map((item) => {
+                        {mainNavItems.map((item) => {
                                 const active = isActive(item.href);
                                 return (
                                     <Link
@@ -175,6 +197,86 @@ export function AppSidebar({
                                     </Link>
                                 );
                             })}
+                        
+                        {/* Master Menu (Admin Only) */}
+                        {auth.user?.role === 'admin' && (
+                            <div>
+                                <button
+                                    onClick={() => setIsMasterOpen(!isMasterOpen)}
+                                    className={'group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition-all hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 ' + (isCollapsed ? 'justify-center' : '')}
+                                >
+                                    <FileText className="h-5 w-5 transition-transform group-hover:scale-110" />
+                                    {!isCollapsed && (
+                                        <>
+                                            <span className="flex-1 font-medium text-left">{t('nav.master')}</span>
+                                            <ChevronRight className={'h-4 w-4 transition-transform ' + (isMasterOpen ? 'rotate-90' : '')} />
+                                        </>
+                                    )}
+                                </button>
+                                
+                                {/* Submenu */}
+                                {!isCollapsed && isMasterOpen && (
+                                    <div className="ml-8 mt-1 space-y-1">
+                                        {masterSubItems.map((subItem) => {
+                                            const active = isActive(subItem.href);
+                                            return (
+                                                <Link
+                                                    key={subItem.title}
+                                                    href={subItem.href}
+                                                    className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (active ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                                >
+                                                    <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                                                    {subItem.title}
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Laporan Menu */}
+                        <div>
+                            <button
+                                onClick={() => setIsLaporanOpen(!isLaporanOpen)}
+                                className={'group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition-all hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 ' + (isCollapsed ? 'justify-center' : '')}
+                            >
+                                <ClipboardList className="h-5 w-5 transition-transform group-hover:scale-110" />
+                                {!isCollapsed && (
+                                    <>
+                                        <span className="flex-1 font-medium text-left">Laporan</span>
+                                        <ChevronRight className={'h-4 w-4 transition-transform ' + (isLaporanOpen ? 'rotate-90' : '')} />
+                                    </>
+                                )}
+                            </button>
+                            
+                            {/* Laporan Submenu */}
+                            {!isCollapsed && isLaporanOpen && (
+                                <div className="ml-8 mt-1 space-y-1">
+                                    <Link
+                                        href="/laporan/penyusutan"
+                                        className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/penyusutan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                    >
+                                        <CalendarClock className="h-3.5 w-3.5" />
+                                        Arsip Mendekati Penyusutan
+                                    </Link>
+                                    <Link
+                                        href="/laporan/status-verifikasi"
+                                        className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/status-verifikasi') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                    >
+                                        <FileCheck className="h-3.5 w-3.5" />
+                                        Status & Verifikasi Arsip
+                                    </Link>
+                                    <Link
+                                        href="/laporan/berita-acara-penyerahan"
+                                        className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/berita-acara-penyerahan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                    >
+                                        <FileSignature className="h-3.5 w-3.5" />
+                                        Berita Acara Penyerahan
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 

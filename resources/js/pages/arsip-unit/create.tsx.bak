@@ -1,0 +1,656 @@
+import AppLayout from '@/layouts/app-layout';
+import { Head, Link, router } from '@inertiajs/react';
+import { FormEventHandler, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface KodeKlasifikasi {
+    id: number;
+    kode_klasifikasi: string;
+    uraian: string;
+}
+
+interface UnitPengolah {
+    id: number;
+    nama: string;
+}
+
+interface BerkasArsip {
+    nomor_berkas: string;
+    nama_berkas: string;
+}
+
+interface Kategori {
+    id: number;
+    nama: string;
+}
+
+interface SubKategori {
+    id: number;
+    nama: string;
+    kategori_id: number;
+    kategori?: Kategori;
+}
+
+interface Props {
+    kodeKlasifikasis: KodeKlasifikasi[];
+    unitPengolahs: UnitPengolah[];
+    berkasArsips: BerkasArsip[];
+    kategoris: Kategori[];
+    subKategoris: SubKategori[];
+}
+
+export default function Create({
+    kodeKlasifikasis,
+    unitPengolahs,
+    berkasArsips,
+    kategoris,
+    subKategoris,
+}: Props) {
+    const { t } = useLanguage();
+    const [data, setData] = useState({
+        kode_klasifikasi_id: '',
+        unit_pengolah_arsip_id: '',
+        berkas_arsip_id: '',
+        kategori_id: '',
+        sub_kategori_id: '',
+        publish_status: 'draft',
+        retensi_aktif: '',
+        retensi_inaktif: '',
+        indeks: '',
+        no_item_arsip: '',
+        uraian_informasi: '',
+        tanggal: '',
+        jumlah_nilai: '',
+        jumlah_satuan: '',
+        tingkat_perkembangan: '',
+        skkaad: '',
+        ruangan: '',
+        no_filling: '',
+        no_laci: '',
+        no_folder: '',
+        no_box: '',
+        dokumen: '',
+        keterangan: '',
+        status: 'pending',
+    });
+    const [processing, setProcessing] = useState(false);
+    const [errors, setErrors] = useState<Record<string, string>>({});
+
+    const filteredSubKategoris = data.kategori_id
+        ? subKategoris.filter((sub) => sub.kategori_id === Number(data.kategori_id))
+        : subKategoris;
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        setProcessing(true);
+        router.post('/arsip-unit', data, {
+            onError: (errors) => setErrors(errors),
+            onFinish: () => setProcessing(false),
+        });
+    };
+
+    return (
+        <AppLayout>
+            <Head title={t('arsipUnit.create')} />
+
+            <div className="py-6">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="mb-6">
+                        <Link href="/arsip-unit">
+                            <Button variant="ghost" size="sm">
+                                <ArrowLeft className="mr-2 h-4 w-4" />
+                                {t('common.back')}
+                            </Button>
+                        </Link>
+                    </div>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>{t('arsipUnit.create')}</CardTitle>
+                            <CardDescription>
+                                {t('arsipUnit.createDescription')}
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <form onSubmit={submit} className="space-y-6">
+                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                    {/* Kode Klasifikasi */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="kode_klasifikasi_id">
+                                            {t('arsipUnit.kodeKlasifikasi')}
+                                        </Label>
+                                        <Select
+                                            value={data.kode_klasifikasi_id}
+                                            onValueChange={(value) =>
+                                                setData({ ...data, kode_klasifikasi_id: value })
+                                            }
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('common.select')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {kodeKlasifikasis.map((item) => (
+                                                    <SelectItem
+                                                        key={item.id}
+                                                        value={item.id.toString()}
+                                                    >
+                                                        {item.kode_klasifikasi} - {item.uraian}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.kode_klasifikasi_id && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.kode_klasifikasi_id}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Unit Pengolah */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="unit_pengolah_arsip_id">
+                                            {t('arsipUnit.unitPengolah')}
+                                        </Label>
+                                        <Select
+                                            value={data.unit_pengolah_arsip_id}
+                                            onValueChange={(value) =>
+                                                setData('unit_pengolah_arsip_id', value)
+                                            }
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('common.select')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {unitPengolahs.map((item) => (
+                                                    <SelectItem
+                                                        key={item.id}
+                                                        value={item.id.toString()}
+                                                    >
+                                                        {item.nama}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.unit_pengolah_arsip_id && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.unit_pengolah_arsip_id}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Berkas Arsip */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="berkas_arsip_id">
+                                            {t('arsipUnit.berkasArsip')}
+                                        </Label>
+                                        <Select
+                                            value={data.berkas_arsip_id}
+                                            onValueChange={(value) =>
+                                                setData('berkas_arsip_id', value)
+                                            }
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('common.select')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {berkasArsips.map((item) => (
+                                                    <SelectItem
+                                                        key={item.nomor_berkas}
+                                                        value={item.nomor_berkas}
+                                                    >
+                                                        {item.nomor_berkas} - {item.nama_berkas}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.berkas_arsip_id && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.berkas_arsip_id}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Kategori */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="kategori_id">
+                                            {t('arsipUnit.kategori')}
+                                        </Label>
+                                        <Select
+                                            value={data.kategori_id}
+                                            onValueChange={(value) => {
+                                                setData('kategori_id', value);
+                                                setData('sub_kategori_id', '');
+                                            }}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('common.select')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {kategoris.map((item) => (
+                                                    <SelectItem
+                                                        key={item.id}
+                                                        value={item.id.toString()}
+                                                    >
+                                                        {item.nama}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.kategori_id && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.kategori_id}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Sub Kategori */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="sub_kategori_id">
+                                            {t('arsipUnit.subKategori')}
+                                        </Label>
+                                        <Select
+                                            value={data.sub_kategori_id}
+                                            onValueChange={(value) =>
+                                                setData('sub_kategori_id', value)
+                                            }
+                                            disabled={!data.kategori_id}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('common.select')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {filteredSubKategoris.map((item) => (
+                                                    <SelectItem
+                                                        key={item.id}
+                                                        value={item.id.toString()}
+                                                    >
+                                                        {item.nama}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.sub_kategori_id && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.sub_kategori_id}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* No Item Arsip */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="no_item_arsip">
+                                            {t('arsipUnit.noItemArsip')}
+                                        </Label>
+                                        <Input
+                                            id="no_item_arsip"
+                                            type="text"
+                                            value={data.no_item_arsip}
+                                            onChange={(e) =>
+                                                setData('no_item_arsip', e.target.value)
+                                            }
+                                        />
+                                        {errors.no_item_arsip && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.no_item_arsip}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Indeks */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="indeks">{t('arsipUnit.indeks')}</Label>
+                                        <Input
+                                            id="indeks"
+                                            type="text"
+                                            value={data.indeks}
+                                            onChange={(e) => setData('indeks', e.target.value)}
+                                        />
+                                        {errors.indeks && (
+                                            <p className="text-sm text-red-600">{errors.indeks}</p>
+                                        )}
+                                    </div>
+
+                                    {/* Tanggal */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="tanggal">{t('arsipUnit.tanggal')}</Label>
+                                        <Input
+                                            id="tanggal"
+                                            type="date"
+                                            value={data.tanggal}
+                                            onChange={(e) => setData('tanggal', e.target.value)}
+                                        />
+                                        {errors.tanggal && (
+                                            <p className="text-sm text-red-600">{errors.tanggal}</p>
+                                        )}
+                                    </div>
+
+                                    {/* Jumlah Nilai */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="jumlah_nilai">
+                                            {t('arsipUnit.jumlahNilai')} *
+                                        </Label>
+                                        <Input
+                                            id="jumlah_nilai"
+                                            type="number"
+                                            min="1"
+                                            value={data.jumlah_nilai}
+                                            onChange={(e) =>
+                                                setData('jumlah_nilai', e.target.value)
+                                            }
+                                            required
+                                        />
+                                        {errors.jumlah_nilai && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.jumlah_nilai}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Jumlah Satuan */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="jumlah_satuan">
+                                            {t('arsipUnit.jumlahSatuan')} *
+                                        </Label>
+                                        <Input
+                                            id="jumlah_satuan"
+                                            type="text"
+                                            value={data.jumlah_satuan}
+                                            onChange={(e) =>
+                                                setData('jumlah_satuan', e.target.value)
+                                            }
+                                            placeholder="contoh: berkas, folder, box"
+                                            required
+                                        />
+                                        {errors.jumlah_satuan && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.jumlah_satuan}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Retensi Aktif */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="retensi_aktif">
+                                            {t('arsipUnit.retensiAktif')}
+                                        </Label>
+                                        <Input
+                                            id="retensi_aktif"
+                                            type="number"
+                                            min="0"
+                                            value={data.retensi_aktif}
+                                            onChange={(e) =>
+                                                setData('retensi_aktif', e.target.value)
+                                            }
+                                        />
+                                        {errors.retensi_aktif && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.retensi_aktif}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Retensi Inaktif */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="retensi_inaktif">
+                                            {t('arsipUnit.retensiInaktif')}
+                                        </Label>
+                                        <Input
+                                            id="retensi_inaktif"
+                                            type="number"
+                                            min="0"
+                                            value={data.retensi_inaktif}
+                                            onChange={(e) =>
+                                                setData('retensi_inaktif', e.target.value)
+                                            }
+                                        />
+                                        {errors.retensi_inaktif && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.retensi_inaktif}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Tingkat Perkembangan */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="tingkat_perkembangan">
+                                            {t('arsipUnit.tingkatPerkembangan')}
+                                        </Label>
+                                        <Input
+                                            id="tingkat_perkembangan"
+                                            type="text"
+                                            value={data.tingkat_perkembangan}
+                                            onChange={(e) =>
+                                                setData('tingkat_perkembangan', e.target.value)
+                                            }
+                                        />
+                                        {errors.tingkat_perkembangan && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.tingkat_perkembangan}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* SKKAAD */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="skkaad">{t('arsipUnit.skkaad')}</Label>
+                                        <Input
+                                            id="skkaad"
+                                            type="text"
+                                            value={data.skkaad}
+                                            onChange={(e) => setData('skkaad', e.target.value)}
+                                        />
+                                        {errors.skkaad && (
+                                            <p className="text-sm text-red-600">{errors.skkaad}</p>
+                                        )}
+                                    </div>
+
+                                    {/* Ruangan */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="ruangan">{t('arsipUnit.ruangan')}</Label>
+                                        <Input
+                                            id="ruangan"
+                                            type="text"
+                                            value={data.ruangan}
+                                            onChange={(e) => setData('ruangan', e.target.value)}
+                                        />
+                                        {errors.ruangan && (
+                                            <p className="text-sm text-red-600">{errors.ruangan}</p>
+                                        )}
+                                    </div>
+
+                                    {/* No Filling */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="no_filling">
+                                            {t('arsipUnit.noFilling')}
+                                        </Label>
+                                        <Input
+                                            id="no_filling"
+                                            type="text"
+                                            value={data.no_filling}
+                                            onChange={(e) => setData('no_filling', e.target.value)}
+                                        />
+                                        {errors.no_filling && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.no_filling}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* No Laci */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="no_laci">{t('arsipUnit.noLaci')}</Label>
+                                        <Input
+                                            id="no_laci"
+                                            type="text"
+                                            value={data.no_laci}
+                                            onChange={(e) => setData('no_laci', e.target.value)}
+                                        />
+                                        {errors.no_laci && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.no_laci}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* No Folder */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="no_folder">{t('arsipUnit.noFolder')}</Label>
+                                        <Input
+                                            id="no_folder"
+                                            type="text"
+                                            value={data.no_folder}
+                                            onChange={(e) => setData('no_folder', e.target.value)}
+                                        />
+                                        {errors.no_folder && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.no_folder}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* No Box */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="no_box">{t('arsipUnit.noBox')}</Label>
+                                        <Input
+                                            id="no_box"
+                                            type="text"
+                                            value={data.no_box}
+                                            onChange={(e) => setData('no_box', e.target.value)}
+                                        />
+                                        {errors.no_box && (
+                                            <p className="text-sm text-red-600">{errors.no_box}</p>
+                                        )}
+                                    </div>
+
+                                    {/* Dokumen */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="dokumen">{t('arsipUnit.dokumen')}</Label>
+                                        <Input
+                                            id="dokumen"
+                                            type="text"
+                                            value={data.dokumen}
+                                            onChange={(e) => setData('dokumen', e.target.value)}
+                                        />
+                                        {errors.dokumen && (
+                                            <p className="text-sm text-red-600">{errors.dokumen}</p>
+                                        )}
+                                    </div>
+
+                                    {/* Status */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="status">
+                                            {t('arsipUnit.status')} *
+                                        </Label>
+                                        <Select
+                                            value={data.status}
+                                            onValueChange={(value) => setData('status', value)}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="pending">Pending</SelectItem>
+                                                <SelectItem value="diterima">Diterima</SelectItem>
+                                                <SelectItem value="ditolak">Ditolak</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.status && (
+                                            <p className="text-sm text-red-600">{errors.status}</p>
+                                        )}
+                                    </div>
+
+                                    {/* Publish Status */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="publish_status">
+                                            {t('arsipUnit.publishStatus')} *
+                                        </Label>
+                                        <Select
+                                            value={data.publish_status}
+                                            onValueChange={(value) =>
+                                                setData('publish_status', value)
+                                            }
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="draft">Draft</SelectItem>
+                                                <SelectItem value="published">Published</SelectItem>
+                                                <SelectItem value="archived">Archived</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.publish_status && (
+                                            <p className="text-sm text-red-600">
+                                                {errors.publish_status}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Uraian Informasi */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="uraian_informasi">
+                                        {t('arsipUnit.uraianInformasi')}
+                                    </Label>
+                                    <Textarea
+                                        id="uraian_informasi"
+                                        value={data.uraian_informasi}
+                                        onChange={(e) =>
+                                            setData('uraian_informasi', e.target.value)
+                                        }
+                                        rows={4}
+                                    />
+                                    {errors.uraian_informasi && (
+                                        <p className="text-sm text-red-600">
+                                            {errors.uraian_informasi}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Keterangan */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="keterangan">
+                                        {t('arsipUnit.keterangan')}
+                                    </Label>
+                                    <Textarea
+                                        id="keterangan"
+                                        value={data.keterangan}
+                                        onChange={(e) => setData('keterangan', e.target.value)}
+                                        rows={3}
+                                    />
+                                    {errors.keterangan && (
+                                        <p className="text-sm text-red-600">{errors.keterangan}</p>
+                                    )}
+                                </div>
+
+                                <div className="flex justify-end gap-4">
+                                    <Link href={route('arsip-unit.index')}>
+                                        <Button type="button" variant="outline">
+                                            {t('common.cancel')}
+                                        </Button>
+                                    </Link>
+                                    <Button type="submit" disabled={processing}>
+                                        {processing ? t('common.saving') : t('common.save')}
+                                    </Button>
+                                </div>
+                            </form>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        </AppLayout>
+    );
+}

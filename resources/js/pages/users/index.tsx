@@ -266,7 +266,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
 
                 {/* Table */}
                 <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800">
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto relative">
                         <table className="w-full">
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
@@ -306,7 +306,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                             {getSortIcon('created_at')}
                                         </button>
                                     </th>
-                                    <th className="px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                                    <th className="sticky right-0 bg-gray-50 dark:bg-gray-900 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
                                         {t('users.actions')}
                                     </th>
                                 </tr>
@@ -325,7 +325,8 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                     users.data.map((user, index) => (
                                         <tr
                                             key={user.id}
-                                            className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                                            className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+                                            onClick={() => router.visit(usersRoutes.edit({ user: user.id }).url)}
                                         >
                                             <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
                                                 {(users.current_page - 1) * users.per_page + index + 1}
@@ -340,6 +341,14 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                                 {user.role === 'admin' ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
                                                         {t('users.admin')}
+                                                    </span>
+                                                ) : user.role === 'management' ? (
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400">
+                                                        {t('users.management')}
+                                                    </span>
+                                                ) : user.role === 'operator' ? (
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
+                                                        {t('users.operator')}
                                                     </span>
                                                 ) : (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
@@ -361,7 +370,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                             <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                                                 {new Date(user.created_at).toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US')}
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
                                                 <div className="flex items-center justify-center gap-2">
                                                     {user.email_verified_at ? (
                                                         <Button

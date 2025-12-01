@@ -37,7 +37,7 @@ class UserController extends Controller
 
         // Sorting
         $sortField = $request->get('sort_field', 'created_at');
-        $sortDirection = $request->get('sort_direction', 'desc');
+        $sortDirection = $request->get('sort_direction', 'asc');
         $query->orderBy($sortField, $sortDirection);
 
         // Pagination with per_page parameter
@@ -68,6 +68,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Password::defaults()],
+            'role' => ['required', 'in:admin,management,operator,user'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -97,6 +98,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'password' => ['nullable', 'confirmed', Password::defaults()],
+            'role' => ['required', 'in:admin,management,operator,user'],
         ]);
 
         if (empty($validated['password'])) {

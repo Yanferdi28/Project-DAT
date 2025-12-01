@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ArsipUnit;
+use App\Models\BerkasArsip;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -11,48 +13,28 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Total users
+        // Total arsip unit
+        $totalArsipUnit = ArsipUnit::count();
+        
+        // Total berkas arsip
+        $totalBerkasArsip = BerkasArsip::count();
+        
+        // Total pengguna
         $totalUsers = User::count();
         
-        // Users this month
-        $usersThisMonth = User::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->count();
-        
-        // Users last month
-        $usersLastMonth = User::whereMonth('created_at', Carbon::now()->subMonth()->month)
-            ->whereYear('created_at', Carbon::now()->subMonth()->year)
-            ->count();
-        
-        // Calculate percentage change
-        $userChange = 0;
-        if ($usersLastMonth > 0) {
-            $userChange = (($usersThisMonth - $usersLastMonth) / $usersLastMonth) * 100;
-        } elseif ($usersThisMonth > 0) {
-            $userChange = 100;
-        }
-        
-        // Verified users count
-        $verifiedUsers = User::whereNotNull('email_verified_at')->count();
-        
-        // Admin users count
-        $adminUsers = User::where('role', 'admin')->count();
-        
-        // Recent users (last 5)
-        $recentUsers = User::latest()
+        // Recent arsip unit (last 5)
+        $recentArsipUnit = ArsipUnit::with('unitPengolah:id,nama_unit')
+            ->orderBy('created_at', 'desc')
             ->take(5)
-            ->get(['id', 'name', 'email', 'created_at', 'email_verified_at', 'role']);
+            ->get(['id_berkas', 'indeks', 'unit_pengolah_arsip_id', 'status', 'publish_status', 'created_at']);
         
         return Inertia::render('dashboard', [
             'stats' => [
+                'totalArsipUnit' => $totalArsipUnit,
+                'totalBerkasArsip' => $totalBerkasArsip,
                 'totalUsers' => $totalUsers,
-                'userChange' => round($userChange, 1),
-                'userTrend' => $userChange >= 0 ? 'up' : 'down',
-                'verifiedUsers' => $verifiedUsers,
-                'adminUsers' => $adminUsers,
-                'usersThisMonth' => $usersThisMonth,
             ],
-            'recentUsers' => $recentUsers,
+            'recentArsipUnit' => $recentArsipUnit,
         ]);
     }
 }
