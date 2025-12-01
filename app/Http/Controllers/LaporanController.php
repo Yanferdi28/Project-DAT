@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ArsipUnit;
+use App\Models\BerkasArsip;
 use App\Models\UnitPengolah;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,6 +12,113 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
+    /**
+     * Display the rekap per unit pengolah page.
+     */
+    public function rekapUnitPengolah(): Response
+    {
+        $unitPengolahs = UnitPengolah::orderBy('nama_unit')->get();
+
+        return Inertia::render('laporan/rekap-unit-pengolah', [
+            'unitPengolahs' => $unitPengolahs,
+        ]);
+    }
+
+    /**
+     * Export rekap per unit pengolah to PDF.
+     */
+    public function exportRekapUnitPengolahPdf(Request $request)
+    {
+        $dariTanggal = $request->input('dari_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
+
+        // Get all unit pengolah
+        $unitPengolahs = UnitPengolah::orderBy('nama_unit')->get();
+
+        // Build rekap data per unit
+        $rekapPerUnit = [];
+        $totalArsip = 0;
+        $totalBerkas = 0;
+        $totalPending = 0;
+        $totalDiterima = 0;
+        $totalDitolak = 0;
+
+        foreach ($unitPengolahs as $unit) {
+            // Query arsip unit
+            $arsipQuery = ArsipUnit::where('unit_pengolah_arsip_id', $unit->id);
+            
+            if ($dariTanggal) {
+                $arsipQuery->whereDate('created_at', '>=', $dariTanggal);
+            }
+            if ($sampaiTanggal) {
+                $arsipQuery->whereDate('created_at', '<=', $sampaiTanggal);
+            }
+
+            $jumlahArsip = (clone $arsipQuery)->count();
+            $pending = (clone $arsipQuery)->where('status', 'pending')->count();
+            $diterima = (clone $arsipQuery)->where('status', 'diterima')->count();
+            $ditolak = (clone $arsipQuery)->where('status', 'ditolak')->count();
+
+            // Query berkas arsip
+            $berkasQuery = BerkasArsip::where('unit_pengolah_id', $unit->id);
+            
+            if ($dariTanggal) {
+                $berkasQuery->whereDate('created_at', '>=', $dariTanggal);
+            }
+            if ($sampaiTanggal) {
+                $berkasQuery->whereDate('created_at', '<=', $sampaiTanggal);
+            }
+
+            $jumlahBerkas = $berkasQuery->count();
+
+            // Only add if unit has arsip or berkas
+            if ($jumlahArsip > 0 || $jumlahBerkas > 0) {
+                $rekapPerUnit[] = [
+                    'id' => $unit->id,
+                    'nama_unit' => $unit->nama_unit,
+                    'jumlah_arsip' => $jumlahArsip,
+                    'jumlah_berkas' => $jumlahBerkas,
+                    'pending' => $pending,
+                    'diterima' => $diterima,
+                    'ditolak' => $ditolak,
+                ];
+
+                $totalArsip += $jumlahArsip;
+                $totalBerkas += $jumlahBerkas;
+                $totalPending += $pending;
+                $totalDiterima += $diterima;
+                $totalDitolak += $ditolak;
+            }
+        }
+
+        // Sort by jumlah arsip descending
+        usort($rekapPerUnit, function ($a, $b) {
+            return $b['jumlah_arsip'] - $a['jumlah_arsip'];
+        });
+
+        // Total stats
+        $totalStats = [
+            'total_unit' => count($rekapPerUnit),
+            'total_arsip' => $totalArsip,
+            'total_berkas' => $totalBerkas,
+            'total_pending' => $totalPending,
+            'total_diterima' => $totalDiterima,
+            'total_ditolak' => $totalDitolak,
+            'avg_arsip_per_unit' => count($rekapPerUnit) > 0 ? $totalArsip / count($rekapPerUnit) : 0,
+        ];
+
+        $pdf = Pdf::loadView('pdf.rekap-unit-pengolah', compact(
+            'rekapPerUnit',
+            'totalStats',
+            'dariTanggal',
+            'sampaiTanggal'
+        ));
+
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->stream('laporan-rekap-unit-pengolah-' . date('Y-m-d') . '.pdf');
+    }
+
     /**
      * Display the penyusutan report page.
      */

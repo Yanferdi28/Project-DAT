@@ -3,7 +3,7 @@ import * as usersRoutes from '@/routes/users';
 import * as myprofileRoutes from '@/routes/myprofile';
 import { type NavItem } from '@/types';
 import { Link, usePage, router } from '@inertiajs/react';
-import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, Sparkles, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, Sparkles, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2 } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -253,6 +253,13 @@ export function AppSidebar({
                             {/* Laporan Submenu */}
                             {!isCollapsed && isLaporanOpen && (
                                 <div className="ml-8 mt-1 space-y-1">
+                                    <Link
+                                        href="/laporan/rekap-unit-pengolah"
+                                        className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/rekap-unit-pengolah') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                    >
+                                        <Building2 className="h-3.5 w-3.5" />
+                                        Rekap per Unit Pengolah
+                                    </Link>
                                     <Link
                                         href="/laporan/penyusutan"
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/penyusutan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}

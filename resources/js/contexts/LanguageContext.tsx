@@ -192,6 +192,7 @@ const translations = {
         'common.metadata': 'Metadata',
         'common.createdAt': 'Dibuat',
         'common.updatedAt': 'Terakhir Diupdate',
+        'common.print': 'Cetak',
         
         // Navigation
         'nav.dashboard': 'Dashboard',
@@ -600,6 +601,7 @@ const translations = {
         'common.metadata': 'Metadata',
         'common.createdAt': 'Created',
         'common.updatedAt': 'Last Updated',
+        'common.print': 'Print',
         
         // Navigation
         'nav.dashboard': 'Dashboard',
