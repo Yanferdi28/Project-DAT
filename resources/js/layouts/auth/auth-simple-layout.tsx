@@ -47,22 +47,19 @@ export default function AuthSimpleLayout({
 
             <div className="w-full max-w-4xl">
                 {/* Single Card with Logo and Form Side by Side */}
-                <div className="flex flex-col gap-0 overflow-hidden rounded-2xl border border-white/20 bg-white/80 shadow-2xl backdrop-blur-xl lg:flex-row dark:border-white/10 dark:bg-gray-900/80 dark:shadow-purple-900/20">
+                <div className="flex flex-col gap-0 overflow-hidden rounded-2xl border border-white/20 bg-white/80 shadow-2xl backdrop-blur-xl lg:flex-row dark:border-white/10 dark:bg-gray-900/80 dark:shadow-blue-900/20">
                     {/* Logo Section - Left Side */}
-                    <div className="flex items-center justify-center border-b border-gray-200/50 bg-gradient-to-br from-blue-500/5 to-purple-600/5 p-8 lg:w-2/5 lg:border-b-0 lg:border-r dark:border-gray-700/50 dark:from-blue-900/20 dark:to-purple-900/20">
+                    <div className="flex items-center justify-center border-b border-gray-200/50 bg-gradient-to-br from-[#0066CC]/5 to-[#003366]/5 p-8 lg:w-2/5 lg:border-b-0 lg:border-r dark:border-gray-700/50 dark:from-[#0066CC]/20 dark:to-[#003366]/20">
                         <Link
                             href={home()}
                             className="flex flex-col items-center gap-4 transition-transform hover:scale-105"
                         >
-                            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg shadow-blue-500/50 dark:shadow-purple-500/30">
-                                <AppLogoIcon className="size-12 fill-current text-white" />
+                            <div className="flex items-center justify-center p-4">
+                                <AppLogoIcon className="h-20 w-auto object-contain" />
                             </div>
                             <div className="text-center">
-                                <h2 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-xl font-bold text-transparent dark:from-blue-400 dark:to-purple-400">
-                                    Selamat Datang
-                                </h2>
                                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                    Akses akun Anda
+                                    Sistem Arsip Digital
                                 </p>
                             </div>
                         </Link>
@@ -71,7 +68,7 @@ export default function AuthSimpleLayout({
                     {/* Form Section - Right Side */}
                     <div className="flex flex-col gap-6 p-8 lg:flex-1">
                         <div className="space-y-2 text-center">
-                            <h1 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent dark:from-blue-400 dark:to-purple-400">
+                            <h1 className="text-2xl font-bold text-[#003366] dark:text-white">
                                 {title}
                             </h1>
                             <p className="text-sm text-gray-600 dark:text-gray-400">

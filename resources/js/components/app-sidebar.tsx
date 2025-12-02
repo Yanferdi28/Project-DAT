@@ -3,10 +3,11 @@ import * as usersRoutes from '@/routes/users';
 import * as myprofileRoutes from '@/routes/myprofile';
 import { type NavItem } from '@/types';
 import { Link, usePage, router } from '@inertiajs/react';
-import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, Sparkles, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2 } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2 } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import AppLogoIcon from './app-logo-icon';
 
 interface AppSidebarProps {
     isMobileOpen?: boolean;
@@ -144,17 +145,9 @@ export function AppSidebar({
                         href={dashboard()} 
                         className="flex items-center gap-3 transition-transform hover:scale-105"
                     >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 shadow-lg">
-                            <Sparkles className="h-5 w-5 text-white" />
+                        <div className="flex items-center justify-center">
+                            <AppLogoIcon className={isCollapsed ? 'h-8 w-auto object-contain' : 'h-10 w-auto object-contain'} />
                         </div>
-                        {!isCollapsed && (
-                            <div className="flex flex-col">
-                                <span className="text-sm font-bold text-gray-900 dark:text-white">
-                                    My App
-                                </span>
-                                <span className="text-xs text-gray-600 dark:text-gray-400">Dashboard</span>
-                            </div>
-                        )}
                     </Link>
                     
                     <button
@@ -244,7 +237,7 @@ export function AppSidebar({
                                 <ClipboardList className="h-5 w-5 transition-transform group-hover:scale-110" />
                                 {!isCollapsed && (
                                     <>
-                                        <span className="flex-1 font-medium text-left">Laporan</span>
+                                        <span className="flex-1 font-medium text-left">{t('nav.laporan')}</span>
                                         <ChevronRight className={'h-4 w-4 transition-transform ' + (isLaporanOpen ? 'rotate-90' : '')} />
                                     </>
                                 )}
@@ -258,28 +251,28 @@ export function AppSidebar({
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/rekap-unit-pengolah') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <Building2 className="h-3.5 w-3.5" />
-                                        Rekap per Unit Pengolah
+                                        {t('nav.rekapUnitPengolah')}
                                     </Link>
                                     <Link
                                         href="/laporan/penyusutan"
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/penyusutan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <CalendarClock className="h-3.5 w-3.5" />
-                                        Arsip Mendekati Penyusutan
+                                        {t('nav.penyusutan')}
                                     </Link>
                                     <Link
                                         href="/laporan/status-verifikasi"
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/status-verifikasi') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <FileCheck className="h-3.5 w-3.5" />
-                                        Status & Verifikasi Arsip
+                                        {t('nav.statusVerifikasi')}
                                     </Link>
                                     <Link
                                         href="/laporan/berita-acara-penyerahan"
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/berita-acara-penyerahan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <FileSignature className="h-3.5 w-3.5" />
-                                        Berita Acara Penyerahan
+                                        {t('nav.beritaAcaraPenyerahan')}
                                     </Link>
                                 </div>
                             )}
