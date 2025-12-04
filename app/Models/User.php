@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'avatar',
         'role',
+        'unit_pengolah_id',
     ];
 
     /**
@@ -50,6 +51,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the unit pengolah that the user belongs to.
+     */
+    public function unitPengolah()
+    {
+        return $this->belongsTo(UnitPengolah::class);
     }
 
     /**

@@ -13,6 +13,19 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class LaporanController extends Controller
 {
     /**
+     * Get user's unit_pengolah_id if restricted.
+     * Returns null for admin (can see all), otherwise returns user's unit_pengolah_id.
+     */
+    private function getUserUnitPengolahId(): ?int
+    {
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            return null;
+        }
+        return $user->unit_pengolah_id;
+    }
+
+    /**
      * Display the rekap per unit pengolah page.
      */
     public function rekapUnitPengolah(): Response
@@ -128,6 +141,7 @@ class LaporanController extends Controller
 
         return Inertia::render('laporan/penyusutan', [
             'unitPengolahs' => $unitPengolahs,
+            'userUnitPengolahId' => $this->getUserUnitPengolahId(),
         ]);
     }
 
@@ -140,6 +154,7 @@ class LaporanController extends Controller
 
         return Inertia::render('laporan/status-verifikasi', [
             'unitPengolahs' => $unitPengolahs,
+            'userUnitPengolahId' => $this->getUserUnitPengolahId(),
         ]);
     }
 
@@ -226,16 +241,23 @@ class LaporanController extends Controller
     public function beritaAcaraPenyerahan(): Response
     {
         $unitPengolahs = UnitPengolah::orderBy('nama_unit')->get();
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
         
         // Get arsip yang statusnya "diterima" dan belum pernah diserahkan
-        $arsipUnits = ArsipUnit::with(['kodeKlasifikasi', 'unitPengolah'])
-            ->where('status', 'diterima')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $arsipQuery = ArsipUnit::with(['kodeKlasifikasi', 'unitPengolah'])
+            ->where('status', 'diterima');
+        
+        // Filter by user's unit pengolah if restricted
+        if ($userUnitPengolahId) {
+            $arsipQuery->where('unit_pengolah_arsip_id', $userUnitPengolahId);
+        }
+        
+        $arsipUnits = $arsipQuery->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('laporan/berita-acara-penyerahan', [
             'unitPengolahs' => $unitPengolahs,
             'arsipUnits' => $arsipUnits,
+            'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
 

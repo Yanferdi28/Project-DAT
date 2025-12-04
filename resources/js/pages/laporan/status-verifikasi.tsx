@@ -11,15 +11,20 @@ interface UnitPengolah {
 
 interface PageProps {
     unitPengolahs: UnitPengolah[];
+    userUnitPengolahId?: number | null;
     [key: string]: unknown;
 }
 
 export default function LaporanStatusVerifikasi() {
-    const { unitPengolahs } = usePage<PageProps>().props;
+    const { unitPengolahs, userUnitPengolahId } = usePage<PageProps>().props;
     const { t } = useLanguage();
     
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
+    
     const [filterStatus, setFilterStatus] = useState('');
-    const [unitPengolahId, setUnitPengolahId] = useState('');
+    const [unitPengolahId, setUnitPengolahId] = useState(
+        isUnitPengolahLocked ? userUnitPengolahId!.toString() : ''
+    );
     const [dariTanggal, setDariTanggal] = useState('');
     const [sampaiTanggal, setSampaiTanggal] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
@@ -149,7 +154,7 @@ export default function LaporanStatusVerifikasi() {
                             <select
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white"
                             >
                                 {statusOptions.map((option) => (
                                     <option key={option.value} value={option.value}>
@@ -164,20 +169,26 @@ export default function LaporanStatusVerifikasi() {
 
                         <div>
                             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {t('laporan.penyusutan.unitPengolah')}
+                                {t('laporan.penyusutan.unitPengolah')}{isUnitPengolahLocked && ' (terkunci)'}
                             </label>
                             <select
                                 value={unitPengolahId}
                                 onChange={(e) => setUnitPengolahId(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                disabled={isUnitPengolahLocked}
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                <option value="">{t('laporan.penyusutan.allUnits')}</option>
+                                {!isUnitPengolahLocked && <option value="">{t('laporan.penyusutan.allUnits')}</option>}
                                 {unitPengolahs.map((unit) => (
                                     <option key={unit.id} value={unit.id}>
                                         {unit.nama_unit}
                                     </option>
                                 ))}
                             </select>
+                            {isUnitPengolahLocked && (
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    Unit pengolah terkunci sesuai dengan unit pengolah Anda.
+                                </p>
+                            )}
                         </div>
 
                         <div>

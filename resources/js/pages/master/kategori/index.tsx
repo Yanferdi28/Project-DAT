@@ -151,7 +151,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                         <select
                             value={perPage}
                             onChange={(e) => handlePerPageChange(e.target.value)}
-                            className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                            className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                         >
                             <option value="5">5</option>
                             <option value="10">10</option>
@@ -309,45 +309,6 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                             </div>
                         </div>
                     )}
-
-                    {/* Previous & Next Navigation */}
-                    <div className="px-6 py-3 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">
-                                {t('users.page')} {kategoris.current_page} {t('users.of')} {kategoris.last_page}
-                            </span>
-                            
-                            <div className="flex gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => {
-                                        const prevLink = kategoris.links.find(link => link.label.includes('Previous') || link.label.includes('&laquo;'));
-                                        if (prevLink?.url) router.get(prevLink.url);
-                                    }}
-                                    disabled={kategoris.current_page === 1}
-                                    className="flex items-center gap-2"
-                                >
-                                    <ChevronLeft className="h-4 w-4" />
-                                    {t('users.previous')}
-                                </Button>
-
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => {
-                                        const nextLink = kategoris.links.find(link => link.label.includes('Next') || link.label.includes('&raquo;'));
-                                        if (nextLink?.url) router.get(nextLink.url);
-                                    }}
-                                    disabled={kategoris.current_page === kategoris.last_page}
-                                    className="flex items-center gap-2"
-                                >
-                                    {t('users.next')}
-                                    <ChevronRight className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

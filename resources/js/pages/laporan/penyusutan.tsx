@@ -11,16 +11,21 @@ interface UnitPengolah {
 
 interface PageProps {
     unitPengolahs: UnitPengolah[];
+    userUnitPengolahId?: number | null;
     [key: string]: unknown;
 }
 
 export default function LaporanPenyusutan() {
-    const { unitPengolahs } = usePage<PageProps>().props;
+    const { unitPengolahs, userUnitPengolahId } = usePage<PageProps>().props;
     const { t } = useLanguage();
+    
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
     
     const [tahunAcuan, setTahunAcuan] = useState(new Date().getFullYear().toString());
     const [batasWarning, setBatasWarning] = useState('1');
-    const [unitPengolahId, setUnitPengolahId] = useState('');
+    const [unitPengolahId, setUnitPengolahId] = useState(
+        isUnitPengolahLocked ? userUnitPengolahId!.toString() : ''
+    );
     const [isGenerating, setIsGenerating] = useState(false);
 
     const handleExport = () => {
@@ -135,7 +140,7 @@ export default function LaporanPenyusutan() {
                             <select
                                 value={tahunAcuan}
                                 onChange={(e) => setTahunAcuan(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white"
                             >
                                 {yearOptions.map((year) => (
                                     <option key={year} value={year}>
@@ -155,7 +160,7 @@ export default function LaporanPenyusutan() {
                             <select
                                 value={batasWarning}
                                 onChange={(e) => setBatasWarning(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white"
                             >
                                 <option value="1">{t('laporan.penyusutan.year1')}</option>
                                 <option value="2">{t('laporan.penyusutan.year2')}</option>
@@ -169,23 +174,30 @@ export default function LaporanPenyusutan() {
 
                         <div>
                             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {t('laporan.penyusutan.unitPengolah')}
+                                {t('laporan.penyusutan.unitPengolah')}{isUnitPengolahLocked && ' (terkunci)'}
                             </label>
                             <select
                                 value={unitPengolahId}
                                 onChange={(e) => setUnitPengolahId(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                disabled={isUnitPengolahLocked}
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                <option value="">{t('laporan.penyusutan.allUnits')}</option>
+                                {!isUnitPengolahLocked && <option value="">{t('laporan.penyusutan.allUnits')}</option>}
                                 {unitPengolahs.map((unit) => (
                                     <option key={unit.id} value={unit.id}>
                                         {unit.nama_unit}
                                     </option>
                                 ))}
                             </select>
-                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                {t('laporan.penyusutan.filterByUnit')}
-                            </p>
+                            {isUnitPengolahLocked ? (
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    Unit pengolah terkunci sesuai dengan unit pengolah Anda.
+                                </p>
+                            ) : (
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                    {t('laporan.penyusutan.filterByUnit')}
+                                </p>
+                            )}
                         </div>
 
                         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">

@@ -1,8 +1,9 @@
-import AppLayout from '@/layouts/app-layout';
-import { Link, router, usePage } from '@inertiajs/react';
-import { Search, Plus, SquarePen, Trash2, FolderInput } from 'lucide-react';
 import { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { router, Link, usePage } from '@inertiajs/react';
+import { FileText, Plus, Search, Edit, Trash2, FolderInput, Printer } from 'lucide-react';
+import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     Dialog,
     DialogContent,
@@ -18,6 +19,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ArsipUnit {
     id_berkas: number;
@@ -80,8 +82,15 @@ interface UnitPengolah {
     nama_unit: string;
 }
 
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
 interface PaginatedData {
     data: ArsipUnit[];
+    links: PaginationLink[];
     current_page: number;
     last_page: number;
     per_page: number;
@@ -98,37 +107,49 @@ interface PageProps {
         search?: string;
         status?: string;
         publish_status?: string;
+        per_page?: number;
+    };
+    flash?: {
+        success?: string;
+        error?: string;
     };
     auth: {
         user: {
             role: string;
+            unit_pengolah_id?: number;
         };
     };
+    userUnitPengolahId?: number | null;
     [key: string]: any;
 }
 
-export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters }: PageProps) {
-    const { auth } = usePage<PageProps>().props;
+export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs, filters, flash }: PageProps) {
+    const { auth, userUnitPengolahId } = usePage<PageProps>().props;
     const { t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [status, setStatus] = useState(filters.status || '');
     const [publishStatus, setPublishStatus] = useState(filters.publish_status || '');
+    const [perPage, setPerPage] = useState(filters.per_page || 10);
+    
+    // Check if user has unit_pengolah restriction
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
     
     // Export dialog state
     const [exportDialog, setExportDialog] = useState(false);
-    const [exportFormat] = useState('pdf');
     const [dariTanggal, setDariTanggal] = useState('');
     const [sampaiTanggal, setSampaiTanggal] = useState('');
     const [exportStatus, setExportStatus] = useState('');
-    const [exportUnitPengolah, setExportUnitPengolah] = useState('');
+    const [exportUnitPengolah, setExportUnitPengolah] = useState(
+        isUnitPengolahLocked ? userUnitPengolahId!.toString() : ''
+    );
     
-    const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; arsipUnit: ArsipUnit | null }>({
+    const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
         open: false,
-        arsipUnit: null,
+        item: null,
     });
-    const [assignDialog, setAssignDialog] = useState<{ open: boolean; arsipUnit: ArsipUnit | null }>({
+    const [assignDialog, setAssignDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
         open: false,
-        arsipUnit: null,
+        item: null,
     });
     const [selectedBerkasId, setSelectedBerkasId] = useState<string>('');
     const [isDeleting, setIsDeleting] = useState(false);
@@ -138,8 +159,18 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
         e.preventDefault();
         router.get(
             '/arsip-unit',
-            { search, status, publish_status: publishStatus },
-            { preserveState: true, replace: true }
+            { search, status, publish_status: publishStatus, per_page: perPage },
+            { preserveState: true, preserveScroll: true }
+        );
+    };
+
+    const handlePerPageChange = (value: string) => {
+        const newPerPage = parseInt(value);
+        setPerPage(newPerPage);
+        router.get(
+            '/arsip-unit',
+            { search, status, publish_status: publishStatus, per_page: newPerPage },
+            { preserveState: true, preserveScroll: true }
         );
     };
 
@@ -147,19 +178,23 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
         setSearch('');
         setStatus('');
         setPublishStatus('');
-        router.get('/arsip-unit', {}, { preserveState: true, replace: true });
+        setPerPage(10);
+        router.get('/arsip-unit');
+    };
+
+    const confirmDelete = (item: ArsipUnit) => {
+        setDeleteDialog({ open: true, item });
     };
 
     const handleDelete = () => {
-        if (!deleteDialog.arsipUnit) return;
-
+        if (!deleteDialog.item) return;
+        
         setIsDeleting(true);
-        router.delete(`/arsip-unit/${deleteDialog.arsipUnit.id_berkas}`, {
-            onSuccess: () => {
-                setDeleteDialog({ open: false, arsipUnit: null });
-            },
+        router.delete(`/arsip-unit/${deleteDialog.item.id_berkas}`, {
+            preserveScroll: true,
             onFinish: () => {
                 setIsDeleting(false);
+                setDeleteDialog({ open: false, item: null });
             },
         });
     };
@@ -168,12 +203,7 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
         router.patch(
             `/arsip-unit/${arsipUnitId}/status`,
             { status: newStatus },
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    // Success message will be handled by Laravel
-                },
-            }
+            { preserveScroll: true }
         );
     };
 
@@ -181,25 +211,20 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
         router.patch(
             `/arsip-unit/${arsipUnitId}/publish-status`,
             { publish_status: newPublishStatus },
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    // Success message will be handled by Laravel
-                },
-            }
+            { preserveScroll: true }
         );
     };
 
     const handleAssignToBerkas = () => {
-        if (!assignDialog.arsipUnit || !selectedBerkasId) return;
+        if (!assignDialog.item || !selectedBerkasId) return;
 
         setIsAssigning(true);
         router.patch(
-            `/arsip-unit/${assignDialog.arsipUnit.id_berkas}/assign-to-berkas`,
+            `/arsip-unit/${assignDialog.item.id_berkas}/assign-to-berkas`,
             { berkas_arsip_id: selectedBerkasId },
             {
                 onSuccess: () => {
-                    setAssignDialog({ open: false, arsipUnit: null });
+                    setAssignDialog({ open: false, item: null });
                     setSelectedBerkasId('');
                 },
                 onFinish: () => {
@@ -221,6 +246,7 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
     };
 
     const canManageStatus = auth.user.role === 'operator' || auth.user.role === 'admin';
+    const canCreateEdit = !['management', 'operator'].includes(auth.user?.role || '');
 
     const getStatusBadge = (status: string) => {
         const badges = {
@@ -241,41 +267,67 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
     };
 
     return (
-        <AppLayout>
-            <div className="p-6">
+        <AppSidebarLayout
+            breadcrumbs={[
+                { title: t('nav.dashboard'), href: '/dashboard' },
+                { title: t('arsipUnit.title'), href: '/arsip-unit' },
+            ]}
+        >
+            <div className="space-y-6">
+                {/* Flash Messages */}
+                {flash?.success && (
+                    <div className="bg-green-50 border border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-700 dark:text-green-400 px-4 py-3 rounded-lg">
+                        {flash.success}
+                    </div>
+                )}
+                {flash?.error && (
+                    <div className="bg-red-50 border border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
+                        {flash.error}
+                    </div>
+                )}
+
                 {/* Header */}
-                <div className="mb-6 flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
                             {t('arsipUnit.title')}
                         </h1>
-                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                            {t('users.totalRegistered').replace('pengguna', 'arsip unit')}: {arsipUnits.total}
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            {t('users.total')} {arsipUnits.total} {t('arsipUnit.title').toLowerCase()}
                         </p>
                     </div>
-                    {!['management', 'operator'].includes(auth.user?.role || '') && (
-                        <Link
-                            href="/arsip-unit/create"
-                            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
+                    <div className="flex gap-2">
+                        <Button 
+                            variant="outline" 
+                            onClick={() => setExportDialog(true)}
+                            className="bg-green-600 hover:bg-green-700 text-white border-green-600"
                         >
-                            <Plus className="h-4 w-4" />
-                            {t('arsipUnit.add')}
-                        </Link>
-                    )}
+                            <Printer className="h-4 w-4 mr-2" />
+                            {t('common.print')}
+                        </Button>
+                        {canCreateEdit && (
+                            <Link href="/arsip-unit/create">
+                                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    {t('arsipUnit.add')}
+                                </Button>
+                            </Link>
+                        )}
+                    </div>
                 </div>
 
                 {/* Filters */}
-                <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4 border border-gray-200 dark:border-gray-800">
                     <form onSubmit={handleSearch} className="space-y-4">
-                        <div className="grid gap-4 md:grid-cols-3">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                                <input
+                        <div className="grid gap-4 md:grid-cols-4">
+                            <div className="relative md:col-span-2">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
+                                <Input
                                     type="text"
+                                    placeholder={t('arsipUnit.search')}
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    placeholder={t('arsipUnit.search')}
-                                    className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+                                    className="pl-10"
                                 />
                             </div>
 
@@ -283,7 +335,7 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                                 <select
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value)}
-                                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                    className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 >
                                     <option value="">{t('arsipUnit.allStatus')}</option>
                                     <option value="pending">{t('arsipUnit.pending')}</option>
@@ -296,7 +348,7 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                                 <select
                                     value={publishStatus}
                                     onChange={(e) => setPublishStatus(e.target.value)}
-                                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                    className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 >
                                     <option value="">{t('arsipUnit.allPublishStatus')}</option>
                                     <option value="draft">{t('arsipUnit.draft')}</option>
@@ -306,224 +358,201 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                             </div>
                         </div>
 
-                        <div className="flex gap-2">
-                            <button
-                                type="submit"
-                                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-                            >
-                                {t('users.searchBtn')}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={handleReset}
-                                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                            >
-                                {t('users.reset')}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setExportDialog(true)}
-                                className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700"
-                            >
-                                {t('common.print')}
-                            </button>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-between">
+                            <div className="flex items-center gap-3">
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
+                                <select
+                                    value={perPage}
+                                    onChange={(e) => handlePerPageChange(e.target.value)}
+                                    className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
+                                >
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
+                            </div>
+                            <div className="flex gap-2">
+                                <Button type="submit">
+                                    <Search className="h-4 w-4 mr-2" />
+                                    {t('users.searchBtn')}
+                                </Button>
+                                {(search || status || publishStatus) && (
+                                    <Button type="button" variant="outline" onClick={handleReset}>
+                                        {t('users.reset')}
+                                    </Button>
+                                )}
+                            </div>
                         </div>
                     </form>
                 </div>
 
                 {/* Table */}
-                <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800">
                     <div className="overflow-x-auto relative">
                         <table className="w-full">
-                            <thead className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800/50">
+                            <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                                        No
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                                        {t('users.no')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.kodeKlasifikasi')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.indeks')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.uraianInformasi')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.tanggal')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.unitPengolah')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.status')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('arsipUnit.publishStatus')}
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                                        {t('arsipUnit.kategori')}
-                                    </th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                                        {t('arsipUnit.subKategori')}
-                                    </th>
-                                    <th className="sticky right-0 bg-gray-50 dark:bg-gray-800/50 px-4 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
+                                    <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
                                         {t('users.actions')}
                                     </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                                {arsipUnits.data.length > 0 ? (
-                                    arsipUnits.data.map((arsipUnit, index) => (
+                                {arsipUnits.data.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={9} className="px-6 py-12 text-center">
+                                            <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
+                                            <p className="text-gray-500 dark:text-gray-400 text-sm">
+                                                {t('arsipUnit.noData')}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    arsipUnits.data.map((item, index) => (
                                         <tr
-                                            key={arsipUnit.id_berkas}
-                                            className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer"
-                                            onClick={() => router.visit(`/arsip-unit/${arsipUnit.id_berkas}`)}
+                                            key={item.id_berkas}
+                                            className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+                                            onClick={() => router.visit(`/arsip-unit/${item.id_berkas}`)}
                                         >
-                                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnits.from + index}
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
+                                                {(arsipUnits.current_page - 1) * arsipUnits.per_page + index + 1}
                                             </td>
-                                            <td className="px-4 py-3 text-sm">
-                                                {arsipUnit.kode_klasifikasi ? (
+                                            <td className="px-6 py-4 text-sm">
+                                                {item.kode_klasifikasi ? (
                                                     <div>
                                                         <div className="font-medium text-gray-900 dark:text-white">
-                                                            {arsipUnit.kode_klasifikasi.kode_klasifikasi}
+                                                            {item.kode_klasifikasi.kode_klasifikasi}
                                                         </div>
                                                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                                                            {arsipUnit.kode_klasifikasi.uraian}
+                                                            {item.kode_klasifikasi.uraian}
                                                         </div>
                                                     </div>
-                                                ) : (
-                                                    '-'
-                                                )}
+                                                ) : '-'}
                                             </td>
-                                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnit.indeks || '-'}
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                                                {item.indeks || '-'}
                                             </td>
-                                            <td className="max-w-xs truncate px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnit.uraian_informasi || '-'}
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-white max-w-xs truncate">
+                                                {item.uraian_informasi || '-'}
                                             </td>
-                                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnit.tanggal ? new Date(arsipUnit.tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-'}
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-white whitespace-nowrap">
+                                                {item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-'}
                                             </td>
-                                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnit.unit_pengolah?.nama || '-'}
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-white whitespace-nowrap">
+                                                {item.unit_pengolah?.nama || '-'}
                                             </td>
-                                            <td className="whitespace-nowrap px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                                            <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                                                 {canManageStatus ? (
                                                     <Select
-                                                        value={arsipUnit.status}
-                                                        onValueChange={(value) =>
-                                                            handleStatusChange(arsipUnit.id_berkas, value)
-                                                        }
+                                                        value={item.status}
+                                                        onValueChange={(value) => handleStatusChange(item.id_berkas, value)}
                                                     >
                                                         <SelectTrigger className="w-32">
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value="pending">
-                                                                {t('arsipUnit.pending')}
-                                                            </SelectItem>
-                                                            <SelectItem value="diterima">
-                                                                {t('arsipUnit.diterima')}
-                                                            </SelectItem>
-                                                            <SelectItem value="ditolak">
-                                                                {t('arsipUnit.ditolak')}
-                                                            </SelectItem>
+                                                            <SelectItem value="pending">{t('arsipUnit.pending')}</SelectItem>
+                                                            <SelectItem value="diterima">{t('arsipUnit.diterima')}</SelectItem>
+                                                            <SelectItem value="ditolak">{t('arsipUnit.ditolak')}</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 ) : (
-                                                    <span
-                                                        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusBadge(arsipUnit.status)}`}
-                                                    >
-                                                        {t(`arsipUnit.${arsipUnit.status}`)}
+                                                    <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusBadge(item.status)}`}>
+                                                        {t(`arsipUnit.${item.status}`)}
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="whitespace-nowrap px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                                            <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                                                 {canManageStatus ? (
                                                     <Select
-                                                        value={arsipUnit.publish_status}
-                                                        onValueChange={(value) =>
-                                                            handlePublishStatusChange(arsipUnit.id_berkas, value)
-                                                        }
+                                                        value={item.publish_status}
+                                                        onValueChange={(value) => handlePublishStatusChange(item.id_berkas, value)}
                                                     >
                                                         <SelectTrigger className="w-32">
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value="draft">
-                                                                {t('arsipUnit.draft')}
-                                                            </SelectItem>
-                                                            <SelectItem value="published">
-                                                                {t('arsipUnit.published')}
-                                                            </SelectItem>
-                                                            <SelectItem value="archived">
-                                                                {t('arsipUnit.archived')}
-                                                            </SelectItem>
+                                                            <SelectItem value="draft">{t('arsipUnit.draft')}</SelectItem>
+                                                            <SelectItem value="published">{t('arsipUnit.published')}</SelectItem>
+                                                            <SelectItem value="archived">{t('arsipUnit.archived')}</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 ) : (
-                                                    <span
-                                                        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getPublishStatusBadge(arsipUnit.publish_status)}`}
-                                                    >
-                                                        {t(`arsipUnit.${arsipUnit.publish_status}`)}
+                                                    <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getPublishStatusBadge(item.publish_status)}`}>
+                                                        {t(`arsipUnit.${item.publish_status}`)}
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnit.kategori?.nama || '-'}
-                                            </td>
-                                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                                {arsipUnit.sub_kategori?.nama || '-'}
-                                            </td>
-                                            <td className="sticky right-0 bg-white dark:bg-gray-900 whitespace-nowrap px-4 py-3 text-center shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
+                                            <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
                                                 <div className="flex items-center justify-center gap-2">
-                                                    {!['management', 'operator'].includes(auth.user?.role || '') && canManageStatus && (
-                                                        <button
+                                                    {canCreateEdit && canManageStatus && (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
                                                             onClick={() => {
-                                                                setAssignDialog({ open: true, arsipUnit });
-                                                                setSelectedBerkasId(arsipUnit.berkas_arsip_id?.toString() || '');
+                                                                setAssignDialog({ open: true, item });
+                                                                setSelectedBerkasId(item.berkas_arsip_id?.toString() || '');
                                                             }}
-                                                            className="text-purple-600 transition-colors hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
+                                                            className="hover:bg-purple-50 hover:text-purple-600 hover:border-purple-300 dark:hover:bg-purple-950 dark:hover:text-purple-400 dark:hover:border-purple-700"
                                                             title="Masukkan ke Berkas"
                                                         >
                                                             <FolderInput className="h-4 w-4" />
-                                                        </button>
+                                                        </Button>
                                                     )}
-                                                    {!['management', 'operator'].includes(auth.user?.role || '') && (
+                                                    {canCreateEdit && (
                                                         <>
-                                                            <Link
-                                                                href={`/arsip-unit/${arsipUnit.id_berkas}/edit`}
-                                                                className="text-yellow-600 transition-colors hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300"
-                                                                title={t('users.edit')}
-                                                            >
-                                                                <SquarePen className="h-4 w-4" />
+                                                            <Link href={`/arsip-unit/${item.id_berkas}/edit`}>
+                                                                <Button
+                                                                    variant="outline"
+                                                                    size="sm"
+                                                                    className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
+                                                                    title={t('users.edit')}
+                                                                >
+                                                                    <Edit className="h-4 w-4" />
+                                                                </Button>
                                                             </Link>
-                                                            <button
-                                                                onClick={() =>
-                                                                    setDeleteDialog({ open: true, arsipUnit })
-                                                                }
-                                                                className="text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => confirmDelete(item)}
+                                                                className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
                                                                 title={t('users.delete')}
                                                             >
                                                                 <Trash2 className="h-4 w-4" />
-                                                            </button>
+                                                            </Button>
                                                         </>
                                                     )}
                                                 </div>
                                             </td>
                                         </tr>
                                     ))
-                                ) : (
-                                    <tr>
-                                        <td
-                                            colSpan={11}
-                                            className="px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400"
-                                        >
-                                            {t('arsipUnit.noData')}
-                                        </td>
-                                    </tr>
                                 )}
                             </tbody>
                         </table>
@@ -531,41 +560,53 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
 
                     {/* Pagination */}
                     {arsipUnits.last_page > 1 && (
-                        <div className="flex items-center justify-between border-t border-gray-200 px-4 py-3 dark:border-gray-800">
-                            <div className="text-sm text-gray-700 dark:text-gray-300">
-                                {t('users.showing')} {arsipUnits.from} - {arsipUnits.to} {t('users.of')}{' '}
-                                {arsipUnits.total}
-                            </div>
-                            <div className="flex gap-2">
-                                {arsipUnits.current_page > 1 && (
-                                    <Link
-                                        href={`/arsip-unit?page=${arsipUnits.current_page - 1}${search ? `&search=${search}` : ''}${status ? `&status=${status}` : ''}${publishStatus ? `&publish_status=${publishStatus}` : ''}`}
-                                        className="rounded-lg border border-gray-300 bg-white px-3 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                                    >
-                                        {t('users.previous')}
-                                    </Link>
-                                )}
-                                {arsipUnits.current_page < arsipUnits.last_page && (
-                                    <Link
-                                        href={`/arsip-unit?page=${arsipUnits.current_page + 1}${search ? `&search=${search}` : ''}${status ? `&status=${status}` : ''}${publishStatus ? `&publish_status=${publishStatus}` : ''}`}
-                                        className="rounded-lg border border-gray-300 bg-white px-3 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                                    >
-                                        {t('users.next')}
-                                    </Link>
-                                )}
+                        <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    {t('users.showing')}{' '}
+                                    <span className="font-medium">{arsipUnits.from}</span> -{' '}
+                                    <span className="font-medium">{arsipUnits.to}</span>{' '}
+                                    {t('users.of')} <span className="font-medium">{arsipUnits.total}</span>
+                                </p>
+                                <div className="flex gap-2">
+                                    {arsipUnits.links?.map((link, index) => {
+                                        if (!link.url) {
+                                            return (
+                                                <Button
+                                                    key={index}
+                                                    variant="outline"
+                                                    size="sm"
+                                                    disabled
+                                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                                />
+                                            );
+                                        }
+
+                                        return (
+                                            <Button
+                                                key={index}
+                                                variant={link.active ? 'default' : 'outline'}
+                                                size="sm"
+                                                onClick={() => router.get(link.url!)}
+                                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                                className={link.active ? 'bg-blue-600 text-white hover:bg-blue-700' : ''}
+                                            />
+                                        );
+                                    })}
+                                </div>
                             </div>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Delete Dialog */}
-            <Dialog open={deleteDialog.open} onOpenChange={(open) => setDeleteDialog({ open, arsipUnit: null })}>
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, item: null })}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>{t('arsipUnit.deleteTitle')}</DialogTitle>
                         <DialogDescription>
-                            {t('arsipUnit.deleteMessage')} "{deleteDialog.arsipUnit?.no_item_arsip || deleteDialog.arsipUnit?.id_berkas}"?
+                            {t('arsipUnit.deleteMessage')} "{deleteDialog.item?.no_item_arsip || deleteDialog.item?.id_berkas}"?
                             <br />
                             <span className="text-red-600 dark:text-red-400">
                                 {t('arsipUnit.deleteWarning')}
@@ -573,20 +614,20 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <button
-                            onClick={() => setDeleteDialog({ open: false, arsipUnit: null })}
+                        <Button
+                            variant="outline"
+                            onClick={() => setDeleteDialog({ open: false, item: null })}
                             disabled={isDeleting}
-                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                         >
                             {t('common.cancel')}
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
-                            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {isDeleting ? t('users.deleting') : t('common.delete')}
-                        </button>
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -594,7 +635,7 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
             {/* Assign to Berkas Dialog */}
             <Dialog open={assignDialog.open} onOpenChange={(open) => {
                 if (!open) {
-                    setAssignDialog({ open: false, arsipUnit: null });
+                    setAssignDialog({ open: false, item: null });
                     setSelectedBerkasId('');
                 }
             }}>
@@ -606,16 +647,13 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                         </DialogDescription>
                     </DialogHeader>
                     <div className="py-4">
-                        {/* Info tentang arsip unit yang dipilih */}
-                        {assignDialog.arsipUnit && (
+                        {assignDialog.item && (
                             <div className="mb-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    <strong>Kode Klasifikasi:</strong>{' '}
-                                    {assignDialog.arsipUnit.kode_klasifikasi?.kode_klasifikasi || '-'}
+                                    <strong>Kode Klasifikasi:</strong> {assignDialog.item.kode_klasifikasi?.kode_klasifikasi || '-'}
                                 </p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    <strong>Unit Pengolah:</strong>{' '}
-                                    {assignDialog.arsipUnit.unit_pengolah?.nama || '-'}
+                                    <strong>Unit Pengolah:</strong> {assignDialog.item.unit_pengolah?.nama || '-'}
                                 </p>
                             </div>
                         )}
@@ -623,10 +661,9 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                             Berkas Arsip
                         </label>
                         {(() => {
-                            // Filter berkas arsip berdasarkan kode klasifikasi dan unit pengolah yang sama
                             const filteredBerkasArsips = berkasArsips.filter((berkas) => {
-                                const sameKlasifikasi = berkas.klasifikasi_id === assignDialog.arsipUnit?.kode_klasifikasi_id;
-                                const sameUnitPengolah = berkas.unit_pengolah_id === assignDialog.arsipUnit?.unit_pengolah_arsip_id;
+                                const sameKlasifikasi = berkas.klasifikasi_id === assignDialog.item?.kode_klasifikasi_id;
+                                const sameUnitPengolah = berkas.unit_pengolah_id === assignDialog.item?.unit_pengolah_arsip_id;
                                 return sameKlasifikasi && sameUnitPengolah;
                             });
 
@@ -660,89 +697,75 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                                 </Select>
                             );
                         })()}
-                        {assignDialog.arsipUnit?.berkas_arsip_id && (
+                        {assignDialog.item?.berkas_arsip_id && (
                             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                Saat ini: {assignDialog.arsipUnit?.berkas_arsip?.nama_berkas || '-'}
+                                Saat ini: {assignDialog.item?.berkas_arsip?.nama_berkas || '-'}
                             </p>
                         )}
                     </div>
                     <DialogFooter>
-                        <button
+                        <Button
+                            variant="outline"
                             onClick={() => {
-                                setAssignDialog({ open: false, arsipUnit: null });
+                                setAssignDialog({ open: false, item: null });
                                 setSelectedBerkasId('');
                             }}
                             disabled={isAssigning}
-                            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                         >
                             {t('common.cancel')}
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={handleAssignToBerkas}
                             disabled={isAssigning || !selectedBerkasId}
-                            className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="bg-purple-600 hover:bg-purple-700"
                         >
                             {isAssigning ? t('common.saving') : 'Masukkan ke Berkas'}
-                        </button>
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
 
             {/* Export Dialog */}
             <Dialog open={exportDialog} onOpenChange={setExportDialog}>
-                <DialogContent className="max-w-md bg-gray-900 text-white">
+                <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className="text-center">Cetak Arsip Unit</DialogTitle>
-                        <DialogDescription className="text-center text-gray-400">
-                            Pilih format ekspor dan rentang tanggal
+                        <DialogTitle>{t('common.print')} {t('arsipUnit.title')}</DialogTitle>
+                        <DialogDescription>
+                            Pilih filter untuk ekspor data
                         </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4">
-                        <div>
-                            <label className="mb-2 block text-sm font-medium">
-                                Format Ekspor<span className="text-red-500">*</span>
-                            </label>
-                            <select
-                                value={exportFormat}
-                                disabled
-                                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white"
-                            >
-                                <option value="pdf">PDF</option>
-                            </select>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Dari Tanggal
+                                </label>
+                                <Input
+                                    type="date"
+                                    value={dariTanggal}
+                                    onChange={(e) => setDariTanggal(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Sampai Tanggal
+                                </label>
+                                <Input
+                                    type="date"
+                                    value={sampaiTanggal}
+                                    onChange={(e) => setSampaiTanggal(e.target.value)}
+                                />
+                            </div>
                         </div>
                         
                         <div>
-                            <label className="mb-2 block text-sm font-medium">
-                                Dari Tanggal<span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="date"
-                                value={dariTanggal}
-                                onChange={(e) => setDariTanggal(e.target.value)}
-                                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white"
-                            />
-                        </div>
-                        
-                        <div>
-                            <label className="mb-2 block text-sm font-medium">
-                                Sampai Tanggal<span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="date"
-                                value={sampaiTanggal}
-                                onChange={(e) => setSampaiTanggal(e.target.value)}
-                                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white"
-                            />
-                        </div>
-                        
-                        <div>
-                            <label className="mb-2 block text-sm font-medium">
+                            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Filter Status
                             </label>
                             <select
                                 value={exportStatus}
                                 onChange={(e) => setExportStatus(e.target.value)}
-                                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                             >
                                 <option value="">Semua Status</option>
                                 <option value="pending">Pending</option>
@@ -752,40 +775,40 @@ export default function Index({ arsipUnits, berkasArsips, unitPengolahs, filters
                         </div>
                         
                         <div>
-                            <label className="mb-2 block text-sm font-medium">
-                                Filter Unit Pengolah
+                            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Filter Unit Pengolah{isUnitPengolahLocked && ' (terkunci)'}
                             </label>
                             <select
                                 value={exportUnitPengolah}
                                 onChange={(e) => setExportUnitPengolah(e.target.value)}
-                                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                disabled={isUnitPengolahLocked}
+                                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                <option value="">Pilih Unit Pengolah</option>
+                                {!isUnitPengolahLocked && <option value="">Semua Unit Pengolah</option>}
                                 {unitPengolahs.map((unit) => (
                                     <option key={unit.id} value={unit.id}>
                                         {unit.nama_unit}
                                     </option>
                                 ))}
                             </select>
+                            {isUnitPengolahLocked && (
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    Unit pengolah terkunci sesuai dengan unit pengolah Anda.
+                                </p>
+                            )}
                         </div>
                     </div>
                     
-                    <DialogFooter className="flex gap-2">
-                        <button
-                            onClick={() => setExportDialog(false)}
-                            className="flex-1 rounded-lg border border-gray-700 bg-transparent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-                        >
-                            Batal
-                        </button>
-                        <button
-                            onClick={handleExport}
-                            className="flex-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-                        >
-                            Konfirmasi!
-                        </button>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setExportDialog(false)}>
+                            {t('common.cancel')}
+                        </Button>
+                        <Button onClick={handleExport} className="bg-blue-600 hover:bg-blue-700">
+                            {t('common.print')} PDF
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-        </AppLayout>
+        </AppSidebarLayout>
     );
 }

@@ -21,7 +21,17 @@ interface User {
     email: string;
     email_verified_at: string | null;
     role: 'admin' | 'user';
+    unit_pengolah_id: number | null;
+    unit_pengolah?: {
+        id: number;
+        nama_unit: string;
+    };
     created_at: string;
+}
+
+interface UnitPengolah {
+    id: number;
+    nama_unit: string;
 }
 
 interface PaginationLink {
@@ -39,9 +49,11 @@ interface Props {
         per_page: number;
         total: number;
     };
+    unitPengolahs: UnitPengolah[];
     filters: {
         search?: string;
         status?: string;
+        unit_pengolah_id?: string;
         sort_field?: string;
         sort_direction?: string;
         per_page?: number;
@@ -52,10 +64,11 @@ interface Props {
     };
 }
 
-export default function UsersIndex({ users, filters, flash }: Props) {
+export default function UsersIndex({ users, unitPengolahs, filters, flash }: Props) {
     const { language, t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [status, setStatus] = useState(filters.status || '');
+    const [unitPengolahFilter, setUnitPengolahFilter] = useState(filters.unit_pengolah_id || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
     const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; user: User | null }>({
         open: false,
@@ -73,7 +86,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
         e.preventDefault();
         router.get(
             usersRoutes.index().url,
-            { search, status, per_page: perPage },
+            { search, status, unit_pengolah_id: unitPengolahFilter, per_page: perPage },
             {
                 preserveState: true,
                 preserveScroll: true,
@@ -85,7 +98,19 @@ export default function UsersIndex({ users, filters, flash }: Props) {
         setStatus(value);
         router.get(
             usersRoutes.index().url,
-            { search, status: value, per_page: perPage },
+            { search, status: value, unit_pengolah_id: unitPengolahFilter, per_page: perPage },
+            {
+                preserveState: true,
+                preserveScroll: true,
+            }
+        );
+    };
+
+    const handleUnitPengolahChange = (value: string) => {
+        setUnitPengolahFilter(value);
+        router.get(
+            usersRoutes.index().url,
+            { search, status, unit_pengolah_id: value, per_page: perPage },
             {
                 preserveState: true,
                 preserveScroll: true,
@@ -98,7 +123,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
         setPerPage(newPerPage);
         router.get(
             usersRoutes.index().url,
-            { search, status, per_page: newPerPage },
+            { search, status, unit_pengolah_id: unitPengolahFilter, per_page: newPerPage },
             {
                 preserveState: true,
                 preserveScroll: true,
@@ -210,7 +235,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                         <select
                             value={perPage}
                             onChange={(e) => handlePerPageChange(e.target.value)}
-                            className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                            className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                         >
                             <option value="5">5</option>
                             <option value="10">10</option>
@@ -236,25 +261,38 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                 </div>
 
                 {/* Filter */}
-                <div className="flex items-center gap-3 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="flex flex-wrap items-center gap-3 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
                     <Filter className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.filter')}:</span>
                     <select
                         value={status}
                         onChange={(e) => handleStatusChange(e.target.value)}
-                        className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                        className="flex-1 min-w-[150px] rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                     >
                         <option value="">{t('users.allStatus')}</option>
                         <option value="verified">{t('users.verified')}</option>
                         <option value="unverified">{t('users.unverified')}</option>
                     </select>
-                    {(search || status) && (
+                    <select
+                        value={unitPengolahFilter}
+                        onChange={(e) => handleUnitPengolahChange(e.target.value)}
+                        className="flex-1 min-w-[150px] rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
+                    >
+                        <option value="">Semua Unit Pengolah</option>
+                        {unitPengolahs.map((unit) => (
+                            <option key={unit.id} value={unit.id}>
+                                {unit.nama_unit}
+                            </option>
+                        ))}
+                    </select>
+                    {(search || status || unitPengolahFilter) && (
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={() => {
                                 setSearch('');
                                 setStatus('');
+                                setUnitPengolahFilter('');
                                 setPerPage(10);
                                 router.get(usersRoutes.index().url);
                             }}
@@ -295,6 +333,9 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                         {t('users.role')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                                        Unit Pengolah
+                                    </th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {t('users.status')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
@@ -314,7 +355,7 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                                 {users.data.length === 0 ? (
                                     <tr>
-                                        <td colSpan={7} className="px-6 py-12 text-center">
+                                        <td colSpan={8} className="px-6 py-12 text-center">
                                             <User className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
                                                 {t('users.noData')}
@@ -355,6 +396,9 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                                                         {t('users.user')}
                                                     </span>
                                                 )}
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                                                {user.unit_pengolah?.nama_unit || '-'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 {user.email_verified_at ? (
@@ -478,45 +522,6 @@ export default function UsersIndex({ users, filters, flash }: Props) {
                             </div>
                         </div>
                     )}
-
-                    {/* Previous & Next Navigation */}
-                    <div className="px-6 py-3 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">
-                                {t('users.page')} {users.current_page} {t('users.of')} {users.last_page}
-                            </span>
-                            
-                            <div className="flex gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => {
-                                        const prevLink = users.links.find(link => link.label.includes('Previous') || link.label.includes('&laquo;'));
-                                        if (prevLink?.url) router.get(prevLink.url);
-                                    }}
-                                    disabled={users.current_page === 1}
-                                    className="flex items-center gap-2"
-                                >
-                                    <ChevronLeft className="h-4 w-4" />
-                                    {t('users.previous')}
-                                </Button>
-
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => {
-                                        const nextLink = users.links.find(link => link.label.includes('Next') || link.label.includes('&raquo;'));
-                                        if (nextLink?.url) router.get(nextLink.url);
-                                    }}
-                                    disabled={users.current_page === users.last_page}
-                                    className="flex items-center gap-2"
-                                >
-                                    {t('users.next')}
-                                    <ChevronRight className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

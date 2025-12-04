@@ -92,7 +92,7 @@ export default function KodeKlasifikasiEdit({ kodeKlasifikasi, parentOptions, er
                                 id="kode_klasifikasi_induk"
                                 value={data.kode_klasifikasi_induk}
                                 onChange={(e) => setData({ ...data, kode_klasifikasi_induk: e.target.value })}
-                                className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
                                 <option value="">{t('kodeKlasifikasi.selectParent')}</option>
                                 {parentOptions.map((opt) => (
@@ -157,7 +157,7 @@ export default function KodeKlasifikasiEdit({ kodeKlasifikasi, parentOptions, er
                                 value={data.status_akhir}
                                 onChange={(e) => setData({ ...data, status_akhir: e.target.value })}
                                 required
-                                className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
                                 <option value="Musnah">{t('kodeKlasifikasi.musnah')}</option>
                                 <option value="Permanen">{t('kodeKlasifikasi.permanen')}</option>
@@ -174,7 +174,7 @@ export default function KodeKlasifikasiEdit({ kodeKlasifikasi, parentOptions, er
                                 value={data.klasifikasi_keamanan}
                                 onChange={(e) => setData({ ...data, klasifikasi_keamanan: e.target.value })}
                                 required
-                                className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
                                 <option value="Biasa">{t('kodeKlasifikasi.biasa')}</option>
                                 <option value="Rahasia">{t('kodeKlasifikasi.rahasia')}</option>

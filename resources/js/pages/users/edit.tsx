@@ -9,12 +9,19 @@ import InputError from '@/components/input-error';
 import * as usersRoutes from '@/routes/users';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+interface UnitPengolah {
+    id: number;
+    nama_unit: string;
+}
+
 interface User {
     id: number;
     name: string;
     email: string;
     email_verified_at: string | null;
     role: 'admin' | 'user';
+    unit_pengolah_id: number | null;
+    unit_pengolah?: UnitPengolah;
     created_at: string;
 }
 
@@ -24,14 +31,16 @@ interface Errors {
     password?: string;
     password_confirmation?: string;
     role?: string;
+    unit_pengolah_id?: string;
 }
 
 interface Props {
     user: User;
+    unitPengolahs: UnitPengolah[];
     errors?: Errors;
 }
 
-export default function EditUser({ user, errors }: Props) {
+export default function EditUser({ user, unitPengolahs, errors }: Props) {
     const { language, t } = useLanguage();
     const [formData, setFormData] = useState({
         name: user.name,
@@ -39,6 +48,7 @@ export default function EditUser({ user, errors }: Props) {
         password: '',
         password_confirmation: '',
         role: user.role,
+        unit_pengolah_id: user.unit_pengolah_id?.toString() || '',
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
@@ -141,7 +151,7 @@ export default function EditUser({ user, errors }: Props) {
                                 name="role"
                                 value={formData.role}
                                 onChange={handleSelectChange}
-                                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 required
                             >
                                 <option value="user">{t('users.user')}</option>
@@ -153,6 +163,28 @@ export default function EditUser({ user, errors }: Props) {
                             <p className="text-xs text-gray-500 dark:text-gray-400">
                                 {t('users.form.roleDescription')}
                             </p>
+                        </div>
+
+                        {/* Unit Pengolah */}
+                        <div className="space-y-2">
+                            <Label htmlFor="unit_pengolah_id">
+                                {t('users.unitPengolah')}
+                            </Label>
+                            <select
+                                id="unit_pengolah_id"
+                                name="unit_pengolah_id"
+                                value={formData.unit_pengolah_id}
+                                onChange={handleSelectChange}
+                                className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
+                            >
+                                <option value="">{t('users.selectUnitPengolah')}</option>
+                                {unitPengolahs.map((unit) => (
+                                    <option key={unit.id} value={unit.id}>
+                                        {unit.nama_unit}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors?.unit_pengolah_id && <InputError message={errors.unit_pengolah_id} />}
                         </div>
 
                         {/* Password */}

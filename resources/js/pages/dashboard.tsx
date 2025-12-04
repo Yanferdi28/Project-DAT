@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface DashboardStats {
     totalArsipUnit: number;
     totalBerkasArsip: number;
-    totalUsers: number;
+    totalUsers: number | null;
 }
 
 interface ArsipUnit {
@@ -55,13 +55,14 @@ export default function Dashboard({ stats, recentArsipUnit }: Props) {
             color: 'from-green-500 to-emerald-500',
             description: t('dashboard.totalBerkasArsipDesc'),
         },
-        {
+        // Only show total users for admin
+        ...(stats.totalUsers !== null ? [{
             title: t('dashboard.totalUsers'),
             value: stats.totalUsers.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
             icon: Users,
             color: 'from-purple-500 to-pink-500',
             description: t('dashboard.totalUsersDesc'),
-        },
+        }] : []),
     ];
 
     const getTimeAgo = (date: string) => {

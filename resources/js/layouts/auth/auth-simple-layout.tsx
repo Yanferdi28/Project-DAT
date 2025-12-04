@@ -59,7 +59,7 @@ export default function AuthSimpleLayout({
                             </div>
                             <div className="text-center">
                                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                    Sistem Arsip Digital
+                                    Digitalisasi Arsip Terpadu
                                 </p>
                             </div>
                         </Link>

@@ -61,6 +61,7 @@ interface Props {
     unitPengolahs: UnitPengolah[];
     kategoris: Kategori[];
     subKategoris: SubKategori[];
+    userUnitPengolahId?: number | null;
 }
 
 export default function Create({
@@ -68,11 +69,16 @@ export default function Create({
     unitPengolahs,
     kategoris,
     subKategoris,
+    userUnitPengolahId,
 }: Props) {
     const { t } = useLanguage();
+    
+    // Check if user has unit_pengolah restriction
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
+    
     const [data, setData] = useState({
         kode_klasifikasi_id: '',
-        unit_pengolah_arsip_id: '',
+        unit_pengolah_arsip_id: isUnitPengolahLocked ? userUnitPengolahId.toString() : '',
         kategori_id: '',
         sub_kategori_id: '',
         retensi_aktif: '',
@@ -238,15 +244,16 @@ export default function Create({
                                     {/* Unit Pengolah */}
                                     <div className="space-y-2">
                                         <Label htmlFor="unit_pengolah_arsip_id">
-                                            {t('arsipUnit.unitPengolah')} *
+                                            {t('arsipUnit.unitPengolah')} * {isUnitPengolahLocked && <span className="text-xs text-gray-500">(terkunci)</span>}
                                         </Label>
-                                        <Popover open={openUnitPengolah} onOpenChange={setOpenUnitPengolah}>
+                                        <Popover open={!isUnitPengolahLocked && openUnitPengolah} onOpenChange={setOpenUnitPengolah}>
                                             <PopoverTrigger asChild>
                                                 <Button
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openUnitPengolah}
-                                                    className="w-full justify-between"
+                                                    className={`w-full justify-between ${isUnitPengolahLocked ? 'cursor-not-allowed opacity-70' : ''}`}
+                                                    disabled={isUnitPengolahLocked}
                                                 >
                                                     {data.unit_pengolah_arsip_id
                                                         ? unitPengolahs.find(
@@ -267,8 +274,10 @@ export default function Create({
                                                                     key={item.id}
                                                                     value={item.nama}
                                                                     onSelect={() => {
-                                                                        setData({ ...data, unit_pengolah_arsip_id: item.id.toString() })
-                                                                        setOpenUnitPengolah(false)
+                                                                        if (!isUnitPengolahLocked) {
+                                                                            setData({ ...data, unit_pengolah_arsip_id: item.id.toString() })
+                                                                            setOpenUnitPengolah(false)
+                                                                        }
                                                                     }}
                                                                 >
                                                                     <Check
@@ -287,6 +296,11 @@ export default function Create({
                                                 </Command>
                                             </PopoverContent>
                                         </Popover>
+                                        {isUnitPengolahLocked && (
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                Unit pengolah terkunci sesuai akun Anda
+                                            </p>
+                                        )}
                                         {errors.unit_pengolah_arsip_id && (
                                             <p className="text-sm text-red-600">
                                                 {errors.unit_pengolah_arsip_id}

@@ -28,10 +28,27 @@ class ArsipUnitController extends Controller
     }
 
     /**
+     * Get the unit pengolah ID for filtering based on user role.
+     * Returns null for admin (can see all), or user's unit_pengolah_id for regular users.
+     */
+    private function getUserUnitPengolahId(): ?int
+    {
+        $user = auth()->user();
+        // Admin can see all, users with unit_pengolah_id can only see their own unit
+        if ($user->role === 'admin') {
+            return null;
+        }
+        return $user->unit_pengolah_id;
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request): Response
     {
+        $user = auth()->user();
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        
         $query = ArsipUnit::with([
             'kodeKlasifikasi',
             'unitPengolah',
@@ -39,6 +56,11 @@ class ArsipUnitController extends Controller
             'kategori',
             'subKategori'
         ]);
+
+        // If user has unit_pengolah_id restriction, filter by it
+        if ($userUnitPengolahId !== null) {
+            $query->where('unit_pengolah_arsip_id', $userUnitPengolahId);
+        }
 
         // Search
         if ($request->has('search') && $request->search != '') {
@@ -64,15 +86,21 @@ class ArsipUnitController extends Controller
             $query->where('publish_status', $request->publish_status);
         }
 
-        $arsipUnits = $query->oldest()->paginate(10)->withQueryString();
+        $perPage = $request->input('per_page', 10);
+        $arsipUnits = $query->oldest()->paginate($perPage)->withQueryString();
+
+        // For berkasArsips filter, also apply unit_pengolah restriction for regular users
+        $berkasArsipsQuery = BerkasArsip::with(['kodeKlasifikasi', 'unitPengolah']);
+        if ($userUnitPengolahId !== null) {
+            $berkasArsipsQuery->where('unit_pengolah_id', $userUnitPengolahId);
+        }
 
         return Inertia::render('arsip-unit/index', [
             'arsipUnits' => $arsipUnits,
-            'filters' => $request->only(['search', 'status', 'publish_status']),
-            'berkasArsips' => BerkasArsip::with(['kodeKlasifikasi', 'unitPengolah'])
-                ->orderBy('nama_berkas')
-                ->get(),
+            'filters' => array_merge($request->only(['search', 'status', 'publish_status']), ['per_page' => $perPage]),
+            'berkasArsips' => $berkasArsipsQuery->orderBy('nama_berkas')->get(),
             'unitPengolahs' => UnitPengolah::orderBy('nama_unit')->get(),
+            'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
 
@@ -83,6 +111,8 @@ class ArsipUnitController extends Controller
     {
         $this->checkRestrictedRole();
         
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        
         return Inertia::render('arsip-unit/create', [
             'kodeKlasifikasis' => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian', 'retensi_aktif', 'retensi_inaktif', 'status_akhir')
                 ->orderBy('kode_klasifikasi')
@@ -90,6 +120,7 @@ class ArsipUnitController extends Controller
             'unitPengolahs' => UnitPengolah::all(),
             'kategoris' => Kategori::all(),
             'subKategoris' => SubKategori::with('kategori')->get(),
+            'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
 
@@ -99,6 +130,14 @@ class ArsipUnitController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $this->checkRestrictedRole();
+        
+        $user = auth()->user();
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        
+        // If user has unit_pengolah restriction, force the unit_pengolah_arsip_id to their unit
+        if ($userUnitPengolahId !== null) {
+            $request->merge(['unit_pengolah_arsip_id' => $userUnitPengolahId]);
+        }
         
         $validated = $request->validate([
             'kode_klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
@@ -146,6 +185,12 @@ class ArsipUnitController extends Controller
      */
     public function show(ArsipUnit $arsipUnit): Response
     {
+        // Check if user has permission to view this arsip unit
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
+            abort(403, 'Anda tidak memiliki akses ke arsip unit ini.');
+        }
+        
         $arsipUnit->load([
             'kodeKlasifikasi',
             'unitPengolah',
@@ -168,6 +213,12 @@ class ArsipUnitController extends Controller
     {
         $this->checkRestrictedRole();
         
+        // Check if user has permission to edit this arsip unit
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
+            abort(403, 'Anda tidak memiliki akses untuk mengedit arsip unit ini.');
+        }
+        
         return Inertia::render('arsip-unit/edit', [
             'arsipUnit' => $arsipUnit,
             'kodeKlasifikasis' => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian', 'retensi_aktif', 'retensi_inaktif', 'status_akhir')
@@ -176,6 +227,7 @@ class ArsipUnitController extends Controller
             'unitPengolahs' => UnitPengolah::all(),
             'kategoris' => Kategori::all(),
             'subKategoris' => SubKategori::with('kategori')->get(),
+            'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
 
@@ -185,6 +237,17 @@ class ArsipUnitController extends Controller
     public function update(Request $request, ArsipUnit $arsipUnit): RedirectResponse
     {
         $this->checkRestrictedRole();
+        
+        // Check if user has permission to update this arsip unit
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
+            abort(403, 'Anda tidak memiliki akses untuk mengupdate arsip unit ini.');
+        }
+        
+        // If user has unit_pengolah restriction, force the unit_pengolah_arsip_id to their unit
+        if ($userUnitPengolahId !== null) {
+            $request->merge(['unit_pengolah_arsip_id' => $userUnitPengolahId]);
+        }
         
         $validated = $request->validate([
             'kode_klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
@@ -234,6 +297,12 @@ class ArsipUnitController extends Controller
     public function destroy(ArsipUnit $arsipUnit): RedirectResponse
     {
         $this->checkRestrictedRole();
+        
+        // Check if user has permission to delete this arsip unit
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
+            abort(403, 'Anda tidak memiliki akses untuk menghapus arsip unit ini.');
+        }
         
         $arsipUnit->delete();
 

@@ -97,13 +97,13 @@ export default function Auth({
             </div>
 
             {/* Toggle Tabs */}
-            <div className="mb-6 flex gap-2 rounded-xl border border-gray-200/50 bg-gradient-to-r from-gray-50/50 to-gray-100/50 p-1.5 shadow-inner dark:border-gray-700/50 dark:from-gray-800/50 dark:to-gray-900/50">
+            <div className="mb-6 flex gap-2 rounded-xl border border-gray-200/50 bg-gray-50/50 p-1.5 shadow-inner dark:border-gray-700/50 dark:bg-gray-800/50">
                 <button
                     type="button"
                     onClick={() => setMode('login')}
                     className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all ${
                         isLogin
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30 dark:shadow-purple-500/30'
+                            ? 'bg-[#0066CC] text-white shadow-lg shadow-[#0066CC]/30'
                             : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
                     }`}
                 >
@@ -115,7 +115,7 @@ export default function Auth({
                     disabled={!canRegister}
                     className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all ${
                         isRegister
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30 dark:shadow-purple-500/30'
+                            ? 'bg-[#0066CC] text-white shadow-lg shadow-[#0066CC]/30'
                             : 'text-gray-600 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-400 dark:hover:text-gray-200'
                     }`}
                 >
@@ -215,7 +215,7 @@ export default function Auth({
 
                                             <Button
                                                 type="submit"
-                                                className="mt-4 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/50 hover:scale-[1.02] active:scale-[0.98] dark:shadow-blue-900/30 dark:hover:shadow-purple-900/50"
+                                                className="mt-4 w-full bg-[#0066CC] text-white shadow-lg shadow-[#0066CC]/50 transition-all hover:bg-[#0055AA] hover:shadow-xl hover:shadow-[#0066CC]/50 hover:scale-[1.02] active:scale-[0.98]"
                                                 tabIndex={4}
                                                 disabled={processing}
                                                 data-test="login-button"
@@ -359,7 +359,7 @@ export default function Auth({
 
                                             <Button
                                                 type="submit"
-                                                className="mt-2 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/50 hover:scale-[1.02] active:scale-[0.98] dark:shadow-blue-900/30 dark:hover:shadow-purple-900/50"
+                                                className="mt-2 w-full bg-[#0066CC] text-white shadow-lg shadow-[#0066CC]/50 transition-all hover:bg-[#0055AA] hover:shadow-xl hover:shadow-[#0066CC]/50 hover:scale-[1.02] active:scale-[0.98]"
                                                 tabIndex={5}
                                                 data-test="register-user-button"
                                             >

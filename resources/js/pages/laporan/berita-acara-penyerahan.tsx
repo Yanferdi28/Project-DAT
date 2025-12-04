@@ -28,14 +28,19 @@ interface ArsipUnit {
 interface PageProps {
     unitPengolahs: UnitPengolah[];
     arsipUnits: ArsipUnit[];
+    userUnitPengolahId?: number | null;
     [key: string]: unknown;
 }
 
 export default function BeritaAcaraPenyerahan() {
-    const { unitPengolahs, arsipUnits } = usePage<PageProps>().props;
+    const { unitPengolahs, arsipUnits, userUnitPengolahId } = usePage<PageProps>().props;
     const { t } = useLanguage();
     
-    const [unitPengolahAsalId, setUnitPengolahAsalId] = useState('');
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
+    
+    const [unitPengolahAsalId, setUnitPengolahAsalId] = useState(
+        isUnitPengolahLocked ? userUnitPengolahId!.toString() : ''
+    );
     const [unitPengolahTujuanId, setUnitPengolahTujuanId] = useState('');
     const [penerimaExternal, setPenerimaExternal] = useState(false);
     const [penerimaNama, setPenerimaNama] = useState('');
@@ -214,7 +219,7 @@ export default function BeritaAcaraPenyerahan() {
                             <div>
                                 <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     <Building2 className="inline h-4 w-4 mr-1" />
-                                    {t('laporan.beritaAcara.originUnit')} <span className="text-red-500">*</span>
+                                    {t('laporan.beritaAcara.originUnit')}{isUnitPengolahLocked && ' (terkunci)'} <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     value={unitPengolahAsalId}
@@ -222,15 +227,21 @@ export default function BeritaAcaraPenyerahan() {
                                         setUnitPengolahAsalId(e.target.value);
                                         setSelectedArsipIds([]);
                                     }}
-                                    className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white ${errors.unit_pengolah_asal_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
+                                    disabled={isUnitPengolahLocked}
+                                    className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white disabled:opacity-60 disabled:cursor-not-allowed ${errors.unit_pengolah_asal_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                                 >
-                                    <option value="">{t('laporan.beritaAcara.selectOriginUnit')}</option>
+                                    {!isUnitPengolahLocked && <option value="">{t('laporan.beritaAcara.selectOriginUnit')}</option>}
                                     {unitPengolahs.map((unit) => (
                                         <option key={unit.id} value={unit.id}>
                                             {unit.nama_unit}
                                         </option>
                                     ))}
                                 </select>
+                                {isUnitPengolahLocked && (
+                                    <p className="mt-1 text-xs text-muted-foreground">
+                                        Unit pengolah terkunci sesuai dengan unit pengolah Anda.
+                                    </p>
+                                )}
                                 {errors.unit_pengolah_asal_id && (
                                     <p className="mt-1 text-xs text-red-500">{errors.unit_pengolah_asal_id}</p>
                                 )}
@@ -260,7 +271,7 @@ export default function BeritaAcaraPenyerahan() {
                                     <select
                                         value={unitPengolahTujuanId}
                                         onChange={(e) => setUnitPengolahTujuanId(e.target.value)}
-                                        className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white ${errors.unit_pengolah_tujuan_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
+                                        className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white ${errors.unit_pengolah_tujuan_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                                     >
                                         <option value="">{t('laporan.beritaAcara.selectDestinationUnit')}</option>
                                         {unitPengolahs

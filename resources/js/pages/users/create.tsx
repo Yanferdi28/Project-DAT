@@ -15,13 +15,20 @@ interface Errors {
     password?: string;
     password_confirmation?: string;
     role?: string;
+    unit_pengolah_id?: string;
+}
+
+interface UnitPengolah {
+    id: number;
+    nama_unit: string;
 }
 
 interface Props {
     errors?: Errors;
+    unitPengolahs: UnitPengolah[];
 }
 
-export default function CreateUser({ errors }: Props) {
+export default function CreateUser({ errors, unitPengolahs }: Props) {
     const { t } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
@@ -29,6 +36,7 @@ export default function CreateUser({ errors }: Props) {
         password: '',
         password_confirmation: '',
         role: 'user',
+        unit_pengolah_id: '',
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
@@ -131,7 +139,7 @@ export default function CreateUser({ errors }: Props) {
                                 name="role"
                                 value={formData.role}
                                 onChange={handleSelectChange}
-                                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 required
                             >
                                 <option value="user">{t('users.user')}</option>
@@ -142,6 +150,31 @@ export default function CreateUser({ errors }: Props) {
                             {errors?.role && <InputError message={errors.role} />}
                             <p className="text-xs text-gray-500 dark:text-gray-400">
                                 {t('users.form.roleDescription')}
+                            </p>
+                        </div>
+
+                        {/* Unit Pengolah */}
+                        <div className="space-y-2">
+                            <Label htmlFor="unit_pengolah_id">
+                                {t('users.unitPengolah')}
+                            </Label>
+                            <select
+                                id="unit_pengolah_id"
+                                name="unit_pengolah_id"
+                                value={formData.unit_pengolah_id}
+                                onChange={handleSelectChange}
+                                className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
+                            >
+                                <option value="">{t('users.selectUnitPengolah')}</option>
+                                {unitPengolahs.map((unit) => (
+                                    <option key={unit.id} value={unit.id}>
+                                        {unit.nama_unit}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors?.unit_pengolah_id && <InputError message={errors.unit_pengolah_id} />}
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                Unit pengolah tempat user bekerja (opsional)
                             </p>
                         </div>
 

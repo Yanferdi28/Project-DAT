@@ -86,6 +86,7 @@ interface Props {
     unitPengolahs: UnitPengolah[];
     kategoris: Kategori[];
     subKategoris: SubKategori[];
+    userUnitPengolahId?: number | null;
 }
 
 export default function Edit({
@@ -94,8 +95,10 @@ export default function Edit({
     unitPengolahs,
     kategoris,
     subKategoris,
+    userUnitPengolahId,
 }: Props) {
     const { t } = useLanguage();
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
     const [data, setData] = useState({
         kode_klasifikasi_id: arsipUnit.kode_klasifikasi_id?.toString() || '',
         unit_pengolah_arsip_id: arsipUnit.unit_pengolah_arsip_id?.toString() || '',
@@ -267,15 +270,16 @@ export default function Edit({
                                     {/* Unit Pengolah */}
                                     <div className="space-y-2">
                                         <Label htmlFor="unit_pengolah_arsip_id">
-                                            {t('arsipUnit.unitPengolah')} *
+                                            {t('arsipUnit.unitPengolah')} *{isUnitPengolahLocked && ' (terkunci)'}
                                         </Label>
-                                        <Popover open={openUnitPengolah} onOpenChange={setOpenUnitPengolah}>
+                                        <Popover open={isUnitPengolahLocked ? false : openUnitPengolah} onOpenChange={isUnitPengolahLocked ? undefined : setOpenUnitPengolah}>
                                             <PopoverTrigger asChild>
                                                 <Button
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openUnitPengolah}
                                                     className="w-full justify-between"
+                                                    disabled={isUnitPengolahLocked}
                                                 >
                                                     {data.unit_pengolah_arsip_id
                                                         ? unitPengolahs.find(
@@ -316,6 +320,11 @@ export default function Edit({
                                                 </Command>
                                             </PopoverContent>
                                         </Popover>
+                                        {isUnitPengolahLocked && (
+                                            <p className="text-xs text-muted-foreground">
+                                                Unit pengolah terkunci sesuai dengan unit pengolah Anda.
+                                            </p>
+                                        )}
                                         {errors.unit_pengolah_arsip_id && (
                                             <p className="text-sm text-red-600">
                                                 {errors.unit_pengolah_arsip_id}

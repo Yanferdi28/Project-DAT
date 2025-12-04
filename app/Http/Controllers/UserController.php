@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UnitPengolah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::query();
+        $query = User::with('unitPengolah');
 
         // Search functionality
         if ($request->has('search') && $request->search != '') {
@@ -35,6 +36,11 @@ class UserController extends Controller
             }
         }
 
+        // Filter by unit pengolah
+        if ($request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
+            $query->where('unit_pengolah_id', $request->unit_pengolah_id);
+        }
+
         // Sorting
         $sortField = $request->get('sort_field', 'created_at');
         $sortDirection = $request->get('sort_direction', 'asc');
@@ -47,7 +53,8 @@ class UserController extends Controller
 
         return Inertia::render('users/index', [
             'users' => $users,
-            'filters' => $request->only(['search', 'status', 'sort_field', 'sort_direction', 'per_page']),
+            'unitPengolahs' => UnitPengolah::orderBy('nama_unit')->get(),
+            'filters' => $request->only(['search', 'status', 'unit_pengolah_id', 'sort_field', 'sort_direction', 'per_page']),
         ]);
     }
 
@@ -56,7 +63,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('users/create');
+        return Inertia::render('users/create', [
+            'unitPengolahs' => UnitPengolah::orderBy('nama_unit')->get(),
+        ]);
     }
 
     /**
@@ -69,6 +78,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'role' => ['required', 'in:admin,management,operator,user'],
+            'unit_pengolah_id' => ['nullable', 'exists:unit_pengolah,id'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -85,7 +95,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return Inertia::render('users/edit', [
-            'user' => $user,
+            'user' => $user->load('unitPengolah'),
+            'unitPengolahs' => UnitPengolah::orderBy('nama_unit')->get(),
         ]);
     }
 
@@ -99,6 +110,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'password' => ['nullable', 'confirmed', Password::defaults()],
             'role' => ['required', 'in:admin,management,operator,user'],
+            'unit_pengolah_id' => ['nullable', 'exists:unit_pengolah,id'],
         ]);
 
         if (empty($validated['password'])) {

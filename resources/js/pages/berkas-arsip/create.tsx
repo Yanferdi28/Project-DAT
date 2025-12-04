@@ -24,18 +24,23 @@ interface UnitPengolah {
 interface PageProps {
     kodeKlasifikasis: KodeKlasifikasi[];
     unitPengolahs: UnitPengolah[];
+    userUnitPengolahId?: number | null;
     errors: Record<string, string>;
     [key: string]: any;
 }
 
 export default function Create() {
     const { t } = useLanguage();
-    const { kodeKlasifikasis, unitPengolahs, errors } = usePage<PageProps>().props;
+    const { kodeKlasifikasis, unitPengolahs, userUnitPengolahId, errors } = usePage<PageProps>().props;
     const [processing, setProcessing] = useState(false);
+    
+    // Check if user has unit_pengolah restriction
+    const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
+    
     const [data, setData] = useState({
         nama_berkas: '',
         klasifikasi_id: '',
-        unit_pengolah_id: '',
+        unit_pengolah_id: isUnitPengolahLocked ? userUnitPengolahId.toString() : '',
         retensi_aktif: '',
         retensi_inaktif: '',
         penyusutan_akhir: '',
@@ -47,7 +52,7 @@ export default function Create() {
         setData({
             nama_berkas: '',
             klasifikasi_id: '',
-            unit_pengolah_id: '',
+            unit_pengolah_id: isUnitPengolahLocked ? userUnitPengolahId!.toString() : '',
             retensi_aktif: '',
             retensi_inaktif: '',
             penyusutan_akhir: '',
@@ -164,7 +169,7 @@ export default function Create() {
 
                                 <div>
                                     <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Unit Pengolah
+                                        Unit Pengolah {isUnitPengolahLocked && <span className="text-xs text-gray-500">(terkunci)</span>}
                                     </Label>
                                     <Combobox
                                         options={unitPengolahs.map((unit) => ({
@@ -172,12 +177,18 @@ export default function Create() {
                                             label: unit.nama_unit,
                                         }))}
                                         value={data.unit_pengolah_id}
-                                        onValueChange={(value) => setData({ ...data, unit_pengolah_id: value })}
+                                        onValueChange={(value) => !isUnitPengolahLocked && setData({ ...data, unit_pengolah_id: value })}
                                         placeholder="Pilih unit pengolah"
                                         searchPlaceholder="Cari unit pengolah..."
                                         emptyMessage="Unit pengolah tidak ditemukan."
                                         className="w-full"
+                                        disabled={isUnitPengolahLocked}
                                     />
+                                    {isUnitPengolahLocked && (
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                            Unit pengolah terkunci sesuai akun Anda
+                                        </p>
+                                    )}
                                     <InputError message={errors.unit_pengolah_id} />
                                 </div>
 
