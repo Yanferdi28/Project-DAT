@@ -318,6 +318,67 @@ class BerkasArsipController extends Controller
     }
 
     /**
+     * Display print preview page for berkas arsip.
+     */
+    public function printPreview(Request $request)
+    {
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        $dariTanggal = $request->input('dari_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
+        
+        $query = BerkasArsip::withCount('arsipUnits')
+            ->with([
+                'kodeKlasifikasi', 
+                'unitPengolah',
+                'arsipUnits' => function($query) {
+                    $query->orderBy('created_at', 'asc');
+                },
+            ]);
+
+        // If user has unit_pengolah_id restriction, filter by it
+        if ($userUnitPengolahId !== null) {
+            $query->where('unit_pengolah_id', $userUnitPengolahId);
+        }
+
+        // Apply filters
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_berkas', 'like', "%{$search}%")
+                    ->orWhere('uraian', 'like', "%{$search}%")
+                    ->orWhere('lokasi_fisik', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('klasifikasi_id') && $request->klasifikasi_id != '') {
+            $query->where('klasifikasi_id', $request->klasifikasi_id);
+        }
+
+        // Filter by unit pengolah (only if user is not restricted)
+        if ($userUnitPengolahId === null && $request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
+            $query->where('unit_pengolah_id', $request->unit_pengolah_id);
+        }
+
+        // Filter by date range
+        if ($dariTanggal) {
+            $query->whereDate('created_at', '>=', $dariTanggal);
+        }
+        if ($sampaiTanggal) {
+            $query->whereDate('created_at', '<=', $sampaiTanggal);
+        }
+
+        $berkasArsips = $query->orderBy('created_at', 'asc')->get();
+
+        return Inertia::render('berkas-arsip/print-preview', [
+            'berkasArsips' => $berkasArsips,
+            'kodeKlasifikasis' => KodeKlasifikasi::orderBy('kode_klasifikasi')->get(),
+            'unitPengolahs' => UnitPengolah::all(),
+            'filters' => $request->only(['dari_tanggal', 'sampai_tanggal', 'klasifikasi_id', 'unit_pengolah_id', 'format']),
+            'userUnitPengolahId' => $userUnitPengolahId,
+        ]);
+    }
+
+    /**
      * Export berkas arsip to PDF.
      */
     public function exportPdf(Request $request)

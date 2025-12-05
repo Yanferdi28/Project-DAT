@@ -89,10 +89,11 @@
             <tr>
                 <th style="width: 3%;">NO</th>
                 <th style="width: 10%;">KODE KLASIFIKASI / NOMOR BERKAS</th>
-                <th style="width: 18%;">NAMA BERKAS</th>
+                <th style="width: 15%;">NAMA BERKAS</th>
                 <th style="width: 8%;">TANGGAL BUAT BERKAS</th>
+                <th style="width: 12%;">LOKASI FISIK</th>
                 <th style="width: 5%;">NO ITEM ARSIP</th>
-                <th style="width: 36%;">URAIAN INFORMASI ARSIP</th>
+                <th style="width: 27%;">URAIAN INFORMASI ARSIP</th>
                 <th style="width: 8%;">TANGGAL ITEM</th>
                 <th style="width: 6%;">JUMLAH ITEM</th>
             </tr>
@@ -116,6 +117,7 @@
                         <td>{{ $kodeNomor }}</td>
                         <td>{{ $berkas->nama_berkas }}</td>
                         <td class="text-center">{{ $tanggalBuat }}</td>
+                        <td>{{ $berkas->lokasi_fisik ?: '-' }}</td>
                         <td class="text-center">-</td>
                         <td>-</td>
                         <td class="text-center">-</td>
@@ -130,6 +132,7 @@
                                 <td rowspan="{{ $totalItems }}">{{ $kodeNomor }}</td>
                                 <td rowspan="{{ $totalItems }}">{{ $berkas->nama_berkas }}</td>
                                 <td class="text-center" rowspan="{{ $totalItems }}">{{ $tanggalBuat }}</td>
+                                <td rowspan="{{ $totalItems }}">{{ $berkas->lokasi_fisik ?: '-' }}</td>
                             @endif
                             <td class="text-center">{{ $arsip->no_item_arsip ?: ($index + 1) }}</td>
                             <td>{{ $arsip->uraian_informasi ?: '-' }}</td>

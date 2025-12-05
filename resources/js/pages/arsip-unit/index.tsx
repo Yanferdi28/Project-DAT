@@ -299,8 +299,8 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                     <div className="flex gap-2">
                         <Button 
                             variant="outline" 
-                            onClick={() => setExportDialog(true)}
                             className="bg-green-600 hover:bg-green-700 text-white border-green-600"
+                            onClick={() => router.visit('/arsip-unit/print-preview')}
                         >
                             <Printer className="h-4 w-4 mr-2" />
                             {t('common.print')}

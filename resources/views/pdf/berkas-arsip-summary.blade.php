@@ -72,13 +72,14 @@
         <thead>
             <tr>
                 <th style="width: 4%;">NO</th>
-                <th style="width: 12%;">KODE KLASIFIKASI / NOMOR BERKAS</th>
-                <th style="width: 28%;">NAMA BERKAS</th>
-                <th style="width: 10%;">TANGGAL BUAT BERKAS</th>
-                <th style="width: 14%;">KURUN WAKTU</th>
-                <th style="width: 7%;">JUMLAH ITEM</th>
-                <th style="width: 7%;">RETENSI AKTIF</th>
-                <th style="width: 7%;">RETENSI INAKTIF</th>
+                <th style="width: 10%;">KODE KLASIFIKASI / NOMOR BERKAS</th>
+                <th style="width: 20%;">NAMA BERKAS</th>
+                <th style="width: 8%;">TANGGAL BUAT BERKAS</th>
+                <th style="width: 12%;">KURUN WAKTU</th>
+                <th style="width: 12%;">LOKASI FISIK</th>
+                <th style="width: 6%;">JUMLAH ITEM</th>
+                <th style="width: 6%;">RETENSI AKTIF</th>
+                <th style="width: 6%;">RETENSI INAKTIF</th>
                 <th style="width: 8%;">STATUS AKHIR</th>
             </tr>
         </thead>
@@ -118,6 +119,7 @@
                     <td>{{ $berkas->nama_berkas }}</td>
                     <td class="text-center">{{ $tanggalBuat }}</td>
                     <td class="text-center">{{ $kurunWaktu }}</td>
+                    <td>{{ $berkas->lokasi_fisik ?: '-' }}</td>
                     <td class="text-center">{{ $berkas->arsipUnits->count() }}</td>
                     <td class="text-center">{{ $berkas->retensi_aktif ?: '-' }}</td>
                     <td class="text-center">{{ $berkas->retensi_inaktif ?: '-' }}</td>

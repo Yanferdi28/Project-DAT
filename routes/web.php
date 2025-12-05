@@ -27,10 +27,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('my-profile/avatar', [ProfileController::class, 'deleteAvatar'])->name('myprofile.avatar.delete');
 
     // Arsip Unit routes (accessible by all authenticated users)
+    Route::get('arsip-unit/print-preview', [ArsipUnitController::class, 'printPreview'])->name('arsip-unit.print-preview');
     Route::get('arsip-unit/export/pdf', [ArsipUnitController::class, 'exportPdf'])->name('arsip-unit.export-pdf');
     Route::resource('arsip-unit', ArsipUnitController::class);
     
     // Berkas Arsip routes (accessible by all authenticated users)
+    Route::get('berkas-arsip/print-preview', [BerkasArsipController::class, 'printPreview'])->name('berkas-arsip.print-preview');
     Route::get('berkas-arsip/export/pdf', [BerkasArsipController::class, 'exportPdf'])->name('berkas-arsip.export-pdf');
     Route::get('berkas-arsip/export/penyusutan', [BerkasArsipController::class, 'exportPenyusutanPdf'])->name('berkas-arsip.export-penyusutan');
     Route::resource('berkas-arsip', BerkasArsipController::class);

@@ -11,12 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // 1. Unit Pengolah (harus dibuat dulu karena di-reference oleh users)
+        Schema::create('unit_pengolah', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_unit')->unique();
+        });
+
+        // 2. Users
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('avatar')->nullable();
+            $table->enum('role', ['admin', 'management', 'operator', 'user'])->default('user');
+            $table->foreignId('unit_pengolah_id')->nullable()->constrained('unit_pengolah')->nullOnDelete();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('two_factor_secret')->nullable();
+            $table->text('two_factor_recovery_codes')->nullable();
+            $table->timestamp('two_factor_confirmed_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -42,8 +55,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('unit_pengolah');
     }
 };

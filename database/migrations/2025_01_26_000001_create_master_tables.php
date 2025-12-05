@@ -26,13 +26,7 @@ return new class extends Migration
             $table->index('kode_klasifikasi_induk');
         });
 
-        // 2. Unit Pengolah
-        Schema::create('unit_pengolah', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_unit')->unique();
-        });
-
-        // 3. Kategori
+        // 2. Kategori
         Schema::create('kategori', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kategori');
@@ -40,7 +34,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 4. Sub Kategori
+        // 3. Sub Kategori
         Schema::create('sub_kategori', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kategori_id')->constrained('kategori')->onDelete('cascade');
@@ -51,11 +45,12 @@ return new class extends Migration
             $table->index('kategori_id');
         });
 
-        // 5. Berkas Arsip
+        // 4. Berkas Arsip
         Schema::create('berkas_arsip', function (Blueprint $table) {
             $table->id('nomor_berkas');
             $table->string('nama_berkas');
             $table->foreignId('klasifikasi_id')->constrained('kode_klasifikasi')->onDelete('restrict');
+            $table->foreignId('unit_pengolah_id')->nullable()->constrained('unit_pengolah')->nullOnDelete();
             $table->integer('retensi_aktif')->nullable();
             $table->integer('retensi_inaktif')->nullable();
             $table->string('penyusutan_akhir')->nullable();
@@ -64,9 +59,10 @@ return new class extends Migration
             $table->timestamps();
             
             $table->index('klasifikasi_id');
+            $table->index('unit_pengolah_id');
         });
 
-        // 6. Arsip Unit
+        // 5. Arsip Unit
         Schema::create('arsip_unit', function (Blueprint $table) {
             $table->id('id_berkas');
 
@@ -115,6 +111,32 @@ return new class extends Migration
             $table->index('berkas_arsip_id');
             $table->index('created_at');
         });
+
+        // 6. Berita Acara Penyerahan
+        Schema::create('berita_acara_penyerahan', function (Blueprint $table) {
+            $table->id();
+            $table->string('nomor_berita_acara')->unique();
+            $table->date('tanggal_penyerahan');
+            $table->foreignId('unit_pengolah_asal_id')->constrained('unit_pengolah')->onDelete('restrict');
+            $table->foreignId('unit_pengolah_tujuan_id')->nullable()->constrained('unit_pengolah')->onDelete('restrict');
+            $table->string('penerima_nama')->nullable();
+            $table->string('penerima_jabatan')->nullable();
+            $table->text('keterangan')->nullable();
+            $table->foreignId('dibuat_oleh')->constrained('users')->onDelete('restrict');
+            $table->timestamps();
+        });
+
+        // 7. Pivot table Berita Acara - Arsip
+        Schema::create('berita_acara_arsip', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('berita_acara_id')->constrained('berita_acara_penyerahan')->onDelete('cascade');
+            $table->unsignedBigInteger('arsip_unit_id');
+            $table->text('keterangan_item')->nullable();
+            $table->timestamps();
+
+            $table->foreign('arsip_unit_id')->references('id_berkas')->on('arsip_unit')->onDelete('restrict');
+            $table->unique(['berita_acara_id', 'arsip_unit_id']);
+        });
     }
 
     /**
@@ -122,11 +144,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('berita_acara_arsip');
+        Schema::dropIfExists('berita_acara_penyerahan');
         Schema::dropIfExists('arsip_unit');
         Schema::dropIfExists('berkas_arsip');
         Schema::dropIfExists('sub_kategori');
         Schema::dropIfExists('kategori');
-        Schema::dropIfExists('unit_pengolah');
         Schema::dropIfExists('kode_klasifikasi');
     }
 };

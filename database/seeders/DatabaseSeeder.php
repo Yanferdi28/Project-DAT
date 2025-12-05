@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             KodeKlasifikasiSeeder::class,
             UnitPengolahSeeder::class,
             KategoriSeeder::class,
+            BerkasArsipSeeder::class,
+            ArsipUnitSeeder::class,
         ]);
     }
 }

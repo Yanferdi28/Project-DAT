@@ -369,6 +369,49 @@ class ArsipUnitController extends Controller
     }
 
     /**
+     * Display print preview page for arsip unit.
+     */
+    public function printPreview(Request $request): Response
+    {
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+        
+        $query = ArsipUnit::with(['kodeKlasifikasi', 'unitPengolah']);
+
+        // If user has unit_pengolah_id restriction, filter by it
+        if ($userUnitPengolahId !== null) {
+            $query->where('unit_pengolah_arsip_id', $userUnitPengolahId);
+        }
+
+        // Filter tanggal
+        if ($request->has('dari_tanggal') && $request->dari_tanggal != '') {
+            $query->where('tanggal', '>=', $request->dari_tanggal);
+        }
+        
+        if ($request->has('sampai_tanggal') && $request->sampai_tanggal != '') {
+            $query->where('tanggal', '<=', $request->sampai_tanggal);
+        }
+        
+        // Filter status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+        
+        // Filter unit pengolah (only if user is not restricted)
+        if ($userUnitPengolahId === null && $request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
+            $query->where('unit_pengolah_arsip_id', $request->unit_pengolah_id);
+        }
+
+        $arsipUnits = $query->orderBy('tanggal', 'asc')->get();
+
+        return Inertia::render('arsip-unit/print-preview', [
+            'arsipUnits' => $arsipUnits,
+            'unitPengolahs' => UnitPengolah::all(),
+            'filters' => $request->only(['dari_tanggal', 'sampai_tanggal', 'status', 'unit_pengolah_id']),
+            'userUnitPengolahId' => $userUnitPengolahId,
+        ]);
+    }
+
+    /**
      * Export arsip unit to PDF.
      */
     public function exportPdf(Request $request)
