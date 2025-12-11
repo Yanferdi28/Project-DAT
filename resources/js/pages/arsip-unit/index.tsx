@@ -660,43 +660,36 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Berkas Arsip
                         </label>
-                        {(() => {
-                            const filteredBerkasArsips = berkasArsips.filter((berkas) => {
-                                const sameKlasifikasi = berkas.klasifikasi_id === assignDialog.item?.kode_klasifikasi_id;
-                                const sameUnitPengolah = berkas.unit_pengolah_id === assignDialog.item?.unit_pengolah_arsip_id;
-                                return sameKlasifikasi && sameUnitPengolah;
-                            });
-
-                            if (filteredBerkasArsips.length === 0) {
-                                return (
-                                    <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-3 dark:border-yellow-600 dark:bg-yellow-900/20">
-                                        <p className="text-sm text-yellow-700 dark:text-yellow-400">
-                                            Tidak ada berkas arsip yang sesuai dengan kode klasifikasi dan unit pengolah arsip unit ini.
-                                        </p>
-                                    </div>
-                                );
-                            }
-
-                            return (
-                                <Select value={selectedBerkasId} onValueChange={setSelectedBerkasId}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Pilih berkas arsip..." />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {filteredBerkasArsips.map((berkas) => (
-                                            <SelectItem key={berkas.nomor_berkas} value={berkas.nomor_berkas.toString()}>
-                                                {berkas.nama_berkas}
-                                                {berkas.kode_klasifikasi && (
-                                                    <span className="ml-2 text-xs text-gray-500">
-                                                        ({berkas.kode_klasifikasi.kode_klasifikasi})
-                                                    </span>
-                                                )}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            );
-                        })()}
+                        {berkasArsips.length === 0 ? (
+                            <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-3 dark:border-yellow-600 dark:bg-yellow-900/20">
+                                <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                                    Tidak ada berkas arsip yang tersedia.
+                                </p>
+                            </div>
+                        ) : (
+                            <Select value={selectedBerkasId} onValueChange={setSelectedBerkasId}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Pilih berkas arsip..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {berkasArsips.map((berkas) => (
+                                        <SelectItem key={berkas.nomor_berkas} value={berkas.nomor_berkas.toString()}>
+                                            {berkas.nama_berkas}
+                                            {berkas.kode_klasifikasi && (
+                                                <span className="ml-2 text-xs text-gray-500">
+                                                    ({berkas.kode_klasifikasi.kode_klasifikasi})
+                                                </span>
+                                            )}
+                                            {berkas.unit_pengolah && (
+                                                <span className="ml-2 text-xs text-gray-500">
+                                                    - {berkas.unit_pengolah.nama_unit}
+                                                </span>
+                                            )}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        )}
                         {assignDialog.item?.berkas_arsip_id && (
                             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                                 Saat ini: {assignDialog.item?.berkas_arsip?.nama_berkas || '-'}

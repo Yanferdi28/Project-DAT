@@ -8,13 +8,13 @@
     @endphp
     <style>
         @page {
-            margin: 10mm 8mm;
+            margin: 8mm 6mm;
         }
         body {
             font-family: Arial, sans-serif;
-            font-size: 8pt;
+            font-size: 7pt;
             line-height: 1.2;
-            color: #1a365d;
+            color: #000000;
         }
         .header {
             text-align: center;
@@ -24,31 +24,31 @@
             margin: 3px 0;
             font-size: 12pt;
             font-weight: bold;
-            color: #1a365d;
+            color: #000000;
         }
         .header p {
             margin: 2px 0;
             font-size: 9pt;
-            color: #1a365d;
+            color: #000000;
         }
         table {
             width: 100%;
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid #1a365d;
-            padding: 4px 5px;
-            vertical-align: top;
+            border: 1px solid #000000;
+            padding: 3px 4px;
+            vertical-align: middle;
         }
         th {
-            background-color: #1a365d;
-            color: white;
+            background-color: #f7fafc;
+            color: #000000;
             font-weight: bold;
             text-align: center;
-            font-size: 7pt;
+            font-size: 6pt;
         }
         td {
-            font-size: 7pt;
+            font-size: 6pt;
         }
         .text-center {
             text-align: center;
@@ -58,16 +58,11 @@
         }
         .berkas-row td {
             background-color: #ffffff;
+            font-weight: bold;
         }
         .item-row td {
-            background-color: #f8f9fa;
-            padding-left: 10px;
-        }
-        .no-border-top {
-            border-top: none !important;
-        }
-        .no-border-bottom {
-            border-bottom: none !important;
+            background-color: #ffffff;
+            font-weight: normal;
         }
     </style>
 </head>
@@ -75,27 +70,42 @@
     <div class="header">
         <h3>LAPORAN DAFTAR ISI BERKAS ARSIP AKTIF</h3>
         @if($unitPengolah)
-            <p><strong>UNIT PENGOLAH: {{ strtoupper($unitPengolah->nama_unit) }}</strong></p>
+            <p>UNIT PENGOLAH: {{ strtoupper($unitPengolah->nama_unit) }}</p>
         @endif
         @if($dariTanggal && $sampaiTanggal)
-            <p>PERIODE: {{ \Carbon\Carbon::parse($dariTanggal)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($sampaiTanggal)->translatedFormat('d F Y') }}</p>
+            <p>PERIODE: {{ strtoupper(\Carbon\Carbon::parse($dariTanggal)->translatedFormat('d F Y')) }} - {{ strtoupper(\Carbon\Carbon::parse($sampaiTanggal)->translatedFormat('d F Y')) }}</p>
         @else
-            <p>PERIODE: {{ date('d F Y') }}</p>
+            <p>Tanggal: {{ strtoupper(now()->translatedFormat('d F Y')) }}</p>
         @endif
     </div>
 
     <table>
         <thead>
             <tr>
-                <th style="width: 3%;">NO</th>
-                <th style="width: 10%;">KODE KLASIFIKASI / NOMOR BERKAS</th>
-                <th style="width: 15%;">NAMA BERKAS</th>
-                <th style="width: 8%;">TANGGAL BUAT BERKAS</th>
-                <th style="width: 12%;">LOKASI FISIK</th>
-                <th style="width: 5%;">NO ITEM ARSIP</th>
-                <th style="width: 27%;">URAIAN INFORMASI ARSIP</th>
-                <th style="width: 8%;">TANGGAL ITEM</th>
-                <th style="width: 6%;">JUMLAH ITEM</th>
+                <th rowspan="2" style="width: 2%;">NO</th>
+                <th rowspan="2" style="width: 4%;">KODE KLSF</th>
+                <th rowspan="2" style="width: 5%;">INDEKS</th>
+                <th rowspan="2" style="width: 8%;">NAMA BERKAS</th>
+                <th rowspan="2" style="width: 5%;">TGL BUAT BERKAS</th>
+                <th rowspan="2" style="width: 3%;">NO ITEM</th>
+                <th rowspan="2" style="width: 12%;">URAIAN INFORMASI</th>
+                <th rowspan="2" style="width: 5%;">TANGGAL</th>
+                <th rowspan="2" style="width: 5%;">TINGKAT PERKMB</th>
+                <th rowspan="2" style="width: 3%;">JML ITEM</th>
+                <th rowspan="2" style="width: 3%;">RET AKTIF</th>
+                <th rowspan="2" style="width: 3%;">RET INAKTIF</th>
+                <th rowspan="2" style="width: 5%;">SKKAAD</th>
+                <th rowspan="2" style="width: 5%;">STATUS AKHIR</th>
+                <th rowspan="2" style="width: 5%;">LOKASI BERKAS</th>
+                <th colspan="5" style="width: 15%;">LOKASI ARSIP</th>
+                <th rowspan="2" style="width: 4%;">KET</th>
+            </tr>
+            <tr>
+                <th>RUANG</th>
+                <th>RAK</th>
+                <th>LACI</th>
+                <th>BOX</th>
+                <th>FOLDER</th>
             </tr>
         </thead>
         <tbody>
@@ -105,44 +115,61 @@
                     $arsipUnits = $berkas->arsipUnits;
                     $totalItems = $arsipUnits->count();
                     $kodeKlasifikasi = $berkas->kodeKlasifikasi ? $berkas->kodeKlasifikasi->kode_klasifikasi : '-';
-                    $nomorBerkas = $berkas->nomor_berkas;
-                    $kodeNomor = $kodeKlasifikasi . ' / ' . $nomorBerkas;
                     $tanggalBuat = $berkas->created_at ? \Carbon\Carbon::parse($berkas->created_at)->format('d/m/Y') : '-';
+                    $skkaad = $berkas->kodeKlasifikasi->status_akhir ?? '-';
+                    $statusAkhir = $berkas->penyusutan_akhir ?: '-';
                 @endphp
                 
-                @if($totalItems == 0)
-                    {{-- Berkas tanpa arsip unit --}}
-                    <tr class="berkas-row">
-                        <td class="text-center">{{ $counter++ }}</td>
-                        <td>{{ $kodeNomor }}</td>
-                        <td>{{ $berkas->nama_berkas }}</td>
-                        <td class="text-center">{{ $tanggalBuat }}</td>
-                        <td>{{ $berkas->lokasi_fisik ?: '-' }}</td>
-                        <td class="text-center">-</td>
-                        <td>-</td>
-                        <td class="text-center">-</td>
-                        <td class="text-center">0</td>
+                {{-- Baris Berkas Arsip --}}
+                <tr class="berkas-row">
+                    <td class="text-center" rowspan="{{ max($totalItems + 1, 1) }}">{{ $counter++ }}</td>
+                    <td>{{ $kodeKlasifikasi }}</td>
+                    <td></td>
+                    <td>{{ $berkas->nama_berkas }}</td>
+                    <td class="text-center">{{ $tanggalBuat }}</td>
+                    <td class="text-center">-</td>
+                    <td>-</td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center">{{ $totalItems }}</td>
+                    <td class="text-center">{{ $berkas->retensi_aktif ?? '-' }}</td>
+                    <td class="text-center">{{ $berkas->retensi_inaktif ?? '-' }}</td>
+                    <td class="text-center">{{ $skkaad }}</td>
+                    <td class="text-center">{{ $statusAkhir }}</td>
+                    <td>{{ $berkas->lokasi_fisik ?: '-' }}</td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td></td>
+                </tr>
+                
+                {{-- Baris Arsip Unit --}}
+                @foreach($arsipUnits as $index => $arsip)
+                    <tr class="item-row">
+                        <td></td>
+                        <td>{{ $arsip->indeks ?? '-' }}</td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ $arsip->uraian_informasi ?? '-' }}</td>
+                        <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d-m-Y') : '-' }}</td>
+                        <td class="text-center">{{ ucfirst($arsip->tingkat_perkembangan ?? '-') }}</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                        <td class="text-center">{{ $arsip->ruangan ?? '-' }}</td>
+                        <td class="text-center">{{ $arsip->no_filling ?? '-' }}</td>
+                        <td class="text-center">{{ $arsip->no_laci ?? '-' }}</td>
+                        <td class="text-center">{{ $arsip->no_box ?? '-' }}</td>
+                        <td class="text-center">{{ $arsip->no_folder ?? '-' }}</td>
+                        <td>{{ $arsip->keterangan ?? '-' }}</td>
                     </tr>
-                @else
-                    {{-- Berkas dengan arsip unit --}}
-                    @foreach($arsipUnits as $index => $arsip)
-                        <tr class="{{ $index > 0 ? 'item-row' : 'berkas-row' }}">
-                            @if($index == 0)
-                                <td class="text-center" rowspan="{{ $totalItems }}">{{ $counter++ }}</td>
-                                <td rowspan="{{ $totalItems }}">{{ $kodeNomor }}</td>
-                                <td rowspan="{{ $totalItems }}">{{ $berkas->nama_berkas }}</td>
-                                <td class="text-center" rowspan="{{ $totalItems }}">{{ $tanggalBuat }}</td>
-                                <td rowspan="{{ $totalItems }}">{{ $berkas->lokasi_fisik ?: '-' }}</td>
-                            @endif
-                            <td class="text-center">{{ $arsip->no_item_arsip ?: ($index + 1) }}</td>
-                            <td>{{ $arsip->uraian_informasi ?: '-' }}</td>
-                            <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d-m-Y') : '-' }}</td>
-                            @if($index == 0)
-                                <td class="text-center" rowspan="{{ $totalItems }}">{{ $totalItems }}</td>
-                            @endif
-                        </tr>
-                    @endforeach
-                @endif
+                @endforeach
             @endforeach
         </tbody>
     </table>

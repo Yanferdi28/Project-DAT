@@ -1,6 +1,6 @@
 import { Head, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Printer, FileDown, ChevronDown, Filter } from 'lucide-react';
+import { ArrowLeft, FileDown, ChevronDown, Filter } from 'lucide-react';
 import { useRef, useState } from 'react';
 import {
     DropdownMenu,
@@ -22,11 +22,13 @@ interface KodeKlasifikasi {
     id: number;
     kode_klasifikasi: string;
     nama_klasifikasi: string;
+    status_akhir?: string;
 }
 
 interface UnitPengolah {
     id: number;
     nama: string;
+    nama_unit?: string;
 }
 
 interface BerkasArsip {
@@ -39,6 +41,8 @@ interface BerkasArsip {
     penyusutan_akhir: string;
     lokasi_fisik?: string;
     uraian?: string;
+    keterangan?: string;
+    kurun_waktu?: string;
     kode_klasifikasi?: KodeKlasifikasi;
     unit_pengolah?: UnitPengolah;
     arsip_units_count?: number;
@@ -69,10 +73,6 @@ export default function PrintPreview() {
         dari_tanggal: filters.dari_tanggal || '',
         sampai_tanggal: filters.sampai_tanggal || '',
     });
-
-    const handlePrint = () => {
-        window.print();
-    };
 
     const handleDownloadPDF = (format: 'summary' | 'detail') => {
         const params = new URLSearchParams();
@@ -182,14 +182,6 @@ export default function PrintPreview() {
                         Kembali
                     </Button>
                     <div className="flex items-center gap-2">
-                        <Button 
-                            variant="outline" 
-                            onClick={handlePrint}
-                            className="flex items-center gap-2"
-                        >
-                            <Printer className="h-4 w-4" />
-                            Cetak
-                        </Button>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button 
@@ -305,14 +297,19 @@ export default function PrintPreview() {
                 <div className="container mx-auto px-4">
                     {/* Header */}
                     <div className="text-center mb-6">
-                        <h1 className="text-xl font-bold text-gray-900 uppercase tracking-wide">
-                            LAPORAN DAFTAR BERKAS ARSIP AKTIF
+                        <h1 className="text-xl font-bold text-black uppercase tracking-wide">
+                            LAPORAN DAFTAR BERKAS ARSIP
                         </h1>
-                        <p className="text-sm text-gray-600 mt-1">
+                        {localFilters.unit_pengolah_id && (
+                            <p className="text-sm text-black mt-1">
+                                UNIT PENGOLAH: {getUnitPengolahName()}
+                            </p>
+                        )}
+                        <p className="text-sm text-black mt-1">
                             {localFilters.dari_tanggal || localFilters.sampai_tanggal ? (
                                 <>
-                                    Periode: {localFilters.dari_tanggal ? new Date(localFilters.dari_tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'}
-                                    {' s/d '}
+                                    PERIODE: {localFilters.dari_tanggal ? new Date(localFilters.dari_tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'}
+                                    {' - '}
                                     {localFilters.sampai_tanggal ? new Date(localFilters.sampai_tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'}
                                 </>
                             ) : (
@@ -321,59 +318,66 @@ export default function PrintPreview() {
                         </p>
                     </div>
 
-                    {/* Summary */}
-                    <div className="mb-4 text-sm text-gray-600">
-                        Total Data: <span className="font-semibold text-gray-900">{berkasArsips.length}</span> berkas
-                    </div>
-
                     {/* Table */}
-                    <div className="overflow-x-auto border border-gray-200 rounded-lg">
+                    <div className="overflow-x-auto border border-gray-300 rounded-lg">
                         <table className="w-full text-sm bg-white">
                             <thead className="bg-gray-100">
                                 <tr>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">NO</th>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">KODE KLASIFIKASI</th>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">NAMA BERKAS</th>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">UNIT PENGOLAH</th>
-                                    <th className="px-3 py-2 text-center font-semibold text-gray-700 border-b border-gray-200">RETENSI AKTIF</th>
-                                    <th className="px-3 py-2 text-center font-semibold text-gray-700 border-b border-gray-200">RETENSI INAKTIF</th>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">PENYUSUTAN</th>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">URAIAN</th>
-                                    <th className="px-3 py-2 text-left font-semibold text-gray-700 border-b border-gray-200">LOKASI FISIK</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">NO</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">KODE KLASIFIKASI</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">NAMA BERKAS</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">TANGGAL BUAT BERKAS</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">KURUN WAKTU</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">JUMLAH ITEM</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">RETENSI AKTIF</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">RETENSI INAKTIF</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">SKKAAD</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">STATUS AKHIR</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">LOKASI FISIK</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">KETERANGAN</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {berkasArsips.length === 0 ? (
                                     <tr>
-                                        <td colSpan={9} className="px-3 py-8 text-center text-gray-500 bg-white">
+                                        <td colSpan={12} className="px-3 py-8 text-center text-gray-500 bg-white">
                                             Tidak ada data berkas arsip
                                         </td>
                                     </tr>
                                 ) : (
                                     berkasArsips.map((berkas, index) => (
                                         <tr key={berkas.nomor_berkas} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-gray-900">{index + 1}</td>
-                                            <td className="px-3 py-2 border-b border-gray-100 font-mono text-xs text-gray-900">
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">{index + 1}</td>
+                                            <td className="px-2 py-1 border border-gray-200 text-gray-900">
                                                 {berkas.kode_klasifikasi?.kode_klasifikasi || '-'}
                                             </td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-gray-900">{berkas.nama_berkas || '-'}</td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-gray-900">
-                                                {berkas.unit_pengolah?.nama || '-'}
+                                            <td className="px-2 py-1 border border-gray-200 text-gray-900">{berkas.nama_berkas || '-'}</td>
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
+                                                {berkas.created_at ? new Date(berkas.created_at).toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-'}
                                             </td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-center text-gray-900">
-                                                {berkas.retensi_aktif} thn
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
+                                                {berkas.kurun_waktu || '-'}
                                             </td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-center text-gray-900">
-                                                {berkas.retensi_inaktif} thn
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
+                                                {berkas.arsip_units_count ?? 0}
                                             </td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-gray-900">
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
+                                                {berkas.retensi_aktif ?? '-'}
+                                            </td>
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
+                                                {berkas.retensi_inaktif ?? '-'}
+                                            </td>
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
+                                                {berkas.kode_klasifikasi?.status_akhir || '-'}
+                                            </td>
+                                            <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
                                                 {berkas.penyusutan_akhir || '-'}
                                             </td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-gray-900">
-                                                {berkas.uraian || '-'}
-                                            </td>
-                                            <td className="px-3 py-2 border-b border-gray-100 text-gray-900">
+                                            <td className="px-2 py-1 border border-gray-200 text-gray-900">
                                                 {berkas.lokasi_fisik || '-'}
+                                            </td>
+                                            <td className="px-2 py-1 border border-gray-200 text-gray-900">
+                                                {berkas.keterangan || '-'}
                                             </td>
                                         </tr>
                                     ))

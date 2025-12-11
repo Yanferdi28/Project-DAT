@@ -167,14 +167,9 @@ class BerkasArsipController extends Controller
         ]);
 
         // Get available arsip units that can be added to this berkas
-        // Must have same kode_klasifikasi and unit_pengolah, and not already in this berkas
+        // Arsip units that are not already assigned to any berkas arsip
         $availableArsipUnits = \App\Models\ArsipUnit::with(['kodeKlasifikasi', 'unitPengolah'])
-            ->where('kode_klasifikasi_id', $berkasArsip->klasifikasi_id)
-            ->where('unit_pengolah_arsip_id', $berkasArsip->unit_pengolah_id)
-            ->where(function ($query) use ($berkasArsip) {
-                $query->whereNull('berkas_arsip_id')
-                    ->orWhere('berkas_arsip_id', '!=', $berkasArsip->nomor_berkas);
-            })
+            ->whereNull('berkas_arsip_id')
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -281,17 +276,6 @@ class BerkasArsipController extends Controller
 
         $arsipUnit = \App\Models\ArsipUnit::find($validated['arsip_unit_id']);
 
-        // Validate that arsip unit has matching kode_klasifikasi and unit_pengolah
-        if ($arsipUnit->kode_klasifikasi_id !== $berkasArsip->klasifikasi_id) {
-            return redirect()->back()
-                ->with('error', 'Kode klasifikasi arsip unit tidak sesuai dengan berkas arsip.');
-        }
-
-        if ($arsipUnit->unit_pengolah_arsip_id !== $berkasArsip->unit_pengolah_id) {
-            return redirect()->back()
-                ->with('error', 'Unit pengolah arsip unit tidak sesuai dengan berkas arsip.');
-        }
-
         $arsipUnit->update(['berkas_arsip_id' => $berkasArsip->nomor_berkas]);
 
         return redirect()->back()
@@ -368,6 +352,29 @@ class BerkasArsipController extends Controller
         }
 
         $berkasArsips = $query->orderBy('created_at', 'asc')->get();
+
+        // Calculate kurun_waktu for each berkas
+        $berkasArsips = $berkasArsips->map(function ($berkas) {
+            $dates = $berkas->arsipUnits->pluck('tanggal')->filter();
+            $minDate = $dates->min();
+            $maxDate = $dates->max();
+            $kurunWaktu = '-';
+            
+            if ($minDate && $maxDate) {
+                $minFormatted = \Carbon\Carbon::parse($minDate)->format('d M Y');
+                $maxFormatted = \Carbon\Carbon::parse($maxDate)->format('d M Y');
+                if ($minFormatted === $maxFormatted) {
+                    $kurunWaktu = $minFormatted;
+                } else {
+                    $kurunWaktu = $minFormatted . ' s/d ' . $maxFormatted;
+                }
+            } elseif ($minDate) {
+                $kurunWaktu = \Carbon\Carbon::parse($minDate)->format('d M Y');
+            }
+            
+            $berkas->kurun_waktu = $kurunWaktu;
+            return $berkas;
+        });
 
         return Inertia::render('berkas-arsip/print-preview', [
             'berkasArsips' => $berkasArsips,

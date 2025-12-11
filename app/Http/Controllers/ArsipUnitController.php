@@ -349,19 +349,6 @@ class ArsipUnitController extends Controller
             'berkas_arsip_id' => 'required|exists:berkas_arsip,nomor_berkas',
         ]);
 
-        // Validate that berkas arsip has matching kode_klasifikasi and unit_pengolah
-        $berkasArsip = BerkasArsip::find($validated['berkas_arsip_id']);
-        
-        if ($berkasArsip->klasifikasi_id !== $arsipUnit->kode_klasifikasi_id) {
-            return redirect()->back()
-                ->with('error', 'Kode klasifikasi berkas arsip tidak sesuai dengan arsip unit.');
-        }
-
-        if ($berkasArsip->unit_pengolah_id !== $arsipUnit->unit_pengolah_arsip_id) {
-            return redirect()->back()
-                ->with('error', 'Unit pengolah berkas arsip tidak sesuai dengan arsip unit.');
-        }
-
         $arsipUnit->update($validated);
 
         return redirect()->back()
@@ -433,13 +420,24 @@ class ArsipUnitController extends Controller
         }
         
         // Filter unit pengolah
+        $unitPengolah = null;
         if ($request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
             $query->where('unit_pengolah_arsip_id', $request->unit_pengolah_id);
+            $unitPengolahModel = UnitPengolah::find($request->unit_pengolah_id);
+            $unitPengolah = $unitPengolahModel ? $unitPengolahModel->nama_unit : null;
         }
 
         $arsipUnits = $query->orderBy('tanggal', 'asc')->get();
 
-        $pdf = Pdf::loadView('pdf.arsip-unit', compact('arsipUnits'));
+        // Build periode string
+        $periode = null;
+        if ($request->dari_tanggal || $request->sampai_tanggal) {
+            $dari = $request->dari_tanggal ? \Carbon\Carbon::parse($request->dari_tanggal)->translatedFormat('d F Y') : '-';
+            $sampai = $request->sampai_tanggal ? \Carbon\Carbon::parse($request->sampai_tanggal)->translatedFormat('d F Y') : '-';
+            $periode = $dari . ' - ' . $sampai;
+        }
+
+        $pdf = Pdf::loadView('pdf.arsip-unit', compact('arsipUnits', 'unitPengolah', 'periode'));
         $pdf->setPaper('a4', 'landscape');
         
         return $pdf->stream('arsip-unit-' . date('Y-m-d') . '.pdf');

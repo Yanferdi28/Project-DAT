@@ -9,18 +9,27 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 15mm;
+            margin: 8mm;
         }
         body {
             font-family: Arial, sans-serif;
-            font-size: 9px;
+            font-size: 10px;
             margin: 0;
             padding: 0;
         }
-        h1 {
+        .header {
             text-align: center;
-            font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            color: #1a365d;
+        }
+        .header p {
+            margin: 2px 0;
+            font-size: 12px;
+            color: #2c5282;
         }
         table {
             width: 100%;
@@ -28,18 +37,20 @@
             margin-top: 10px;
         }
         th, td {
-            border: 1px solid #000;
-            padding: 4px 6px;
+            border: 1px solid #333;
+            padding: 4px 5px;
             text-align: left;
         }
         th {
-            background-color: #f0f0f0;
+            background-color: #edf2f7;
             font-weight: bold;
             text-align: center;
             vertical-align: middle;
+            font-size: 9px;
         }
         td {
             vertical-align: top;
+            font-size: 9px;
         }
         .text-center {
             text-align: center;
@@ -47,28 +58,48 @@
         .footer {
             margin-top: 20px;
             text-align: right;
-            font-size: 8px;
+            font-size: 10px;
+        }
+        .lokasi-header {
+            text-align: center;
+            background-color: #edf2f7;
         }
     </style>
 </head>
 <body>
-    <h1>DAFTAR ARSIP UNIT</h1>
+    <div class="header">
+        <h1>LAPORAN DAFTAR ARSIP UNIT</h1>
+        @if(isset($unitPengolah))
+            <p>UNIT PENGOLAH: {{ $unitPengolah }}</p>
+        @endif
+        @if(isset($periode))
+            <p>PERIODE: {{ $periode }}</p>
+        @endif
+    </div>
     
     <table>
         <thead>
             <tr>
-                <th style="width: 3%;">NO</th>
-                <th style="width: 8%;">KODE KLASIFIKASI</th>
-                <th style="width: 7%;">INDEKS</th>
-                <th style="width: 20%;">URAIAN INFORMASI</th>
-                <th style="width: 8%;">TANGGAL</th>
-                <th style="width: 7%;">JUMLAH</th>
-                <th style="width: 10%;">TINGKAT PERKEMBANGAN</th>
-                <th style="width: 10%;">UNIT PENGOLAH</th>
-                <th style="width: 6%;">RETENSI AKTIF</th>
-                <th style="width: 6%;">RETENSI INAKTIF</th>
-                <th style="width: 8%;">STATUS</th>
-                <th style="width: 7%;">KETERANGAN</th>
+                <th rowspan="2" style="width: 2%;">NO</th>
+                <th rowspan="2" style="width: 5%;">KODE KLASIFIKASI</th>
+                <th rowspan="2" style="width: 6%;">INDEKS</th>
+                <th rowspan="2" style="width: 12%;">URAIAN INFORMASI</th>
+                <th rowspan="2" style="width: 5%;">TANGGAL</th>
+                <th rowspan="2" style="width: 5%;">JUMLAH</th>
+                <th rowspan="2" style="width: 7%;">TINGKAT PERKEMBANGAN</th>
+                <th rowspan="2" style="width: 8%;">UNIT PENGOLAH</th>
+                <th rowspan="2" style="width: 4%;">RETENSI AKTIF</th>
+                <th rowspan="2" style="width: 4%;">RETENSI INAKTIF</th>
+                <th rowspan="2" style="width: 5%;">SKKAAD</th>
+                <th colspan="5" class="lokasi-header">LOKASI FISIK</th>
+                <th rowspan="2" style="width: 7%;">KETERANGAN</th>
+            </tr>
+            <tr>
+                <th style="width: 4%;">RUANG</th>
+                <th style="width: 4%;">NO RAK</th>
+                <th style="width: 4%;">NO LACI</th>
+                <th style="width: 4%;">NO BOX</th>
+                <th style="width: 4%;">NO FOLDER</th>
             </tr>
         </thead>
         <tbody>
@@ -80,12 +111,17 @@
                 <td>{{ $arsip->uraian_informasi ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d-m-Y') : '-' }}</td>
                 <td class="text-center">{{ $arsip->jumlah_nilai }} {{ $arsip->jumlah_satuan }}</td>
-                <td>{{ ucfirst($arsip->tingkat_perkembangan) }}</td>
+                <td class="text-center">{{ ucfirst($arsip->tingkat_perkembangan ?? '-') }}</td>
                 <td>{{ $arsip->unitPengolah->nama_unit ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->retensi_aktif ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->retensi_inaktif ?? '-' }}</td>
-                <td class="text-center">{{ $arsip->status }}</td>
-                <td>{{ $arsip->skkaad ?? '' }}</td>
+                <td>{{ $arsip->skkaad ?? '-' }}</td>
+                <td class="text-center">{{ $arsip->ruangan ?? '-' }}</td>
+                <td class="text-center">{{ $arsip->no_filling ?? '-' }}</td>
+                <td class="text-center">{{ $arsip->no_laci ?? '-' }}</td>
+                <td class="text-center">{{ $arsip->no_box ?? '-' }}</td>
+                <td class="text-center">{{ $arsip->no_folder ?? '-' }}</td>
+                <td>{{ $arsip->keterangan ?? '-' }}</td>
             </tr>
             @endforeach
         </tbody>
