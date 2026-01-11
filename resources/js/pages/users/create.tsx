@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
 import * as usersRoutes from '@/routes/users';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Errors {
     name?: string;
@@ -29,7 +28,6 @@ interface Props {
 }
 
 export default function CreateUser({ errors, unitPengolahs }: Props) {
-    const { t } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -68,9 +66,9 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('nav.userManagement'), href: usersRoutes.index().url },
-                { title: t('users.addUser'), href: usersRoutes.create().url },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Manajemen Pengguna', href: usersRoutes.index().url },
+                { title: 'Tambah Pengguna', href: usersRoutes.create().url },
             ]}
         >
             <div>
@@ -79,14 +77,14 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                     <Link href={usersRoutes.index().url}>
                         <Button variant="outline" className="mb-4">
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            {t('users.form.back')}
+                            {'Kembali'}
                         </Button>
                     </Link>
                     <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                        {t('users.createUser')}
+                        {'Tambah Pengguna Baru'}
                     </h1>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {t('users.fillForm')}
+                        {'Isi form di bawah untuk menambahkan pengguna baru'}
                     </p>
                 </div>
 
@@ -96,7 +94,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                         {/* Name */}
                         <div className="space-y-2">
                             <Label htmlFor="name">
-                                {t('users.form.fullName')} <span className="text-red-500">*</span>
+                                {'Nama Lengkap'} <span className="text-red-500">*</span>
                             </Label>
                             <Input
                                 id="name"
@@ -104,7 +102,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                 type="text"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder={t('users.form.enterName')}
+                                placeholder={'Masukkan nama lengkap'}
                                 className={errors?.name ? 'border-red-500' : ''}
                                 required
                             />
@@ -114,7 +112,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                         {/* Email */}
                         <div className="space-y-2">
                             <Label htmlFor="email">
-                                {t('users.email')} <span className="text-red-500">*</span>
+                                {'Email'} <span className="text-red-500">*</span>
                             </Label>
                             <Input
                                 id="email"
@@ -122,7 +120,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder={t('auth.emailPlaceholder')}
+                                placeholder={'Masukkan email Anda'}
                                 className={errors?.email ? 'border-red-500' : ''}
                                 required
                             />
@@ -132,7 +130,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                         {/* Role */}
                         <div className="space-y-2">
                             <Label htmlFor="role">
-                                {t('users.role')} <span className="text-red-500">*</span>
+                                {'Role'} <span className="text-red-500">*</span>
                             </Label>
                             <select
                                 id="role"
@@ -142,21 +140,21 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                 className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 required
                             >
-                                <option value="user">{t('users.user')}</option>
-                                <option value="operator">{t('users.operator')}</option>
-                                <option value="management">{t('users.management')}</option>
-                                <option value="admin">{t('users.admin')}</option>
+                                <option value="user">{'User'}</option>
+                                <option value="operator">{'Operator'}</option>
+                                <option value="management">{'Manajemen'}</option>
+                                <option value="admin">{'Admin'}</option>
                             </select>
                             {errors?.role && <InputError message={errors.role} />}
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                {t('users.form.roleDescription')}
+                                {'User: Akses terbatas | Admin: Akses penuh'}
                             </p>
                         </div>
 
                         {/* Unit Pengolah */}
                         <div className="space-y-2">
                             <Label htmlFor="unit_pengolah_id">
-                                {t('users.unitPengolah')}
+                                {'Unit Pengolah'}
                             </Label>
                             <select
                                 id="unit_pengolah_id"
@@ -165,7 +163,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                 onChange={handleSelectChange}
                                 className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
-                                <option value="">{t('users.selectUnitPengolah')}</option>
+                                <option value="">{'Pilih Unit Pengolah'}</option>
                                 {unitPengolahs.map((unit) => (
                                     <option key={unit.id} value={unit.id}>
                                         {unit.nama_unit}
@@ -181,7 +179,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                         {/* Password */}
                         <div className="space-y-2">
                             <Label htmlFor="password">
-                                {t('users.form.password')} <span className="text-red-500">*</span>
+                                {'Password'} <span className="text-red-500">*</span>
                             </Label>
                             <div className="relative">
                                 <Input
@@ -190,7 +188,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                     type={showPassword ? 'text' : 'password'}
                                     value={formData.password}
                                     onChange={handleChange}
-                                    placeholder={t('users.form.minChars')}
+                                    placeholder={'Minimal 8 karakter'}
                                     className={errors?.password ? 'border-red-500 pr-10' : 'pr-10'}
                                     required
                                 />
@@ -212,7 +210,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                         {/* Password Confirmation */}
                         <div className="space-y-2">
                             <Label htmlFor="password_confirmation">
-                                {t('users.form.confirmPassword')} <span className="text-red-500">*</span>
+                                {'Konfirmasi Password'} <span className="text-red-500">*</span>
                             </Label>
                             <div className="relative">
                                 <Input
@@ -221,7 +219,7 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                     type={showPasswordConfirmation ? 'text' : 'password'}
                                     value={formData.password_confirmation}
                                     onChange={handleChange}
-                                    placeholder={t('users.form.repeatPassword')}
+                                    placeholder={'Ulangi password'}
                                     className={
                                         errors?.password_confirmation
                                             ? 'border-red-500 pr-10'
@@ -256,11 +254,11 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                                 className="bg-blue-600 hover:bg-blue-700 text-white"
                             >
                                 <Save className="h-4 w-4 mr-2" />
-                                {isSubmitting ? t('users.form.saving') : t('users.form.saveUser')}
+                                {isSubmitting ? 'Menyimpan...' : 'Simpan Pengguna'}
                             </Button>
                             <Link href={usersRoutes.index().url}>
                                 <Button type="button" variant="outline" disabled={isSubmitting}>
-                                    {t('users.form.cancel')}
+                                    {'Batal'}
                                 </Button>
                             </Link>
                         </div>

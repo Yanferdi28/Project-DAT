@@ -27,7 +27,6 @@ import {
 } from '@/components/ui/popover';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Upload, Check, ChevronsUpDown } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 interface KodeKlasifikasi {
@@ -97,7 +96,6 @@ export default function Edit({
     subKategoris,
     userUnitPengolahId,
 }: Props) {
-    const { t } = useLanguage();
     const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
     const [data, setData] = useState({
         kode_klasifikasi_id: arsipUnit.kode_klasifikasi_id?.toString() || '',
@@ -183,7 +181,7 @@ export default function Edit({
 
     return (
         <AppLayout>
-            <Head title={t('arsipUnit.edit')} />
+            <Head title={'Edit Arsip Unit'} />
 
             <div className="py-6">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -191,7 +189,7 @@ export default function Edit({
                         <Link href="/arsip-unit">
                             <Button variant="ghost" size="sm">
                                 <ArrowLeft className="mr-2 h-4 w-4" />
-                                {t('common.back')}
+                                {'Kembali'}
                             </Button>
                         </Link>
                     </div>
@@ -199,9 +197,9 @@ export default function Edit({
                     <form onSubmit={submit} className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle>{t('arsipUnit.edit')}</CardTitle>
+                                <CardTitle>{'Edit Arsip Unit'}</CardTitle>
                                 <CardDescription>
-                                    {t('arsipUnit.editDescription')}
+                                    {'Perbarui informasi arsip unit'}
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
@@ -209,7 +207,7 @@ export default function Edit({
                                     {/* Kode Klasifikasi */}
                                     <div className="space-y-2">
                                         <Label htmlFor="kode_klasifikasi_id">
-                                            {t('arsipUnit.kodeKlasifikasi')} *
+                                            {'Kode Klasifikasi'} *
                                         </Label>
                                         <Popover open={openKodeKlasifikasi} onOpenChange={setOpenKodeKlasifikasi}>
                                             <PopoverTrigger asChild>
@@ -225,7 +223,7 @@ export default function Edit({
                                                           )?.kode_klasifikasi + ' - ' + kodeKlasifikasis.find(
                                                               (item) => item.id.toString() === data.kode_klasifikasi_id
                                                           )?.uraian
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -270,7 +268,7 @@ export default function Edit({
                                     {/* Unit Pengolah */}
                                     <div className="space-y-2">
                                         <Label htmlFor="unit_pengolah_arsip_id">
-                                            {t('arsipUnit.unitPengolah')} *{isUnitPengolahLocked && ' (terkunci)'}
+                                            {'Unit Pengolah'} *{isUnitPengolahLocked && ' (terkunci)'}
                                         </Label>
                                         <Popover open={isUnitPengolahLocked ? false : openUnitPengolah} onOpenChange={isUnitPengolahLocked ? undefined : setOpenUnitPengolah}>
                                             <PopoverTrigger asChild>
@@ -285,7 +283,7 @@ export default function Edit({
                                                         ? unitPengolahs.find(
                                                               (item) => item.id.toString() === data.unit_pengolah_arsip_id
                                                           )?.nama
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -335,7 +333,7 @@ export default function Edit({
                                     {/* Kategori */}
                                     <div className="space-y-2">
                                         <Label htmlFor="kategori_id">
-                                            {t('arsipUnit.kategori')} *
+                                            {'Kategori'} *
                                         </Label>
                                         <Popover open={openKategori} onOpenChange={setOpenKategori}>
                                             <PopoverTrigger asChild>
@@ -349,7 +347,7 @@ export default function Edit({
                                                         ? kategoris.find(
                                                               (item) => item.id.toString() === data.kategori_id
                                                           )?.nama
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -394,7 +392,7 @@ export default function Edit({
                                     {/* Sub Kategori */}
                                     <div className="space-y-2">
                                         <Label htmlFor="sub_kategori_id">
-                                            {t('arsipUnit.subKategori')} *
+                                            {'Sub Kategori'} *
                                         </Label>
                                         <Popover open={openSubKategori} onOpenChange={setOpenSubKategori}>
                                             <PopoverTrigger asChild>
@@ -409,7 +407,7 @@ export default function Edit({
                                                         ? filteredSubKategoris.find(
                                                               (item) => item.id.toString() === data.sub_kategori_id
                                                           )?.nama
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -453,7 +451,7 @@ export default function Edit({
 
                                     {/* Tanggal */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="tanggal">{t('arsipUnit.tanggal')} *</Label>
+                                        <Label htmlFor="tanggal">{'Tanggal'} *</Label>
                                         <Input
                                             id="tanggal"
                                             type="date"
@@ -468,7 +466,7 @@ export default function Edit({
 
                                     {/* Indeks */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="indeks">{t('arsipUnit.indeks')}</Label>
+                                        <Label htmlFor="indeks">{'Indeks'}</Label>
                                         <Input
                                             id="indeks"
                                             type="text"
@@ -483,7 +481,7 @@ export default function Edit({
                                     {/* Jumlah Nilai */}
                                     <div className="space-y-2">
                                         <Label htmlFor="jumlah_nilai">
-                                            {t('arsipUnit.jumlahNilai')} *
+                                            {'Jumlah Nilai'} *
                                         </Label>
                                         <Input
                                             id="jumlah_nilai"
@@ -505,7 +503,7 @@ export default function Edit({
                                     {/* Jumlah Satuan */}
                                     <div className="space-y-2">
                                         <Label htmlFor="jumlah_satuan">
-                                            {t('arsipUnit.jumlahSatuan')} *
+                                            {'Jumlah Satuan'} *
                                         </Label>
                                         <Select
                                             value={data.jumlah_satuan}
@@ -532,7 +530,7 @@ export default function Edit({
                                     {/* Tingkat Perkembangan */}
                                     <div className="space-y-2">
                                         <Label htmlFor="tingkat_perkembangan">
-                                            {t('arsipUnit.tingkatPerkembangan')} *
+                                            {'Tingkat Perkembangan'} *
                                         </Label>
                                         <Select
                                             value={data.tingkat_perkembangan}
@@ -560,7 +558,7 @@ export default function Edit({
                                     {/* Retensi Aktif - Auto filled */}
                                     <div className="space-y-2">
                                         <Label htmlFor="retensi_aktif">
-                                            {t('arsipUnit.retensiAktif')}
+                                            {'Retensi Aktif'}
                                         </Label>
                                         <Input
                                             id="retensi_aktif"
@@ -579,7 +577,7 @@ export default function Edit({
                                     {/* Retensi Inaktif - Auto filled */}
                                     <div className="space-y-2">
                                         <Label htmlFor="retensi_inaktif">
-                                            {t('arsipUnit.retensiInaktif')}
+                                            {'Retensi Inaktif'}
                                         </Label>
                                         <Input
                                             id="retensi_inaktif"
@@ -597,7 +595,7 @@ export default function Edit({
 
                                     {/* SKKAAD - Auto filled */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="skkaad">{t('arsipUnit.skkaad')}</Label>
+                                        <Label htmlFor="skkaad">{'SKKAAD'}</Label>
                                         <Input
                                             id="skkaad"
                                             type="text"
@@ -622,7 +620,7 @@ export default function Edit({
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {/* Ruangan */}
                                         <div className="space-y-2">
-                                        <Label htmlFor="ruangan">{t('arsipUnit.ruangan')}</Label>
+                                        <Label htmlFor="ruangan">{'Ruangan'}</Label>
                                         <Input
                                             id="ruangan"
                                             type="text"
@@ -637,7 +635,7 @@ export default function Edit({
                                     {/* No Filling */}
                                     <div className="space-y-2">
                                         <Label htmlFor="no_filling">
-                                            {t('arsipUnit.noFilling')}
+                                            {'No. Filling'}
                                         </Label>
                                         <Input
                                             id="no_filling"
@@ -654,7 +652,7 @@ export default function Edit({
 
                                     {/* No Laci */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="no_laci">{t('arsipUnit.noLaci')}</Label>
+                                        <Label htmlFor="no_laci">{'No. Laci'}</Label>
                                         <Input
                                             id="no_laci"
                                             type="text"
@@ -670,7 +668,7 @@ export default function Edit({
 
                                     {/* No Folder */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="no_folder">{t('arsipUnit.noFolder')}</Label>
+                                        <Label htmlFor="no_folder">{'No. Folder'}</Label>
                                         <Input
                                             id="no_folder"
                                             type="text"
@@ -686,7 +684,7 @@ export default function Edit({
 
                                     {/* No Box */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="no_box">{t('arsipUnit.noBox')}</Label>
+                                        <Label htmlFor="no_box">{'No. Box'}</Label>
                                         <Input
                                             id="no_box"
                                             type="text"
@@ -702,7 +700,7 @@ export default function Edit({
                                 {/* Uraian Informasi */}
                                 <div className="space-y-2">
                                     <Label htmlFor="uraian_informasi">
-                                        {t('arsipUnit.uraianInformasi')} *
+                                        {'Uraian Informasi'} *
                                     </Label>
                                     <Textarea
                                         id="uraian_informasi"
@@ -723,7 +721,7 @@ export default function Edit({
                                 {/* Keterangan */}
                                 <div className="space-y-2">
                                     <Label htmlFor="keterangan">
-                                        {t('arsipUnit.keterangan')}
+                                        {'Keterangan'}
                                     </Label>
                                     <Textarea
                                         id="keterangan"
@@ -739,7 +737,7 @@ export default function Edit({
                                 {/* Upload Dokumen */}
                                 <div className="space-y-2">
                                     <Label htmlFor="dokumen">
-                                        {t('arsipUnit.dokumen')}
+                                        {'Dokumen'}
                                     </Label>
                                     <div className="flex items-center gap-4">
                                         <Input
@@ -771,11 +769,11 @@ export default function Edit({
                         <div className="flex justify-end gap-4">
                             <Link href="/arsip-unit">
                                 <Button type="button" variant="outline">
-                                    {t('common.cancel')}
+                                    {'Batal'}
                                 </Button>
                             </Link>
                             <Button type="submit" disabled={processing}>
-                                {processing ? t('common.updating') : t('common.update')}
+                                {processing ? 'Memperbarui...' : 'Perbarui'}
                             </Button>
                         </div>
                     </form>

@@ -2,7 +2,6 @@ import AppLayout from '@/layouts/app-layout';
 import { Link, router, usePage } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
 import { useState, FormEvent } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import InputError from '@/components/input-error';
 import { Combobox } from '@/components/ui/combobox';
 import { Label } from '@/components/ui/label';
@@ -30,7 +29,6 @@ interface PageProps {
 }
 
 export default function Create() {
-    const { t } = useLanguage();
     const { kodeKlasifikasis, unitPengolahs, userUnitPengolahId, errors } = usePage<PageProps>().props;
     const [processing, setProcessing] = useState(false);
     
@@ -101,8 +99,8 @@ export default function Create() {
         <AppLayout
             breadcrumbs={[
                 { title: 'Dashboard', href: '/dashboard' },
-                { title: t('berkasArsip.title'), href: '/berkas-arsip' },
-                { title: t('berkasArsip.create'), href: '' },
+                { title: 'Berkas Arsip', href: '/berkas-arsip' },
+                { title: 'Tambah Berkas Arsip Baru', href: '' },
             ]}
         >
             <div className="mx-auto max-w-6xl">
@@ -112,16 +110,16 @@ export default function Create() {
                         className="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                     >
                         <ArrowLeft className="h-4 w-4" />
-                        {t('common.back')}
+                        {'Kembali'}
                     </Link>
                 </div>
 
                 <div className="mb-6">
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                        {t('berkasArsip.create')}
+                        {'Tambah Berkas Arsip Baru'}
                     </h2>
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        {t('berkasArsip.fillForm')}
+                        {'Isi form di bawah untuk menambahkan berkas arsip baru'}
                     </p>
                 </div>
 
@@ -136,14 +134,14 @@ export default function Create() {
                                 
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {t('berkasArsip.namaBerkas')} <span className="text-red-500">*</span>
+                                        {'Nama Berkas'} <span className="text-red-500">*</span>
                                     </label>
                                     <input
                                         type="text"
                                         value={data.nama_berkas}
                                         onChange={(e) => setData({ ...data, nama_berkas: e.target.value })}
                                         className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                                        placeholder={t('berkasArsip.enterNamaBerkas')}
+                                        placeholder={'Masukkan nama berkas'}
                                     />
                                     <InputError message={errors.nama_berkas} />
                                 </div>
@@ -195,7 +193,7 @@ export default function Create() {
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <div>
                                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            {t('berkasArsip.retensiAktif')}
+                                            {'Retensi Aktif'}
                                         </label>
                                         <input
                                             type="number"
@@ -211,7 +209,7 @@ export default function Create() {
 
                                     <div>
                                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            {t('berkasArsip.retensiInaktif')}
+                                            {'Retensi Inaktif'}
                                         </label>
                                         <input
                                             type="number"
@@ -228,7 +226,7 @@ export default function Create() {
 
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {t('berkasArsip.penyusutanAkhir')}
+                                        {'Penyusutan Akhir'}
                                     </label>
                                     <input
                                         type="text"
@@ -236,7 +234,7 @@ export default function Create() {
                                         onChange={(e) => setData({ ...data, penyusutan_akhir: e.target.value })}
                                         disabled
                                         className="w-full rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-gray-500 cursor-not-allowed dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400"
-                                        placeholder={t('berkasArsip.enterPenyusutanAkhir')}
+                                        placeholder={'Masukkan penyusutan akhir'}
                                     />
                                     <InputError message={errors.penyusutan_akhir} />
                                 </div>
@@ -252,28 +250,28 @@ export default function Create() {
                                 
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {t('berkasArsip.lokasiFisik')}
+                                        {'Lokasi Fisik'}
                                     </label>
                                     <input
                                         type="text"
                                         value={data.lokasi_fisik}
                                         onChange={(e) => setData({ ...data, lokasi_fisik: e.target.value })}
                                         className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                                        placeholder={t('berkasArsip.enterLokasiFisik')}
+                                        placeholder={'Masukkan lokasi fisik'}
                                     />
                                     <InputError message={errors.lokasi_fisik} />
                                 </div>
 
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {t('berkasArsip.uraian')}
+                                        {'Uraian'}
                                     </label>
                                     <textarea
                                         value={data.uraian}
                                         onChange={(e) => setData({ ...data, uraian: e.target.value })}
                                         rows={10}
                                         className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                                        placeholder={t('berkasArsip.enterUraian')}
+                                        placeholder={'Masukkan uraian (opsional)'}
                                     />
                                     <InputError message={errors.uraian} />
                                 </div>
@@ -287,7 +285,7 @@ export default function Create() {
                                 disabled={processing}
                                 className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
                             >
-                                {processing ? t('common.saving') : 'Buat'}
+                                {processing ? 'Menyimpan...' : 'Buat'}
                             </button>
                             <button
                                 type="button"
@@ -295,7 +293,7 @@ export default function Create() {
                                 onClick={(e) => handleSubmit(e as any, true)}
                                 className="rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                             >
-                                {processing ? t('common.saving') : 'Buat & buat lainnya'}
+                                {processing ? 'Menyimpan...' : 'Buat & buat lainnya'}
                             </button>
                             <Link
                                 href="/berkas-arsip"

@@ -12,7 +12,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BerkasArsip {
     nomor_berkas: number;
@@ -87,7 +86,6 @@ interface PageProps {
 }
 
 export default function BerkasArsipIndex() {
-    const { t } = useLanguage();
     const { berkasArsips, kodeKlasifikasis, unitPengolahs, filters, flash, auth, userUnitPengolahId } = usePage<PageProps>().props;
     const [search, setSearch] = useState(filters.search || '');
     const [filterKlasifikasi, setFilterKlasifikasi] = useState<string>(
@@ -187,8 +185,8 @@ export default function BerkasArsipIndex() {
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('berkasArsip.title'), href: '/berkas-arsip' },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Berkas Arsip', href: '/berkas-arsip' },
             ]}
         >
             <div className="space-y-6">
@@ -208,10 +206,10 @@ export default function BerkasArsipIndex() {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {t('berkasArsip.title')}
+                            {'Berkas Arsip'}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('users.total')} {berkasArsips.total} {t('berkasArsip.title').toLowerCase()}
+                            {'Total'} {berkasArsips.total} {'Berkas Arsip'.toLowerCase()}
                         </p>
                     </div>
                     <div className="flex gap-2">
@@ -221,13 +219,13 @@ export default function BerkasArsipIndex() {
                             onClick={() => router.visit('/berkas-arsip/print-preview')}
                         >
                             <Printer className="h-4 w-4 mr-2" />
-                            {t('common.print')}
+                            {'Cetak'}
                         </Button>
                         {canCreateEdit && (
                             <Link href="/berkas-arsip/create">
                                 <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                                     <Plus className="h-4 w-4 mr-2" />
-                                    {t('berkasArsip.add')}
+                                    {'Tambah Berkas Arsip'}
                                 </Button>
                             </Link>
                         )}
@@ -242,7 +240,7 @@ export default function BerkasArsipIndex() {
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                                 <Input
                                     type="text"
-                                    placeholder={t('berkasArsip.search')}
+                                    placeholder={'Cari nomor berkas atau keterangan...'}
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     className="pl-10"
@@ -255,7 +253,7 @@ export default function BerkasArsipIndex() {
                                     onChange={(e) => setFilterKlasifikasi(e.target.value)}
                                     className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 >
-                                    <option value="">{t('berkasArsip.allKlasifikasi')}</option>
+                                    <option value="">{'Semua Klasifikasi'}</option>
                                     {kodeKlasifikasis.map((kode) => (
                                         <option key={kode.id} value={kode.id}>
                                             {kode.kode_klasifikasi} - {kode.uraian}
@@ -288,7 +286,7 @@ export default function BerkasArsipIndex() {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-between">
                             <div className="flex items-center gap-3">
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
                                 <select
                                     value={perPage}
                                     onChange={(e) => handlePerPageChange(e.target.value)}
@@ -300,16 +298,16 @@ export default function BerkasArsipIndex() {
                                     <option value="50">50</option>
                                     <option value="100">100</option>
                                 </select>
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'data'}</label>
                             </div>
                             <div className="flex gap-2">
                                 <Button type="submit">
                                     <Search className="h-4 w-4 mr-2" />
-                                    {t('users.searchBtn')}
+                                    {'Cari'}
                                 </Button>
                                 {(search || filterKlasifikasi || filterUnitPengolah) && (
                                     <Button type="button" variant="outline" onClick={handleReset}>
-                                        {t('users.reset')}
+                                        {'Reset'}
                                     </Button>
                                 )}
                             </div>
@@ -324,28 +322,28 @@ export default function BerkasArsipIndex() {
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('users.no')}
+                                        {'No'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('berkasArsip.namaBerkas')}
+                                        {'Nama Berkas'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('berkasArsip.kodeKlasifikasi')}
+                                        {'Kode Klasifikasi'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         Unit Pengolah
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('berkasArsip.retensi')}
+                                        {'Retensi'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('berkasArsip.lokasiFisik')}
+                                        {'Lokasi Fisik'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('berkasArsip.jumlahArsip')}
+                                        {'Jumlah Arsip'}
                                     </th>
                                     <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
-                                        {t('users.actions')}
+                                        {'Aksi'}
                                     </th>
                                 </tr>
                             </thead>
@@ -355,7 +353,7 @@ export default function BerkasArsipIndex() {
                                         <td colSpan={8} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                {t('berkasArsip.noData')}
+                                                {'Tidak ada data berkas arsip'}
                                             </p>
                                         </td>
                                     </tr>
@@ -408,7 +406,7 @@ export default function BerkasArsipIndex() {
                                                                     variant="outline"
                                                                     size="sm"
                                                                     className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
-                                                                    title={t('users.edit')}
+                                                                    title={'Edit'}
                                                                 >
                                                                     <Edit className="h-4 w-4" />
                                                                 </Button>
@@ -418,7 +416,7 @@ export default function BerkasArsipIndex() {
                                                                 size="sm"
                                                                 onClick={() => confirmDelete(item)}
                                                                 className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
-                                                                title={t('users.delete')}
+                                                                title={'Hapus'}
                                                             >
                                                                 <Trash2 className="h-4 w-4" />
                                                             </Button>
@@ -438,10 +436,10 @@ export default function BerkasArsipIndex() {
                         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    {t('users.showing')}{' '}
+                                    {'Menampilkan'}{' '}
                                     <span className="font-medium">{berkasArsips.from}</span> -{' '}
                                     <span className="font-medium">{berkasArsips.to}</span>{' '}
-                                    {t('users.of')} <span className="font-medium">{berkasArsips.total}</span>
+                                    {'dari'} <span className="font-medium">{berkasArsips.total}</span>
                                 </p>
                                 <div className="flex gap-2">
                                     {berkasArsips.links?.map((link, index) => {
@@ -479,9 +477,9 @@ export default function BerkasArsipIndex() {
             <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, item: null })}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('berkasArsip.deleteTitle')}</DialogTitle>
+                        <DialogTitle>{'Konfirmasi Hapus Berkas Arsip'}</DialogTitle>
                         <DialogDescription>
-                            {t('berkasArsip.deleteConfirmation')}
+                            {'Apakah Anda yakin ingin menghapus berkas arsip ini? Tindakan ini tidak dapat dibatalkan.'}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -490,14 +488,14 @@ export default function BerkasArsipIndex() {
                             onClick={() => setDeleteDialog({ open: false, item: null })}
                             disabled={isDeleting}
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
-                            {isDeleting ? t('users.deleting') : t('common.delete')}
+                            {isDeleting ? 'Menghapus...' : 'Hapus'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -507,7 +505,7 @@ export default function BerkasArsipIndex() {
             <Dialog open={exportDialog} onOpenChange={setExportDialog}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('common.print')} {t('berkasArsip.title')}</DialogTitle>
+                        <DialogTitle>{'Cetak'} {'Berkas Arsip'}</DialogTitle>
                         <DialogDescription>
                             Pilih format laporan dan filter
                         </DialogDescription>
@@ -600,10 +598,10 @@ export default function BerkasArsipIndex() {
                     
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setExportDialog(false)}>
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button onClick={handleExport} className="bg-blue-600 hover:bg-blue-700">
-                            {t('common.print')} PDF
+                            {'Cetak'} PDF
                         </Button>
                     </DialogFooter>
                 </DialogContent>

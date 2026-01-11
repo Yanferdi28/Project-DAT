@@ -9,29 +9,26 @@ import { edit as editPassword } from '@/routes/user-password';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
-    const { t } = useLanguage();
-    
     const sidebarNavItems: NavItem[] = [
         {
-            title: t('profile.title'),
+            title: 'Profil Saya',
             href: edit(),
             icon: null,
         },
         {
-            title: t('profile.changePassword'),
+            title: 'Ubah Password',
             href: editPassword(),
             icon: null,
         },
         {
-            title: t('settings.twoFactor'),
+            title: 'Autentikasi Dua Faktor',
             href: show(),
             icon: null,
         },
         {
-            title: t('settings.appearance'),
+            title: 'Tampilan',
             href: editAppearance(),
             icon: null,
         },
@@ -47,8 +44,8 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     return (
         <div className="px-4 py-6">
             <Heading
-                title={t('settings.title')}
-                description={t('settings.description')}
+                title="Pengaturan"
+                description="Kelola profil dan pengaturan akun Anda"
             />
 
             <div className="flex flex-col lg:flex-row lg:space-x-12">

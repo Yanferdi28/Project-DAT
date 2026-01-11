@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
 import * as usersRoutes from '@/routes/users';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface UnitPengolah {
     id: number;
@@ -41,7 +40,6 @@ interface Props {
 }
 
 export default function EditUser({ user, unitPengolahs, errors }: Props) {
-    const { language, t } = useLanguage();
     const [formData, setFormData] = useState({
         name: user.name,
         email: user.email,
@@ -80,9 +78,9 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('nav.userManagement'), href: usersRoutes.index().url },
-                { title: t('users.editUser'), href: usersRoutes.edit({ user: user.id }).url },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Manajemen Pengguna', href: usersRoutes.index().url },
+                { title: 'Edit Pengguna', href: usersRoutes.edit({ user: user.id }).url },
             ]}
         >
             <div>
@@ -91,14 +89,14 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                     <Link href={usersRoutes.index().url}>
                         <Button variant="outline" className="mb-4">
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            {t('users.form.back')}
+                            {'Kembali'}
                         </Button>
                     </Link>
                     <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                        {t('users.editUser')}
+                        {'Edit Pengguna'}
                     </h1>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {t('users.updateInfo')} <span className="font-semibold">{user.name}</span>
+                        {'Perbarui informasi pengguna'} <span className="font-semibold">{user.name}</span>
                     </p>
                 </div>
 
@@ -108,7 +106,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                         {/* Name */}
                         <div className="space-y-2">
                             <Label htmlFor="name">
-                                {t('users.form.fullName')} <span className="text-red-500">*</span>
+                                {'Nama Lengkap'} <span className="text-red-500">*</span>
                             </Label>
                             <Input
                                 id="name"
@@ -116,7 +114,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                 type="text"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder={t('users.form.enterName')}
+                                placeholder={'Masukkan nama lengkap'}
                                 className={errors?.name ? 'border-red-500' : ''}
                                 required
                             />
@@ -126,7 +124,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                         {/* Email */}
                         <div className="space-y-2">
                             <Label htmlFor="email">
-                                {t('users.email')} <span className="text-red-500">*</span>
+                                {'Email'} <span className="text-red-500">*</span>
                             </Label>
                             <Input
                                 id="email"
@@ -134,7 +132,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder={t('auth.emailPlaceholder')}
+                                placeholder={'Masukkan email Anda'}
                                 className={errors?.email ? 'border-red-500' : ''}
                                 required
                             />
@@ -144,7 +142,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                         {/* Role */}
                         <div className="space-y-2">
                             <Label htmlFor="role">
-                                {t('users.role')} <span className="text-red-500">*</span>
+                                {'Role'} <span className="text-red-500">*</span>
                             </Label>
                             <select
                                 id="role"
@@ -154,21 +152,21 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                 className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 required
                             >
-                                <option value="user">{t('users.user')}</option>
-                                <option value="operator">{t('users.operator')}</option>
-                                <option value="management">{t('users.management')}</option>
-                                <option value="admin">{t('users.admin')}</option>
+                                <option value="user">{'User'}</option>
+                                <option value="operator">{'Operator'}</option>
+                                <option value="management">{'Manajemen'}</option>
+                                <option value="admin">{'Admin'}</option>
                             </select>
                             {errors?.role && <InputError message={errors.role} />}
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                {t('users.form.roleDescription')}
+                                {'User: Akses terbatas | Admin: Akses penuh'}
                             </p>
                         </div>
 
                         {/* Unit Pengolah */}
                         <div className="space-y-2">
                             <Label htmlFor="unit_pengolah_id">
-                                {t('users.unitPengolah')}
+                                {'Unit Pengolah'}
                             </Label>
                             <select
                                 id="unit_pengolah_id"
@@ -177,7 +175,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                 onChange={handleSelectChange}
                                 className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-1 text-sm shadow-sm transition-colors text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
-                                <option value="">{t('users.selectUnitPengolah')}</option>
+                                <option value="">{'Pilih Unit Pengolah'}</option>
                                 {unitPengolahs.map((unit) => (
                                     <option key={unit.id} value={unit.id}>
                                         {unit.nama_unit}
@@ -190,7 +188,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                         {/* Password */}
                         <div className="space-y-2">
                             <Label htmlFor="password">
-                                {t('users.form.newPassword')} <span className="text-gray-500 dark:text-gray-400 text-xs">(Opsional)</span>
+                                {'Password Baru'} <span className="text-gray-500 dark:text-gray-400 text-xs">(Opsional)</span>
                             </Label>
                             <div className="relative">
                                 <Input
@@ -199,7 +197,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                     type={showPassword ? 'text' : 'password'}
                                     value={formData.password}
                                     onChange={handleChange}
-                                    placeholder={t('users.form.leaveEmpty')}
+                                    placeholder={'Kosongkan jika tidak ingin mengubah'}
                                     className={errors?.password ? 'border-red-500 pr-10' : 'pr-10'}
                                 />
                                 <button
@@ -216,14 +214,14 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                             </div>
                             {errors?.password && <InputError message={errors.password} />}
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                {t('users.form.minCharsNote')}
+                                {'Minimal 8 karakter jika ingin mengubah password'}
                             </p>
                         </div>
 
                         {/* Password Confirmation */}
                         <div className="space-y-2">
                             <Label htmlFor="password_confirmation">
-                                {t('users.form.confirmNewPassword')}
+                                {'Konfirmasi Password Baru'}
                             </Label>
                             <div className="relative">
                                 <Input
@@ -232,7 +230,7 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                     type={showPasswordConfirmation ? 'text' : 'password'}
                                     value={formData.password_confirmation}
                                     onChange={handleChange}
-                                    placeholder={t('users.form.repeatNewPassword')}
+                                    placeholder={'Ulangi password baru'}
                                     className={
                                         errors?.password_confirmation
                                             ? 'border-red-500 pr-10'
@@ -261,20 +259,20 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                         {/* User Info */}
                         <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
                             <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                {t('users.form.userInfo')}
+                                {'Informasi Pengguna'}
                             </h3>
                             <div className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                                 <p>
-                                    <span className="font-medium">{t('users.status')}:</span>{' '}
+                                    <span className="font-medium">{'Status'}:</span>{' '}
                                     {user.email_verified_at ? (
-                                        <span className="text-green-600 dark:text-green-400">{t('users.form.emailVerified')}</span>
+                                        <span className="text-green-600 dark:text-green-400">{'✓ Email Terverifikasi'}</span>
                                     ) : (
-                                        <span className="text-yellow-600 dark:text-yellow-400">{t('users.form.notVerified')}</span>
+                                        <span className="text-yellow-600 dark:text-yellow-400">{'⚠ Belum Verifikasi'}</span>
                                     )}
                                 </p>
                                 <p>
-                                    <span className="font-medium">{t('users.form.registeredOn')}</span>{' '}
-                                    {new Date(user.created_at).toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US', {
+                                    <span className="font-medium">{'Terdaftar:'}</span>{' '}
+                                    {new Date(user.created_at).toLocaleDateString('id-ID', {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric',
@@ -291,11 +289,11 @@ export default function EditUser({ user, unitPengolahs, errors }: Props) {
                                 className="bg-blue-600 hover:bg-blue-700 text-white"
                             >
                                 <Save className="h-4 w-4 mr-2" />
-                                {isSubmitting ? t('users.form.saving') : t('users.form.saveChanges')}
+                                {isSubmitting ? 'Menyimpan...' : 'Simpan Perubahan'}
                             </Button>
                             <Link href={usersRoutes.index().url}>
                                 <Button type="button" variant="outline" disabled={isSubmitting}>
-                                    {t('users.form.cancel')}
+                                    {'Batal'}
                                 </Button>
                             </Link>
                         </div>

@@ -3,7 +3,6 @@ import { send } from '@/routes/verification';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
@@ -23,24 +22,23 @@ export default function Profile({
     status?: string;
 }) {
     const { auth } = usePage<SharedData>().props;
-    const { t } = useLanguage();
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: t('profile.title'),
+            title: 'Profil Saya',
             href: edit().url,
         },
     ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title={t('profile.title')} />
+            <Head title={'Profil Saya'} />
 
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title={t('profile.accountInfo')}
-                        description={t('profile.updateInfo')}
+                        title={'Informasi Akun'}
+                        description={'Perbarui nama dan alamat email Anda'}
                     />
 
                     <Form
@@ -53,7 +51,7 @@ export default function Profile({
                         {({ processing, recentlySuccessful, errors }) => (
                             <>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="name">{t('users.name')}</Label>
+                                    <Label htmlFor="name">{'Nama'}</Label>
 
                                     <Input
                                         id="name"
@@ -62,7 +60,7 @@ export default function Profile({
                                         name="name"
                                         required
                                         autoComplete="name"
-                                        placeholder={t('auth.fullNamePlaceholder')}
+                                        placeholder={'Masukkan nama lengkap Anda'}
                                     />
 
                                     <InputError
@@ -72,7 +70,7 @@ export default function Profile({
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label htmlFor="email">{t('users.email')}</Label>
+                                    <Label htmlFor="email">{'Email'}</Label>
 
                                     <Input
                                         id="email"
@@ -82,7 +80,7 @@ export default function Profile({
                                         name="email"
                                         required
                                         autoComplete="username"
-                                        placeholder={t('auth.emailPlaceholder')}
+                                        placeholder={'Masukkan email Anda'}
                                     />
 
                                     <InputError
@@ -95,20 +93,20 @@ export default function Profile({
                                     auth.user.email_verified_at === null && (
                                         <div>
                                             <p className="-mt-4 text-sm text-muted-foreground">
-                                                {t('profile.emailUnverified')}{' '}
+                                                {'Alamat email Anda belum diverifikasi.'}{' '}
                                                 <Link
                                                     href={send()}
                                                     as="button"
                                                     className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                                 >
-                                                    {t('profile.resendVerification')}
+                                                    {'Klik di sini untuk mengirim ulang email verifikasi.'}
                                                 </Link>
                                             </p>
 
                                             {status ===
                                                 'verification-link-sent' && (
                                                 <div className="mt-2 text-sm font-medium text-green-600">
-                                                    {t('profile.verificationSent')}
+                                                    {'Link verifikasi baru telah dikirim ke alamat email Anda.'}
                                                 </div>
                                             )}
                                         </div>
@@ -119,7 +117,7 @@ export default function Profile({
                                         disabled={processing}
                                         data-test="update-profile-button"
                                     >
-                                        {t('common.save')}
+                                        {'Simpan'}
                                     </Button>
 
                                     <Transition
@@ -130,7 +128,7 @@ export default function Profile({
                                         leaveTo="opacity-0"
                                     >
                                         <p className="text-sm text-neutral-600">
-                                            {t('profile.saved')}
+                                            {'Tersimpan'}
                                         </p>
                                     </Transition>
                                 </div>

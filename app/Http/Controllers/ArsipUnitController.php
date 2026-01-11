@@ -50,11 +50,11 @@ class ArsipUnitController extends Controller
         $userUnitPengolahId = $this->getUserUnitPengolahId();
         
         $query = ArsipUnit::with([
-            'kodeKlasifikasi',
-            'unitPengolah',
-            'berkasArsip',
-            'kategori',
-            'subKategori'
+            'kodeKlasifikasi:id,kode_klasifikasi,uraian',
+            'unitPengolah:id,nama_unit',
+            'berkasArsip:nomor_berkas,nama_berkas',
+            'kategori:id,nama_kategori',
+            'subKategori:id,nama_sub_kategori,kategori_id'
         ]);
 
         // If user has unit_pengolah_id restriction, filter by it
@@ -90,7 +90,8 @@ class ArsipUnitController extends Controller
         $arsipUnits = $query->oldest()->paginate($perPage)->withQueryString();
 
         // For berkasArsips filter, also apply unit_pengolah restriction for regular users
-        $berkasArsipsQuery = BerkasArsip::with(['kodeKlasifikasi', 'unitPengolah']);
+        $berkasArsipsQuery = BerkasArsip::select('nomor_berkas', 'nama_berkas', 'klasifikasi_id', 'unit_pengolah_id')
+            ->with(['kodeKlasifikasi:id,kode_klasifikasi,uraian', 'unitPengolah:id,nama_unit']);
         if ($userUnitPengolahId !== null) {
             $berkasArsipsQuery->where('unit_pengolah_id', $userUnitPengolahId);
         }
@@ -98,8 +99,8 @@ class ArsipUnitController extends Controller
         return Inertia::render('arsip-unit/index', [
             'arsipUnits' => $arsipUnits,
             'filters' => array_merge($request->only(['search', 'status', 'publish_status']), ['per_page' => $perPage]),
-            'berkasArsips' => $berkasArsipsQuery->orderBy('nama_berkas')->get(),
-            'unitPengolahs' => UnitPengolah::orderBy('nama_unit')->get(),
+            'berkasArsips' => Inertia::lazy(fn () => $berkasArsipsQuery->orderBy('nama_berkas')->get()),
+            'unitPengolahs' => Inertia::lazy(fn () => UnitPengolah::select('id', 'nama_unit')->orderBy('nama_unit')->get()),
             'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
@@ -317,12 +318,33 @@ class ArsipUnitController extends Controller
     {
         $validated = $request->validate([
             'status' => 'required|in:pending,diterima,ditolak',
+            'verifikasi_keterangan' => 'nullable|string|max:1000',
         ]);
 
-        $arsipUnit->update($validated);
+        $updateData = [
+            'status' => $validated['status'],
+            'verifikasi_oleh' => auth()->id(),
+            'verifikasi_tanggal' => now(),
+        ];
+
+        // Add rejection reason if status is ditolak
+        if ($validated['status'] === 'ditolak' && !empty($validated['verifikasi_keterangan'])) {
+            $updateData['verifikasi_keterangan'] = $validated['verifikasi_keterangan'];
+        } else if ($validated['status'] !== 'ditolak') {
+            // Clear rejection reason if status is not ditolak
+            $updateData['verifikasi_keterangan'] = null;
+        }
+
+        $arsipUnit->update($updateData);
+
+        $statusMessages = [
+            'pending' => 'Status berhasil diubah menjadi pending.',
+            'diterima' => 'Arsip unit berhasil diterima.',
+            'ditolak' => 'Arsip unit berhasil ditolak.',
+        ];
 
         return redirect()->back()
-            ->with('success', 'Status berhasil diperbarui.');
+            ->with('success', $statusMessages[$validated['status']] ?? 'Status berhasil diperbarui.');
     }
 
     /**
@@ -441,5 +463,43 @@ class ArsipUnitController extends Controller
         $pdf->setPaper('a4', 'landscape');
         
         return $pdf->stream('arsip-unit-' . date('Y-m-d') . '.pdf');
+    }
+
+    /**
+     * Preview file inline (for PDF and other documents).
+     */
+    public function previewFile(string $path)
+    {
+        // Check if file exists
+        if (!Storage::disk('public')->exists($path)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        $fullPath = Storage::disk('public')->path($path);
+        $filename = basename($path);
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        
+        // Determine mime type based on extension for reliability
+        $mimeTypes = [
+            'pdf' => 'application/pdf',
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ];
+        
+        $mimeType = $mimeTypes[$extension] ?? (mime_content_type($fullPath) ?: 'application/octet-stream');
+
+        return response()->file($fullPath, [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            'X-Content-Type-Options' => 'nosniff',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
     }
 }

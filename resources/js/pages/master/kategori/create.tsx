@@ -6,14 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Props {
     errors?: Record<string, string>;
 }
 
 export default function KategoriCreate({ errors }: Props) {
-    const { t } = useLanguage();
     const [processing, setProcessing] = useState(false);
     const [data, setData] = useState({
         nama_kategori: '',
@@ -39,8 +37,8 @@ export default function KategoriCreate({ errors }: Props) {
                         </Button>
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{t('kategori.create')}</h1>
-                        <p className="text-muted-foreground mt-1">{t('kategori.fillForm')}</p>
+                        <h1 className="text-3xl font-bold tracking-tight">{'Tambah Kategori Baru'}</h1>
+                        <p className="text-muted-foreground mt-1">{'Isi form di bawah untuk menambahkan kategori baru'}</p>
                     </div>
                 </div>
 
@@ -49,13 +47,13 @@ export default function KategoriCreate({ errors }: Props) {
                     <div className="grid gap-6">
                         {/* Nama Kategori */}
                         <div>
-                            <Label htmlFor="nama_kategori">{t('kategori.namaKategori')} *</Label>
+                            <Label htmlFor="nama_kategori">{'Nama Kategori'} *</Label>
                             <Input
                                 id="nama_kategori"
                                 type="text"
                                 value={data.nama_kategori}
                                 onChange={(e) => setData({ ...data, nama_kategori: e.target.value })}
-                                placeholder={t('kategori.enterNamaKategori')}
+                                placeholder={'Masukkan nama kategori'}
                                 required
                                 className="mt-2"
                             />
@@ -64,12 +62,12 @@ export default function KategoriCreate({ errors }: Props) {
 
                         {/* Deskripsi */}
                         <div>
-                            <Label htmlFor="deskripsi">{t('kategori.deskripsi')}</Label>
+                            <Label htmlFor="deskripsi">{'Deskripsi'}</Label>
                             <textarea
                                 id="deskripsi"
                                 value={data.deskripsi}
                                 onChange={(e) => setData({ ...data, deskripsi: e.target.value })}
-                                placeholder={t('kategori.enterDeskripsi')}
+                                placeholder={'Masukkan deskripsi (opsional)'}
                                 className="mt-2 flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             />
                             <InputError message={errors?.deskripsi} className="mt-2" />
@@ -80,16 +78,16 @@ export default function KategoriCreate({ errors }: Props) {
                     <div className="mt-6 flex justify-end gap-4">
                         <Link href="/kategori">
                             <Button type="button" variant="outline" disabled={processing}>
-                                {t('users.form.cancel')}
+                                {'Batal'}
                             </Button>
                         </Link>
                         <Button type="submit" disabled={processing}>
                             {processing ? (
-                                <>{t('users.form.saving')}</>
+                                <>{'Menyimpan...'}</>
                             ) : (
                                 <>
                                     <Save className="mr-2 h-4 w-4" />
-                                    {t('common.save')}
+                                    {'Simpan'}
                                 </>
                             )}
                         </Button>

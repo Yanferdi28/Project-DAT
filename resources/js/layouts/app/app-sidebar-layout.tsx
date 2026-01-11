@@ -3,7 +3,6 @@ import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useAppearance } from '@/hooks/use-appearance';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 
 export default function AppSidebarLayout({
@@ -13,17 +12,12 @@ export default function AppSidebarLayout({
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const { appearance, updateAppearance } = useAppearance();
-    const { language, setLanguage } = useLanguage();
     
     const isDarkMode = appearance === 'dark' || (appearance === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
     const toggleTheme = () => {
         const isDark = appearance === 'dark' || (appearance === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         updateAppearance(isDark ? 'light' : 'dark');
-    };
-
-    const toggleLanguage = () => {
-        setLanguage(language === 'id' ? 'en' : 'id');
     };
 
     return (
@@ -55,15 +49,6 @@ export default function AppSidebarLayout({
                             )}
                         </div>
                         <div className="flex items-center gap-2">
-                            <Button
-                                onClick={toggleLanguage}
-                                variant="outline"
-                                size="sm"
-                                className="h-9 px-3 font-semibold"
-                                title={language === 'id' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'}
-                            >
-                                {language === 'id' ? 'EN' : 'ID'}
-                            </Button>
                             <Button
                                 onClick={toggleTheme}
                                 variant="outline"

@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Download, Calendar, FileText, FolderOpen, User, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { ArrowLeft, Download, Calendar, FileText, FolderOpen, User, CheckCircle, XCircle, Clock, Eye, Image, FileIcon, ZoomIn, ZoomOut, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import AppLayout from '@/layouts/app-layout';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface KodeKlasifikasi {
     id: number;
@@ -65,6 +71,8 @@ interface ArsipUnit {
     verified_at: string | null;
     verified_by: number | null;
     verifikasi_oleh: number | null;
+    verifikasi_tanggal: string | null;
+    verifikasi_keterangan: string | null;
     created_at: string;
     updated_at: string;
     kode_klasifikasi: KodeKlasifikasi;
@@ -85,7 +93,37 @@ interface Props {
 }
 
 export default function Show({ arsipUnit, auth }: Props) {
-    const { t } = useLanguage();
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [imageZoom, setImageZoom] = useState(1);
+    const [imageRotation, setImageRotation] = useState(0);
+
+    // Helper function to check if file is an image
+    const isImage = (filename: string | null) => {
+        if (!filename) return false;
+        const ext = filename.split('.').pop()?.toLowerCase();
+        return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(ext || '');
+    };
+
+    // Helper function to check if file is a PDF
+    const isPdf = (filename: string | null) => {
+        if (!filename) return false;
+        const ext = filename.split('.').pop()?.toLowerCase();
+        return ext === 'pdf';
+    };
+
+    // Helper function to get file extension
+    const getFileExtension = (filename: string | null) => {
+        if (!filename) return '';
+        return filename.split('.').pop()?.toUpperCase() || '';
+    };
+
+    const handleZoomIn = () => setImageZoom(prev => Math.min(prev + 0.25, 3));
+    const handleZoomOut = () => setImageZoom(prev => Math.max(prev - 0.25, 0.5));
+    const handleRotate = () => setImageRotation(prev => (prev + 90) % 360);
+    const resetImageView = () => {
+        setImageZoom(1);
+        setImageRotation(0);
+    };
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -138,7 +176,7 @@ export default function Show({ arsipUnit, auth }: Props) {
 
     return (
         <AppLayout>
-            <Head title={t('arsipUnit.detail')} />
+            <Head title={'Detail Arsip Unit'} />
 
             <div className="py-6">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -146,14 +184,14 @@ export default function Show({ arsipUnit, auth }: Props) {
                         <Link href="/arsip-unit">
                             <Button variant="ghost" size="sm">
                                 <ArrowLeft className="mr-2 h-4 w-4" />
-                                {t('common.back')}
+                                {'Kembali'}
                             </Button>
                         </Link>
                         <div className="flex gap-2">
                             {!['management', 'operator'].includes(auth.user?.role || '') && (
                                 <Link href={`/arsip-unit/${arsipUnit.id_berkas}/edit`}>
                                     <Button variant="outline" size="sm">
-                                        {t('common.edit')}
+                                        {'Edit'}
                                     </Button>
                                 </Link>
                             )}
@@ -161,7 +199,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                 <a href={`/storage/${arsipUnit.dokumen}`} target="_blank" rel="noopener noreferrer">
                                     <Button variant="outline" size="sm">
                                         <Download className="mr-2 h-4 w-4" />
-                                        {t('arsipUnit.downloadDokumen')}
+                                        {'Download Dokumen'}
                                     </Button>
                                 </a>
                             )}
@@ -195,12 +233,12 @@ export default function Show({ arsipUnit, auth }: Props) {
                                 <CardHeader>
                                     <CardTitle className="flex items-center">
                                         <FileText className="mr-2 h-5 w-5" />
-                                        {t('arsipUnit.informasiArsip')}
+                                        {'Informasi Arsip'}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.kodeKlasifikasi')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Kode Klasifikasi'}</label>
                                         <p className="mt-1 text-sm">
                                             {arsipUnit.kode_klasifikasi.kode_klasifikasi} - {arsipUnit.kode_klasifikasi.uraian}
                                         </p>
@@ -209,21 +247,21 @@ export default function Show({ arsipUnit, auth }: Props) {
                                     <Separator />
 
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.unitPengolah')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Unit Pengolah'}</label>
                                         <p className="mt-1 text-sm">{arsipUnit.unit_pengolah.nama}</p>
                                     </div>
 
                                     <Separator />
 
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.kategori')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Kategori'}</label>
                                         <p className="mt-1 text-sm">{arsipUnit.kategori.nama}</p>
                                     </div>
 
                                     <Separator />
 
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.subKategori')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Sub Kategori'}</label>
                                         <p className="mt-1 text-sm">{arsipUnit.sub_kategori.nama}</p>
                                     </div>
 
@@ -231,15 +269,15 @@ export default function Show({ arsipUnit, auth }: Props) {
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.retensiAktif')}</label>
+                                            <label className="text-sm font-medium text-muted-foreground">{'Retensi Aktif'}</label>
                                             <p className="mt-1 text-sm">
-                                                {arsipUnit.retensi_aktif ? `${arsipUnit.retensi_aktif} ${t('arsipUnit.tahun')}` : '-'}
+                                                {arsipUnit.retensi_aktif ? `${arsipUnit.retensi_aktif} ${'tahun'}` : '-'}
                                             </p>
                                         </div>
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.retensiInaktif')}</label>
+                                            <label className="text-sm font-medium text-muted-foreground">{'Retensi Inaktif'}</label>
                                             <p className="mt-1 text-sm">
-                                                {arsipUnit.retensi_inaktif ? `${arsipUnit.retensi_inaktif} ${t('arsipUnit.tahun')}` : '-'}
+                                                {arsipUnit.retensi_inaktif ? `${arsipUnit.retensi_inaktif} ${'tahun'}` : '-'}
                                             </p>
                                         </div>
                                     </div>
@@ -248,7 +286,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             <Separator />
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.indeks')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'Indeks'}</label>
                                                 <p className="mt-1 text-sm">{arsipUnit.indeks}</p>
                                             </div>
                                         </>
@@ -258,14 +296,14 @@ export default function Show({ arsipUnit, auth }: Props) {
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.tanggal')}</label>
+                                            <label className="text-sm font-medium text-muted-foreground">{'Tanggal'}</label>
                                             <p className="mt-1 flex items-center text-sm">
                                                 <Calendar className="mr-1 h-4 w-4" />
                                                 {formatDate(arsipUnit.tanggal)}
                                             </p>
                                         </div>
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.jumlah')}</label>
+                                            <label className="text-sm font-medium text-muted-foreground">{'Jumlah'}</label>
                                             <p className="mt-1 text-sm">
                                                 {arsipUnit.jumlah_nilai} {formatJumlahSatuan(arsipUnit.jumlah_satuan)}
                                             </p>
@@ -275,7 +313,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                     <Separator />
 
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.tingkatPerkembangan')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Tingkat Perkembangan'}</label>
                                         <p className="mt-1 text-sm">{formatTingkatPerkembangan(arsipUnit.tingkat_perkembangan)}</p>
                                     </div>
 
@@ -283,7 +321,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             <Separator />
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.skkaad')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'SKKAAD'}</label>
                                                 <p className="mt-1 text-sm">{arsipUnit.skkaad}</p>
                                             </div>
                                         </>
@@ -296,13 +334,13 @@ export default function Show({ arsipUnit, auth }: Props) {
                                 <CardHeader>
                                     <CardTitle className="flex items-center">
                                         <FolderOpen className="mr-2 h-5 w-5" />
-                                        {t('arsipUnit.lokasiPenyimpanan')}
+                                        {'Lokasi Penyimpanan'}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     {arsipUnit.ruangan && (
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.ruangan')}</label>
+                                            <label className="text-sm font-medium text-muted-foreground">{'Ruangan'}</label>
                                             <p className="mt-1 text-sm">{arsipUnit.ruangan}</p>
                                         </div>
                                     )}
@@ -311,7 +349,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             {arsipUnit.ruangan && <Separator />}
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.noFilling')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'No. Filling'}</label>
                                                 <p className="mt-1 text-sm">{arsipUnit.no_filling}</p>
                                             </div>
                                         </>
@@ -321,7 +359,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             {(arsipUnit.ruangan || arsipUnit.no_filling) && <Separator />}
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.noLaci')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'No. Laci'}</label>
                                                 <p className="mt-1 text-sm">{arsipUnit.no_laci}</p>
                                             </div>
                                         </>
@@ -331,7 +369,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             {(arsipUnit.ruangan || arsipUnit.no_filling || arsipUnit.no_laci) && <Separator />}
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.noFolder')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'No. Folder'}</label>
                                                 <p className="mt-1 text-sm">{arsipUnit.no_folder}</p>
                                             </div>
                                         </>
@@ -341,7 +379,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             {(arsipUnit.ruangan || arsipUnit.no_filling || arsipUnit.no_laci || arsipUnit.no_folder) && <Separator />}
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.noBox')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'No. Box'}</label>
                                                 <p className="mt-1 text-sm">{arsipUnit.no_box}</p>
                                             </div>
                                         </>
@@ -351,17 +389,89 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             {(arsipUnit.ruangan || arsipUnit.no_filling || arsipUnit.no_laci || arsipUnit.no_folder || arsipUnit.no_box) && <Separator />}
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.dokumen')}</label>
-                                                <div className="mt-1 flex items-center gap-2">
-                                                    <FileText className="h-4 w-4 text-muted-foreground" />
-                                                    <a
-                                                        href={`/storage/${arsipUnit.dokumen}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-sm text-blue-600 hover:underline dark:text-blue-400"
-                                                    >
-                                                        {arsipUnit.dokumen.split('/').pop()}
-                                                    </a>
+                                                <label className="text-sm font-medium text-muted-foreground">{'Dokumen'}</label>
+                                                <div className="mt-2 space-y-3">
+                                                    {/* Preview Area */}
+                                                    {isImage(arsipUnit.dokumen) ? (
+                                                        <div 
+                                                            className="relative group cursor-pointer rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+                                                            onClick={() => setPreviewOpen(true)}
+                                                        >
+                                                            <img
+                                                                src={`/storage/${arsipUnit.dokumen}`}
+                                                                alt="Preview Dokumen"
+                                                                className="w-full h-48 object-cover transition-transform group-hover:scale-105"
+                                                            />
+                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                                <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
+                                                                    <Eye className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ) : isPdf(arsipUnit.dokumen) ? (
+                                                        <div className="space-y-3">
+                                                            <div className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden bg-gray-100 dark:bg-gray-800">
+                                                                <iframe
+                                                                    src={`/file/preview/${arsipUnit.dokumen}#view=FitH`}
+                                                                    className="w-full h-[500px]"
+                                                                    title="PDF Preview"
+                                                                    style={{ border: 'none' }}
+                                                                />
+                                                            </div>
+                                                            <div className="flex justify-center">
+                                                                <a 
+                                                                    href={`/file/preview/${arsipUnit.dokumen}`}
+                                                                    target="_blank" 
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <Button variant="outline" size="sm">
+                                                                        <Eye className="h-4 w-4 mr-2" />
+                                                                        Buka PDF di Tab Baru (Full Screen)
+                                                                    </Button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                                            <div className="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                                                                <FileIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                                                    {arsipUnit.dokumen.split('/').pop()}
+                                                                </p>
+                                                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                    Format: {getFileExtension(arsipUnit.dokumen)}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    
+                                                    {/* File Info & Actions */}
+                                                    <div className="flex items-center justify-between">
+                                                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                                            <FileText className="h-4 w-4" />
+                                                            <span>{arsipUnit.dokumen.split('/').pop()}</span>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            {isImage(arsipUnit.dokumen) && (
+                                                                <Button
+                                                                    variant="outline"
+                                                                    size="sm"
+                                                                    onClick={() => setPreviewOpen(true)}
+                                                                >
+                                                                    <Eye className="h-4 w-4 mr-1" />
+                                                                    Lihat
+                                                                </Button>
+                                                            )}
+                                                            <a href={`/storage/${arsipUnit.dokumen}`} target="_blank" rel="noopener noreferrer">
+                                                                <Button variant="outline" size="sm">
+                                                                    <Download className="h-4 w-4 mr-1" />
+                                                                    Unduh
+                                                                </Button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </>
@@ -371,7 +481,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             <Separator />
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.keterangan')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'Keterangan'}</label>
                                                 <p className="mt-1 text-sm whitespace-pre-wrap">{arsipUnit.keterangan}</p>
                                             </div>
                                         </>
@@ -379,34 +489,44 @@ export default function Show({ arsipUnit, auth }: Props) {
 
                                     {!arsipUnit.ruangan && !arsipUnit.no_filling && !arsipUnit.no_laci && 
                                      !arsipUnit.no_folder && !arsipUnit.no_box && !arsipUnit.dokumen && !arsipUnit.keterangan && (
-                                        <p className="text-sm text-muted-foreground">{t('arsipUnit.tidakAdaLokasiPenyimpanan')}</p>
+                                        <p className="text-sm text-muted-foreground">{'Tidak ada data lokasi penyimpanan'}</p>
                                     )}
                                 </CardContent>
                             </Card>
                         </div>
 
                         {/* Informasi Verifikasi */}
-                        {(arsipUnit.verified_at || arsipUnit.verified_by_user || arsipUnit.verifikasi_oleh_user) && (
+                        {(arsipUnit.verified_at || arsipUnit.verified_by_user || arsipUnit.verifikasi_oleh_user || arsipUnit.verifikasi_tanggal || arsipUnit.verifikasi_keterangan) && (
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center">
                                         <User className="mr-2 h-5 w-5" />
-                                        {t('arsipUnit.informasiVerifikasi')}
+                                        {'Informasi Verifikasi'}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     {arsipUnit.verified_at && (
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.tanggalVerifikasi')}</label>
+                                            <label className="text-sm font-medium text-muted-foreground">{'Tanggal Verifikasi'}</label>
                                             <p className="mt-1 text-sm">{formatDate(arsipUnit.verified_at)}</p>
                                         </div>
+                                    )}
+
+                                    {arsipUnit.verifikasi_tanggal && (
+                                        <>
+                                            <Separator />
+                                            <div>
+                                                <label className="text-sm font-medium text-muted-foreground">Tanggal Verifikasi Status</label>
+                                                <p className="mt-1 text-sm">{formatDate(arsipUnit.verifikasi_tanggal)}</p>
+                                            </div>
+                                        </>
                                     )}
 
                                     {arsipUnit.verified_by_user && (
                                         <>
                                             <Separator />
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.diverifikasiOleh')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'Diverifikasi Oleh'}</label>
                                                 <p className="mt-1 text-sm">
                                                     {arsipUnit.verified_by_user.name} ({arsipUnit.verified_by_user.email})
                                                 </p>
@@ -418,10 +538,20 @@ export default function Show({ arsipUnit, auth }: Props) {
                                         <>
                                             <Separator />
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{t('arsipUnit.verifikasiOleh')}</label>
+                                                <label className="text-sm font-medium text-muted-foreground">{'Diverifikasi Oleh'}</label>
                                                 <p className="mt-1 text-sm">
                                                     {arsipUnit.verifikasi_oleh_user.name} ({arsipUnit.verifikasi_oleh_user.email})
                                                 </p>
+                                            </div>
+                                        </>
+                                    )}
+
+                                    {arsipUnit.status === 'ditolak' && arsipUnit.verifikasi_keterangan && (
+                                        <>
+                                            <Separator />
+                                            <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
+                                                <label className="text-sm font-medium text-red-800 dark:text-red-400">Alasan Penolakan</label>
+                                                <p className="mt-1 text-sm text-red-700 whitespace-pre-wrap dark:text-red-300">{arsipUnit.verifikasi_keterangan}</p>
                                             </div>
                                         </>
                                     )}
@@ -432,16 +562,16 @@ export default function Show({ arsipUnit, auth }: Props) {
                         {/* Metadata */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>{t('common.metadata')}</CardTitle>
+                                <CardTitle>{'Metadata'}</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('common.createdAt')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Dibuat'}</label>
                                         <p className="mt-1 text-sm">{formatDate(arsipUnit.created_at)}</p>
                                     </div>
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">{t('common.updatedAt')}</label>
+                                        <label className="text-sm font-medium text-muted-foreground">{'Terakhir Diupdate'}</label>
                                         <p className="mt-1 text-sm">{formatDate(arsipUnit.updated_at)}</p>
                                     </div>
                                 </div>
@@ -450,6 +580,68 @@ export default function Show({ arsipUnit, auth }: Props) {
                     </div>
                 </div>
             </div>
+
+            {/* Image Preview Modal */}
+            {arsipUnit.dokumen && isImage(arsipUnit.dokumen) && (
+                <Dialog open={previewOpen} onOpenChange={(open) => {
+                    setPreviewOpen(open);
+                    if (!open) resetImageView();
+                }}>
+                    <DialogContent className="max-w-5xl w-full h-[90vh] flex flex-col p-0">
+                        <DialogHeader className="p-4 border-b flex-shrink-0">
+                            <div className="flex items-center justify-between">
+                                <DialogTitle className="flex items-center gap-2">
+                                    <Image className="h-5 w-5" />
+                                    {arsipUnit.dokumen.split('/').pop()}
+                                </DialogTitle>
+                                <div className="flex items-center gap-2">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={handleZoomOut}
+                                        disabled={imageZoom <= 0.5}
+                                    >
+                                        <ZoomOut className="h-4 w-4" />
+                                    </Button>
+                                    <span className="text-sm font-medium min-w-[60px] text-center">
+                                        {Math.round(imageZoom * 100)}%
+                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={handleZoomIn}
+                                        disabled={imageZoom >= 3}
+                                    >
+                                        <ZoomIn className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={handleRotate}
+                                    >
+                                        <RotateCw className="h-4 w-4" />
+                                    </Button>
+                                    <a href={`/storage/${arsipUnit.dokumen}`} download>
+                                        <Button variant="outline" size="sm">
+                                            <Download className="h-4 w-4" />
+                                        </Button>
+                                    </a>
+                                </div>
+                            </div>
+                        </DialogHeader>
+                        <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
+                            <img
+                                src={`/storage/${arsipUnit.dokumen}`}
+                                alt="Preview Dokumen"
+                                className="max-w-full max-h-full object-contain transition-transform duration-200"
+                                style={{
+                                    transform: `scale(${imageZoom}) rotate(${imageRotation}deg)`,
+                                }}
+                            />
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            )}
         </AppLayout>
     );
 }

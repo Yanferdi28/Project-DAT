@@ -5,7 +5,6 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
-import { LanguageProvider } from './contexts/LanguageContext';
 
 const appName = import.meta.env.VITE_APP_NAME || 'RRI Banjarmasin';
 
@@ -21,9 +20,7 @@ createInertiaApp({
 
         root.render(
             <StrictMode>
-                <LanguageProvider>
-                    <App {...props} />
-                </LanguageProvider>
+                <App {...props} />
             </StrictMode>,
         );
     },

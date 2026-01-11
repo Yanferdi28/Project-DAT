@@ -2,7 +2,6 @@ import AppLayout from '@/layouts/app-layout';
 import { Link, router, usePage } from '@inertiajs/react';
 import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye } from 'lucide-react';
 import { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Badge } from '@/components/ui/badge';
 import {
     Dialog,
@@ -84,7 +83,6 @@ interface PageProps {
 }
 
 export default function Show() {
-    const { t } = useLanguage();
     const { berkasArsip, availableArsipUnits, auth } = usePage<PageProps>().props;
 
     const [addDialog, setAddDialog] = useState(false);
@@ -165,8 +163,8 @@ export default function Show() {
         <AppLayout
             breadcrumbs={[
                 { title: 'Dashboard', href: '/dashboard' },
-                { title: t('berkasArsip.title'), href: '/berkas-arsip' },
-                { title: t('berkasArsip.detail'), href: '' },
+                { title: 'Berkas Arsip', href: '/berkas-arsip' },
+                { title: 'Detail Berkas Arsip', href: '' },
             ]}
         >
             <div className="mx-auto max-w-6xl">
@@ -176,7 +174,7 @@ export default function Show() {
                         className="inline-flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                     >
                         <ArrowLeft className="h-4 w-4" />
-                        {t('common.back')}
+                        {'Kembali'}
                     </Link>
                 </div>
 
@@ -188,7 +186,7 @@ export default function Show() {
                                 {berkasArsip.nama_berkas}
                             </h1>
                             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                {t('berkasArsip.nomorBerkas')}: {berkasArsip.nomor_berkas}
+                                {'Nomor Berkas'}: {berkasArsip.nomor_berkas}
                             </p>
                         </div>
                         {canManage && (
@@ -197,7 +195,7 @@ export default function Show() {
                                 className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                             >
                                 <SquarePen className="h-4 w-4" />
-                                {t('common.edit')}
+                                {'Edit'}
                             </Link>
                         )}
                     </div>
@@ -208,12 +206,12 @@ export default function Show() {
                     {/* Informasi Berkas */}
                     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                            {t('berkasArsip.informasiBerkas')}
+                            {'Informasi Berkas'}
                         </h2>
                         <div className="grid gap-4 sm:grid-cols-2">
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.namaBerkas')}
+                                    {'Nama Berkas'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {berkasArsip.nama_berkas}
@@ -221,7 +219,7 @@ export default function Show() {
                             </div>
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.kodeKlasifikasi')}
+                                    {'Kode Klasifikasi'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {berkasArsip.kode_klasifikasi
@@ -239,23 +237,23 @@ export default function Show() {
                             </div>
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.retensiAktif')}
+                                    {'Retensi Aktif'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                                    {berkasArsip.retensi_aktif || '-'} {t('berkasArsip.tahun')}
+                                    {berkasArsip.retensi_aktif || '-'} {'Tahun'}
                                 </p>
                             </div>
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.retensiInaktif')}
+                                    {'Retensi Inaktif'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                                    {berkasArsip.retensi_inaktif || '-'} {t('berkasArsip.tahun')}
+                                    {berkasArsip.retensi_inaktif || '-'} {'Tahun'}
                                 </p>
                             </div>
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.penyusutanAkhir')}
+                                    {'Penyusutan Akhir'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {berkasArsip.penyusutan_akhir || '-'}
@@ -263,7 +261,7 @@ export default function Show() {
                             </div>
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.lokasiFisik')}
+                                    {'Lokasi Fisik'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {berkasArsip.lokasi_fisik || '-'}
@@ -273,7 +271,7 @@ export default function Show() {
                         {berkasArsip.uraian && (
                             <div className="mt-4">
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('berkasArsip.uraian')}
+                                    {'Uraian'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {berkasArsip.uraian}
@@ -286,7 +284,7 @@ export default function Show() {
                     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <div className="mb-4 flex items-center justify-between">
                             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                {t('berkasArsip.daftarArsipUnit')} ({berkasArsip.arsip_units?.length || 0})
+                                {'Daftar Arsip Unit'} ({berkasArsip.arsip_units?.length || 0})
                             </h2>
                             {canManage && availableArsipUnits.length > 0 && (
                                 <button
@@ -398,12 +396,12 @@ export default function Show() {
                     {/* Metadata */}
                     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                            {t('common.metadata')}
+                            {'Metadata'}
                         </h2>
                         <div className="grid gap-4 sm:grid-cols-2">
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('common.createdAt')}
+                                    {'Dibuat'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {new Date(berkasArsip.created_at).toLocaleString('id-ID')}
@@ -411,7 +409,7 @@ export default function Show() {
                             </div>
                             <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {t('common.updatedAt')}
+                                    {'Terakhir Diupdate'}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                     {new Date(berkasArsip.updated_at).toLocaleString('id-ID')}
@@ -471,14 +469,14 @@ export default function Show() {
                             disabled={isAdding}
                             className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </button>
                         <button
                             onClick={handleAddArsipUnit}
                             disabled={isAdding || !selectedArsipUnitId}
                             className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {isAdding ? t('common.saving') : 'Tambahkan'}
+                            {isAdding ? 'Menyimpan...' : 'Tambahkan'}
                         </button>
                     </DialogFooter>
                 </DialogContent>
@@ -511,14 +509,14 @@ export default function Show() {
                             disabled={isRemoving}
                             className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </button>
                         <button
                             onClick={handleRemoveArsipUnit}
                             disabled={isRemoving}
                             className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {isRemoving ? t('common.saving') : 'Keluarkan'}
+                            {isRemoving ? 'Menyimpan...' : 'Keluarkan'}
                         </button>
                     </DialogFooter>
                 </DialogContent>

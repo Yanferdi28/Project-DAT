@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Kategori {
     id: number;
@@ -28,7 +27,6 @@ interface Props {
 }
 
 export default function SubKategoriEdit({ subKategori, kategoris, errors }: Props) {
-    const { t } = useLanguage();
     const [processing, setProcessing] = useState(false);
     const [data, setData] = useState({
         kategori_id: subKategori.kategori_id.toString(),
@@ -55,8 +53,8 @@ export default function SubKategoriEdit({ subKategori, kategoris, errors }: Prop
                         </Button>
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{t('subKategori.edit')}</h1>
-                        <p className="text-muted-foreground mt-1">{t('subKategori.updateInfo')}</p>
+                        <h1 className="text-3xl font-bold tracking-tight">{'Edit Sub Kategori'}</h1>
+                        <p className="text-muted-foreground mt-1">{'Perbarui informasi sub kategori'}</p>
                     </div>
                 </div>
 
@@ -65,7 +63,7 @@ export default function SubKategoriEdit({ subKategori, kategoris, errors }: Prop
                     <div className="grid gap-6">
                         {/* Kategori */}
                         <div>
-                            <Label htmlFor="kategori_id">{t('subKategori.kategori')} *</Label>
+                            <Label htmlFor="kategori_id">{'Kategori'} *</Label>
                             <select
                                 id="kategori_id"
                                 value={data.kategori_id}
@@ -73,7 +71,7 @@ export default function SubKategoriEdit({ subKategori, kategoris, errors }: Prop
                                 required
                                 className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
-                                <option value="">{t('subKategori.selectKategori')}</option>
+                                <option value="">{'-- Pilih Kategori --'}</option>
                                 {kategoris.map((kat) => (
                                     <option key={kat.id} value={kat.id}>
                                         {kat.nama_kategori}
@@ -85,13 +83,13 @@ export default function SubKategoriEdit({ subKategori, kategoris, errors }: Prop
 
                         {/* Nama Sub Kategori */}
                         <div>
-                            <Label htmlFor="nama_sub_kategori">{t('subKategori.namaSubKategori')} *</Label>
+                            <Label htmlFor="nama_sub_kategori">{'Nama Sub Kategori'} *</Label>
                             <Input
                                 id="nama_sub_kategori"
                                 type="text"
                                 value={data.nama_sub_kategori}
                                 onChange={(e) => setData({ ...data, nama_sub_kategori: e.target.value })}
-                                placeholder={t('subKategori.enterNamaSubKategori')}
+                                placeholder={'Masukkan nama sub kategori'}
                                 required
                                 className="mt-2"
                             />
@@ -100,12 +98,12 @@ export default function SubKategoriEdit({ subKategori, kategoris, errors }: Prop
 
                         {/* Deskripsi */}
                         <div>
-                            <Label htmlFor="deskripsi">{t('subKategori.deskripsi')}</Label>
+                            <Label htmlFor="deskripsi">{'Deskripsi'}</Label>
                             <textarea
                                 id="deskripsi"
                                 value={data.deskripsi}
                                 onChange={(e) => setData({ ...data, deskripsi: e.target.value })}
-                                placeholder={t('subKategori.enterDeskripsi')}
+                                placeholder={'Masukkan deskripsi (opsional)'}
                                 rows={4}
                                 className="mt-2 flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             />
@@ -117,16 +115,16 @@ export default function SubKategoriEdit({ subKategori, kategoris, errors }: Prop
                     <div className="mt-6 flex justify-end gap-4">
                         <Link href="/sub-kategori">
                             <Button type="button" variant="outline" disabled={processing}>
-                                {t('users.form.cancel')}
+                                {'Batal'}
                             </Button>
                         </Link>
                         <Button type="submit" disabled={processing}>
                             {processing ? (
-                                <>{t('users.form.saving')}</>
+                                <>{'Menyimpan...'}</>
                             ) : (
                                 <>
                                     <Save className="mr-2 h-4 w-4" />
-                                    {t('users.form.saveChanges')}
+                                    {'Simpan Perubahan'}
                                 </>
                             )}
                         </Button>

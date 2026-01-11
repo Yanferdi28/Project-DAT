@@ -27,7 +27,6 @@ import {
 } from '@/components/ui/popover';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Upload, Check, ChevronsUpDown } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 interface KodeKlasifikasi {
@@ -71,7 +70,6 @@ export default function Create({
     subKategoris,
     userUnitPengolahId,
 }: Props) {
-    const { t } = useLanguage();
     
     // Check if user has unit_pengolah restriction
     const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
@@ -157,7 +155,7 @@ export default function Create({
 
     return (
         <AppLayout>
-            <Head title={t('arsipUnit.create')} />
+            <Head title={'Tambah Arsip Unit Baru'} />
 
             <div className="py-6">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -165,7 +163,7 @@ export default function Create({
                         <Link href="/arsip-unit">
                             <Button variant="ghost" size="sm">
                                 <ArrowLeft className="mr-2 h-4 w-4" />
-                                {t('common.back')}
+                                {'Kembali'}
                             </Button>
                         </Link>
                     </div>
@@ -173,9 +171,9 @@ export default function Create({
                     <form onSubmit={submit} className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle>{t('arsipUnit.create')}</CardTitle>
+                                <CardTitle>{'Tambah Arsip Unit Baru'}</CardTitle>
                                 <CardDescription>
-                                    {t('arsipUnit.createDescription')}
+                                    {'Isi form di bawah untuk menambahkan arsip unit baru'}
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
@@ -183,7 +181,7 @@ export default function Create({
                                     {/* Kode Klasifikasi */}
                                     <div className="space-y-2">
                                         <Label htmlFor="kode_klasifikasi_id">
-                                            {t('arsipUnit.kodeKlasifikasi')} *
+                                            {'Kode Klasifikasi'} *
                                         </Label>
                                         <Popover open={openKodeKlasifikasi} onOpenChange={setOpenKodeKlasifikasi}>
                                             <PopoverTrigger asChild>
@@ -199,7 +197,7 @@ export default function Create({
                                                           )?.kode_klasifikasi + ' - ' + kodeKlasifikasis.find(
                                                               (item) => item.id.toString() === data.kode_klasifikasi_id
                                                           )?.uraian
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -244,7 +242,7 @@ export default function Create({
                                     {/* Unit Pengolah */}
                                     <div className="space-y-2">
                                         <Label htmlFor="unit_pengolah_arsip_id">
-                                            {t('arsipUnit.unitPengolah')} * {isUnitPengolahLocked && <span className="text-xs text-gray-500">(terkunci)</span>}
+                                            {'Unit Pengolah'} * {isUnitPengolahLocked && <span className="text-xs text-gray-500">(terkunci)</span>}
                                         </Label>
                                         <Popover open={!isUnitPengolahLocked && openUnitPengolah} onOpenChange={setOpenUnitPengolah}>
                                             <PopoverTrigger asChild>
@@ -259,7 +257,7 @@ export default function Create({
                                                         ? unitPengolahs.find(
                                                               (item) => item.id.toString() === data.unit_pengolah_arsip_id
                                                           )?.nama
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -311,7 +309,7 @@ export default function Create({
                                     {/* Kategori */}
                                     <div className="space-y-2">
                                         <Label htmlFor="kategori_id">
-                                            {t('arsipUnit.kategori')} *
+                                            {'Kategori'} *
                                         </Label>
                                         <Popover open={openKategori} onOpenChange={setOpenKategori}>
                                             <PopoverTrigger asChild>
@@ -325,7 +323,7 @@ export default function Create({
                                                         ? kategoris.find(
                                                               (item) => item.id.toString() === data.kategori_id
                                                           )?.nama
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -370,7 +368,7 @@ export default function Create({
                                     {/* Sub Kategori */}
                                     <div className="space-y-2">
                                         <Label htmlFor="sub_kategori_id">
-                                            {t('arsipUnit.subKategori')} *
+                                            {'Sub Kategori'} *
                                         </Label>
                                         <Popover open={openSubKategori} onOpenChange={setOpenSubKategori}>
                                             <PopoverTrigger asChild>
@@ -385,7 +383,7 @@ export default function Create({
                                                         ? filteredSubKategoris.find(
                                                               (item) => item.id.toString() === data.sub_kategori_id
                                                           )?.nama
-                                                        : t('common.select')}
+                                                        : 'Pilih'}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -429,7 +427,7 @@ export default function Create({
 
                                     {/* Tanggal */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="tanggal">{t('arsipUnit.tanggal')} *</Label>
+                                        <Label htmlFor="tanggal">{'Tanggal'} *</Label>
                                         <Input
                                             id="tanggal"
                                             type="date"
@@ -444,7 +442,7 @@ export default function Create({
 
                                     {/* Indeks */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="indeks">{t('arsipUnit.indeks')}</Label>
+                                        <Label htmlFor="indeks">{'Indeks'}</Label>
                                         <Input
                                             id="indeks"
                                             type="text"
@@ -459,7 +457,7 @@ export default function Create({
                                     {/* Jumlah Nilai */}
                                     <div className="space-y-2">
                                         <Label htmlFor="jumlah_nilai">
-                                            {t('arsipUnit.jumlahNilai')} *
+                                            {'Jumlah Nilai'} *
                                         </Label>
                                         <Input
                                             id="jumlah_nilai"
@@ -481,7 +479,7 @@ export default function Create({
                                     {/* Jumlah Satuan */}
                                     <div className="space-y-2">
                                         <Label htmlFor="jumlah_satuan">
-                                            {t('arsipUnit.jumlahSatuan')} *
+                                            {'Jumlah Satuan'} *
                                         </Label>
                                         <Select
                                             value={data.jumlah_satuan}
@@ -508,7 +506,7 @@ export default function Create({
                                     {/* Tingkat Perkembangan */}
                                     <div className="space-y-2">
                                         <Label htmlFor="tingkat_perkembangan">
-                                            {t('arsipUnit.tingkatPerkembangan')} *
+                                            {'Tingkat Perkembangan'} *
                                         </Label>
                                         <Select
                                             value={data.tingkat_perkembangan}
@@ -536,7 +534,7 @@ export default function Create({
                                     {/* Retensi Aktif - Auto filled */}
                                     <div className="space-y-2">
                                         <Label htmlFor="retensi_aktif">
-                                            {t('arsipUnit.retensiAktif')}
+                                            {'Retensi Aktif'}
                                         </Label>
                                         <Input
                                             id="retensi_aktif"
@@ -555,7 +553,7 @@ export default function Create({
                                     {/* Retensi Inaktif - Auto filled */}
                                     <div className="space-y-2">
                                         <Label htmlFor="retensi_inaktif">
-                                            {t('arsipUnit.retensiInaktif')}
+                                            {'Retensi Inaktif'}
                                         </Label>
                                         <Input
                                             id="retensi_inaktif"
@@ -573,7 +571,7 @@ export default function Create({
 
                                     {/* SKKAAD - Auto filled */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="skkaad">{t('arsipUnit.skkaad')}</Label>
+                                        <Label htmlFor="skkaad">{'SKKAAD'}</Label>
                                         <Input
                                             id="skkaad"
                                             type="text"
@@ -598,7 +596,7 @@ export default function Create({
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {/* Ruangan */}
                                         <div className="space-y-2">
-                                        <Label htmlFor="ruangan">{t('arsipUnit.ruangan')}</Label>
+                                        <Label htmlFor="ruangan">{'Ruangan'}</Label>
                                         <Input
                                             id="ruangan"
                                             type="text"
@@ -613,7 +611,7 @@ export default function Create({
                                     {/* No Filling */}
                                     <div className="space-y-2">
                                         <Label htmlFor="no_filling">
-                                            {t('arsipUnit.noFilling')}
+                                            {'No. Filling'}
                                         </Label>
                                         <Input
                                             id="no_filling"
@@ -630,7 +628,7 @@ export default function Create({
 
                                     {/* No Laci */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="no_laci">{t('arsipUnit.noLaci')}</Label>
+                                        <Label htmlFor="no_laci">{'No. Laci'}</Label>
                                         <Input
                                             id="no_laci"
                                             type="text"
@@ -646,7 +644,7 @@ export default function Create({
 
                                     {/* No Folder */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="no_folder">{t('arsipUnit.noFolder')}</Label>
+                                        <Label htmlFor="no_folder">{'No. Folder'}</Label>
                                         <Input
                                             id="no_folder"
                                             type="text"
@@ -662,7 +660,7 @@ export default function Create({
 
                                     {/* No Box */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="no_box">{t('arsipUnit.noBox')}</Label>
+                                        <Label htmlFor="no_box">{'No. Box'}</Label>
                                         <Input
                                             id="no_box"
                                             type="text"
@@ -678,7 +676,7 @@ export default function Create({
                                 {/* Uraian Informasi */}
                                 <div className="space-y-2">
                                     <Label htmlFor="uraian_informasi">
-                                        {t('arsipUnit.uraianInformasi')} *
+                                        {'Uraian Informasi'} *
                                     </Label>
                                     <Textarea
                                         id="uraian_informasi"
@@ -699,7 +697,7 @@ export default function Create({
                                 {/* Upload Dokumen */}
                                 <div className="space-y-2">
                                     <Label htmlFor="dokumen">
-                                        {t('arsipUnit.dokumen')}
+                                        {'Dokumen'}
                                     </Label>
                                     <div className="flex items-center gap-4">
                                         <Input
@@ -731,11 +729,11 @@ export default function Create({
                         <div className="flex justify-end gap-4">
                             <Link href="/arsip-unit">
                                 <Button type="button" variant="outline">
-                                    {t('common.cancel')}
+                                    {'Batal'}
                                 </Button>
                             </Link>
                             <Button type="submit" disabled={processing}>
-                                {processing ? t('common.saving') : t('common.save')}
+                                {processing ? 'Menyimpan...' : 'Simpan'}
                             </Button>
                         </div>
                     </form>

@@ -6,7 +6,6 @@ import { Link, usePage, router } from '@inertiajs/react';
 import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2 } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import AppLogoIcon from './app-logo-icon';
 
 interface AppSidebarProps {
@@ -24,7 +23,6 @@ export function AppSidebar({
 }: AppSidebarProps = {}) {
     const { auth } = usePage<SharedData>().props;
     const page = usePage();
-    const { t } = useLanguage();
     const [internalCollapsed, setInternalCollapsed] = useState(false);
     const [internalMobileOpen, setInternalMobileOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -34,17 +32,17 @@ export function AppSidebar({
 
     const mainNavItems: NavItem[] = [
         {
-            title: t('nav.dashboard'),
+            title: 'Dashboard',
             href: dashboard(),
             icon: LayoutGrid,
         },
         {
-            title: t('nav.arsipUnit'),
+            title: 'Arsip Unit',
             href: '/arsip-unit',
             icon: FileText,
         },
         {
-            title: t('nav.berkasArsip'),
+            title: 'Berkas Arsip',
             href: '/berkas-arsip',
             icon: Folder,
         },
@@ -52,35 +50,35 @@ export function AppSidebar({
 
     const masterSubItems = [
         {
-            title: t('nav.userManagement'),
+            title: 'Manajemen Pengguna',
             href: usersRoutes.index().url,
         },
         {
-            title: t('nav.kodeKlasifikasi'),
+            title: 'Kode Klasifikasi',
             href: '/kode-klasifikasi',
         },
         {
-            title: t('nav.unitPengolah'),
+            title: 'Unit Pengolah',
             href: '/unit-pengolah',
         },
         {
-            title: t('nav.kategori'),
+            title: 'Kategori',
             href: '/kategori',
         },
         {
-            title: t('nav.subKategori'),
+            title: 'Sub Kategori',
             href: '/sub-kategori',
         },
     ];
 
     const footerNavItems: NavItem[] = [
         {
-            title: t('nav.repository'),
+            title: 'Repositori',
             href: 'https://github.com/laravel/react-starter-kit',
             icon: Folder,
         },
         {
-            title: t('nav.documentation'),
+            title: 'Dokumentasi',
             href: 'https://laravel.com/docs/starter-kits#react',
             icon: BookOpen,
         },
@@ -201,7 +199,7 @@ export function AppSidebar({
                                     <FileText className="h-5 w-5 transition-transform group-hover:scale-110" />
                                     {!isCollapsed && (
                                         <>
-                                            <span className="flex-1 font-medium text-left">{t('nav.master')}</span>
+                                            <span className="flex-1 font-medium text-left">Master</span>
                                             <ChevronRight className={'h-4 w-4 transition-transform ' + (isMasterOpen ? 'rotate-90' : '')} />
                                         </>
                                     )}
@@ -237,7 +235,7 @@ export function AppSidebar({
                                 <ClipboardList className="h-5 w-5 transition-transform group-hover:scale-110" />
                                 {!isCollapsed && (
                                     <>
-                                        <span className="flex-1 font-medium text-left">{t('nav.laporan')}</span>
+                                        <span className="flex-1 font-medium text-left">Laporan</span>
                                         <ChevronRight className={'h-4 w-4 transition-transform ' + (isLaporanOpen ? 'rotate-90' : '')} />
                                     </>
                                 )}
@@ -253,7 +251,7 @@ export function AppSidebar({
                                             className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/rekap-unit-pengolah') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                         >
                                             <Building2 className="h-3.5 w-3.5" />
-                                            {t('nav.rekapUnitPengolah')}
+                                            Rekap per Unit Pengolah
                                         </Link>
                                     )}
                                     <Link
@@ -261,21 +259,21 @@ export function AppSidebar({
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/penyusutan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <CalendarClock className="h-3.5 w-3.5" />
-                                        {t('nav.penyusutan')}
+                                        Arsip Mendekati Penyusutan
                                     </Link>
                                     <Link
                                         href="/laporan/status-verifikasi"
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/status-verifikasi') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <FileCheck className="h-3.5 w-3.5" />
-                                        {t('nav.statusVerifikasi')}
+                                        Status & Verifikasi Arsip
                                     </Link>
                                     <Link
                                         href="/laporan/berita-acara-penyerahan"
                                         className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/berita-acara-penyerahan') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
                                     >
                                         <FileSignature className="h-3.5 w-3.5" />
-                                        {t('nav.beritaAcaraPenyerahan')}
+                                        Berita Acara Penyerahan
                                     </Link>
                                 </div>
                             )}
@@ -346,14 +344,14 @@ export function AppSidebar({
                                     className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
                                 >
                                     <UserCog className="h-4 w-4" />
-                                    <span>{t('profile.editProfile')}</span>
+                                    <span>{'Edit Profil'}</span>
                                 </Link>
                                 <button
                                     onClick={handleLogout}
                                     className="flex w-full items-center gap-3 px-4 py-3 text-sm text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
                                 >
                                     <LogOut className="h-4 w-4" />
-                                    <span>{t('common.logout')}</span>
+                                    <span>{'Keluar'}</span>
                                 </button>
                             </div>
                         )}

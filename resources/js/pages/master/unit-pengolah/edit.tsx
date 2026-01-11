@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface UnitPengolah {
     id: number;
@@ -19,7 +18,6 @@ interface Props {
 }
 
 export default function UnitPengolahEdit({ unitPengolah, errors }: Props) {
-    const { t } = useLanguage();
     const [processing, setProcessing] = useState(false);
     const [data, setData] = useState({
         nama_unit: unitPengolah.nama_unit,
@@ -44,8 +42,8 @@ export default function UnitPengolahEdit({ unitPengolah, errors }: Props) {
                         </Button>
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{t('unitPengolah.edit')}</h1>
-                        <p className="text-muted-foreground mt-1">{t('unitPengolah.updateInfo')}</p>
+                        <h1 className="text-3xl font-bold tracking-tight">{'Edit Unit Pengolah'}</h1>
+                        <p className="text-muted-foreground mt-1">{'Perbarui informasi unit pengolah'}</p>
                     </div>
                 </div>
 
@@ -54,13 +52,13 @@ export default function UnitPengolahEdit({ unitPengolah, errors }: Props) {
                     <div className="grid gap-6">
                         {/* Nama Unit */}
                         <div>
-                            <Label htmlFor="nama_unit">{t('unitPengolah.namaUnit')} *</Label>
+                            <Label htmlFor="nama_unit">{'Nama Unit'} *</Label>
                             <Input
                                 id="nama_unit"
                                 type="text"
                                 value={data.nama_unit}
                                 onChange={(e) => setData({ ...data, nama_unit: e.target.value })}
-                                placeholder={t('unitPengolah.enterNamaUnit')}
+                                placeholder={'Masukkan nama unit pengolah'}
                                 required
                                 className="mt-2"
                             />
@@ -72,16 +70,16 @@ export default function UnitPengolahEdit({ unitPengolah, errors }: Props) {
                     <div className="mt-6 flex justify-end gap-4">
                         <Link href="/unit-pengolah">
                             <Button type="button" variant="outline" disabled={processing}>
-                                {t('users.form.cancel')}
+                                {'Batal'}
                             </Button>
                         </Link>
                         <Button type="submit" disabled={processing}>
                             {processing ? (
-                                <>{t('users.form.saving')}</>
+                                <>{'Menyimpan...'}</>
                             ) : (
                                 <>
                                     <Save className="mr-2 h-4 w-4" />
-                                    {t('users.form.saveChanges')}
+                                    {'Simpan Perubahan'}
                                 </>
                             )}
                         </Button>

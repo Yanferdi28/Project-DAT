@@ -26,6 +26,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('my-profile', [ProfileController::class, 'update'])->name('myprofile.update');
     Route::delete('my-profile/avatar', [ProfileController::class, 'deleteAvatar'])->name('myprofile.avatar.delete');
 
+    // File preview route (serve files inline for preview)
+    Route::get('file/preview/{path}', [ArsipUnitController::class, 'previewFile'])
+        ->where('path', '.*')
+        ->name('file.preview');
+
     // Arsip Unit routes (accessible by all authenticated users)
     Route::get('arsip-unit/print-preview', [ArsipUnitController::class, 'printPreview'])->name('arsip-unit.print-preview');
     Route::get('arsip-unit/export/pdf', [ArsipUnitController::class, 'exportPdf'])->name('arsip-unit.export-pdf');

@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ParentOption {
     kode_klasifikasi: string;
@@ -19,7 +18,6 @@ interface Props {
 }
 
 export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) {
-    const { t } = useLanguage();
     const [processing, setProcessing] = useState(false);
     const [data, setData] = useState({
         kode_klasifikasi: '',
@@ -50,8 +48,8 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
                         </Button>
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{t('kodeKlasifikasi.create')}</h1>
-                        <p className="text-muted-foreground mt-1">{t('kodeKlasifikasi.fillForm')}</p>
+                        <h1 className="text-3xl font-bold tracking-tight">{'Tambah Kode Klasifikasi Baru'}</h1>
+                        <p className="text-muted-foreground mt-1">{'Isi form di bawah untuk menambahkan kode klasifikasi baru'}</p>
                     </div>
                 </div>
 
@@ -60,13 +58,13 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
                     <div className="grid gap-6 md:grid-cols-2">
                         {/* Kode Klasifikasi */}
                         <div>
-                            <Label htmlFor="kode_klasifikasi">{t('kodeKlasifikasi.kode')} *</Label>
+                            <Label htmlFor="kode_klasifikasi">{'Kode'} *</Label>
                             <Input
                                 id="kode_klasifikasi"
                                 type="text"
                                 value={data.kode_klasifikasi}
                                 onChange={(e) => setData({ ...data, kode_klasifikasi: e.target.value })}
-                                placeholder={t('kodeKlasifikasi.enterKode')}
+                                placeholder={'Masukkan kode klasifikasi'}
                                 required
                                 className="mt-2"
                             />
@@ -75,14 +73,14 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
 
                         {/* Kode Klasifikasi Induk */}
                         <div>
-                            <Label htmlFor="kode_klasifikasi_induk">{t('kodeKlasifikasi.parent')}</Label>
+                            <Label htmlFor="kode_klasifikasi_induk">{'Kode Induk'}</Label>
                             <select
                                 id="kode_klasifikasi_induk"
                                 value={data.kode_klasifikasi_induk}
                                 onChange={(e) => setData({ ...data, kode_klasifikasi_induk: e.target.value })}
                                 className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
-                                <option value="">{t('kodeKlasifikasi.selectParent')}</option>
+                                <option value="">{'-- Pilih Kode Induk --'}</option>
                                 {parentOptions.map((opt) => (
                                     <option key={opt.kode_klasifikasi} value={opt.kode_klasifikasi}>
                                         {opt.kode_klasifikasi} - {opt.uraian}
@@ -94,13 +92,13 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
 
                         {/* Uraian */}
                         <div className="md:col-span-2">
-                            <Label htmlFor="uraian">{t('kodeKlasifikasi.uraian')} *</Label>
+                            <Label htmlFor="uraian">{'Uraian'} *</Label>
                             <Input
                                 id="uraian"
                                 type="text"
                                 value={data.uraian}
                                 onChange={(e) => setData({ ...data, uraian: e.target.value })}
-                                placeholder={t('kodeKlasifikasi.enterUraian')}
+                                placeholder={'Masukkan uraian'}
                                 required
                                 className="mt-2"
                             />
@@ -109,7 +107,7 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
 
                         {/* Retensi Aktif */}
                         <div>
-                            <Label htmlFor="retensi_aktif">{t('kodeKlasifikasi.retensiAktif')} ({t('kodeKlasifikasi.year')}) *</Label>
+                            <Label htmlFor="retensi_aktif">{'Retensi Aktif'} ({'Tahun'}) *</Label>
                             <Input
                                 id="retensi_aktif"
                                 type="number"
@@ -124,7 +122,7 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
 
                         {/* Retensi Inaktif */}
                         <div>
-                            <Label htmlFor="retensi_inaktif">{t('kodeKlasifikasi.retensiInaktif')} ({t('kodeKlasifikasi.year')}) *</Label>
+                            <Label htmlFor="retensi_inaktif">{'Retensi Inaktif'} ({'Tahun'}) *</Label>
                             <Input
                                 id="retensi_inaktif"
                                 type="number"
@@ -139,7 +137,7 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
 
                         {/* Status Akhir */}
                         <div>
-                            <Label htmlFor="status_akhir">{t('kodeKlasifikasi.statusAkhir')} *</Label>
+                            <Label htmlFor="status_akhir">{'Status Akhir'} *</Label>
                             <select
                                 id="status_akhir"
                                 value={data.status_akhir}
@@ -147,16 +145,16 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
                                 required
                                 className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
-                                <option value="Musnah">{t('kodeKlasifikasi.musnah')}</option>
-                                <option value="Permanen">{t('kodeKlasifikasi.permanen')}</option>
-                                <option value="Dinilai Kembali">{t('kodeKlasifikasi.dinilaiKembali')}</option>
+                                <option value="Musnah">{'Musnah'}</option>
+                                <option value="Permanen">{'Permanen'}</option>
+                                <option value="Dinilai Kembali">{'Dinilai Kembali'}</option>
                             </select>
                             <InputError message={errors?.status_akhir} className="mt-2" />
                         </div>
 
                         {/* Klasifikasi Keamanan */}
                         <div>
-                            <Label htmlFor="klasifikasi_keamanan">{t('kodeKlasifikasi.klasifikasiKeamanan')} *</Label>
+                            <Label htmlFor="klasifikasi_keamanan">{'Klasifikasi Keamanan'} *</Label>
                             <select
                                 id="klasifikasi_keamanan"
                                 value={data.klasifikasi_keamanan}
@@ -164,9 +162,9 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
                                 required
                                 className="mt-2 flex h-10 w-full rounded-md border border-input bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                             >
-                                <option value="Biasa">{t('kodeKlasifikasi.biasa')}</option>
-                                <option value="Rahasia">{t('kodeKlasifikasi.rahasia')}</option>
-                                <option value="Terbatas">{t('kodeKlasifikasi.terbatas')}</option>
+                                <option value="Biasa">{'Biasa'}</option>
+                                <option value="Rahasia">{'Rahasia'}</option>
+                                <option value="Terbatas">{'Terbatas'}</option>
                             </select>
                             <InputError message={errors?.klasifikasi_keamanan} className="mt-2" />
                         </div>
@@ -176,16 +174,16 @@ export default function KodeKlasifikasiCreate({ parentOptions, errors }: Props) 
                     <div className="mt-6 flex justify-end gap-4">
                         <Link href="/kode-klasifikasi">
                             <Button type="button" variant="outline" disabled={processing}>
-                                {t('users.form.cancel')}
+                                {'Batal'}
                             </Button>
                         </Link>
                         <Button type="submit" disabled={processing}>
                             {processing ? (
-                                <>{t('users.form.saving')}</>
+                                <>{'Menyimpan...'}</>
                             ) : (
                                 <>
                                     <Save className="mr-2 h-4 w-4" />
-                                    {t('common.save')}
+                                    {'Simpan'}
                                 </>
                             )}
                         </Button>

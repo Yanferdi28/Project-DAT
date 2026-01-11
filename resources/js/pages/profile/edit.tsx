@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
 import * as myprofileRoutes from '@/routes/myprofile';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface User {
     id: number;
@@ -28,7 +27,6 @@ interface Props {
 }
 
 export default function EditProfile({ user, errors, flash }: Props) {
-    const { language, t } = useLanguage();
     const [formData, setFormData] = useState({
         name: user.name,
         email: user.email,
@@ -97,7 +95,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
     };
 
     const handleDeleteAvatar = () => {
-        if (confirm(t('profile.confirmDelete'))) {
+        if (confirm('Apakah Anda yakin ingin menghapus foto profil?')) {
             router.delete('/my-profile/avatar');
             setAvatarPreview(null);
             setAvatarFile(null);
@@ -107,8 +105,8 @@ export default function EditProfile({ user, errors, flash }: Props) {
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('profile.title'), href: myprofileRoutes.edit().url },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Profil Saya', href: myprofileRoutes.edit().url },
             ]}
         >
             <div>
@@ -127,10 +125,10 @@ export default function EditProfile({ user, errors, flash }: Props) {
                 {/* Header */}
                 <div className="mb-6 md:mb-8">
                     <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                        {t('profile.title')}
+                        {'Profil Saya'}
                     </h1>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {t('profile.manageProfile')}
+                        {'Kelola informasi profil dan foto Anda'}
                     </p>
                 </div>
 
@@ -168,7 +166,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
                             />
                             <div className="text-center">
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    {t('profile.maxSize')}
+                                    {'JPG, PNG, atau GIF (Max. 2MB)'}
                                 </p>
                                 {avatarPreview && (
                                     <Button
@@ -179,7 +177,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
                                         className="mt-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950"
                                     >
                                         <Trash2 className="w-4 h-4 mr-2" />
-                                        {t('profile.removePhoto')}
+                                        {'Hapus Foto'}
                                     </Button>
                                 )}
                             </div>
@@ -189,11 +187,11 @@ export default function EditProfile({ user, errors, flash }: Props) {
                         {/* Personal Information */}
                         <div className="space-y-4">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                {t('profile.personalInfo')}
+                                {'Informasi Pribadi'}
                             </h3>
 
                             <div>
-                                <Label htmlFor="name">{t('users.form.fullName')}</Label>
+                                <Label htmlFor="name">{'Nama Lengkap'}</Label>
                                 <Input
                                     id="name"
                                     name="name"
@@ -206,7 +204,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
                             </div>
 
                             <div>
-                                <Label htmlFor="email">{t('users.email')}</Label>
+                                <Label htmlFor="email">{'Email'}</Label>
                                 <Input
                                     id="email"
                                     name="email"
@@ -222,14 +220,14 @@ export default function EditProfile({ user, errors, flash }: Props) {
                         {/* Password Section */}
                         <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-gray-800">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                {t('profile.changePasswordOptional')}
+                                {'Ubah Password (Opsional)'}
                             </h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                                {t('profile.leaveEmpty')}
+                                {'Kosongkan jika tidak ingin mengubah password'}
                             </p>
 
                             <div>
-                                <Label htmlFor="current_password">{t('profile.currentPassword')}</Label>
+                                <Label htmlFor="current_password">{'Password Saat Ini'}</Label>
                                 <div className="relative">
                                     <Input
                                         id="current_password"
@@ -255,7 +253,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
                             </div>
 
                             <div>
-                                <Label htmlFor="password">{t('users.form.newPassword')}</Label>
+                                <Label htmlFor="password">{'Password Baru'}</Label>
                                 <div className="relative">
                                     <Input
                                         id="password"
@@ -281,7 +279,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
                             </div>
 
                             <div>
-                                <Label htmlFor="password_confirmation">{t('users.form.confirmNewPassword')}</Label>
+                                <Label htmlFor="password_confirmation">{'Konfirmasi Password Baru'}</Label>
                                 <div className="relative">
                                     <Input
                                         id="password_confirmation"
@@ -309,20 +307,20 @@ export default function EditProfile({ user, errors, flash }: Props) {
                         {/* Account Info */}
                         <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
                             <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                {t('profile.accountInfo')}
+                                {'Informasi Akun'}
                             </h3>
                             <div className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                                 <p>
-                                    <span className="font-medium">{t('users.status')}:</span>{' '}
+                                    <span className="font-medium">{'Status'}:</span>{' '}
                                     {user.email_verified_at ? (
-                                        <span className="text-green-600 dark:text-green-400">{t('users.form.emailVerified')}</span>
+                                        <span className="text-green-600 dark:text-green-400">{'✓ Email Terverifikasi'}</span>
                                     ) : (
-                                        <span className="text-yellow-600 dark:text-yellow-400">{t('users.form.notVerified')}</span>
+                                        <span className="text-yellow-600 dark:text-yellow-400">{'⚠ Belum Verifikasi'}</span>
                                     )}
                                 </p>
                                 <p>
-                                    <span className="font-medium">{t('users.form.registeredOn')}</span>{' '}
-                                    {new Date(user.created_at).toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US', {
+                                    <span className="font-medium">{'Terdaftar:'}</span>{' '}
+                                    {new Date(user.created_at).toLocaleDateString('id-ID', {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric',
@@ -339,7 +337,7 @@ export default function EditProfile({ user, errors, flash }: Props) {
                                 className="bg-blue-600 hover:bg-blue-700 text-white"
                             >
                                 <Save className="h-4 w-4 mr-2" />
-                                {isSubmitting ? t('users.form.saving') : t('users.form.saveChanges')}
+                                {isSubmitting ? 'Menyimpan...' : 'Simpan Perubahan'}
                             </Button>
                         </div>
                     </form>

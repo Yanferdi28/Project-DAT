@@ -4,8 +4,6 @@ import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { BarChart3, Users, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, UserCheck, Shield, Clock, FileText, Folder } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -38,30 +36,28 @@ interface Props {
 }
 
 export default function Dashboard({ stats, recentArsipUnit }: Props) {
-    const { t, language } = useLanguage();
-    
     const statsCards = [
         {
-            title: t('dashboard.totalArsipUnit'),
-            value: stats.totalArsipUnit.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
+            title: 'Total Arsip Unit',
+            value: stats.totalArsipUnit.toLocaleString('id-ID'),
             icon: FileText,
             color: 'from-blue-500 to-cyan-500',
-            description: t('dashboard.totalArsipUnitDesc'),
+            description: 'Jumlah arsip unit terdaftar',
         },
         {
-            title: t('dashboard.totalBerkasArsip'),
-            value: stats.totalBerkasArsip.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
+            title: 'Total Berkas Arsip',
+            value: stats.totalBerkasArsip.toLocaleString('id-ID'),
             icon: Folder,
             color: 'from-green-500 to-emerald-500',
-            description: t('dashboard.totalBerkasArsipDesc'),
+            description: 'Jumlah berkas arsip terdaftar',
         },
         // Only show total users for admin
         ...(stats.totalUsers !== null ? [{
-            title: t('dashboard.totalUsers'),
-            value: stats.totalUsers.toLocaleString(language === 'id' ? 'id-ID' : 'en-US'),
+            title: 'Total Pengguna',
+            value: stats.totalUsers.toLocaleString('id-ID'),
             icon: Users,
             color: 'from-purple-500 to-pink-500',
-            description: t('dashboard.totalUsersDesc'),
+            description: 'Jumlah pengguna terdaftar',
         }] : []),
     ];
 
@@ -70,43 +66,41 @@ export default function Dashboard({ stats, recentArsipUnit }: Props) {
         const created = new Date(date);
         const diffInMinutes = Math.floor((now.getTime() - created.getTime()) / (1000 * 60));
         
-        if (diffInMinutes < 1) return t('dashboard.justNow');
-        if (diffInMinutes < 60) return `${diffInMinutes} ${t('dashboard.minutesAgo')}`;
+        if (diffInMinutes < 1) return 'Baru saja';
+        if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`;
         
         const diffInHours = Math.floor(diffInMinutes / 60);
-        if (diffInHours < 24) return `${diffInHours} ${t('dashboard.hoursAgo')}`;
+        if (diffInHours < 24) return `${diffInHours} jam yang lalu`;
         
         const diffInDays = Math.floor(diffInHours / 24);
-        if (diffInDays < 7) return `${diffInDays} ${t('dashboard.daysAgo')}`;
+        if (diffInDays < 7) return `${diffInDays} hari yang lalu`;
         
-        return created.toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+        return created.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
     };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="relative min-h-screen overflow-hidden">
-                {/* Animated gradient background - same as auth */}
+                {/* Static gradient background */}
                 <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950 dark:via-indigo-950 dark:to-purple-950">
-                    <div className="absolute -left-40 -top-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-blue-400/20 to-indigo-400/20 blur-3xl dark:from-blue-600/10 dark:to-indigo-600/10" />
-                    <div className="absolute -bottom-40 -right-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 blur-3xl delay-1000 dark:from-purple-600/10 dark:to-pink-600/10" />
-                    <div className="absolute left-1/2 top-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-gradient-to-br from-indigo-400/15 to-purple-400/15 blur-3xl delay-500 dark:from-indigo-600/10 dark:to-purple-600/10" />
+                    <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-400/20 to-indigo-400/20 blur-3xl dark:from-blue-600/10 dark:to-indigo-600/10" />
+                    <div className="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 blur-3xl dark:from-purple-600/10 dark:to-pink-600/10" />
+                    <div className="absolute left-1/2 top-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-indigo-400/15 to-purple-400/15 blur-3xl dark:from-indigo-600/10 dark:to-purple-600/10" />
                 </div>
 
                 <div className="flex flex-col gap-4 md:gap-6 p-4 md:p-6">
                     {/* Welcome Section */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                    <div
                         className="rounded-2xl border border-white/20 bg-white/80 p-4 md:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80"
                     >
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex-1">
                                 <h1 className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                                    {t('dashboard.welcome')}
+                                    Selamat Datang Kembali!
                                 </h1>
                                 <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-600 dark:text-gray-400">
-                                    {t('dashboard.summary')}
+                                    Berikut adalah ringkasan aktivitas Anda hari ini
                                 </p>
                             </div>
                             <div className="hidden md:block">
@@ -115,16 +109,13 @@ export default function Dashboard({ stats, recentArsipUnit }: Props) {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Stats Grid */}
                     <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                         {statsCards.map((stat, index) => (
-                            <motion.div
+                            <div
                                 key={stat.title}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
                                 className="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/80 p-4 md:p-6 shadow-xl backdrop-blur-xl transition-all hover:scale-105 hover:shadow-2xl dark:border-white/10 dark:bg-gray-900/80"
                             >
                                 <div className="flex items-start justify-between">
@@ -145,20 +136,17 @@ export default function Dashboard({ stats, recentArsipUnit }: Props) {
                                         <stat.icon className="h-5 w-5 md:h-6 md:w-6 text-white" />
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
 
                     {/* Recent Arsip Unit Table */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
+                    <div
                         className="rounded-2xl border border-white/20 bg-white/80 p-6 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80"
                     >
                         <div className="mb-4 flex items-center justify-between">
                             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                                {t('dashboard.recentArsipUnit')}
+                                Arsip Unit Terbaru
                             </h2>
                         </div>
                         
@@ -239,7 +227,7 @@ export default function Dashboard({ stats, recentArsipUnit }: Props) {
                                 </tbody>
                             </table>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </AppLayout>

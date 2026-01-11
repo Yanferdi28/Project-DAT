@@ -12,7 +12,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Kategori {
     id: number;
@@ -56,7 +55,6 @@ interface Props {
 }
 
 export default function SubKategoriIndex({ subKategoris, kategoris, filters, flash }: Props) {
-    const { t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [kategoriId, setKategoriId] = useState(filters.kategori_id || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
@@ -130,9 +128,9 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('nav.master'), href: '#' },
-                { title: t('subKategori.title'), href: '/sub-kategori' },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Master', href: '#' },
+                { title: 'Sub Kategori', href: '/sub-kategori' },
             ]}
         >
             <div className="space-y-6">
@@ -152,16 +150,16 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {t('subKategori.title')}
+                            {'Sub Kategori'}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('users.total')} {subKategoris.total} {t('subKategori.title').toLowerCase()}
+                            {'Total'} {subKategoris.total} {'Sub Kategori'.toLowerCase()}
                         </p>
                     </div>
                     <Link href="/sub-kategori/create">
                         <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                             <Plus className="h-4 w-4 mr-2" />
-                            {t('subKategori.add')}
+                            {'Tambah Sub Kategori'}
                         </Button>
                     </Link>
                 </div>
@@ -169,7 +167,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                 {/* Show Entries & Search */}
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex items-center gap-3">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
                         <select
                             value={perPage}
                             onChange={(e) => handlePerPageChange(e.target.value)}
@@ -181,33 +179,33 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'data'}</label>
                     </div>
                     <form onSubmit={handleSearch} className="flex gap-2 flex-1">
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                             <Input
                                 type="text"
-                                placeholder={t('subKategori.search')}
+                                placeholder={'Cari nama atau deskripsi...'}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="pl-10"
                             />
                         </div>
-                        <Button type="submit">{t('users.searchBtn')}</Button>
+                        <Button type="submit">{'Cari'}</Button>
                     </form>
                 </div>
 
                 {/* Filter */}
                 <div className="flex items-center gap-3 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
                     <Filter className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.filter')}:</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Filter'}:</span>
                     <select
                         value={kategoriId}
                         onChange={(e) => handleKategoriChange(e.target.value)}
                         className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                     >
-                        <option value="">{t('subKategori.allKategori')}</option>
+                        <option value="">{'Semua Kategori'}</option>
                         {kategoris.map((kat) => (
                             <option key={kat.id} value={kat.id}>
                                 {kat.nama_kategori}
@@ -220,7 +218,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                             size="sm"
                             onClick={handleReset}
                         >
-                            {t('users.reset')}
+                            {'Reset'}
                         </Button>
                     )}
                 </div>
@@ -232,19 +230,19 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('users.no')}
+                                        {'No'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('subKategori.kategori')}
+                                        {'Kategori'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('subKategori.namaSubKategori')}
+                                        {'Nama Sub Kategori'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('subKategori.deskripsi')}
+                                        {'Deskripsi'}
                                     </th>
                                     <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
-                                        {t('users.actions')}
+                                        {'Aksi'}
                                     </th>
                                 </tr>
                             </thead>
@@ -254,7 +252,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                                         <td colSpan={5} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                {t('subKategori.noData')}
+                                                {'Tidak ada data sub kategori'}
                                             </p>
                                         </td>
                                     </tr>
@@ -286,7 +284,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                                                             variant="outline"
                                                             size="sm"
                                                             className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
-                                                            title={t('users.edit')}
+                                                            title={'Edit'}
                                                         >
                                                             <Edit className="h-4 w-4" />
                                                         </Button>
@@ -296,7 +294,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                                                         size="sm"
                                                         onClick={() => confirmDelete(item)}
                                                         className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
-                                                        title={t('users.delete')}
+                                                        title={'Hapus'}
                                                     >
                                                         <Trash2 className="h-4 w-4" />
                                                     </Button>
@@ -314,7 +312,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    {t('users.showing')}{' '}
+                                    {'Menampilkan'}{' '}
                                     <span className="font-medium">
                                         {(subKategoris.current_page - 1) * subKategoris.per_page + 1}
                                     </span>{' '}
@@ -322,7 +320,7 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                                     <span className="font-medium">
                                         {Math.min(subKategoris.current_page * subKategoris.per_page, subKategoris.total)}
                                     </span>{' '}
-                                    {t('users.of')} <span className="font-medium">{subKategoris.total}</span>
+                                    {'dari'} <span className="font-medium">{subKategoris.total}</span>
                                 </p>
                                 <div className="flex gap-2">
                                     {subKategoris.links.map((link, index) => {
@@ -360,10 +358,10 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
             <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, item: null })}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('subKategori.deleteTitle')}</DialogTitle>
+                        <DialogTitle>{'Konfirmasi Hapus Sub Kategori'}</DialogTitle>
                         <DialogDescription>
-                            {t('subKategori.deleteMessage')}{' '}
-                            <span className="font-semibold">{deleteDialog.item?.nama_sub_kategori}</span>? {t('subKategori.deleteWarning')}
+                            {'Apakah Anda yakin ingin menghapus sub kategori'}{' '}
+                            <span className="font-semibold">{deleteDialog.item?.nama_sub_kategori}</span>? {'Tindakan ini tidak dapat dibatalkan.'}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -372,14 +370,14 @@ export default function SubKategoriIndex({ subKategoris, kategoris, filters, fla
                             onClick={() => setDeleteDialog({ open: false, item: null })}
                             disabled={isDeleting}
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
-                            {isDeleting ? t('users.deleting') : t('common.delete')}
+                            {isDeleting ? 'Menghapus...' : 'Hapus'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

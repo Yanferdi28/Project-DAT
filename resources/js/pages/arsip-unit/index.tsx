@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { router, Link, usePage } from '@inertiajs/react';
-import { FileText, Plus, Search, Edit, Trash2, FolderInput, Printer } from 'lucide-react';
+import { FileText, Plus, Search, Edit, Trash2, FolderInput, Printer, Check, X, Clock, AlertCircle } from 'lucide-react';
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 import {
     Select,
     SelectContent,
@@ -19,7 +20,24 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { useLanguage } from '@/contexts/LanguageContext';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
+
+// Helper function for status translation
+const getStatusLabel = (status: string) => {
+    const labels: Record<string, string> = {
+        pending: 'Menunggu',
+        diterima: 'Diterima',
+        ditolak: 'Ditolak',
+        draft: 'Draft',
+        published: 'Dipublikasi',
+        archived: 'Diarsipkan'
+    };
+    return labels[status] || status;
+};
 
 interface ArsipUnit {
     id_berkas: number;
@@ -43,6 +61,9 @@ interface ArsipUnit {
     berkas_arsip_id: number | null;
     kode_klasifikasi_id: number | null;
     unit_pengolah_arsip_id: number | null;
+    verifikasi_keterangan: string | null;
+    verifikasi_oleh: number | null;
+    verifikasi_tanggal: string | null;
     kode_klasifikasi?: {
         id: number;
         kode_klasifikasi: string;
@@ -125,7 +146,6 @@ interface PageProps {
 
 export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs, filters, flash }: PageProps) {
     const { auth, userUnitPengolahId } = usePage<PageProps>().props;
-    const { t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [status, setStatus] = useState(filters.status || '');
     const [publishStatus, setPublishStatus] = useState(filters.publish_status || '');
@@ -154,6 +174,51 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     const [selectedBerkasId, setSelectedBerkasId] = useState<string>('');
     const [isDeleting, setIsDeleting] = useState(false);
     const [isAssigning, setIsAssigning] = useState(false);
+    const [isLoadingBerkas, setIsLoadingBerkas] = useState(false);
+    
+    // Rejection dialog state
+    const [rejectDialog, setRejectDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
+        open: false,
+        item: null,
+    });
+    const [rejectReason, setRejectReason] = useState('');
+    const [isRejecting, setIsRejecting] = useState(false);
+    
+    // Accept confirmation dialog state
+    const [acceptDialog, setAcceptDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
+        open: false,
+        item: null,
+    });
+    const [isAccepting, setIsAccepting] = useState(false);
+    
+    // Publish status confirmation dialog state
+    const [publishDialog, setPublishDialog] = useState<{ open: boolean; item: ArsipUnit | null; targetStatus: string }>({
+        open: false,
+        item: null,
+        targetStatus: '',
+    });
+    const [isPublishing, setIsPublishing] = useState(false);
+    const [isLoadingUnits, setIsLoadingUnits] = useState(false);
+
+    // Load berkasArsips lazily when assign dialog opens
+    const openAssignDialog = (item: ArsipUnit) => {
+        setAssignDialog({ open: true, item });
+        setSelectedBerkasId(item.berkas_arsip_id?.toString() || '');
+        // Reload lazy data if not already loaded
+        if (!berkasArsips || berkasArsips.length === 0) {
+            setIsLoadingBerkas(true);
+            router.reload({ only: ['berkasArsips'], onFinish: () => setIsLoadingBerkas(false) });
+        }
+    };
+
+    // Load unitPengolahs lazily when export dialog opens
+    const openExportDialog = () => {
+        setExportDialog(true);
+        if (!unitPengolahs || unitPengolahs.length === 0) {
+            setIsLoadingUnits(true);
+            router.reload({ only: ['unitPengolahs'], onFinish: () => setIsLoadingUnits(false) });
+        }
+    };
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -199,11 +264,59 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
         });
     };
 
-    const handleStatusChange = (arsipUnitId: number, newStatus: string) => {
+    const handleStatusChange = (arsipUnitId: number, newStatus: string, reason?: string) => {
         router.patch(
             `/arsip-unit/${arsipUnitId}/status`,
-            { status: newStatus },
+            { status: newStatus, verifikasi_keterangan: reason },
             { preserveScroll: true }
+        );
+    };
+
+    const handleReject = () => {
+        if (!rejectDialog.item || !rejectReason.trim()) return;
+
+        setIsRejecting(true);
+        router.patch(
+            `/arsip-unit/${rejectDialog.item.id_berkas}/status`,
+            { status: 'ditolak', verifikasi_keterangan: rejectReason },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setRejectDialog({ open: false, item: null });
+                    setRejectReason('');
+                },
+                onFinish: () => {
+                    setIsRejecting(false);
+                },
+            }
+        );
+    };
+
+    const openRejectDialog = (item: ArsipUnit) => {
+        setRejectDialog({ open: true, item });
+        setRejectReason('');
+    };
+
+    const openAcceptDialog = (item: ArsipUnit) => {
+        setAcceptDialog({ open: true, item });
+    };
+
+    const handleAccept = () => {
+        if (!acceptDialog.item) return;
+
+        setIsAccepting(true);
+        router.patch(
+            `/arsip-unit/${acceptDialog.item.id_berkas}/status`,
+            { status: 'diterima' },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setAcceptDialog({ open: false, item: null });
+                },
+                onFinish: () => {
+                    setIsAccepting(false);
+                },
+            }
         );
     };
 
@@ -212,6 +325,29 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
             `/arsip-unit/${arsipUnitId}/publish-status`,
             { publish_status: newPublishStatus },
             { preserveScroll: true }
+        );
+    };
+
+    const openPublishDialog = (item: ArsipUnit, targetStatus: string) => {
+        setPublishDialog({ open: true, item, targetStatus });
+    };
+
+    const handlePublishConfirm = () => {
+        if (!publishDialog.item || !publishDialog.targetStatus) return;
+
+        setIsPublishing(true);
+        router.patch(
+            `/arsip-unit/${publishDialog.item.id_berkas}/publish-status`,
+            { publish_status: publishDialog.targetStatus },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setPublishDialog({ open: false, item: null, targetStatus: '' });
+                },
+                onFinish: () => {
+                    setIsPublishing(false);
+                },
+            }
         );
     };
 
@@ -269,8 +405,8 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('arsipUnit.title'), href: '/arsip-unit' },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Arsip Unit', href: '/arsip-unit' },
             ]}
         >
             <div className="space-y-6">
@@ -290,10 +426,10 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {t('arsipUnit.title')}
+                            {'Arsip Unit'}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('users.total')} {arsipUnits.total} {t('arsipUnit.title').toLowerCase()}
+                            {'Total'} {arsipUnits.total} {'Arsip Unit'.toLowerCase()}
                         </p>
                     </div>
                     <div className="flex gap-2">
@@ -303,13 +439,13 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             onClick={() => router.visit('/arsip-unit/print-preview')}
                         >
                             <Printer className="h-4 w-4 mr-2" />
-                            {t('common.print')}
+                            {'Cetak'}
                         </Button>
                         {canCreateEdit && (
                             <Link href="/arsip-unit/create">
                                 <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                                     <Plus className="h-4 w-4 mr-2" />
-                                    {t('arsipUnit.add')}
+                                    {'Tambah Arsip Unit'}
                                 </Button>
                             </Link>
                         )}
@@ -324,7 +460,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                                 <Input
                                     type="text"
-                                    placeholder={t('arsipUnit.search')}
+                                    placeholder={'Cari no item, uraian, atau indeks...'}
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     className="pl-10"
@@ -337,10 +473,10 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                     onChange={(e) => setStatus(e.target.value)}
                                     className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 >
-                                    <option value="">{t('arsipUnit.allStatus')}</option>
-                                    <option value="pending">{t('arsipUnit.pending')}</option>
-                                    <option value="diterima">{t('arsipUnit.diterima')}</option>
-                                    <option value="ditolak">{t('arsipUnit.ditolak')}</option>
+                                    <option value="">{'Semua Status'}</option>
+                                    <option value="pending">{'Pending'}</option>
+                                    <option value="diterima">{'Diterima'}</option>
+                                    <option value="ditolak">{'Ditolak'}</option>
                                 </select>
                             </div>
 
@@ -350,17 +486,17 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                     onChange={(e) => setPublishStatus(e.target.value)}
                                     className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
                                 >
-                                    <option value="">{t('arsipUnit.allPublishStatus')}</option>
-                                    <option value="draft">{t('arsipUnit.draft')}</option>
-                                    <option value="published">{t('arsipUnit.published')}</option>
-                                    <option value="archived">{t('arsipUnit.archived')}</option>
+                                    <option value="">{'Semua Status Publikasi'}</option>
+                                    <option value="draft">{'Draft'}</option>
+                                    <option value="published">{'Published'}</option>
+                                    <option value="archived">{'Diarsipkan'}</option>
                                 </select>
                             </div>
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-between">
                             <div className="flex items-center gap-3">
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
                                 <select
                                     value={perPage}
                                     onChange={(e) => handlePerPageChange(e.target.value)}
@@ -372,16 +508,16 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                     <option value="50">50</option>
                                     <option value="100">100</option>
                                 </select>
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'data'}</label>
                             </div>
                             <div className="flex gap-2">
                                 <Button type="submit">
                                     <Search className="h-4 w-4 mr-2" />
-                                    {t('users.searchBtn')}
+                                    {'Cari'}
                                 </Button>
                                 {(search || status || publishStatus) && (
                                     <Button type="button" variant="outline" onClick={handleReset}>
-                                        {t('users.reset')}
+                                        {'Reset'}
                                     </Button>
                                 )}
                             </div>
@@ -396,31 +532,31 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('users.no')}
+                                        {'No'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.kodeKlasifikasi')}
+                                        {'Kode Klasifikasi'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.indeks')}
+                                        {'Indeks'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.uraianInformasi')}
+                                        {'Uraian Informasi'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.tanggal')}
+                                        {'Tanggal'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.unitPengolah')}
+                                        {'Unit Pengolah'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.status')}
+                                        {'Status'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('arsipUnit.publishStatus')}
+                                        {'Status Publikasi'}
                                     </th>
                                     <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
-                                        {t('users.actions')}
+                                        {'Aksi'}
                                     </th>
                                 </tr>
                             </thead>
@@ -430,7 +566,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                         <td colSpan={9} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                {t('arsipUnit.noData')}
+                                                {'Tidak ada data arsip unit'}
                                             </p>
                                         </td>
                                     </tr>
@@ -470,43 +606,104 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                                                 {canManageStatus ? (
-                                                    <Select
-                                                        value={item.status}
-                                                        onValueChange={(value) => handleStatusChange(item.id_berkas, value)}
-                                                    >
-                                                        <SelectTrigger className="w-32">
-                                                            <SelectValue />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectItem value="pending">{t('arsipUnit.pending')}</SelectItem>
-                                                            <SelectItem value="diterima">{t('arsipUnit.diterima')}</SelectItem>
-                                                            <SelectItem value="ditolak">{t('arsipUnit.ditolak')}</SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
+                                                    <div className="flex items-center gap-1">
+                                                        {item.status !== 'pending' && (
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => handleStatusChange(item.id_berkas, 'pending')}
+                                                                className="h-8 w-8 p-0 hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-300 dark:hover:bg-yellow-950 dark:hover:text-yellow-400 dark:hover:border-yellow-700"
+                                                                title={'Pending'}
+                                                            >
+                                                                <Clock className="h-4 w-4" />
+                                                            </Button>
+                                                        )}
+                                                        {item.status !== 'diterima' && (
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => openAcceptDialog(item)}
+                                                                className="h-8 w-8 p-0 hover:bg-green-50 hover:text-green-600 hover:border-green-300 dark:hover:bg-green-950 dark:hover:text-green-400 dark:hover:border-green-700"
+                                                                title={'Diterima'}
+                                                            >
+                                                                <Check className="h-4 w-4" />
+                                                            </Button>
+                                                        )}
+                                                        {item.status !== 'ditolak' && (
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => openRejectDialog(item)}
+                                                                className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
+                                                                title={'Ditolak'}
+                                                            >
+                                                                <X className="h-4 w-4" />
+                                                            </Button>
+                                                        )}
+                                                        {item.status === 'ditolak' && item.verifikasi_keterangan ? (
+                                                            <Tooltip>
+                                                                <TooltipTrigger asChild>
+                                                                    <span className={`ml-2 inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold cursor-help ${getStatusBadge(item.status)}`}>
+                                                                        {getStatusLabel(item.status)}
+                                                                        <AlertCircle className="h-3 w-3" />
+                                                                    </span>
+                                                                </TooltipTrigger>
+                                                                <TooltipContent className="max-w-xs">
+                                                                    <p className="font-semibold mb-1">Alasan Penolakan:</p>
+                                                                    <p className="text-sm">{item.verifikasi_keterangan}</p>
+                                                                </TooltipContent>
+                                                            </Tooltip>
+                                                        ) : (
+                                                            <span className={`ml-2 inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusBadge(item.status)}`}>
+                                                                {getStatusLabel(item.status)}
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 ) : (
-                                                    <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusBadge(item.status)}`}>
-                                                        {t(`arsipUnit.${item.status}`)}
-                                                    </span>
+                                                    item.status === 'ditolak' && item.verifikasi_keterangan ? (
+                                                        <Tooltip>
+                                                            <TooltipTrigger asChild>
+                                                                <span className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold cursor-help ${getStatusBadge(item.status)}`}>
+                                                                    {getStatusLabel(item.status)}
+                                                                    <AlertCircle className="h-3 w-3" />
+                                                                </span>
+                                                            </TooltipTrigger>
+                                                            <TooltipContent className="max-w-xs">
+                                                                <p className="font-semibold mb-1">Alasan Penolakan:</p>
+                                                                <p className="text-sm">{item.verifikasi_keterangan}</p>
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    ) : (
+                                                        <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusBadge(item.status)}`}>
+                                                            {getStatusLabel(item.status)}
+                                                        </span>
+                                                    )
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                                                 {canManageStatus ? (
                                                     <Select
                                                         value={item.publish_status}
-                                                        onValueChange={(value) => handlePublishStatusChange(item.id_berkas, value)}
+                                                        onValueChange={(value) => {
+                                                            if (value === 'published' || value === 'archived') {
+                                                                openPublishDialog(item, value);
+                                                            } else {
+                                                                handlePublishStatusChange(item.id_berkas, value);
+                                                            }
+                                                        }}
                                                     >
                                                         <SelectTrigger className="w-32">
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value="draft">{t('arsipUnit.draft')}</SelectItem>
-                                                            <SelectItem value="published">{t('arsipUnit.published')}</SelectItem>
-                                                            <SelectItem value="archived">{t('arsipUnit.archived')}</SelectItem>
+                                                            <SelectItem value="draft">{'Draft'}</SelectItem>
+                                                            <SelectItem value="published">{'Published'}</SelectItem>
+                                                            <SelectItem value="archived">{'Diarsipkan'}</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 ) : (
                                                     <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getPublishStatusBadge(item.publish_status)}`}>
-                                                        {t(`arsipUnit.${item.publish_status}`)}
+                                                        {getStatusLabel(item.publish_status)}
                                                     </span>
                                                 )}
                                             </td>
@@ -516,10 +713,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                                         <Button
                                                             variant="outline"
                                                             size="sm"
-                                                            onClick={() => {
-                                                                setAssignDialog({ open: true, item });
-                                                                setSelectedBerkasId(item.berkas_arsip_id?.toString() || '');
-                                                            }}
+                                                            onClick={() => openAssignDialog(item)}
                                                             className="hover:bg-purple-50 hover:text-purple-600 hover:border-purple-300 dark:hover:bg-purple-950 dark:hover:text-purple-400 dark:hover:border-purple-700"
                                                             title="Masukkan ke Berkas"
                                                         >
@@ -533,7 +727,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                                                     variant="outline"
                                                                     size="sm"
                                                                     className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
-                                                                    title={t('users.edit')}
+                                                                    title={'Edit'}
                                                                 >
                                                                     <Edit className="h-4 w-4" />
                                                                 </Button>
@@ -543,7 +737,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                                                 size="sm"
                                                                 onClick={() => confirmDelete(item)}
                                                                 className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
-                                                                title={t('users.delete')}
+                                                                title={'Hapus'}
                                                             >
                                                                 <Trash2 className="h-4 w-4" />
                                                             </Button>
@@ -563,10 +757,10 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    {t('users.showing')}{' '}
+                                    {'Menampilkan'}{' '}
                                     <span className="font-medium">{arsipUnits.from}</span> -{' '}
                                     <span className="font-medium">{arsipUnits.to}</span>{' '}
-                                    {t('users.of')} <span className="font-medium">{arsipUnits.total}</span>
+                                    {'dari'} <span className="font-medium">{arsipUnits.total}</span>
                                 </p>
                                 <div className="flex gap-2">
                                     {arsipUnits.links?.map((link, index) => {
@@ -604,12 +798,12 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
             <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, item: null })}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('arsipUnit.deleteTitle')}</DialogTitle>
+                        <DialogTitle>{'Konfirmasi Hapus Arsip Unit'}</DialogTitle>
                         <DialogDescription>
-                            {t('arsipUnit.deleteMessage')} "{deleteDialog.item?.no_item_arsip || deleteDialog.item?.id_berkas}"?
+                            {'Apakah Anda yakin ingin menghapus arsip unit'} "{deleteDialog.item?.no_item_arsip || deleteDialog.item?.id_berkas}"?
                             <br />
                             <span className="text-red-600 dark:text-red-400">
-                                {t('arsipUnit.deleteWarning')}
+                                {'Tindakan ini tidak dapat dibatalkan.'}
                             </span>
                         </DialogDescription>
                     </DialogHeader>
@@ -619,14 +813,14 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             onClick={() => setDeleteDialog({ open: false, item: null })}
                             disabled={isDeleting}
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
-                            {isDeleting ? t('users.deleting') : t('common.delete')}
+                            {isDeleting ? 'Menghapus...' : 'Hapus'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -660,7 +854,13 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Berkas Arsip
                         </label>
-                        {berkasArsips.length === 0 ? (
+                        {isLoadingBerkas ? (
+                            <div className="rounded-lg border border-gray-300 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-800">
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    Memuat data berkas arsip...
+                                </p>
+                            </div>
+                        ) : !berkasArsips || berkasArsips.length === 0 ? (
                             <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-3 dark:border-yellow-600 dark:bg-yellow-900/20">
                                 <p className="text-sm text-yellow-700 dark:text-yellow-400">
                                     Tidak ada berkas arsip yang tersedia.
@@ -705,14 +905,14 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             }}
                             disabled={isAssigning}
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button
                             onClick={handleAssignToBerkas}
                             disabled={isAssigning || !selectedBerkasId}
                             className="bg-purple-600 hover:bg-purple-700"
                         >
-                            {isAssigning ? t('common.saving') : 'Masukkan ke Berkas'}
+                            {isAssigning ? 'Menyimpan...' : 'Masukkan ke Berkas'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -722,7 +922,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
             <Dialog open={exportDialog} onOpenChange={setExportDialog}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('common.print')} {t('arsipUnit.title')}</DialogTitle>
+                        <DialogTitle>{'Cetak'} {'Arsip Unit'}</DialogTitle>
                         <DialogDescription>
                             Pilih filter untuk ekspor data
                         </DialogDescription>
@@ -771,19 +971,25 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Filter Unit Pengolah{isUnitPengolahLocked && ' (terkunci)'}
                             </label>
-                            <select
-                                value={exportUnitPengolah}
-                                onChange={(e) => setExportUnitPengolah(e.target.value)}
-                                disabled={isUnitPengolahLocked}
-                                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
-                            >
-                                {!isUnitPengolahLocked && <option value="">Semua Unit Pengolah</option>}
-                                {unitPengolahs.map((unit) => (
-                                    <option key={unit.id} value={unit.id}>
-                                        {unit.nama_unit}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoadingUnits ? (
+                                <div className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-sm text-gray-500">
+                                    Memuat data unit pengolah...
+                                </div>
+                            ) : (
+                                <select
+                                    value={exportUnitPengolah}
+                                    onChange={(e) => setExportUnitPengolah(e.target.value)}
+                                    disabled={isUnitPengolahLocked}
+                                    className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
+                                >
+                                    {!isUnitPengolahLocked && <option value="">Semua Unit Pengolah</option>}
+                                    {unitPengolahs && unitPengolahs.map((unit) => (
+                                        <option key={unit.id} value={unit.id}>
+                                            {unit.nama_unit}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {isUnitPengolahLocked && (
                                 <p className="mt-1 text-xs text-muted-foreground">
                                     Unit pengolah terkunci sesuai dengan unit pengolah Anda.
@@ -794,10 +1000,186 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                     
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setExportDialog(false)}>
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button onClick={handleExport} className="bg-blue-600 hover:bg-blue-700">
-                            {t('common.print')} PDF
+                            {'Cetak'} PDF
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Reject Dialog */}
+            <Dialog open={rejectDialog.open} onOpenChange={(open) => {
+                if (!open && !isRejecting) {
+                    setRejectDialog({ open: false, item: null });
+                    setRejectReason('');
+                }
+            }}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Tolak Arsip Unit</DialogTitle>
+                        <DialogDescription>
+                            Berikan alasan penolakan untuk arsip unit ini.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        {rejectDialog.item && (
+                            <div className="mb-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>No. Item:</strong> {rejectDialog.item.no_item_arsip || rejectDialog.item.id_berkas}
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>Uraian:</strong> {rejectDialog.item.uraian_informasi || '-'}
+                                </p>
+                            </div>
+                        )}
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Alasan Penolakan <span className="text-red-500">*</span>
+                        </label>
+                        <Textarea
+                            value={rejectReason}
+                            onChange={(e) => setRejectReason(e.target.value)}
+                            placeholder="Masukkan alasan penolakan..."
+                            rows={4}
+                            className="w-full"
+                        />
+                    </div>
+                    <DialogFooter>
+                        <Button
+                            variant="outline"
+                            onClick={() => {
+                                setRejectDialog({ open: false, item: null });
+                                setRejectReason('');
+                            }}
+                            disabled={isRejecting}
+                        >
+                            {'Batal'}
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            onClick={handleReject}
+                            disabled={isRejecting || !rejectReason.trim()}
+                        >
+                            {isRejecting ? 'Menolak...' : 'Tolak Arsip'}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Accept Confirmation Dialog */}
+            <Dialog open={acceptDialog.open} onOpenChange={(open) => {
+                if (!open && !isAccepting) {
+                    setAcceptDialog({ open: false, item: null });
+                }
+            }}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Konfirmasi Penerimaan</DialogTitle>
+                        <DialogDescription>
+                            Apakah Anda yakin ingin menerima arsip unit ini?
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        {acceptDialog.item && (
+                            <div className="rounded-lg bg-green-50 border border-green-200 p-4 dark:bg-green-900/20 dark:border-green-800">
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>No. Item:</strong> {acceptDialog.item.no_item_arsip || acceptDialog.item.id_berkas}
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>Uraian:</strong> {acceptDialog.item.uraian_informasi || '-'}
+                                </p>
+                                {acceptDialog.item.kode_klasifikasi && (
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                        <strong>Kode Klasifikasi:</strong> {acceptDialog.item.kode_klasifikasi.kode_klasifikasi}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button
+                            variant="outline"
+                            onClick={() => setAcceptDialog({ open: false, item: null })}
+                            disabled={isAccepting}
+                        >
+                            {'Batal'}
+                        </Button>
+                        <Button
+                            onClick={handleAccept}
+                            disabled={isAccepting}
+                            className="bg-green-600 hover:bg-green-700"
+                        >
+                            {isAccepting ? 'Memproses...' : 'Terima Arsip'}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Publish Status Confirmation Dialog */}
+            <Dialog open={publishDialog.open} onOpenChange={(open) => {
+                if (!open && !isPublishing) {
+                    setPublishDialog({ open: false, item: null, targetStatus: '' });
+                }
+            }}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>
+                            {publishDialog.targetStatus === 'published' ? 'Konfirmasi Publikasi' : 'Konfirmasi Arsipkan'}
+                        </DialogTitle>
+                        <DialogDescription>
+                            {publishDialog.targetStatus === 'published' 
+                                ? 'Apakah Anda yakin ingin mempublikasikan arsip unit ini? Arsip yang dipublikasikan akan dapat diakses secara publik.'
+                                : 'Apakah Anda yakin ingin mengarsipkan arsip unit ini? Arsip yang diarsipkan tidak akan ditampilkan di daftar utama.'}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        {publishDialog.item && (
+                            <div className={`rounded-lg border p-4 ${
+                                publishDialog.targetStatus === 'published' 
+                                    ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800'
+                                    : 'bg-purple-50 border-purple-200 dark:bg-purple-900/20 dark:border-purple-800'
+                            }`}>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>No. Item:</strong> {publishDialog.item.no_item_arsip || publishDialog.item.id_berkas}
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>Uraian:</strong> {publishDialog.item.uraian_informasi || '-'}
+                                </p>
+                                {publishDialog.item.kode_klasifikasi && (
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                        <strong>Kode Klasifikasi:</strong> {publishDialog.item.kode_klasifikasi.kode_klasifikasi}
+                                    </p>
+                                )}
+                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                                    <strong>Status saat ini:</strong>{' '}
+                                    <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${getPublishStatusBadge(publishDialog.item.publish_status)}`}>
+                                        {getStatusLabel(publishDialog.item.publish_status)}
+                                    </span>
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button
+                            variant="outline"
+                            onClick={() => setPublishDialog({ open: false, item: null, targetStatus: '' })}
+                            disabled={isPublishing}
+                        >
+                            {'Batal'}
+                        </Button>
+                        <Button
+                            onClick={handlePublishConfirm}
+                            disabled={isPublishing}
+                            className={publishDialog.targetStatus === 'published' 
+                                ? 'bg-blue-600 hover:bg-blue-700'
+                                : 'bg-purple-600 hover:bg-purple-700'}
+                        >
+                            {isPublishing 
+                                ? 'Memproses...' 
+                                : publishDialog.targetStatus === 'published' 
+                                    ? 'Publikasikan' 
+                                    : 'Arsipkan'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

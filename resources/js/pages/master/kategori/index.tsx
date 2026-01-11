@@ -12,7 +12,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Kategori {
     id: number;
@@ -48,7 +47,6 @@ interface Props {
 }
 
 export default function KategoriIndex({ kategoris, filters, flash }: Props) {
-    const { t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
     const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; item: Kategori | null }>({
@@ -108,9 +106,9 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('nav.master'), href: '#' },
-                { title: t('kategori.title'), href: '/kategori' },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Master', href: '#' },
+                { title: 'Kategori', href: '/kategori' },
             ]}
         >
             <div className="space-y-6">
@@ -130,16 +128,16 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {t('kategori.title')}
+                            {'Kategori'}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('users.total')} {kategoris.total} {t('kategori.title').toLowerCase()}
+                            {'Total'} {kategoris.total} {'Kategori'.toLowerCase()}
                         </p>
                     </div>
                     <Link href="/kategori/create">
                         <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                             <Plus className="h-4 w-4 mr-2" />
-                            {t('kategori.add')}
+                            {'Tambah Kategori'}
                         </Button>
                     </Link>
                 </div>
@@ -147,7 +145,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                 {/* Show Entries & Search */}
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex items-center gap-3">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
                         <select
                             value={perPage}
                             onChange={(e) => handlePerPageChange(e.target.value)}
@@ -159,23 +157,23 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'data'}</label>
                     </div>
                     <form onSubmit={handleSearch} className="flex gap-2 flex-1">
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                             <Input
                                 type="text"
-                                placeholder={t('kategori.search')}
+                                placeholder={'Cari nama atau deskripsi...'}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="pl-10"
                             />
                         </div>
-                        <Button type="submit">{t('users.searchBtn')}</Button>
+                        <Button type="submit">{'Cari'}</Button>
                         {search && (
                             <Button type="button" variant="outline" onClick={handleReset}>
-                                {t('users.reset')}
+                                {'Reset'}
                             </Button>
                         )}
                     </form>
@@ -188,19 +186,19 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('users.no')}
+                                        {'No'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kategori.namaKategori')}
+                                        {'Nama Kategori'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kategori.deskripsi')}
+                                        {'Deskripsi'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kategori.jumlahSubKategori')}
+                                        {'Jumlah Sub Kategori'}
                                     </th>
                                     <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
-                                        {t('users.actions')}
+                                        {'Aksi'}
                                     </th>
                                 </tr>
                             </thead>
@@ -210,7 +208,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                                         <td colSpan={5} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                {t('kategori.noData')}
+                                                {'Tidak ada data kategori'}
                                             </p>
                                         </td>
                                     </tr>
@@ -242,7 +240,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                                                             variant="outline"
                                                             size="sm"
                                                             className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
-                                                            title={t('users.edit')}
+                                                            title={'Edit'}
                                                         >
                                                             <Edit className="h-4 w-4" />
                                                         </Button>
@@ -252,7 +250,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                                                         size="sm"
                                                         onClick={() => confirmDelete(item)}
                                                         className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
-                                                        title={t('users.delete')}
+                                                        title={'Hapus'}
                                                     >
                                                         <Trash2 className="h-4 w-4" />
                                                     </Button>
@@ -270,7 +268,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    {t('users.showing')}{' '}
+                                    {'Menampilkan'}{' '}
                                     <span className="font-medium">
                                         {(kategoris.current_page - 1) * kategoris.per_page + 1}
                                     </span>{' '}
@@ -278,7 +276,7 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                                     <span className="font-medium">
                                         {Math.min(kategoris.current_page * kategoris.per_page, kategoris.total)}
                                     </span>{' '}
-                                    {t('users.of')} <span className="font-medium">{kategoris.total}</span>
+                                    {'dari'} <span className="font-medium">{kategoris.total}</span>
                                 </p>
                                 <div className="flex gap-2">
                                     {kategoris.links.map((link, index) => {
@@ -316,10 +314,10 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
             <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, item: null })}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('kategori.deleteTitle')}</DialogTitle>
+                        <DialogTitle>{'Konfirmasi Hapus Kategori'}</DialogTitle>
                         <DialogDescription>
-                            {t('kategori.deleteMessage')}{' '}
-                            <span className="font-semibold">{deleteDialog.item?.nama_kategori}</span>? {t('kategori.deleteWarning')}
+                            {'Apakah Anda yakin ingin menghapus kategori'}{' '}
+                            <span className="font-semibold">{deleteDialog.item?.nama_kategori}</span>? {'Tindakan ini akan menghapus semua sub kategori yang terkait.'}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -328,14 +326,14 @@ export default function KategoriIndex({ kategoris, filters, flash }: Props) {
                             onClick={() => setDeleteDialog({ open: false, item: null })}
                             disabled={isDeleting}
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
-                            {isDeleting ? t('users.deleting') : t('common.delete')}
+                            {isDeleting ? 'Menghapus...' : 'Hapus'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

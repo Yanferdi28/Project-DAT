@@ -2,7 +2,6 @@ import AppLayout from '@/layouts/app-layout';
 import { usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { FileText, CheckCircle, Search, X, FileSignature, Building2, Calendar, Users, Package } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface UnitPengolah {
     id: number;
@@ -34,7 +33,6 @@ interface PageProps {
 
 export default function BeritaAcaraPenyerahan() {
     const { unitPengolahs, arsipUnits, userUnitPengolahId } = usePage<PageProps>().props;
-    const { t } = useLanguage();
     
     const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
     
@@ -163,12 +161,12 @@ export default function BeritaAcaraPenyerahan() {
                 } else {
                     const text = await response.text();
                     console.error('Server error:', text);
-                    setErrors({ general: t('laporan.beritaAcara.generateError') });
+                    setErrors({ general: 'Terjadi kesalahan saat generate PDF. Silakan coba lagi.' });
                 }
             }
         } catch (error) {
             console.error('Error generating PDF:', error);
-            setErrors({ general: t('laporan.beritaAcara.connectionError') });
+            setErrors({ general: 'Gagal terhubung ke server. Silakan coba lagi.' });
         } finally {
             setIsGenerating(false);
         }
@@ -177,17 +175,17 @@ export default function BeritaAcaraPenyerahan() {
     return (
         <AppLayout
             breadcrumbs={[
-                { title: t('laporan.dashboard'), href: '/dashboard' },
-                { title: t('laporan.title'), href: '' },
-                { title: t('laporan.beritaAcara.breadcrumb'), href: '' },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Laporan', href: '' },
+                { title: 'Berita Acara Penyerahan Arsip', href: '' },
             ]}
         >
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {t('laporan.beritaAcara.title')}
+                    {'Berita Acara Penyerahan Arsip'}
                 </h1>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {t('laporan.beritaAcara.description')}
+                    {'Buat berita acara untuk serah terima arsip antar unit atau ke pihak eksternal'}
                 </p>
             </div>
 
@@ -199,9 +197,9 @@ export default function BeritaAcaraPenyerahan() {
                         <div className="flex items-start gap-3">
                             <FileSignature className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-0.5" />
                             <div>
-                                <h3 className="font-semibold text-blue-800 dark:text-blue-300">{t('laporan.beritaAcara.aboutTitle')}</h3>
+                                <h3 className="font-semibold text-blue-800 dark:text-blue-300">{'Tentang Berita Acara'}</h3>
                                 <p className="mt-1 text-sm text-blue-700 dark:text-blue-400">
-                                    {t('laporan.beritaAcara.aboutDescription')}
+                                    {'Dokumen resmi yang mencatat serah terima arsip dari satu unit ke unit lain atau ke pihak eksternal.'}
                                 </p>
                             </div>
                         </div>
@@ -211,7 +209,7 @@ export default function BeritaAcaraPenyerahan() {
                     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                             <FileText className="h-5 w-5 text-blue-600" />
-                            {t('laporan.beritaAcara.handoverForm')}
+                            {'Form Penyerahan'}
                         </h2>
 
                         <div className="space-y-4">
@@ -219,7 +217,7 @@ export default function BeritaAcaraPenyerahan() {
                             <div>
                                 <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     <Building2 className="inline h-4 w-4 mr-1" />
-                                    {t('laporan.beritaAcara.originUnit')}{isUnitPengolahLocked && ' (terkunci)'} <span className="text-red-500">*</span>
+                                    {'Unit Pengolah Asal'}{isUnitPengolahLocked && ' (terkunci)'} <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     value={unitPengolahAsalId}
@@ -230,7 +228,7 @@ export default function BeritaAcaraPenyerahan() {
                                     disabled={isUnitPengolahLocked}
                                     className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white disabled:opacity-60 disabled:cursor-not-allowed ${errors.unit_pengolah_asal_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                                 >
-                                    {!isUnitPengolahLocked && <option value="">{t('laporan.beritaAcara.selectOriginUnit')}</option>}
+                                    {!isUnitPengolahLocked && <option value="">{'-- Pilih Unit Asal --'}</option>}
                                     {unitPengolahs.map((unit) => (
                                         <option key={unit.id} value={unit.id}>
                                             {unit.nama_unit}
@@ -257,7 +255,7 @@ export default function BeritaAcaraPenyerahan() {
                                     className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                 />
                                 <label htmlFor="penerimaExternal" className="text-sm text-gray-700 dark:text-gray-300">
-                                    {t('laporan.beritaAcara.externalRecipient')}
+                                    {'Penerima eksternal (bukan unit internal)'}
                                 </label>
                             </div>
 
@@ -266,14 +264,14 @@ export default function BeritaAcaraPenyerahan() {
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         <Building2 className="inline h-4 w-4 mr-1" />
-                                        {t('laporan.beritaAcara.destinationUnit')} <span className="text-red-500">*</span>
+                                        {'Unit Pengolah Tujuan'} <span className="text-red-500">*</span>
                                     </label>
                                     <select
                                         value={unitPengolahTujuanId}
                                         onChange={(e) => setUnitPengolahTujuanId(e.target.value)}
                                         className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white ${errors.unit_pengolah_tujuan_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                                     >
-                                        <option value="">{t('laporan.beritaAcara.selectDestinationUnit')}</option>
+                                        <option value="">{'-- Pilih Unit Tujuan --'}</option>
                                         {unitPengolahs
                                             .filter(unit => unit.id !== parseInt(unitPengolahAsalId))
                                             .map((unit) => (
@@ -291,13 +289,13 @@ export default function BeritaAcaraPenyerahan() {
                                     <div>
                                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                             <Users className="inline h-4 w-4 mr-1" />
-                                            {t('laporan.beritaAcara.recipientName')} <span className="text-red-500">*</span>
+                                            {'Nama Penerima'} <span className="text-red-500">*</span>
                                         </label>
                                         <input
                                             type="text"
                                             value={penerimaNama}
                                             onChange={(e) => setPenerimaNama(e.target.value)}
-                                            placeholder={t('laporan.beritaAcara.recipientNamePlaceholder')}
+                                            placeholder={'Nama lengkap penerima'}
                                             className={`w-full rounded-lg border px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-800 dark:text-white ${errors.penerima_nama ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                                         />
                                         {errors.penerima_nama && (
@@ -306,13 +304,13 @@ export default function BeritaAcaraPenyerahan() {
                                     </div>
                                     <div>
                                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            {t('laporan.beritaAcara.recipientPosition')}
+                                            {'Jabatan Penerima'}
                                         </label>
                                         <input
                                             type="text"
                                             value={penerimaJabatan}
                                             onChange={(e) => setPenerimaJabatan(e.target.value)}
-                                            placeholder={t('laporan.beritaAcara.recipientPositionPlaceholder')}
+                                            placeholder={'Jabatan penerima (opsional)'}
                                             className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                         />
                                     </div>
@@ -323,7 +321,7 @@ export default function BeritaAcaraPenyerahan() {
                             <div>
                                 <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     <Calendar className="inline h-4 w-4 mr-1" />
-                                    {t('laporan.beritaAcara.handoverDate')} <span className="text-red-500">*</span>
+                                    {'Tanggal Penyerahan'} <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="date"
@@ -339,13 +337,13 @@ export default function BeritaAcaraPenyerahan() {
                             {/* Keterangan */}
                             <div>
                                 <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {t('laporan.beritaAcara.notes')}
+                                    {'Keterangan'}
                                 </label>
                                 <textarea
                                     value={keterangan}
                                     onChange={(e) => setKeterangan(e.target.value)}
                                     rows={3}
-                                    placeholder={t('laporan.beritaAcara.notesPlaceholder')}
+                                    placeholder={'Catatan tambahan (opsional)'}
                                     className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                 />
                             </div>
@@ -354,10 +352,10 @@ export default function BeritaAcaraPenyerahan() {
                             <div className="rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                                        {t('laporan.beritaAcara.selectedArchives')}
+                                        {'Arsip dipilih:'}
                                     </span>
                                     <span className="font-bold text-blue-600 dark:text-blue-400">
-                                        {selectedArsipIds.length} {t('laporan.beritaAcara.item')}
+                                        {selectedArsipIds.length} {'item'}
                                     </span>
                                 </div>
                                 {errors.arsip_ids && (
@@ -385,12 +383,12 @@ export default function BeritaAcaraPenyerahan() {
                                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                         </svg>
-                                        {t('laporan.generating')}
+                                        {'Generating...'}
                                     </>
                                 ) : (
                                     <>
                                         <FileSignature className="h-4 w-4" />
-                                        {t('laporan.beritaAcara.createPdf')}
+                                        {'Buat Berita Acara PDF'}
                                     </>
                                 )}
                             </button>
@@ -405,20 +403,20 @@ export default function BeritaAcaraPenyerahan() {
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                                     <Package className="h-5 w-5 text-green-600" />
-                                    {t('laporan.beritaAcara.selectArchives')}
+                                    {'Pilih Arsip untuk Diserahkan'}
                                 </h2>
                                 <div className="flex gap-2">
                                     <button
                                         onClick={selectAll}
                                         className="text-xs px-3 py-1 rounded bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400"
                                     >
-                                        {t('laporan.beritaAcara.selectAll')}
+                                        {'Pilih Semua'}
                                     </button>
                                     <button
                                         onClick={deselectAll}
                                         className="text-xs px-3 py-1 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
                                     >
-                                        {t('laporan.beritaAcara.deselectAll')}
+                                        {'Batal Pilih'}
                                     </button>
                                 </div>
                             </div>
@@ -430,7 +428,7 @@ export default function BeritaAcaraPenyerahan() {
                                     type="text"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder={t('laporan.beritaAcara.searchArchive')}
+                                    placeholder={'Cari arsip berdasarkan kode, nomor item, atau uraian...'}
                                     className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                 />
                                 {searchTerm && (
@@ -445,7 +443,7 @@ export default function BeritaAcaraPenyerahan() {
 
                             {!unitPengolahAsalId && (
                                 <p className="mt-2 text-sm text-amber-600 dark:text-amber-400">
-                                    ⚠️ {t('laporan.beritaAcara.selectOriginFirst')}
+                                    ⚠️ {'Pilih unit pengolah asal terlebih dahulu untuk memfilter arsip'}
                                 </p>
                             )}
                         </div>
@@ -457,8 +455,8 @@ export default function BeritaAcaraPenyerahan() {
                                     <Package className="mx-auto h-12 w-12 opacity-50" />
                                     <p className="mt-2">
                                         {unitPengolahAsalId 
-                                            ? t('laporan.beritaAcara.noArchiveAvailable')
-                                            : t('laporan.beritaAcara.selectOriginToShow')}
+                                            ? 'Tidak ada arsip yang tersedia untuk unit ini'
+                                            : 'Pilih unit pengolah asal untuk menampilkan arsip'}
                                     </p>
                                 </div>
                             ) : (
@@ -488,7 +486,7 @@ export default function BeritaAcaraPenyerahan() {
                                                     </span>
                                                     <span className="inline-flex items-center rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400">
                                                         <CheckCircle className="mr-1 h-3 w-3" />
-                                                        {t('laporan.statusVerifikasi.accepted')}
+                                                        {'Diterima'}
                                                     </span>
                                                 </div>
                                                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
@@ -509,10 +507,10 @@ export default function BeritaAcaraPenyerahan() {
                         {/* Footer */}
                         <div className="border-t border-gray-200 p-3 dark:border-gray-700">
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {t('laporan.beritaAcara.showing')} {filteredArsip.length} {t('laporan.beritaAcara.archives')} 
+                                {'Menampilkan'} {filteredArsip.length} {'arsip'} 
                                 {selectedArsipIds.length > 0 && (
                                     <span className="ml-2 text-blue-600 dark:text-blue-400">
-                                        • {selectedArsipIds.length} {t('laporan.beritaAcara.selected')}
+                                        • {selectedArsipIds.length} {'dipilih'}
                                     </span>
                                 )}
                             </p>

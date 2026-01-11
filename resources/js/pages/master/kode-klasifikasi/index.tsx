@@ -12,7 +12,25 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { useLanguage } from '@/contexts/LanguageContext';
+
+// Helper functions for labels
+const getStatusAkhirLabel = (status: string) => {
+    const labels: Record<string, string> = {
+        musnah: 'Musnah',
+        permanen: 'Permanen',
+        dinilaikembali: 'Dinilai Kembali'
+    };
+    return labels[status.toLowerCase().replace(' ', '')] || status;
+};
+
+const getKeamananLabel = (keamanan: string) => {
+    const labels: Record<string, string> = {
+        biasa: 'Biasa',
+        rahasia: 'Rahasia',
+        terbatas: 'Terbatas'
+    };
+    return labels[keamanan.toLowerCase()] || keamanan;
+};
 
 interface KodeKlasifikasi {
     id: number;
@@ -56,7 +74,6 @@ interface Props {
 }
 
 export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash }: Props) {
-    const { t } = useLanguage();
     const [search, setSearch] = useState(filters.search || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
     const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; item: KodeKlasifikasi | null }>({
@@ -134,9 +151,9 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
     return (
         <AppSidebarLayout
             breadcrumbs={[
-                { title: t('nav.dashboard'), href: '/dashboard' },
-                { title: t('nav.master'), href: '#' },
-                { title: t('kodeKlasifikasi.title'), href: '/kode-klasifikasi' },
+                { title: 'Dashboard', href: '/dashboard' },
+                { title: 'Master', href: '#' },
+                { title: 'Kode Klasifikasi', href: '/kode-klasifikasi' },
             ]}
         >
             <div className="space-y-6">
@@ -156,16 +173,16 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            {t('kodeKlasifikasi.title')}
+                            {'Kode Klasifikasi'}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('users.total')} {kodeKlasifikasis.total} {t('kodeKlasifikasi.title').toLowerCase()}
+                            {'Total'} {kodeKlasifikasis.total} {'Kode Klasifikasi'.toLowerCase()}
                         </p>
                     </div>
                     <Link href="/kode-klasifikasi/create">
                         <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                             <Plus className="h-4 w-4 mr-2" />
-                            {t('kodeKlasifikasi.add')}
+                            {'Tambah Kode Klasifikasi'}
                         </Button>
                     </Link>
                 </div>
@@ -173,7 +190,7 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                 {/* Show Entries & Search */}
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex items-center gap-3">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.showEntries')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
                         <select
                             value={perPage}
                             onChange={(e) => handlePerPageChange(e.target.value)}
@@ -185,23 +202,23 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('users.entries')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'data'}</label>
                     </div>
                     <form onSubmit={handleSearch} className="flex gap-2 flex-1">
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                             <Input
                                 type="text"
-                                placeholder={t('kodeKlasifikasi.search')}
+                                placeholder={'Cari kode atau uraian...'}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="pl-10"
                             />
                         </div>
-                        <Button type="submit">{t('users.searchBtn')}</Button>
+                        <Button type="submit">{'Cari'}</Button>
                         {search && (
                             <Button type="button" variant="outline" onClick={handleReset}>
-                                {t('users.reset')}
+                                {'Reset'}
                             </Button>
                         )}
                     </form>
@@ -214,31 +231,31 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('users.no')}
+                                        {'No'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.kode')}
+                                        {'Kode'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.uraian')}
+                                        {'Uraian'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.parent')}
+                                        {'Kode Induk'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.retensiAktif')}
+                                        {'Retensi Aktif'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.retensiInaktif')}
+                                        {'Retensi Inaktif'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.statusAkhir')}
+                                        {'Status Akhir'}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                        {t('kodeKlasifikasi.klasifikasiKeamanan')}
+                                        {'Klasifikasi Keamanan'}
                                     </th>
                                     <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
-                                        {t('users.actions')}
+                                        {'Aksi'}
                                     </th>
                                 </tr>
                             </thead>
@@ -248,7 +265,7 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                                         <td colSpan={9} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                {t('kodeKlasifikasi.noData')}
+                                                {'Tidak ada data kode klasifikasi'}
                                             </p>
                                         </td>
                                     </tr>
@@ -276,19 +293,19 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                                                {item.retensi_aktif} {t('kodeKlasifikasi.year')}
+                                                {item.retensi_aktif} {'Tahun'}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                                                {item.retensi_inaktif} {t('kodeKlasifikasi.year')}
+                                                {item.retensi_inaktif} {'Tahun'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadge(item.status_akhir)}`}>
-                                                    {t(`kodeKlasifikasi.${item.status_akhir.toLowerCase().replace(' ', '')}`)}
+                                                    {getStatusAkhirLabel(item.status_akhir)}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getKeamananBadge(item.klasifikasi_keamanan)}`}>
-                                                    {t(`kodeKlasifikasi.${item.klasifikasi_keamanan.toLowerCase()}`)}
+                                                    {getKeamananLabel(item.klasifikasi_keamanan)}
                                                 </span>
                                             </td>
                                             <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
@@ -298,7 +315,7 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                                                             variant="outline"
                                                             size="sm"
                                                             className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-400 dark:hover:border-blue-700"
-                                                            title={t('users.edit')}
+                                                            title={'Edit'}
                                                         >
                                                             <Edit className="h-4 w-4" />
                                                         </Button>
@@ -308,7 +325,7 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                                                         size="sm"
                                                         onClick={() => confirmDelete(item)}
                                                         className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400 dark:hover:border-red-700"
-                                                        title={t('users.delete')}
+                                                        title={'Hapus'}
                                                     >
                                                         <Trash2 className="h-4 w-4" />
                                                     </Button>
@@ -326,7 +343,7 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    {t('users.showing')}{' '}
+                                    {'Menampilkan'}{' '}
                                     <span className="font-medium">
                                         {(kodeKlasifikasis.current_page - 1) * kodeKlasifikasis.per_page + 1}
                                     </span>{' '}
@@ -334,7 +351,7 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                                     <span className="font-medium">
                                         {Math.min(kodeKlasifikasis.current_page * kodeKlasifikasis.per_page, kodeKlasifikasis.total)}
                                     </span>{' '}
-                                    {t('users.of')} <span className="font-medium">{kodeKlasifikasis.total}</span>
+                                    {'dari'} <span className="font-medium">{kodeKlasifikasis.total}</span>
                                 </p>
                                 <div className="flex gap-2">
                                     {kodeKlasifikasis.links.map((link, index) => {
@@ -372,10 +389,10 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
             <Dialog open={deleteDialog.open} onOpenChange={(open) => !isDeleting && setDeleteDialog({ open, item: null })}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('kodeKlasifikasi.deleteTitle')}</DialogTitle>
+                        <DialogTitle>{'Konfirmasi Hapus Kode Klasifikasi'}</DialogTitle>
                         <DialogDescription>
-                            {t('kodeKlasifikasi.deleteMessage')}{' '}
-                            <span className="font-semibold">{deleteDialog.item?.kode_klasifikasi}</span>? {t('kodeKlasifikasi.deleteWarning')}
+                            {'Apakah Anda yakin ingin menghapus kode klasifikasi'}{' '}
+                            <span className="font-semibold">{deleteDialog.item?.kode_klasifikasi}</span>? {'Tindakan ini tidak dapat dibatalkan.'}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -384,14 +401,14 @@ export default function KodeKlasifikasiIndex({ kodeKlasifikasis, filters, flash 
                             onClick={() => setDeleteDialog({ open: false, item: null })}
                             disabled={isDeleting}
                         >
-                            {t('common.cancel')}
+                            {'Batal'}
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDeleting}
                         >
-                            {isDeleting ? t('users.deleting') : t('common.delete')}
+                            {isDeleting ? 'Menghapus...' : 'Hapus'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
