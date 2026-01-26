@@ -1,14 +1,11 @@
-// Redirect ke halaman verification-pending yang baru
-// File ini tetap dipertahankan untuk backward compatibility
-
 // Components
 import TextLink from '@/components/text-link';
 import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
 import { Head } from '@inertiajs/react';
-import { Clock, ShieldCheck, Mail } from 'lucide-react';
+import { Clock, Mail, ShieldCheck } from 'lucide-react';
 
-export default function VerifyEmail({ status }: { status?: string }) {
+export default function VerificationPending() {
     return (
         <AuthLayout
             title="Menunggu Verifikasi"

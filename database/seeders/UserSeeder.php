@@ -24,17 +24,6 @@ class UserSeeder extends Seeder
             ]
         );
 
-        // Management User
-        User::firstOrCreate(
-            ['email' => 'management@example.com'],
-            [
-                'name' => 'Management',
-                'password' => Hash::make('password'),
-                'role' => 'management',
-                'email_verified_at' => now(),
-            ]
-        );
-
         // Operator User
         User::firstOrCreate(
             ['email' => 'operator@example.com'],

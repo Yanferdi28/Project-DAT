@@ -22,11 +22,11 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Redirect to verify email page after registration
+        // Redirect to pending verification page after registration
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                return redirect()->route('verification.notice');
+                return redirect()->route('verification.pending');
             }
         });
     }
@@ -68,10 +68,6 @@ class FortifyServiceProvider extends ServiceProvider
         ]));
 
         Fortify::requestPasswordResetLinkView(fn (Request $request) => Inertia::render('auth/forgot-password', [
-            'status' => $request->session()->get('status'),
-        ]));
-
-        Fortify::verifyEmailView(fn (Request $request) => Inertia::render('auth/verify-email', [
             'status' => $request->session()->get('status'),
         ]));
 

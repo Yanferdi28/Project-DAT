@@ -19,17 +19,27 @@ class ArsipUnitSeeder extends Seeder
      */
     public function run(): void
     {
-        $klasifikasiIds = KodeKlasifikasi::whereNotNull('kode_klasifikasi_induk')->pluck('id')->toArray();
-        $unitPengolahIds = UnitPengolah::pluck('id')->toArray();
-        $berkasArsipIds = BerkasArsip::pluck('nomor_berkas')->toArray();
-        $kategoriIds = Kategori::pluck('id')->toArray();
-        $subKategoriIds = SubKategori::pluck('id')->toArray();
-        $userIds = User::pluck('id')->toArray();
+        $kodeKlasifikasiMap = KodeKlasifikasi::whereNotNull('kode_klasifikasi_induk')
+            ->get(['id', 'retensi_aktif', 'retensi_inaktif', 'status_akhir', 'kode_klasifikasi'])
+            ->keyBy('id');
+        $klasifikasiIds = $kodeKlasifikasiMap->keys()->values();
 
-        $tingkatPerkembangan = ['Asli', 'Salinan', 'Fotokopi', 'Pertinggal'];
-        $jumlahSatuan = ['Lembar', 'Berkas', 'Bendel', 'Buku', 'Map'];
-        $statusList = ['pending', 'diterima', 'ditolak'];
-        $publishStatusList = ['draft', 'submitted', 'verified', 'published'];
+        $unitPengolahIds = UnitPengolah::pluck('id')->values();
+        $berkasArsipIds = BerkasArsip::pluck('nomor_berkas')->values();
+        $kategoriIds = Kategori::pluck('id')->values();
+        $subKategoriByKategori = SubKategori::select('id', 'kategori_id')
+            ->get()
+            ->groupBy('kategori_id')
+            ->map(fn ($items) => $items->pluck('id')->values());
+        $userIds = User::pluck('id')->values();
+
+        if ($klasifikasiIds->isEmpty() || $unitPengolahIds->isEmpty() || $kategoriIds->isEmpty()) {
+            return;
+        }
+
+        // Gunakan nilai yang valid dengan form/controller (agar cocok dengan filter laporan dan UI).
+        $tingkatPerkembangan = ['asli', 'salinan', 'tembusan', 'pertinggal'];
+        $jumlahSatuan = ['lembar', 'jilid', 'bundle'];
         $ruanganList = ['Ruang Arsip A', 'Ruang Arsip B', 'Ruang Arsip C', 'Gudang Arsip'];
 
         $arsipData = [
@@ -156,9 +166,36 @@ class ArsipUnitSeeder extends Seeder
         ];
 
         foreach ($arsipData as $index => $arsip) {
-            $status = $statusList[array_rand($statusList)];
-            $publishStatus = $publishStatusList[array_rand($publishStatusList)];
-            $tanggal = Carbon::now()->subDays(rand(1, 365));
+            // Pastikan sebaran status & publish_status muncul di semua laporan.
+            $status = match ($index % 10) {
+                0, 1, 2 => 'pending',
+                3, 4, 5, 6 => 'diterima',
+                default => 'ditolak',
+            };
+
+            $publishStatus = ($index % 3 === 0) ? 'draft' : 'published';
+
+            $kodeKlasifikasiId = $klasifikasiIds[$index % $klasifikasiIds->count()];
+            $kodeKlasifikasi = $kodeKlasifikasiMap[$kodeKlasifikasiId];
+            $unitPengolahId = $unitPengolahIds[$index % $unitPengolahIds->count()];
+
+            // Pastikan setiap berkas punya minimal 1 item arsip (untuk laporan berkas/detail).
+            // Setelah itu, sisipkan beberapa arsip unit tanpa berkas (untuk laporan penyusutan - arsip unit).
+            $berkasArsipId = null;
+            if (!$berkasArsipIds->isEmpty()) {
+                if ($index < $berkasArsipIds->count()) {
+                    $berkasArsipId = $berkasArsipIds[$index];
+                } else {
+                    $berkasArsipId = ($index % 3 === 0) ? null : $berkasArsipIds[$index % $berkasArsipIds->count()];
+                }
+            }
+
+            // Variasi tahun untuk kebutuhan laporan penyusutan dan filter periode.
+            $tanggal = $berkasArsipId === null
+                ? Carbon::create(2014 + ($index % 5), ($index % 12) + 1, min(($index % 28) + 1, 28))
+                : Carbon::create(2019 + ($index % 7), ($index % 12) + 1, min(($index % 28) + 1, 28));
+
+            $createdAt = $tanggal->copy()->addDays(($index % 20) + 1)->setTime(9, 0);
 
             $verifiedBy = null;
             $verifiedAt = null;
@@ -166,57 +203,73 @@ class ArsipUnitSeeder extends Seeder
             $verifikasiOleh = null;
             $verifikasiTanggal = null;
             $verifikasiKeterangan = null;
+            $verificationNotes = null;
 
-            if ($status === 'diterima') {
-                $verifiedBy = !empty($userIds) ? $userIds[array_rand($userIds)] : null;
-                $verifiedAt = Carbon::now()->subDays(rand(1, 30));
-                $verifikasiOleh = $verifiedBy;
+            if ($status !== 'pending') {
+                $verifierId = $userIds->isEmpty() ? null : $userIds[$index % $userIds->count()];
+                $verifiedBy = $verifierId;
+                $verifikasiOleh = $verifierId;
+                $verifiedAt = $createdAt->copy()->addDays(2)->setTime(10, 15);
                 $verifikasiTanggal = $verifiedAt;
-                $verifikasiKeterangan = 'Arsip telah diverifikasi dan diterima';
-            } elseif ($status === 'ditolak') {
-                $verifiedBy = !empty($userIds) ? $userIds[array_rand($userIds)] : null;
-                $verifiedAt = Carbon::now()->subDays(rand(1, 30));
-                $verifikasiOleh = $verifiedBy;
-                $verifikasiTanggal = $verifiedAt;
-                $verifikasiKeterangan = 'Arsip ditolak karena data tidak lengkap';
+
+                if ($status === 'diterima') {
+                    $verifikasiKeterangan = 'Arsip telah diverifikasi dan diterima.';
+                    $verificationNotes = 'Data lengkap. Diterima untuk proses penyimpanan.';
+                } else {
+                    $verifikasiKeterangan = 'Arsip ditolak karena data tidak lengkap.';
+                    $verificationNotes = 'Mohon lengkapi metadata/unggah dokumen pendukung.';
+                }
             }
 
-            if (in_array($publishStatus, ['submitted', 'verified', 'published'])) {
-                $submittedAt = Carbon::now()->subDays(rand(31, 60));
+            if ($publishStatus === 'published') {
+                $submittedAt = $createdAt->copy()->subDays(1)->setTime(16, 0);
             }
 
-            ArsipUnit::create([
-                'kode_klasifikasi_id' => !empty($klasifikasiIds) ? $klasifikasiIds[array_rand($klasifikasiIds)] : null,
-                'unit_pengolah_arsip_id' => !empty($unitPengolahIds) ? $unitPengolahIds[array_rand($unitPengolahIds)] : null,
-                'berkas_arsip_id' => !empty($berkasArsipIds) ? $berkasArsipIds[array_rand($berkasArsipIds)] : null,
-                'kategori_id' => !empty($kategoriIds) ? $kategoriIds[array_rand($kategoriIds)] : null,
-                'sub_kategori_id' => !empty($subKategoriIds) ? $subKategoriIds[array_rand($subKategoriIds)] : null,
+            $kategoriId = $kategoriIds[$index % $kategoriIds->count()];
+            $subKategoriCandidates = $subKategoriByKategori->get($kategoriId);
+            $subKategoriId = $subKategoriCandidates && $subKategoriCandidates->isNotEmpty()
+                ? $subKategoriCandidates[$index % $subKategoriCandidates->count()]
+                : null;
+
+            $arsipUnit = ArsipUnit::create([
+                'kode_klasifikasi_id' => $kodeKlasifikasiId,
+                'unit_pengolah_arsip_id' => $unitPengolahId,
+                'berkas_arsip_id' => $berkasArsipId,
+                'kategori_id' => $kategoriId,
+                'sub_kategori_id' => $subKategoriId,
                 'publish_status' => $publishStatus,
                 'verified_by' => $verifiedBy,
                 'verified_at' => $verifiedAt,
+                'verification_notes' => $verificationNotes,
                 'submitted_at' => $submittedAt,
                 'verifikasi_oleh' => $verifikasiOleh,
                 'verifikasi_tanggal' => $verifikasiTanggal,
-                'retensi_aktif' => rand(1, 5),
-                'retensi_inaktif' => rand(3, 10),
+                'retensi_aktif' => $kodeKlasifikasi->retensi_aktif,
+                'retensi_inaktif' => $kodeKlasifikasi->retensi_inaktif,
                 'indeks' => $arsip['indeks'],
                 'no_item_arsip' => $arsip['no_item_arsip'],
                 'uraian_informasi' => $arsip['uraian_informasi'],
                 'tanggal' => $tanggal,
-                'jumlah_nilai' => rand(1, 50),
-                'jumlah_satuan' => $jumlahSatuan[array_rand($jumlahSatuan)],
-                'tingkat_perkembangan' => $tingkatPerkembangan[array_rand($tingkatPerkembangan)],
-                'skkaad' => 'SKKAAD-' . str_pad($index + 1, 4, '0', STR_PAD_LEFT),
-                'ruangan' => $ruanganList[array_rand($ruanganList)],
-                'no_filling' => 'F-' . str_pad(rand(1, 100), 3, '0', STR_PAD_LEFT),
-                'no_laci' => 'L-' . str_pad(rand(1, 20), 2, '0', STR_PAD_LEFT),
-                'no_folder' => 'FD-' . str_pad(rand(1, 50), 3, '0', STR_PAD_LEFT),
-                'no_box' => 'BX-' . str_pad(rand(1, 200), 4, '0', STR_PAD_LEFT),
+                'jumlah_nilai' => ($index % 25) + 1,
+                'jumlah_satuan' => $jumlahSatuan[$index % count($jumlahSatuan)],
+                'tingkat_perkembangan' => $tingkatPerkembangan[$index % count($tingkatPerkembangan)],
+                'skkaad' => $kodeKlasifikasi->status_akhir,
+                'ruangan' => $ruanganList[$index % count($ruanganList)],
+                'no_filling' => 'R' . str_pad((string)(($index % 20) + 1), 2, '0', STR_PAD_LEFT),
+                'no_laci' => 'L' . str_pad((string)(($index % 10) + 1), 2, '0', STR_PAD_LEFT),
+                'no_folder' => 'FD' . str_pad((string)(($index % 50) + 1), 3, '0', STR_PAD_LEFT),
+                'no_box' => 'BX' . str_pad((string)(($index % 200) + 1), 4, '0', STR_PAD_LEFT),
                 'dokumen' => null,
                 'keterangan' => $arsip['keterangan'],
                 'status' => $status,
                 'verifikasi_keterangan' => $verifikasiKeterangan,
             ]);
+
+            // Set created_at agar laporan filter periode dan rekap per unit pengolah punya variasi.
+            $arsipUnit->forceFill([
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
+            ])->saveQuietly();
         }
     }
 }

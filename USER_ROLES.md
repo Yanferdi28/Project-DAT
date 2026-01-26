@@ -1,13 +1,12 @@
 # User Roles and Default Accounts
 
-Sistem memiliki 4 level role pengguna:
+Sistem memiliki 3 level role pengguna:
 
 ## Roles
 
 1. **Admin** - Full access ke semua fitur sistem
-2. **Management** - Akses untuk manajemen dan approval
-3. **Operator** - Akses untuk operasional data entry
-4. **User** - Akses terbatas untuk pengguna umum
+2. **Operator** - Akses untuk operasional data entry dan verifikasi
+3. **User** - Akses terbatas untuk pengguna umum
 
 ## Default Accounts
 
@@ -19,19 +18,13 @@ Setelah menjalankan seeder, akun-akun berikut tersedia:
 - **Role**: admin
 - **Access**: Full system access
 
-### 2. Management
-- **Email**: management@example.com
-- **Password**: password
-- **Role**: management
-- **Access**: Management level access
-
-### 3. Operator
+### 2. Operator
 - **Email**: operator@example.com
 - **Password**: password
 - **Role**: operator
 - **Access**: Data entry and operational access
 
-### 4. Regular User
+### 3. Regular User
 - **Email**: user@example.com
 - **Password**: password
 - **Role**: user
@@ -41,7 +34,7 @@ Setelah menjalankan seeder, akun-akun berikut tersedia:
 
 Role enum sudah ditambahkan di migration:
 ```php
-enum('role', ['admin', 'management', 'operator', 'user'])->default('user')
+enum('role', ['admin', 'operator', 'user'])->default('user')
 ```
 
 ## Seeder

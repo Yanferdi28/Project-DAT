@@ -12,13 +12,13 @@ Dokumen ini menjelaskan alur kerja (flowmap) berdasarkan role pengguna dalam sis
                     │ (Full Access)   │
                     └────────┬────────┘
                              │
-            ┌────────────────┼────────────────┐
-            │                │                │
-            ▼                ▼                ▼
-    ┌───────────────┐ ┌─────────────┐ ┌───────────────┐
-    │  MANAGEMENT   │ │  OPERATOR   │ │     USER      │
-    │  (Approval)   │ │(Data Entry) │ │(Basic Access) │
-    └───────────────┘ └─────────────┘ └───────────────┘
+            ┌────────────────┴────────────────┐
+            │                                 │
+            ▼                                 ▼
+    ┌───────────────┐                 ┌───────────────┐
+    │   OPERATOR    │                 │     USER      │
+    │ (Data Entry)  │                 │(Basic Access) │
+    └───────────────┘                 └───────────────┘
 ```
 
 ---
@@ -30,17 +30,12 @@ Dokumen ini menjelaskan alur kerja (flowmap) berdasarkan role pengguna dalam sis
 - **Akses**: Full system access
 - **Email Default**: admin@example.com
 
-### 2. **MANAGEMENT** (Manajemen)
-- **Level**: Menengah
-- **Akses**: Approval & monitoring
-- **Email Default**: management@example.com
-
-### 3. **OPERATOR** (Operator)
+### 2. **OPERATOR** (Operator)
 - **Level**: Menengah
 - **Akses**: Data entry & operasional
 - **Email Default**: operator@example.com
 
-### 4. **USER** (Pengguna Umum)
+### 3. **USER** (Pengguna Umum)
 - **Level**: Dasar
 - **Akses**: Basic access (create & view arsip)
 - **Email Default**: user@example.com
@@ -185,33 +180,33 @@ Dokumen ini menjelaskan alur kerja (flowmap) berdasarkan role pengguna dalam sis
 
 ## 📊 Matriks Akses Role
 
-| Fitur | Admin | Management | Operator | User |
-|-------|:-----:|:----------:|:--------:|:----:|
-| **Dashboard** | ✅ | ✅ | ✅ | ✅ |
-| **Profile (View/Edit)** | ✅ | ✅ | ✅ | ✅ |
-| **Arsip Unit - View** | ✅ | ✅ | ✅ | ✅ |
-| **Arsip Unit - Create** | ✅ | ❌ | ❌ | ✅ |
-| **Arsip Unit - Edit** | ✅ | ❌ | ❌ | ✅ |
-| **Arsip Unit - Delete** | ✅ | ❌ | ❌ | ✅ |
-| **Arsip Unit - Export PDF** | ✅ | ✅ | ✅ | ✅ |
-| **Arsip Unit - Update Status** | ✅ | ❌ | ✅ | ❌ |
-| **Arsip Unit - Update Publish Status** | ✅ | ❌ | ✅ | ❌ |
-| **Arsip Unit - Assign to Berkas** | ✅ | ❌ | ✅ | ❌ |
-| **Berkas Arsip - View** | ✅ | ✅ | ✅ | ✅ |
-| **Berkas Arsip - Create** | ✅ | ❌ | ❌ | ✅ |
-| **Berkas Arsip - Edit** | ✅ | ❌ | ❌ | ✅ |
-| **Berkas Arsip - Delete** | ✅ | ❌ | ❌ | ✅ |
-| **Berkas Arsip - Export PDF** | ✅ | ✅ | ✅ | ✅ |
-| **Laporan - Penyusutan** | ✅ | ✅ | ✅ | ✅ |
-| **Laporan - Status Verifikasi** | ✅ | ✅ | ✅ | ✅ |
-| **Laporan - Berita Acara** | ✅ | ✅ | ✅ | ✅ |
-| **Laporan - Rekap Unit Pengolah** | ✅ | ✅ | ✅ | ✅ |
-| **Master - Users CRUD** | ✅ | ❌ | ❌ | ❌ |
-| **Master - Kode Klasifikasi** | ✅ | ❌ | ❌ | ❌ |
-| **Master - Unit Pengolah** | ✅ | ❌ | ❌ | ❌ |
-| **Master - Kategori** | ✅ | ❌ | ❌ | ❌ |
-| **Master - Sub Kategori** | ✅ | ❌ | ❌ | ❌ |
-| **Verify/Unverify User** | ✅ | ❌ | ❌ | ❌ |
+| Fitur | Admin | Operator | User |
+|-------|:-----:|:--------:|:----:|
+| **Dashboard** | ✅ | ✅ | ✅ |
+| **Profile (View/Edit)** | ✅ | ✅ | ✅ |
+| **Arsip Unit - View** | ✅ | ✅ | ✅ |
+| **Arsip Unit - Create** | ✅ | ❌ | ✅ |
+| **Arsip Unit - Edit** | ✅ | ❌ | ✅ |
+| **Arsip Unit - Delete** | ✅ | ❌ | ✅ |
+| **Arsip Unit - Export PDF** | ✅ | ✅ | ✅ |
+| **Arsip Unit - Update Status** | ✅ | ✅ | ❌ |
+| **Arsip Unit - Update Publish Status** | ✅ | ✅ | ❌ |
+| **Arsip Unit - Assign to Berkas** | ✅ | ✅ | ❌ |
+| **Berkas Arsip - View** | ✅ | ✅ | ✅ |
+| **Berkas Arsip - Create** | ✅ | ❌ | ✅ |
+| **Berkas Arsip - Edit** | ✅ | ❌ | ✅ |
+| **Berkas Arsip - Delete** | ✅ | ❌ | ✅ |
+| **Berkas Arsip - Export PDF** | ✅ | ✅ | ✅ |
+| **Laporan - Penyusutan** | ✅ | ✅ | ✅ |
+| **Laporan - Status Verifikasi** | ✅ | ✅ | ✅ |
+| **Laporan - Berita Acara** | ✅ | ✅ | ✅ |
+| **Laporan - Rekap Unit Pengolah** | ✅ | ✅ | ✅ |
+| **Master - Users CRUD** | ✅ | ❌ | ❌ |
+| **Master - Kode Klasifikasi** | ✅ | ❌ | ❌ |
+| **Master - Unit Pengolah** | ✅ | ❌ | ❌ |
+| **Master - Kategori** | ✅ | ❌ | ❌ |
+| **Master - Sub Kategori** | ✅ | ❌ | ❌ |
+| **Verify/Unverify User** | ✅ | ❌ | ❌ |
 
 ---
 
@@ -275,7 +270,7 @@ Dokumen ini menjelaskan alur kerja (flowmap) berdasarkan role pengguna dalam sis
 
 ## 📝 Catatan Penting
 
-1. **Role Management & Operator** tidak dapat:
+1. **Role Operator** tidak dapat:
    - Create, Edit, Delete Arsip Unit
    - Create, Edit, Delete Berkas Arsip
    

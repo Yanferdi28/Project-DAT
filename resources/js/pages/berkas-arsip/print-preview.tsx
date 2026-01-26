@@ -60,10 +60,11 @@ interface Props {
         sampai_tanggal?: string;
     };
     userUnitPengolahId?: number | null;
+    userUnitPengolah?: UnitPengolah | null;
 }
 
 export default function PrintPreview() {
-    const { berkasArsips, kodeKlasifikasis, unitPengolahs, filters, userUnitPengolahId } = usePage<{ props: Props }>().props as unknown as Props;
+    const { berkasArsips, kodeKlasifikasis, unitPengolahs, filters, userUnitPengolahId, userUnitPengolah } = usePage<{ props: Props }>().props as unknown as Props;
     const printRef = useRef<HTMLDivElement>(null);
     
     // Local filter state
@@ -236,27 +237,25 @@ export default function PrintPreview() {
                                 </Select>
                             </div>
                             
-                            {userUnitPengolahId === null && (
-                                <div className="space-y-2">
-                                    <Label htmlFor="unit_pengolah" className="text-gray-700 dark:text-gray-300">Unit Pengolah</Label>
-                                    <Select
-                                        value={localFilters.unit_pengolah_id}
-                                        onValueChange={(value) => setLocalFilters(prev => ({ ...prev, unit_pengolah_id: value === 'all' ? '' : value }))}
-                                    >
-                                        <SelectTrigger id="unit_pengolah" className="bg-white dark:bg-gray-800">
-                                            <SelectValue placeholder="Semua Unit" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="all">Semua Unit</SelectItem>
-                                            {unitPengolahs.map((u) => (
-                                                <SelectItem key={u.id} value={u.id.toString()}>
-                                                    {u.nama}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            )}
+                            <div className="space-y-2">
+                                <Label htmlFor="unit_pengolah" className="text-gray-700 dark:text-gray-300">Unit Pengolah</Label>
+                                <Select
+                                    value={localFilters.unit_pengolah_id}
+                                    onValueChange={(value) => setLocalFilters(prev => ({ ...prev, unit_pengolah_id: value === 'all' ? '' : value }))}
+                                >
+                                    <SelectTrigger id="unit_pengolah" className="bg-white dark:bg-gray-800">
+                                        <SelectValue placeholder="Semua Unit" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Semua Unit</SelectItem>
+                                        {unitPengolahs.map((u) => (
+                                            <SelectItem key={u.id} value={u.id.toString()}>
+                                                {u.nama}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
                             
                             <div className="space-y-2">
                                 <Label htmlFor="dari_tanggal" className="text-gray-700 dark:text-gray-300">Dari Tanggal</Label>
@@ -300,6 +299,11 @@ export default function PrintPreview() {
                         <h1 className="text-xl font-bold text-black uppercase tracking-wide">
                             LAPORAN DAFTAR BERKAS ARSIP
                         </h1>
+                        {userUnitPengolah && (
+                            <p className="text-sm text-black mt-1">
+                                DIBUAT OLEH: {userUnitPengolah.nama_unit || userUnitPengolah.nama}
+                            </p>
+                        )}
                         {localFilters.unit_pengolah_id && (
                             <p className="text-sm text-black mt-1">
                                 UNIT PENGOLAH: {getUnitPengolahName()}

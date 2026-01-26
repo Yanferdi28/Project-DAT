@@ -22,7 +22,7 @@ class ArsipUnitController extends Controller
      */
     private function checkRestrictedRole(): void
     {
-        if (in_array(auth()->user()->role, ['management', 'operator'])) {
+        if (auth()->user()->role === 'operator') {
             abort(403, 'Unauthorized action.');
         }
     }
@@ -57,10 +57,8 @@ class ArsipUnitController extends Controller
             'subKategori:id,nama_sub_kategori,kategori_id'
         ]);
 
-        // If user has unit_pengolah_id restriction, filter by it
-        if ($userUnitPengolahId !== null) {
-            $query->where('unit_pengolah_arsip_id', $userUnitPengolahId);
-        }
+        // Users can now see all arsip units (no filter by unit_pengolah)
+        // But edit/delete is restricted in their respective methods
 
         // Search
         if ($request->has('search') && $request->search != '') {
@@ -186,11 +184,8 @@ class ArsipUnitController extends Controller
      */
     public function show(ArsipUnit $arsipUnit): Response
     {
-        // Check if user has permission to view this arsip unit
-        $userUnitPengolahId = $this->getUserUnitPengolahId();
-        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
-            abort(403, 'Anda tidak memiliki akses ke arsip unit ini.');
-        }
+        // Users can view any arsip unit (no restriction)
+        // Edit/delete is restricted in their respective methods
         
         $arsipUnit->load([
             'kodeKlasifikasi',
@@ -202,8 +197,11 @@ class ArsipUnitController extends Controller
             'verifikasiOleh'
         ]);
 
+        $userUnitPengolahId = $this->getUserUnitPengolahId();
+
         return Inertia::render('arsip-unit/show', [
             'arsipUnit' => $arsipUnit,
+            'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
 
@@ -386,10 +384,7 @@ class ArsipUnitController extends Controller
         
         $query = ArsipUnit::with(['kodeKlasifikasi', 'unitPengolah']);
 
-        // If user has unit_pengolah_id restriction, filter by it
-        if ($userUnitPengolahId !== null) {
-            $query->where('unit_pengolah_arsip_id', $userUnitPengolahId);
-        }
+        // Users can now see all arsip units (no filter by unit_pengolah)
 
         // Filter tanggal
         if ($request->has('dari_tanggal') && $request->dari_tanggal != '') {
@@ -405,18 +400,24 @@ class ArsipUnitController extends Controller
             $query->where('status', $request->status);
         }
         
-        // Filter unit pengolah (only if user is not restricted)
-        if ($userUnitPengolahId === null && $request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
+        // Filter unit pengolah (available for all users)
+        if ($request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
             $query->where('unit_pengolah_arsip_id', $request->unit_pengolah_id);
         }
 
         $arsipUnits = $query->orderBy('tanggal', 'asc')->get();
+
+        // Get logged-in user's unit pengolah for display
+        $user = auth()->user();
+        $userUnitPengolah = $user->unitPengolah;
 
         return Inertia::render('arsip-unit/print-preview', [
             'arsipUnits' => $arsipUnits,
             'unitPengolahs' => UnitPengolah::all(),
             'filters' => $request->only(['dari_tanggal', 'sampai_tanggal', 'status', 'unit_pengolah_id']),
             'userUnitPengolahId' => $userUnitPengolahId,
+            'userUnitPengolah' => $userUnitPengolah,
+            'userName' => $user->name,
         ]);
     }
 

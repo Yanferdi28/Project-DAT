@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\EnsureUserIsVerified;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => AdminMiddleware::class,
             'role' => RoleMiddleware::class,
+            'verified' => EnsureUserIsVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

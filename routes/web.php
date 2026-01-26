@@ -18,6 +18,17 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
+// Route untuk halaman menunggu verifikasi admin
+Route::middleware(['auth'])->group(function () {
+    Route::get('verification/pending', function () {
+        // Jika user sudah diverifikasi, redirect ke dashboard
+        if (auth()->user()->isVerifiedByAdmin()) {
+            return redirect()->route('dashboard');
+        }
+        return Inertia::render('auth/verification-pending');
+    })->name('verification.pending');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -52,8 +63,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('laporan/berita-acara-penyerahan', [LaporanController::class, 'storeBeritaAcaraPenyerahan'])->name('laporan.berita-acara-penyerahan.store');
     Route::get('laporan/berita-acara-penyerahan/{id}/export', [LaporanController::class, 'exportBeritaAcaraPdf'])->name('laporan.berita-acara-penyerahan.export');
     
-    // Laporan Rekap Unit Pengolah (admin and management only)
-    Route::middleware('role:admin,management')->group(function () {
+    // Laporan Rekap Unit Pengolah (admin only)
+    Route::middleware('admin')->group(function () {
         Route::get('laporan/rekap-unit-pengolah', [LaporanController::class, 'rekapUnitPengolah'])->name('laporan.rekap-unit-pengolah');
         Route::get('laporan/rekap-unit-pengolah/export', [LaporanController::class, 'exportRekapUnitPengolahPdf'])->name('laporan.rekap-unit-pengolah.export');
     });

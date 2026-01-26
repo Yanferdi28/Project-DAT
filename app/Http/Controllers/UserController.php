@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UnitPengolah;
+use App\Notifications\AccountVerified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -77,7 +78,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'role' => ['required', 'in:admin,management,operator,user'],
+            'role' => ['required', 'in:admin,operator,user'],
             'unit_pengolah_id' => ['nullable', 'exists:unit_pengolah,id'],
         ]);
 
@@ -109,7 +110,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'password' => ['nullable', 'confirmed', Password::defaults()],
-            'role' => ['required', 'in:admin,management,operator,user'],
+            'role' => ['required', 'in:admin,operator,user'],
             'unit_pengolah_id' => ['nullable', 'exists:unit_pengolah,id'],
         ]);
 
@@ -141,7 +142,7 @@ class UserController extends Controller
     }
 
     /**
-     * Manually verify user's email.
+     * Manually verify user's account (admin verification).
      */
     public function verify(User $user)
     {
@@ -152,11 +153,14 @@ class UserController extends Controller
         $user->email_verified_at = now();
         $user->save();
 
-        return back()->with('success', 'Email pengguna berhasil diverifikasi.');
+        // Kirim notifikasi ke user bahwa akunnya sudah diverifikasi
+        $user->notify(new AccountVerified());
+
+        return back()->with('success', 'Pengguna berhasil diverifikasi dan notifikasi telah dikirim.');
     }
 
     /**
-     * Unverify user's email.
+     * Unverify user's account.
      */
     public function unverify(User $user)
     {
@@ -167,6 +171,6 @@ class UserController extends Controller
         $user->email_verified_at = null;
         $user->save();
 
-        return back()->with('success', 'Verifikasi email pengguna berhasil dibatalkan.');
+        return back()->with('success', 'Verifikasi pengguna berhasil dibatalkan.');
     }
 }

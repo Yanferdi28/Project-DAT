@@ -61,7 +61,7 @@ export default function LaporanStatusVerifikasi() {
                     {'Laporan Status & Verifikasi Arsip'}
                 </h1>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {'Generate laporan arsip berdasarkan status dan informasi verifikasi'}
+                    {'Buat laporan arsip berdasarkan status dan informasi verifikasi'}
                 </p>
             </div>
 
@@ -140,7 +140,7 @@ export default function LaporanStatusVerifikasi() {
                     <div className="flex items-center gap-2 mb-4">
                         <FileCheck className="h-5 w-5 text-blue-600" />
                         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                            {'Generate Laporan'}
+                            {'Buat Laporan'}
                         </h2>
                     </div>
 
@@ -231,7 +231,7 @@ export default function LaporanStatusVerifikasi() {
                                 ) : (
                                     <>
                                         <FileCheck className="h-4 w-4" />
-                                        {'Generate Laporan PDF'}
+                                        {'Buat Laporan PDF'}
                                     </>
                                 )}
                             </button>

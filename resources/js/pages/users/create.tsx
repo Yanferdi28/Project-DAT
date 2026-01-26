@@ -142,7 +142,6 @@ export default function CreateUser({ errors, unitPengolahs }: Props) {
                             >
                                 <option value="user">{'User'}</option>
                                 <option value="operator">{'Operator'}</option>
-                                <option value="management">{'Manajemen'}</option>
                                 <option value="admin">{'Admin'}</option>
                             </select>
                             {errors?.role && <InputError message={errors.role} />}

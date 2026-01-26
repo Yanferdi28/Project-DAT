@@ -382,7 +382,16 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     };
 
     const canManageStatus = auth.user.role === 'operator' || auth.user.role === 'admin';
-    const canCreateEdit = !['management', 'operator'].includes(auth.user?.role || '');
+    const canCreateEdit = auth.user?.role !== 'operator';
+    
+    // Check if user can edit/delete a specific arsip unit
+    // Admin can edit/delete all, regular users can only edit/delete their own unit's arsip
+    const canEditDelete = (item: ArsipUnit) => {
+        if (auth.user.role === 'admin') return true;
+        if (!canCreateEdit) return false;
+        // User can only edit/delete arsip from their own unit pengolah
+        return userUnitPengolahId === null || item.unit_pengolah_arsip_id === userUnitPengolahId;
+    };
 
     const getStatusBadge = (status: string) => {
         const badges = {
@@ -720,7 +729,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                                             <FolderInput className="h-4 w-4" />
                                                         </Button>
                                                     )}
-                                                    {canCreateEdit && (
+                                                    {canEditDelete(item) && (
                                                         <>
                                                             <Link href={`/arsip-unit/${item.id_berkas}/edit`}>
                                                                 <Button

@@ -161,7 +161,7 @@ export default function BeritaAcaraPenyerahan() {
                 } else {
                     const text = await response.text();
                     console.error('Server error:', text);
-                    setErrors({ general: 'Terjadi kesalahan saat generate PDF. Silakan coba lagi.' });
+                    setErrors({ general: 'Terjadi kesalahan saat buat PDF. Silakan coba lagi.' });
                 }
             }
         } catch (error) {

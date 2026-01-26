@@ -16,7 +16,7 @@ class BerkasArsipController extends Controller
      */
     private function checkRestrictedRole(): void
     {
-        if (in_array(auth()->user()->role, ['management', 'operator'])) {
+        if (auth()->user()->role === 'operator') {
             abort(403, 'Unauthorized action.');
         }
     }
@@ -49,10 +49,8 @@ class BerkasArsipController extends Controller
 
         $berkasArsips = BerkasArsip::with(['kodeKlasifikasi', 'unitPengolah'])
             ->withCount('arsipUnits')
-            // If user has unit_pengolah restriction, filter by it
-            ->when($userUnitPengolahId !== null, function ($query) use ($userUnitPengolahId) {
-                $query->where('unit_pengolah_id', $userUnitPengolahId);
-            })
+            // Users can now see all berkas arsip (no filter by unit_pengolah)
+            // Edit/delete is restricted in their respective methods
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('nama_berkas', 'like', "%{$search}%")
@@ -63,8 +61,8 @@ class BerkasArsipController extends Controller
             ->when($filterKlasifikasi, function ($query, $filterKlasifikasi) {
                 $query->where('klasifikasi_id', $filterKlasifikasi);
             })
-            // Only apply manual unit_pengolah filter if user is admin
-            ->when($filterUnitPengolah && $userUnitPengolahId === null, function ($query) use ($filterUnitPengolah) {
+            // Allow unit_pengolah filter for all users
+            ->when($filterUnitPengolah, function ($query) use ($filterUnitPengolah) {
                 $query->where('unit_pengolah_id', $filterUnitPengolah);
             })
             ->oldest('created_at')
@@ -148,11 +146,9 @@ class BerkasArsipController extends Controller
      */
     public function show(BerkasArsip $berkasArsip)
     {
-        // Check if user has permission to view this berkas arsip
+        // Users can view any berkas arsip (no restriction)
+        // Edit/delete is restricted in their respective methods
         $userUnitPengolahId = $this->getUserUnitPengolahId();
-        if ($userUnitPengolahId !== null && $berkasArsip->unit_pengolah_id !== $userUnitPengolahId) {
-            abort(403, 'Anda tidak memiliki akses ke berkas arsip ini.');
-        }
         
         $berkasArsip->load([
             'kodeKlasifikasi', 
@@ -176,6 +172,7 @@ class BerkasArsipController extends Controller
         return Inertia::render('berkas-arsip/show', [
             'berkasArsip' => $berkasArsip,
             'availableArsipUnits' => $availableArsipUnits,
+            'userUnitPengolahId' => $userUnitPengolahId,
         ]);
     }
 
@@ -319,10 +316,7 @@ class BerkasArsipController extends Controller
                 },
             ]);
 
-        // If user has unit_pengolah_id restriction, filter by it
-        if ($userUnitPengolahId !== null) {
-            $query->where('unit_pengolah_id', $userUnitPengolahId);
-        }
+        // Users can now see all berkas arsip (no filter by unit_pengolah)
 
         // Apply filters
         if ($request->has('search') && $request->search != '') {
@@ -338,8 +332,8 @@ class BerkasArsipController extends Controller
             $query->where('klasifikasi_id', $request->klasifikasi_id);
         }
 
-        // Filter by unit pengolah (only if user is not restricted)
-        if ($userUnitPengolahId === null && $request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
+        // Filter by unit pengolah (available for all users)
+        if ($request->has('unit_pengolah_id') && $request->unit_pengolah_id != '') {
             $query->where('unit_pengolah_id', $request->unit_pengolah_id);
         }
 
@@ -376,12 +370,17 @@ class BerkasArsipController extends Controller
             return $berkas;
         });
 
+        // Get logged-in user's unit pengolah for display
+        $user = auth()->user();
+        $userUnitPengolah = $user->unitPengolah;
+
         return Inertia::render('berkas-arsip/print-preview', [
             'berkasArsips' => $berkasArsips,
             'kodeKlasifikasis' => KodeKlasifikasi::orderBy('kode_klasifikasi')->get(),
             'unitPengolahs' => UnitPengolah::all(),
             'filters' => $request->only(['dari_tanggal', 'sampai_tanggal', 'klasifikasi_id', 'unit_pengolah_id', 'format']),
             'userUnitPengolahId' => $userUnitPengolahId,
+            'userUnitPengolah' => $userUnitPengolah,
         ]);
     }
 

@@ -85,17 +85,26 @@ interface ArsipUnit {
 
 interface Props {
     arsipUnit: ArsipUnit;
+    userUnitPengolahId?: number | null;
     auth: {
         user: {
             role: string;
+            unit_pengolah_id?: number;
         };
     };
 }
 
-export default function Show({ arsipUnit, auth }: Props) {
+export default function Show({ arsipUnit, userUnitPengolahId, auth }: Props) {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [imageZoom, setImageZoom] = useState(1);
     const [imageRotation, setImageRotation] = useState(0);
+
+    // Check if user can edit this arsip unit
+    const canEdit = auth.user?.role !== 'operator' && (
+        auth.user?.role === 'admin' || 
+        userUnitPengolahId === null || 
+        arsipUnit.unit_pengolah_arsip_id === userUnitPengolahId
+    );
 
     // Helper function to check if file is an image
     const isImage = (filename: string | null) => {
@@ -188,7 +197,7 @@ export default function Show({ arsipUnit, auth }: Props) {
                             </Button>
                         </Link>
                         <div className="flex gap-2">
-                            {!['management', 'operator'].includes(auth.user?.role || '') && (
+                            {canEdit && (
                                 <Link href={`/arsip-unit/${arsipUnit.id_berkas}/edit`}>
                                     <Button variant="outline" size="sm">
                                         {'Edit'}

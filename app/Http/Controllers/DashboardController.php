@@ -28,14 +28,11 @@ class DashboardController extends Controller
     {
         $userUnitPengolahId = $this->getUserUnitPengolahId();
         
-        // Base queries with unit pengolah filter
+        // Base queries - users can now see all data in dashboard
         $arsipQuery = ArsipUnit::query();
         $berkasQuery = BerkasArsip::query();
         
-        if ($userUnitPengolahId) {
-            $arsipQuery->where('unit_pengolah_arsip_id', $userUnitPengolahId);
-            $berkasQuery->where('unit_pengolah_id', $userUnitPengolahId);
-        }
+        // No filter by unit_pengolah - show all data to all users
         
         // Total arsip unit
         $totalArsipUnit = (clone $arsipQuery)->count();

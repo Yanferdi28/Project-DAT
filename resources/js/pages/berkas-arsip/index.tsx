@@ -17,6 +17,7 @@ interface BerkasArsip {
     nomor_berkas: number;
     nama_berkas: string;
     klasifikasi_id: number;
+    unit_pengolah_id: number | null;
     retensi_aktif: number | null;
     retensi_inaktif: number | null;
     penyusutan_akhir: string | null;
@@ -114,7 +115,16 @@ export default function BerkasArsipIndex() {
     });
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const canCreateEdit = !['management', 'operator'].includes(auth.user?.role || '');
+    const canCreateEdit = auth.user?.role !== 'operator';
+    
+    // Check if user can edit/delete a specific berkas arsip
+    // Admin can edit/delete all, regular users can only edit/delete their own unit's berkas
+    const canEditDelete = (item: BerkasArsip) => {
+        if (auth.user.role === 'admin') return true;
+        if (!canCreateEdit) return false;
+        // User can only edit/delete berkas from their own unit pengolah
+        return userUnitPengolahId === null || item.unit_pengolah_id === userUnitPengolahId;
+    };
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -399,7 +409,7 @@ export default function BerkasArsipIndex() {
                                             </td>
                                             <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
                                                 <div className="flex items-center justify-center gap-2">
-                                                    {canCreateEdit && (
+                                                    {canEditDelete(item) && (
                                                         <>
                                                             <Link href={`/berkas-arsip/${item.nomor_berkas}/edit`}>
                                                                 <Button

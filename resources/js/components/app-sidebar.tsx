@@ -244,8 +244,8 @@ export function AppSidebar({
                             {/* Laporan Submenu */}
                             {!isCollapsed && isLaporanOpen && (
                                 <div className="ml-8 mt-1 space-y-1">
-                                    {/* Rekap Unit Pengolah - Admin and Management only */}
-                                    {['admin', 'management'].includes(auth.user?.role || '') && (
+                                    {/* Rekap Unit Pengolah - Admin only */}
+                                    {auth.user?.role === 'admin' && (
                                         <Link
                                             href="/laporan/rekap-unit-pengolah"
                                             className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/rekap-unit-pengolah') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}

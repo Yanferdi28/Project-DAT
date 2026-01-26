@@ -82,10 +82,12 @@ return [
     |
     | This option controls whether new users are required to verify their
     | email address before they can login to the application.
+    | 
+    | Disabled - using admin verification instead of email verification.
     |
     */
 
-    'verify_email' => true,
+    'verify_email' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -158,7 +160,8 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        Features::emailVerification(),
+        // Email verification disabled - using admin verification instead
+        // Features::emailVerification(),
         Features::twoFactorAuthentication([
             'confirm' => true,
             'confirmPassword' => true,

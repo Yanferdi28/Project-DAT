@@ -381,10 +381,6 @@ export default function UsersIndex({ users, unitPengolahs, filters, flash }: Pro
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
                                                         {'Admin'}
                                                     </span>
-                                                ) : user.role === 'management' ? (
-                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400">
-                                                        {'Manajemen'}
-                                                    </span>
                                                 ) : user.role === 'operator' ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
                                                         {'Operator'}

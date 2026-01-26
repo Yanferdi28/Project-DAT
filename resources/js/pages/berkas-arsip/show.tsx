@@ -74,16 +74,18 @@ interface BerkasArsip {
 interface PageProps {
     berkasArsip: BerkasArsip;
     availableArsipUnits: ArsipUnit[];
+    userUnitPengolahId?: number | null;
     auth: {
         user: {
             role: string;
+            unit_pengolah_id?: number;
         };
     };
     [key: string]: any;
 }
 
 export default function Show() {
-    const { berkasArsip, availableArsipUnits, auth } = usePage<PageProps>().props;
+    const { berkasArsip, availableArsipUnits, userUnitPengolahId, auth } = usePage<PageProps>().props;
 
     const [addDialog, setAddDialog] = useState(false);
     const [removeDialog, setRemoveDialog] = useState<{ open: boolean; arsipUnit: ArsipUnit | null }>({
@@ -94,7 +96,15 @@ export default function Show() {
     const [isAdding, setIsAdding] = useState(false);
     const [isRemoving, setIsRemoving] = useState(false);
 
-    const canManage = !['management', 'operator'].includes(auth.user?.role || '');
+    // Check if user can manage (not operator)
+    const canManageBase = auth.user?.role !== 'operator';
+    
+    // Check if user can edit this berkas arsip specifically
+    const canManage = canManageBase && (
+        auth.user?.role === 'admin' ||
+        userUnitPengolahId === null ||
+        berkasArsip.unit_pengolah_id === userUnitPengolahId
+    );
 
     const handleAddArsipUnit = () => {
         if (!selectedArsipUnitId) return;
