@@ -277,39 +277,57 @@ class LaporanController extends Controller
             'arsip_ids.*' => 'exists:arsip_unit,id_berkas',
         ]);
 
-        // Generate nomor berita acara
-        $nomorBeritaAcara = \App\Models\BeritaAcaraPenyerahan::generateNomorBeritaAcara();
+        try {
+            return \Illuminate\Support\Facades\DB::transaction(function () use ($validated) {
+                // Generate nomor berita acara
+                $nomorBeritaAcara = \App\Models\BeritaAcaraPenyerahan::generateNomorBeritaAcara();
 
-        // Create berita acara
-        $beritaAcara = \App\Models\BeritaAcaraPenyerahan::create([
-            'nomor_berita_acara' => $nomorBeritaAcara,
-            'tanggal_penyerahan' => $validated['tanggal_penyerahan'],
-            'unit_pengolah_asal_id' => $validated['unit_pengolah_asal_id'],
-            'unit_pengolah_tujuan_id' => $validated['unit_pengolah_tujuan_id'] ?? null,
-            'penerima_nama' => $validated['penerima_nama'] ?? null,
-            'penerima_jabatan' => $validated['penerima_jabatan'] ?? null,
-            'keterangan' => $validated['keterangan'] ?? null,
-            'dibuat_oleh' => auth()->id(),
-        ]);
+                // Create berita acara
+                $beritaAcara = \App\Models\BeritaAcaraPenyerahan::create([
+                    'nomor_berita_acara' => $nomorBeritaAcara,
+                    'tanggal_penyerahan' => $validated['tanggal_penyerahan'],
+                    'unit_pengolah_asal_id' => $validated['unit_pengolah_asal_id'],
+                    'unit_pengolah_tujuan_id' => $validated['unit_pengolah_tujuan_id'] ?? null,
+                    'penerima_nama' => $validated['penerima_nama'] ?? null,
+                    'penerima_jabatan' => $validated['penerima_jabatan'] ?? null,
+                    'keterangan' => $validated['keterangan'] ?? null,
+                    'dibuat_oleh' => auth()->id(),
+                ]);
 
-        // Attach arsip units
-        $beritaAcara->arsipUnits()->attach($validated['arsip_ids']);
+                // Attach arsip units
+                $beritaAcara->arsipUnits()->attach($validated['arsip_ids']);
 
-        // Load relationships for PDF
-        $beritaAcara->load([
-            'unitPengolahAsal',
-            'unitPengolahTujuan',
-            'dibuatOleh',
-            'arsipUnits.kodeKlasifikasi',
-            'arsipUnits.unitPengolah',
-        ]);
+                // Load relationships for PDF
+                $beritaAcara->load([
+                    'unitPengolahAsal',
+                    'unitPengolahTujuan',
+                    'dibuatOleh',
+                    'arsipUnits.kodeKlasifikasi',
+                    'arsipUnits.unitPengolah',
+                ]);
 
-        $pdf = Pdf::loadView('pdf.berita-acara-penyerahan', compact('beritaAcara'));
-        $pdf->setPaper('a4', 'portrait');
+                $pdf = Pdf::loadView('pdf.berita-acara-penyerahan', compact('beritaAcara'));
+                $pdf->setPaper('a4', 'portrait');
 
-        // Replace / dengan - untuk nama file yang valid
-        $safeFilename = str_replace('/', '-', $nomorBeritaAcara);
-        return $pdf->stream('berita-acara-penyerahan-' . $safeFilename . '.pdf');
+                // Replace / dengan - untuk nama file yang valid
+                $safeFilename = str_replace('/', '-', $nomorBeritaAcara);
+
+                // Gunakan download() bukan stream() untuk menghindari masalah output buffering
+                return $pdf->download('berita-acara-penyerahan-' . $safeFilename . '.pdf');
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal membuat Berita Acara PDF', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'user_id' => auth()->id(),
+                'input' => $validated,
+            ]);
+
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat membuat PDF: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

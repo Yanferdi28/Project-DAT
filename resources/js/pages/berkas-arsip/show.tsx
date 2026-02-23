@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { Link, router, usePage } from '@inertiajs/react';
-import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye } from 'lucide-react';
+import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye, Search } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -93,18 +93,26 @@ export default function Show() {
         arsipUnit: null,
     });
     const [selectedArsipUnitId, setSelectedArsipUnitId] = useState<string>('');
+    const [arsipUnitSearch, setArsipUnitSearch] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [isRemoving, setIsRemoving] = useState(false);
 
     // Check if user can manage (not operator)
-    const canManageBase = auth.user?.role !== 'operator';
-    
-    // Check if user can edit this berkas arsip specifically
-    const canManage = canManageBase && (
-        auth.user?.role === 'admin' ||
-        userUnitPengolahId === null ||
-        berkasArsip.unit_pengolah_id === userUnitPengolahId
-    );
+    // Admin and User can assign berkas, operator cannot
+    const canManage = auth.user?.role !== 'operator';
+
+    // Filter available arsip units based on search
+    const filteredArsipUnits = availableArsipUnits.filter((arsip) => {
+        if (!arsipUnitSearch.trim()) return true;
+        const searchLower = arsipUnitSearch.toLowerCase();
+        return (
+            arsip.indeks?.toLowerCase().includes(searchLower) ||
+            arsip.no_item_arsip?.toLowerCase().includes(searchLower) ||
+            arsip.uraian_informasi?.toLowerCase().includes(searchLower) ||
+            arsip.kode_klasifikasi?.kode_klasifikasi?.toLowerCase().includes(searchLower) ||
+            arsip.unit_pengolah?.nama_unit?.toLowerCase().includes(searchLower)
+        );
+    });
 
     const handleAddArsipUnit = () => {
         if (!selectedArsipUnitId) return;
@@ -117,6 +125,7 @@ export default function Show() {
                 onSuccess: () => {
                     setAddDialog(false);
                     setSelectedArsipUnitId('');
+                    setArsipUnitSearch('');
                 },
                 onFinish: () => {
                     setIsAdding(false);
@@ -444,26 +453,49 @@ export default function Show() {
                             Arsip Unit
                         </label>
                         {availableArsipUnits.length > 0 ? (
-                            <Select value={selectedArsipUnitId} onValueChange={setSelectedArsipUnitId}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Pilih arsip unit..." />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {availableArsipUnits.map((arsip) => (
-                                        <SelectItem key={arsip.id_berkas} value={arsip.id_berkas.toString()}>
-                                            <div className="flex flex-col">
-                                                <span>
-                                                    {arsip.indeks || arsip.no_item_arsip || `ID: ${arsip.id_berkas}`}
-                                                </span>
-                                                <span className="text-xs text-gray-500">
-                                                    {arsip.uraian_informasi?.substring(0, 50)}
-                                                    {arsip.uraian_informasi && arsip.uraian_informasi.length > 50 ? '...' : ''}
-                                                </span>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <div className="space-y-2">
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                                    <input
+                                        type="text"
+                                        placeholder="Cari arsip unit..."
+                                        value={arsipUnitSearch}
+                                        onChange={(e) => setArsipUnitSearch(e.target.value)}
+                                        className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                    />
+                                </div>
+                                {filteredArsipUnits.length === 0 ? (
+                                    <div className="rounded-lg border border-gray-300 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-800">
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            Tidak ada arsip unit yang cocok dengan pencarian "{arsipUnitSearch}"
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <Select value={selectedArsipUnitId} onValueChange={setSelectedArsipUnitId}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Pilih arsip unit..." />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {filteredArsipUnits.map((arsip) => (
+                                                <SelectItem key={arsip.id_berkas} value={arsip.id_berkas.toString()}>
+                                                    <div className="flex flex-col">
+                                                        <span>
+                                                            {arsip.indeks || arsip.no_item_arsip || `ID: ${arsip.id_berkas}`}
+                                                        </span>
+                                                        <span className="text-xs text-gray-500">
+                                                            {arsip.uraian_informasi?.substring(0, 50)}
+                                                            {arsip.uraian_informasi && arsip.uraian_informasi.length > 50 ? '...' : ''}
+                                                        </span>
+                                                    </div>
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                )}
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    Menampilkan {filteredArsipUnits.length} dari {availableArsipUnits.length} arsip unit
+                                </p>
+                            </div>
                         ) : (
                             <p className="text-sm text-gray-500 dark:text-gray-400">
                                 Tidak ada arsip unit yang tersedia.
@@ -475,6 +507,7 @@ export default function Show() {
                             onClick={() => {
                                 setAddDialog(false);
                                 setSelectedArsipUnitId('');
+                                setArsipUnitSearch('');
                             }}
                             disabled={isAdding}
                             className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"

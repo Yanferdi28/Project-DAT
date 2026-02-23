@@ -150,10 +150,10 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     const [status, setStatus] = useState(filters.status || '');
     const [publishStatus, setPublishStatus] = useState(filters.publish_status || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
-    
+
     // Check if user has unit_pengolah restriction
     const isUnitPengolahLocked = userUnitPengolahId !== null && userUnitPengolahId !== undefined;
-    
+
     // Export dialog state
     const [exportDialog, setExportDialog] = useState(false);
     const [dariTanggal, setDariTanggal] = useState('');
@@ -162,7 +162,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     const [exportUnitPengolah, setExportUnitPengolah] = useState(
         isUnitPengolahLocked ? userUnitPengolahId!.toString() : ''
     );
-    
+
     const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
         open: false,
         item: null,
@@ -175,7 +175,8 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     const [isDeleting, setIsDeleting] = useState(false);
     const [isAssigning, setIsAssigning] = useState(false);
     const [isLoadingBerkas, setIsLoadingBerkas] = useState(false);
-    
+    const [berkasSearch, setBerkasSearch] = useState('');
+
     // Rejection dialog state
     const [rejectDialog, setRejectDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
         open: false,
@@ -183,14 +184,14 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     });
     const [rejectReason, setRejectReason] = useState('');
     const [isRejecting, setIsRejecting] = useState(false);
-    
+
     // Accept confirmation dialog state
     const [acceptDialog, setAcceptDialog] = useState<{ open: boolean; item: ArsipUnit | null }>({
         open: false,
         item: null,
     });
     const [isAccepting, setIsAccepting] = useState(false);
-    
+
     // Publish status confirmation dialog state
     const [publishDialog, setPublishDialog] = useState<{ open: boolean; item: ArsipUnit | null; targetStatus: string }>({
         open: false,
@@ -204,12 +205,25 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     const openAssignDialog = (item: ArsipUnit) => {
         setAssignDialog({ open: true, item });
         setSelectedBerkasId(item.berkas_arsip_id?.toString() || '');
+        setBerkasSearch('');
         // Reload lazy data if not already loaded
         if (!berkasArsips || berkasArsips.length === 0) {
             setIsLoadingBerkas(true);
             router.reload({ only: ['berkasArsips'], onFinish: () => setIsLoadingBerkas(false) });
         }
     };
+
+    // Filter berkasArsips based on search
+    const filteredBerkasArsips = berkasArsips?.filter((berkas) => {
+        if (!berkasSearch.trim()) return true;
+        const searchLower = berkasSearch.toLowerCase();
+        return (
+            berkas.nama_berkas.toLowerCase().includes(searchLower) ||
+            berkas.kode_klasifikasi?.kode_klasifikasi?.toLowerCase().includes(searchLower) ||
+            berkas.kode_klasifikasi?.uraian?.toLowerCase().includes(searchLower) ||
+            berkas.unit_pengolah?.nama_unit?.toLowerCase().includes(searchLower)
+        );
+    }) || [];
 
     // Load unitPengolahs lazily when export dialog opens
     const openExportDialog = () => {
@@ -253,7 +267,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
 
     const handleDelete = () => {
         if (!deleteDialog.item) return;
-        
+
         setIsDeleting(true);
         router.delete(`/arsip-unit/${deleteDialog.item.id_berkas}`, {
             preserveScroll: true,
@@ -376,14 +390,16 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
         if (sampaiTanggal) params.append('sampai_tanggal', sampaiTanggal);
         if (exportStatus) params.append('status', exportStatus);
         if (exportUnitPengolah) params.append('unit_pengolah_id', exportUnitPengolah);
-        
+
         window.open(`/arsip-unit/export/pdf?${params.toString()}`, '_blank');
         setExportDialog(false);
     };
 
     const canManageStatus = auth.user.role === 'operator' || auth.user.role === 'admin';
     const canCreateEdit = auth.user?.role !== 'operator';
-    
+    // User can assign berkas (admin and user, not operator)
+    const canAssignBerkas = auth.user?.role !== 'operator';
+
     // Check if user can edit/delete a specific arsip unit
     // Admin can edit/delete all, regular users can only edit/delete their own unit's arsip
     const canEditDelete = (item: ArsipUnit) => {
@@ -442,8 +458,8 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                         </p>
                     </div>
                     <div className="flex gap-2">
-                        <Button 
-                            variant="outline" 
+                        <Button
+                            variant="outline"
                             className="bg-green-600 hover:bg-green-700 text-white border-green-600"
                             onClick={() => router.visit('/arsip-unit/print-preview')}
                         >
@@ -718,7 +734,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                             </td>
                                             <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
                                                 <div className="flex items-center justify-center gap-2">
-                                                    {canCreateEdit && canManageStatus && (
+                                                    {canAssignBerkas && (
                                                         <Button
                                                             variant="outline"
                                                             size="sm"
@@ -876,28 +892,51 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                 </p>
                             </div>
                         ) : (
-                            <Select value={selectedBerkasId} onValueChange={setSelectedBerkasId}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Pilih berkas arsip..." />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {berkasArsips.map((berkas) => (
-                                        <SelectItem key={berkas.nomor_berkas} value={berkas.nomor_berkas.toString()}>
-                                            {berkas.nama_berkas}
-                                            {berkas.kode_klasifikasi && (
-                                                <span className="ml-2 text-xs text-gray-500">
-                                                    ({berkas.kode_klasifikasi.kode_klasifikasi})
-                                                </span>
-                                            )}
-                                            {berkas.unit_pengolah && (
-                                                <span className="ml-2 text-xs text-gray-500">
-                                                    - {berkas.unit_pengolah.nama_unit}
-                                                </span>
-                                            )}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <div className="space-y-2">
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                                    <Input
+                                        type="text"
+                                        placeholder="Cari berkas arsip..."
+                                        value={berkasSearch}
+                                        onChange={(e) => setBerkasSearch(e.target.value)}
+                                        className="pl-10"
+                                    />
+                                </div>
+                                {filteredBerkasArsips.length === 0 ? (
+                                    <div className="rounded-lg border border-gray-300 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-800">
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            Tidak ada berkas arsip yang cocok dengan pencarian "{berkasSearch}"
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <Select value={selectedBerkasId} onValueChange={setSelectedBerkasId}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Pilih berkas arsip..." />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {filteredBerkasArsips.map((berkas) => (
+                                                <SelectItem key={berkas.nomor_berkas} value={berkas.nomor_berkas.toString()}>
+                                                    {berkas.nama_berkas}
+                                                    {berkas.kode_klasifikasi && (
+                                                        <span className="ml-2 text-xs text-gray-500">
+                                                            ({berkas.kode_klasifikasi.kode_klasifikasi})
+                                                        </span>
+                                                    )}
+                                                    {berkas.unit_pengolah && (
+                                                        <span className="ml-2 text-xs text-gray-500">
+                                                            - {berkas.unit_pengolah.nama_unit}
+                                                        </span>
+                                                    )}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                )}
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    Menampilkan {filteredBerkasArsips.length} dari {berkasArsips.length} berkas
+                                </p>
+                            </div>
                         )}
                         {assignDialog.item?.berkas_arsip_id && (
                             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -959,7 +998,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                 />
                             </div>
                         </div>
-                        
+
                         <div>
                             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Filter Status
@@ -975,7 +1014,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                 <option value="ditolak">Ditolak</option>
                             </select>
                         </div>
-                        
+
                         <div>
                             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Filter Unit Pengolah{isUnitPengolahLocked && ' (terkunci)'}
@@ -1006,7 +1045,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             )}
                         </div>
                     </div>
-                    
+
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setExportDialog(false)}>
                             {'Batal'}
@@ -1137,18 +1176,17 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             {publishDialog.targetStatus === 'published' ? 'Konfirmasi Publikasi' : 'Konfirmasi Arsipkan'}
                         </DialogTitle>
                         <DialogDescription>
-                            {publishDialog.targetStatus === 'published' 
+                            {publishDialog.targetStatus === 'published'
                                 ? 'Apakah Anda yakin ingin mempublikasikan arsip unit ini? Arsip yang dipublikasikan akan dapat diakses secara publik.'
                                 : 'Apakah Anda yakin ingin mengarsipkan arsip unit ini? Arsip yang diarsipkan tidak akan ditampilkan di daftar utama.'}
                         </DialogDescription>
                     </DialogHeader>
                     <div className="py-4">
                         {publishDialog.item && (
-                            <div className={`rounded-lg border p-4 ${
-                                publishDialog.targetStatus === 'published' 
-                                    ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800'
-                                    : 'bg-purple-50 border-purple-200 dark:bg-purple-900/20 dark:border-purple-800'
-                            }`}>
+                            <div className={`rounded-lg border p-4 ${publishDialog.targetStatus === 'published'
+                                ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800'
+                                : 'bg-purple-50 border-purple-200 dark:bg-purple-900/20 dark:border-purple-800'
+                                }`}>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
                                     <strong>No. Item:</strong> {publishDialog.item.no_item_arsip || publishDialog.item.id_berkas}
                                 </p>
@@ -1180,14 +1218,14 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                         <Button
                             onClick={handlePublishConfirm}
                             disabled={isPublishing}
-                            className={publishDialog.targetStatus === 'published' 
+                            className={publishDialog.targetStatus === 'published'
                                 ? 'bg-blue-600 hover:bg-blue-700'
                                 : 'bg-purple-600 hover:bg-purple-700'}
                         >
-                            {isPublishing 
-                                ? 'Memproses...' 
-                                : publishDialog.targetStatus === 'published' 
-                                    ? 'Publikasikan' 
+                            {isPublishing
+                                ? 'Memproses...'
+                                : publishDialog.targetStatus === 'published'
+                                    ? 'Publikasikan'
                                     : 'Arsipkan'}
                         </Button>
                     </DialogFooter>

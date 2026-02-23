@@ -46,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('arsip-unit/print-preview', [ArsipUnitController::class, 'printPreview'])->name('arsip-unit.print-preview');
     Route::get('arsip-unit/export/pdf', [ArsipUnitController::class, 'exportPdf'])->name('arsip-unit.export-pdf');
     Route::resource('arsip-unit', ArsipUnitController::class);
-    
+
     // Berkas Arsip routes (accessible by all authenticated users)
     Route::get('berkas-arsip/print-preview', [BerkasArsipController::class, 'printPreview'])->name('berkas-arsip.print-preview');
     Route::get('berkas-arsip/export/pdf', [BerkasArsipController::class, 'exportPdf'])->name('berkas-arsip.export-pdf');
@@ -54,7 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('berkas-arsip', BerkasArsipController::class);
     Route::post('berkas-arsip/{berkasArsip}/add-arsip-unit', [BerkasArsipController::class, 'addArsipUnit'])->name('berkas-arsip.add-arsip-unit');
     Route::delete('berkas-arsip/{berkasArsip}/remove-arsip-unit/{arsipUnit}', [BerkasArsipController::class, 'removeArsipUnit'])->name('berkas-arsip.remove-arsip-unit');
-    
+
     // Laporan routes
     Route::get('laporan/penyusutan', [LaporanController::class, 'penyusutan'])->name('laporan.penyusutan');
     Route::get('laporan/status-verifikasi', [LaporanController::class, 'statusVerifikasi'])->name('laporan.status-verifikasi');
@@ -62,17 +62,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('laporan/berita-acara-penyerahan', [LaporanController::class, 'beritaAcaraPenyerahan'])->name('laporan.berita-acara-penyerahan');
     Route::post('laporan/berita-acara-penyerahan', [LaporanController::class, 'storeBeritaAcaraPenyerahan'])->name('laporan.berita-acara-penyerahan.store');
     Route::get('laporan/berita-acara-penyerahan/{id}/export', [LaporanController::class, 'exportBeritaAcaraPdf'])->name('laporan.berita-acara-penyerahan.export');
-    
+
     // Laporan Rekap Unit Pengolah (admin only)
     Route::middleware('admin')->group(function () {
         Route::get('laporan/rekap-unit-pengolah', [LaporanController::class, 'rekapUnitPengolah'])->name('laporan.rekap-unit-pengolah');
         Route::get('laporan/rekap-unit-pengolah/export', [LaporanController::class, 'exportRekapUnitPengolahPdf'])->name('laporan.rekap-unit-pengolah.export');
     });
-    
+
     // Arsip Unit status routes (operator and admin only)
     Route::middleware('role:operator,admin')->group(function () {
         Route::patch('arsip-unit/{arsipUnit}/status', [ArsipUnitController::class, 'updateStatus'])->name('arsip-unit.update-status');
         Route::patch('arsip-unit/{arsipUnit}/publish-status', [ArsipUnitController::class, 'updatePublishStatus'])->name('arsip-unit.update-publish-status');
+    });
+
+    // Assign to berkas route (user and admin only, not operator)
+    Route::middleware('role:user,admin')->group(function () {
         Route::patch('arsip-unit/{arsipUnit}/assign-to-berkas', [ArsipUnitController::class, 'assignToBerkas'])->name('arsip-unit.assign-to-berkas');
     });
 
@@ -90,4 +94,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

@@ -160,8 +160,14 @@ export default function BeritaAcaraPenyerahan() {
                     }
                 } else {
                     const text = await response.text();
-                    console.error('Server error:', text);
-                    setErrors({ general: 'Terjadi kesalahan saat buat PDF. Silakan coba lagi.' });
+                    console.error('Server error (status ' + response.status + '):', text);
+                    if (response.status === 419) {
+                        setErrors({ general: 'Sesi telah berakhir. Silakan muat ulang halaman dan coba lagi.' });
+                    } else if (response.status === 422) {
+                        setErrors({ general: 'Data tidak valid. Periksa kembali form Anda.' });
+                    } else {
+                        setErrors({ general: 'Terjadi kesalahan saat buat PDF (kode: ' + response.status + '). Silakan coba lagi.' });
+                    }
                 }
             }
         } catch (error) {
