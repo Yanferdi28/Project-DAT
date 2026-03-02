@@ -3,7 +3,7 @@ import * as usersRoutes from '@/routes/users';
 import * as myprofileRoutes from '@/routes/myprofile';
 import { type NavItem } from '@/types';
 import { Link, usePage, router } from '@inertiajs/react';
-import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2 } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2, Activity, HelpCircle } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
 import AppLogoIcon from './app-logo-icon';
@@ -68,19 +68,16 @@ export function AppSidebar({
         {
             title: 'Sub Kategori',
             href: '/sub-kategori',
-        },
-    ];
+        },        {
+            title: 'Activity Log',
+            href: '/activity-log',
+        },    ];
 
     const footerNavItems: NavItem[] = [
         {
-            title: 'Repositori',
-            href: 'https://github.com/laravel/react-starter-kit',
-            icon: Folder,
-        },
-        {
-            title: 'Dokumentasi',
-            href: 'https://laravel.com/docs/starter-kits#react',
-            icon: BookOpen,
+            title: 'Bantuan',
+            href: '/bantuan',
+            icon: HelpCircle,
         },
     ];
 
@@ -286,18 +283,16 @@ export function AppSidebar({
                     {/* Footer Links */}
                     <div className="mb-3 space-y-1">
                         {footerNavItems.map((item) => (
-                            <a
+                            <Link
                                 key={item.title}
                                 href={item.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-all hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 ' + (isCollapsed ? 'justify-center' : '')}
+                                className={'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all ' + (isActive(item.href) ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800') + ' ' + (isCollapsed ? 'justify-center' : '')}
                             >
                                 {item.icon && (
                                     <item.icon className="h-4 w-4 transition-transform group-hover:scale-110" />
                                 )}
                                 {!isCollapsed && <span>{item.title}</span>}
-                            </a>
+                            </Link>
                         ))}
                     </div>
 

@@ -26,8 +26,9 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Upload, Check, ChevronsUpDown } from 'lucide-react';
+import { ArrowLeft, Upload, Check, ChevronsUpDown, Brain, Loader2, FileSearch, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import axios from 'axios';
 
 interface KodeKlasifikasi {
     id: number;
@@ -61,6 +62,7 @@ interface Props {
     kategoris: Kategori[];
     subKategoris: SubKategori[];
     userUnitPengolahId?: number | null;
+    ocrEnabled?: boolean;
 }
 
 export default function Create({
@@ -69,6 +71,7 @@ export default function Create({
     kategoris,
     subKategoris,
     userUnitPengolahId,
+    ocrEnabled = false,
 }: Props) {
     
     // Check if user has unit_pengolah restriction
@@ -103,6 +106,24 @@ export default function Create({
     const [openKategori, setOpenKategori] = useState(false);
     const [openSubKategori, setOpenSubKategori] = useState(false);
 
+    // OCR scan state
+    const [isScanning, setIsScanning] = useState(false);
+    const [scanResult, setScanResult] = useState<{
+        success: boolean;
+        extracted_text?: string;
+        ocr_confidence?: number;
+        suggestions?: {
+            kode_klasifikasi_id: number | null;
+            kode_klasifikasi_kode: string | null;
+            kode_klasifikasi_uraian: string | null;
+            confidence: number;
+            indeks: string | null;
+            jumlah_nilai: string | null;
+            uraian_informasi: string | null;
+        } | null;
+        error?: string;
+    } | null>(null);
+
     // Auto-fill retensi and skkaad when kode_klasifikasi changes
     useEffect(() => {
         if (data.kode_klasifikasi_id) {
@@ -129,6 +150,61 @@ export default function Create({
             const file = e.target.files[0];
             setData({ ...data, dokumen: file });
             setFileName(file.name);
+            setScanResult(null);
+        }
+    };
+
+    const isOcrEligibleFile = (name: string) => {
+        const ext = name.split('.').pop()?.toLowerCase() || '';
+        return ['pdf', 'jpg', 'jpeg', 'png'].includes(ext);
+    };
+
+    const handleScanDocument = async () => {
+        if (!data.dokumen) return;
+
+        setIsScanning(true);
+        setScanResult(null);
+
+        try {
+            const formData = new FormData();
+            formData.append('dokumen', data.dokumen);
+
+            const response = await axios.post('/ocr/scan-document', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+                timeout: 120000,
+            });
+
+            const result = response.data;
+            setScanResult(result);
+
+            // Auto-fill fields if AI suggestions are available
+            if (result.success && result.suggestions) {
+                const updates: Record<string, string> = {};
+
+                if (result.suggestions.kode_klasifikasi_id) {
+                    updates.kode_klasifikasi_id = result.suggestions.kode_klasifikasi_id.toString();
+                }
+                if (result.suggestions.indeks) {
+                    updates.indeks = result.suggestions.indeks;
+                }
+                if (result.suggestions.jumlah_nilai) {
+                    updates.jumlah_nilai = result.suggestions.jumlah_nilai;
+                }
+                if (result.suggestions.uraian_informasi) {
+                    updates.uraian_informasi = result.suggestions.uraian_informasi;
+                }
+
+                if (Object.keys(updates).length > 0) {
+                    setData((prev) => ({ ...prev, ...updates }));
+                }
+            }
+        } catch (err: any) {
+            setScanResult({
+                success: false,
+                error: err.response?.data?.message || err.response?.data?.error || 'Gagal terhubung ke layanan OCR.',
+            });
+        } finally {
+            setIsScanning(false);
         }
     };
 
@@ -719,6 +795,104 @@ export default function Create({
                                     </p>
                                     {errors.dokumen && (
                                         <p className="text-sm text-red-600">{errors.dokumen}</p>
+                                    )}
+
+                                    {/* OCR Scan Button */}
+                                    {ocrEnabled && data.dokumen && isOcrEligibleFile(fileName) && (
+                                        <div className="mt-3 space-y-3">
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                onClick={handleScanDocument}
+                                                disabled={isScanning}
+                                                className="border-purple-300 text-purple-700 hover:bg-purple-50 hover:border-purple-400 dark:border-purple-700 dark:text-purple-400 dark:hover:bg-purple-950"
+                                            >
+                                                {isScanning ? (
+                                                    <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Memindai dokumen...</>
+                                                ) : (
+                                                    <><Brain className="h-4 w-4 mr-2" /> Scan OCR & Isi Otomatis</>
+                                                )}
+                                            </Button>
+
+                                            {/* Scan Result */}
+                                            {scanResult && (
+                                                <div className={`rounded-lg border p-4 ${
+                                                    scanResult.success
+                                                        ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'
+                                                        : 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20'
+                                                }`}>
+                                                    {scanResult.success ? (
+                                                        <div className="space-y-3">
+                                                            <div className="flex items-center gap-2">
+                                                                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                                                                <span className="text-sm font-medium text-green-800 dark:text-green-300">
+                                                                    Dokumen berhasil dipindai
+                                                                </span>
+                                                                {scanResult.ocr_confidence != null && (
+                                                                    <span className="text-xs text-green-600 dark:text-green-400">
+                                                                        (kepercayaan: {scanResult.ocr_confidence.toFixed(1)}%)
+                                                                    </span>
+                                                                )}
+                                                            </div>
+
+                                                            {scanResult.suggestions ? (
+                                                                <div className="space-y-2">
+                                                                    <p className="text-sm text-green-700 dark:text-green-300">
+                                                                        <Brain className="inline h-3 w-3 mr-1" />
+                                                                        AI menyarankan klasifikasi:
+                                                                    </p>
+                                                                    <div className="ml-4 space-y-1">
+                                                                        {scanResult.suggestions.kode_klasifikasi_kode && (
+                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
+                                                                                <strong>Kode Klasifikasi:</strong> {scanResult.suggestions.kode_klasifikasi_kode} - {scanResult.suggestions.kode_klasifikasi_uraian}
+                                                                            </p>
+                                                                        )}
+                                                                        {scanResult.suggestions.indeks && (
+                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
+                                                                                <strong>Indeks:</strong> {scanResult.suggestions.indeks}
+                                                                            </p>
+                                                                        )}
+                                                                        {scanResult.suggestions.uraian_informasi && (
+                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
+                                                                                <strong>Uraian Informasi:</strong> {scanResult.suggestions.uraian_informasi}
+                                                                            </p>
+                                                                        )}
+                                                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                            Keyakinan AI: {(scanResult.suggestions.confidence * 100).toFixed(1)}%
+                                                                        </p>
+                                                                    </div>
+                                                                    <p className="text-xs text-green-600 dark:text-green-400 italic">
+                                                                        Field telah diisi otomatis berdasarkan hasil OCR. Anda masih bisa mengubahnya.
+                                                                    </p>
+                                                                </div>
+                                                            ) : (
+                                                                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                                                                    Teks berhasil diekstrak tetapi AI tidak dapat menentukan klasifikasi.
+                                                                </p>
+                                                            )}
+
+                                                            {scanResult.extracted_text && (
+                                                                <details className="mt-2">
+                                                                    <summary className="cursor-pointer text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700">
+                                                                        Lihat teks hasil OCR
+                                                                    </summary>
+                                                                    <pre className="mt-2 max-h-40 overflow-y-auto rounded border bg-white p-2 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 whitespace-pre-wrap font-mono">
+                                                                        {scanResult.extracted_text}
+                                                                    </pre>
+                                                                </details>
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center gap-2">
+                                                            <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                                                            <span className="text-sm text-red-800 dark:text-red-300">
+                                                                {scanResult.error || 'Gagal memindai dokumen.'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                     )}
                                 </div>
                             </div>

@@ -1,17 +1,13 @@
-import { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Download, Calendar, FileText, FolderOpen, User, CheckCircle, XCircle, Clock, Eye, Image, FileIcon, ZoomIn, ZoomOut, RotateCw } from 'lucide-react';
+import { ArrowLeft, Download, Calendar, FileText, FolderOpen, User, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
 import AppLayout from '@/layouts/app-layout';
+import { OcrResultPanel } from '@/components/ocr-result-panel';
+import { AiSuggestionCard } from '@/components/ai-suggestion-card';
+import { DocumentPreview } from '@/components/document-preview';
 
 interface KodeKlasifikasi {
     id: number;
@@ -81,11 +77,22 @@ interface ArsipUnit {
     sub_kategori: SubKategori;
     verified_by_user?: User;
     verifikasi_oleh_user?: User;
+    // OCR fields
+    extracted_text: string | null;
+    ocr_status: string | null;
+    ocr_confidence: number | null;
+    ocr_error: string | null;
+    ocr_processed_at: string | null;
+    suggested_kategori?: { id: number; nama_kategori: string } | null;
+    suggested_sub_kategori?: { id: number; nama_sub_kategori: string } | null;
+    ai_confidence_score: number | null;
+    ai_suggestion_status: string | null;
 }
 
 interface Props {
     arsipUnit: ArsipUnit;
     userUnitPengolahId?: number | null;
+    ocrEnabled?: boolean;
     auth: {
         user: {
             role: string;
@@ -94,45 +101,13 @@ interface Props {
     };
 }
 
-export default function Show({ arsipUnit, userUnitPengolahId, auth }: Props) {
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [imageZoom, setImageZoom] = useState(1);
-    const [imageRotation, setImageRotation] = useState(0);
-
+export default function Show({ arsipUnit, userUnitPengolahId, ocrEnabled, auth }: Props) {
     // Check if user can edit this arsip unit
     const canEdit = auth.user?.role !== 'operator' && (
         auth.user?.role === 'admin' || 
         userUnitPengolahId === null || 
         arsipUnit.unit_pengolah_arsip_id === userUnitPengolahId
     );
-
-    // Helper function to check if file is an image
-    const isImage = (filename: string | null) => {
-        if (!filename) return false;
-        const ext = filename.split('.').pop()?.toLowerCase();
-        return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(ext || '');
-    };
-
-    // Helper function to check if file is a PDF
-    const isPdf = (filename: string | null) => {
-        if (!filename) return false;
-        const ext = filename.split('.').pop()?.toLowerCase();
-        return ext === 'pdf';
-    };
-
-    // Helper function to get file extension
-    const getFileExtension = (filename: string | null) => {
-        if (!filename) return '';
-        return filename.split('.').pop()?.toUpperCase() || '';
-    };
-
-    const handleZoomIn = () => setImageZoom(prev => Math.min(prev + 0.25, 3));
-    const handleZoomOut = () => setImageZoom(prev => Math.max(prev - 0.25, 0.5));
-    const handleRotate = () => setImageRotation(prev => (prev + 90) % 360);
-    const resetImageView = () => {
-        setImageZoom(1);
-        setImageRotation(0);
-    };
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -399,88 +374,12 @@ export default function Show({ arsipUnit, userUnitPengolahId, auth }: Props) {
                                             {(arsipUnit.ruangan || arsipUnit.no_filling || arsipUnit.no_laci || arsipUnit.no_folder || arsipUnit.no_box) && <Separator />}
                                             <div>
                                                 <label className="text-sm font-medium text-muted-foreground">{'Dokumen'}</label>
-                                                <div className="mt-2 space-y-3">
-                                                    {/* Preview Area */}
-                                                    {isImage(arsipUnit.dokumen) ? (
-                                                        <div 
-                                                            className="relative group cursor-pointer rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
-                                                            onClick={() => setPreviewOpen(true)}
-                                                        >
-                                                            <img
-                                                                src={`/storage/${arsipUnit.dokumen}`}
-                                                                alt="Preview Dokumen"
-                                                                className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-                                                            />
-                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                                <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
-                                                                    <Eye className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ) : isPdf(arsipUnit.dokumen) ? (
-                                                        <div className="space-y-3">
-                                                            <div className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden bg-gray-100 dark:bg-gray-800">
-                                                                <iframe
-                                                                    src={`/file/preview/${arsipUnit.dokumen}#view=FitH`}
-                                                                    className="w-full h-[500px]"
-                                                                    title="PDF Preview"
-                                                                    style={{ border: 'none' }}
-                                                                />
-                                                            </div>
-                                                            <div className="flex justify-center">
-                                                                <a 
-                                                                    href={`/file/preview/${arsipUnit.dokumen}`}
-                                                                    target="_blank" 
-                                                                    rel="noopener noreferrer"
-                                                                >
-                                                                    <Button variant="outline" size="sm">
-                                                                        <Eye className="h-4 w-4 mr-2" />
-                                                                        Buka PDF di Tab Baru (Full Screen)
-                                                                    </Button>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                                                            <div className="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                                                                <FileIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                                                            </div>
-                                                            <div className="flex-1 min-w-0">
-                                                                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                                                                    {arsipUnit.dokumen.split('/').pop()}
-                                                                </p>
-                                                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                    Format: {getFileExtension(arsipUnit.dokumen)}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    
-                                                    {/* File Info & Actions */}
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                                                            <FileText className="h-4 w-4" />
-                                                            <span>{arsipUnit.dokumen.split('/').pop()}</span>
-                                                        </div>
-                                                        <div className="flex gap-2">
-                                                            {isImage(arsipUnit.dokumen) && (
-                                                                <Button
-                                                                    variant="outline"
-                                                                    size="sm"
-                                                                    onClick={() => setPreviewOpen(true)}
-                                                                >
-                                                                    <Eye className="h-4 w-4 mr-1" />
-                                                                    Lihat
-                                                                </Button>
-                                                            )}
-                                                            <a href={`/storage/${arsipUnit.dokumen}`} target="_blank" rel="noopener noreferrer">
-                                                                <Button variant="outline" size="sm">
-                                                                    <Download className="h-4 w-4 mr-1" />
-                                                                    Unduh
-                                                                </Button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                <div className="mt-2">
+                                                    <DocumentPreview
+                                                        dokumen={arsipUnit.dokumen}
+                                                        inline={true}
+                                                        inlineHeight="h-48"
+                                                    />
                                                 </div>
                                             </div>
                                         </>
@@ -586,71 +485,32 @@ export default function Show({ arsipUnit, userUnitPengolahId, auth }: Props) {
                                 </div>
                             </CardContent>
                         </Card>
+
+                        {/* OCR & AI Section */}
+                        {ocrEnabled && arsipUnit.ocr_status && (
+                            <div className="space-y-6">
+                                <OcrResultPanel
+                                    arsipUnitId={arsipUnit.id_berkas}
+                                    ocrStatus={arsipUnit.ocr_status}
+                                    extractedText={arsipUnit.extracted_text}
+                                    ocrConfidence={arsipUnit.ocr_confidence}
+                                    ocrError={arsipUnit.ocr_error}
+                                    ocrProcessedAt={arsipUnit.ocr_processed_at}
+                                />
+                                <AiSuggestionCard
+                                    arsipUnitId={arsipUnit.id_berkas}
+                                    currentKategori={arsipUnit.kategori.nama}
+                                    currentSubKategori={arsipUnit.sub_kategori.nama}
+                                    suggestedKategori={arsipUnit.suggested_kategori}
+                                    suggestedSubKategori={arsipUnit.suggested_sub_kategori}
+                                    aiConfidenceScore={arsipUnit.ai_confidence_score}
+                                    aiSuggestionStatus={arsipUnit.ai_suggestion_status}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-
-            {/* Image Preview Modal */}
-            {arsipUnit.dokumen && isImage(arsipUnit.dokumen) && (
-                <Dialog open={previewOpen} onOpenChange={(open) => {
-                    setPreviewOpen(open);
-                    if (!open) resetImageView();
-                }}>
-                    <DialogContent className="max-w-5xl w-full h-[90vh] flex flex-col p-0">
-                        <DialogHeader className="p-4 border-b flex-shrink-0">
-                            <div className="flex items-center justify-between">
-                                <DialogTitle className="flex items-center gap-2">
-                                    <Image className="h-5 w-5" />
-                                    {arsipUnit.dokumen.split('/').pop()}
-                                </DialogTitle>
-                                <div className="flex items-center gap-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={handleZoomOut}
-                                        disabled={imageZoom <= 0.5}
-                                    >
-                                        <ZoomOut className="h-4 w-4" />
-                                    </Button>
-                                    <span className="text-sm font-medium min-w-[60px] text-center">
-                                        {Math.round(imageZoom * 100)}%
-                                    </span>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={handleZoomIn}
-                                        disabled={imageZoom >= 3}
-                                    >
-                                        <ZoomIn className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={handleRotate}
-                                    >
-                                        <RotateCw className="h-4 w-4" />
-                                    </Button>
-                                    <a href={`/storage/${arsipUnit.dokumen}`} download>
-                                        <Button variant="outline" size="sm">
-                                            <Download className="h-4 w-4" />
-                                        </Button>
-                                    </a>
-                                </div>
-                            </div>
-                        </DialogHeader>
-                        <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
-                            <img
-                                src={`/storage/${arsipUnit.dokumen}`}
-                                alt="Preview Dokumen"
-                                className="max-w-full max-h-full object-contain transition-transform duration-200"
-                                style={{
-                                    transform: `scale(${imageZoom}) rotate(${imageRotation}deg)`,
-                                }}
-                            />
-                        </div>
-                    </DialogContent>
-                </Dialog>
-            )}
         </AppLayout>
     );
 }

@@ -1,8 +1,9 @@
 import AppLayout from '@/layouts/app-layout';
 import { Link, router, usePage } from '@inertiajs/react';
-import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye, Search } from 'lucide-react';
+import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye, Search, QrCode } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { QrCodeLabelDialog } from '@/components/qr-code-label';
 import {
     Dialog,
     DialogContent,
@@ -96,6 +97,7 @@ export default function Show() {
     const [arsipUnitSearch, setArsipUnitSearch] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [isRemoving, setIsRemoving] = useState(false);
+    const [qrDialogOpen, setQrDialogOpen] = useState(false);
 
     // Check if user can manage (not operator)
     // Admin and User can assign berkas, operator cannot
@@ -209,13 +211,22 @@ export default function Show() {
                             </p>
                         </div>
                         {canManage && (
-                            <Link
-                                href={`/berkas-arsip/${berkasArsip.nomor_berkas}/edit`}
-                                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-                            >
-                                <SquarePen className="h-4 w-4" />
-                                {'Edit'}
-                            </Link>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => setQrDialogOpen(true)}
+                                    className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                                >
+                                    <QrCode className="h-4 w-4" />
+                                    QR Label
+                                </button>
+                                <Link
+                                    href={`/berkas-arsip/${berkasArsip.nomor_berkas}/edit`}
+                                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                                >
+                                    <SquarePen className="h-4 w-4" />
+                                    {'Edit'}
+                                </Link>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -564,6 +575,14 @@ export default function Show() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
+            {/* QR Code Label Dialog */}
+            <QrCodeLabelDialog
+                open={qrDialogOpen}
+                onOpenChange={setQrDialogOpen}
+                berkas={berkasArsip}
+                baseUrl={typeof window !== 'undefined' ? window.location.origin : ''}
+            />
 
         </AppLayout>
     );

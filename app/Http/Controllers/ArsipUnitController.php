@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessOcrJob;
+use App\Models\ActivityLog;
 use App\Models\ArsipUnit;
 use App\Models\KodeKlasifikasi;
 use App\Models\UnitPengolah;
@@ -74,6 +76,11 @@ class ArsipUnitController extends Controller
             });
         }
 
+        // Search by document content (OCR extracted text)
+        if ($request->has('content_search') && $request->content_search != '') {
+            $query->searchByContent($request->content_search);
+        }
+
         // Filter by status
         if ($request->has('status') && $request->status != '') {
             $query->where('status', $request->status);
@@ -94,10 +101,11 @@ class ArsipUnitController extends Controller
 
         return Inertia::render('arsip-unit/index', [
             'arsipUnits' => $arsipUnits,
-            'filters' => array_merge($request->only(['search', 'status', 'publish_status']), ['per_page' => $perPage]),
+            'filters' => array_merge($request->only(['search', 'content_search', 'status', 'publish_status']), ['per_page' => $perPage]),
             'berkasArsips' => Inertia::lazy(fn() => $berkasArsipsQuery->orderBy('nama_berkas')->get()),
             'unitPengolahs' => Inertia::lazy(fn() => UnitPengolah::select('id', 'nama_unit')->orderBy('nama_unit')->get()),
             'userUnitPengolahId' => $userUnitPengolahId,
+            'ocrEnabled' => config('ocr.enabled', true),
         ]);
     }
 
@@ -118,6 +126,7 @@ class ArsipUnitController extends Controller
             'kategoris' => Kategori::all(),
             'subKategoris' => SubKategori::with('kategori')->get(),
             'userUnitPengolahId' => $userUnitPengolahId,
+            'ocrEnabled' => config('ocr.enabled', true),
         ]);
     }
 
@@ -171,7 +180,13 @@ class ArsipUnitController extends Controller
         $validated['status'] = 'pending';
         $validated['publish_status'] = 'draft';
 
-        ArsipUnit::create($validated);
+        $arsipUnit = ArsipUnit::create($validated);
+
+        // Dispatch OCR job if document was uploaded and OCR is enabled
+        if ($arsipUnit->dokumen && config('ocr.enabled', true) && $arsipUnit->isOcrEligible()) {
+            $arsipUnit->update(['ocr_status' => 'pending']);
+            ProcessOcrJob::dispatch($arsipUnit->id_berkas);
+        }
 
         return redirect()->route('arsip-unit.index')
             ->with('success', 'Arsip unit berhasil ditambahkan.');
@@ -192,7 +207,9 @@ class ArsipUnitController extends Controller
             'kategori',
             'subKategori',
             'verifiedBy',
-            'verifikasiOleh'
+            'verifikasiOleh',
+            'suggestedKategori',
+            'suggestedSubKategori',
         ]);
 
         $userUnitPengolahId = $this->getUserUnitPengolahId();
@@ -200,6 +217,7 @@ class ArsipUnitController extends Controller
         return Inertia::render('arsip-unit/show', [
             'arsipUnit' => $arsipUnit,
             'userUnitPengolahId' => $userUnitPengolahId,
+            'ocrEnabled' => config('ocr.enabled', true),
         ]);
     }
 
@@ -225,6 +243,7 @@ class ArsipUnitController extends Controller
             'kategoris' => Kategori::all(),
             'subKategoris' => SubKategori::with('kategori')->get(),
             'userUnitPengolahId' => $userUnitPengolahId,
+            'ocrEnabled' => config('ocr.enabled', true),
         ]);
     }
 
@@ -270,6 +289,7 @@ class ArsipUnitController extends Controller
         ]);
 
         // Handle file upload
+        $newFileUploaded = false;
         if ($request->hasFile('dokumen')) {
             // Delete old file if exists
             if ($arsipUnit->dokumen && Storage::disk('public')->exists($arsipUnit->dokumen)) {
@@ -280,9 +300,25 @@ class ArsipUnitController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('dokumen-arsip', $filename, 'public');
             $validated['dokumen'] = $path;
+            $newFileUploaded = true;
         }
 
         $arsipUnit->update($validated);
+
+        // Re-process OCR if a new file was uploaded
+        if ($newFileUploaded && config('ocr.enabled', true) && $arsipUnit->isOcrEligible()) {
+            $arsipUnit->update([
+                'ocr_status' => 'pending',
+                'extracted_text' => null,
+                'ocr_confidence' => null,
+                'ocr_error' => null,
+                'suggested_kategori_id' => null,
+                'suggested_sub_kategori_id' => null,
+                'ai_confidence_score' => null,
+                'ai_suggestion_status' => null,
+            ]);
+            ProcessOcrJob::dispatch($arsipUnit->id_berkas);
+        }
 
         return redirect()->route('arsip-unit.index')
             ->with('success', 'Arsip unit berhasil diperbarui.');
@@ -331,7 +367,16 @@ class ArsipUnitController extends Controller
             $updateData['verifikasi_keterangan'] = null;
         }
 
+        $oldStatus = $arsipUnit->status;
         $arsipUnit->update($updateData);
+
+        ActivityLog::log(
+            'status_changed',
+            "Status Arsip Unit {$arsipUnit->indeks} diubah dari {$oldStatus} menjadi {$validated['status']}",
+            $arsipUnit,
+            ['status' => $oldStatus],
+            ['status' => $validated['status']],
+        );
 
         $statusMessages = [
             'pending' => 'Status berhasil diubah menjadi pending.',
@@ -352,7 +397,16 @@ class ArsipUnitController extends Controller
             'publish_status' => 'required|in:draft,published,archived',
         ]);
 
+        $oldPublishStatus = $arsipUnit->publish_status;
         $arsipUnit->update($validated);
+
+        ActivityLog::log(
+            'published',
+            "Status publikasi Arsip Unit {$arsipUnit->indeks} diubah dari {$oldPublishStatus} menjadi {$validated['publish_status']}",
+            $arsipUnit,
+            ['publish_status' => $oldPublishStatus],
+            ['publish_status' => $validated['publish_status']],
+        );
 
         return redirect()->back()
             ->with('success', 'Status publikasi berhasil diperbarui.');

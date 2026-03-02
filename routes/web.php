@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ArsipUnitController;
 use App\Http\Controllers\BerkasArsipController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KodeKlasifikasiController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\OcrController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubKategoriController;
 use App\Http\Controllers\UnitPengolahController;
@@ -68,6 +70,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('laporan/rekap-unit-pengolah', [LaporanController::class, 'rekapUnitPengolah'])->name('laporan.rekap-unit-pengolah');
         Route::get('laporan/rekap-unit-pengolah/export', [LaporanController::class, 'exportRekapUnitPengolahPdf'])->name('laporan.rekap-unit-pengolah.export');
     });
+
+    // OCR routes
+    Route::get('arsip-unit/{arsipUnit}/ocr-result', [OcrController::class, 'result'])->name('arsip-unit.ocr-result');
+    Route::post('arsip-unit/{arsipUnit}/ocr-retry', [OcrController::class, 'retry'])->name('arsip-unit.ocr-retry');
+    Route::post('arsip-unit/{arsipUnit}/ocr-accept', [OcrController::class, 'acceptSuggestion'])->name('arsip-unit.ocr-accept');
+    Route::post('arsip-unit/{arsipUnit}/ocr-reject', [OcrController::class, 'rejectSuggestion'])->name('arsip-unit.ocr-reject');
+    Route::get('ocr/status', [OcrController::class, 'status'])->name('ocr.status');
+    Route::post('ocr/scan-document', [OcrController::class, 'scanDocument'])->name('ocr.scan-document');
+
+    // Activity Log (admin only)
+    Route::middleware('admin')->group(function () {
+        Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
+    });
+
+    // Bantuan / Help page
+    Route::get('bantuan', function () {
+        return Inertia::render('bantuan/index');
+    })->name('bantuan');
 
     // Arsip Unit status routes (operator and admin only)
     Route::middleware('role:operator,admin')->group(function () {

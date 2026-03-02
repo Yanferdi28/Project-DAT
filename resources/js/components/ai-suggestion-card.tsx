@@ -1,0 +1,166 @@
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Brain, Check, X, ArrowRight } from 'lucide-react';
+import { AiStatusBadge } from '@/components/ocr-status-badge';
+import { router } from '@inertiajs/react';
+
+interface AiSuggestionCardProps {
+    arsipUnitId: number;
+    currentKategori: string;
+    currentSubKategori: string;
+    suggestedKategori?: { id: number; nama_kategori: string } | null;
+    suggestedSubKategori?: { id: number; nama_sub_kategori: string } | null;
+    aiConfidenceScore: number | null;
+    aiSuggestionStatus: string | null;
+}
+
+export function AiSuggestionCard({
+    arsipUnitId,
+    currentKategori,
+    currentSubKategori,
+    suggestedKategori,
+    suggestedSubKategori,
+    aiConfidenceScore,
+    aiSuggestionStatus,
+}: AiSuggestionCardProps) {
+    const [isAccepting, setIsAccepting] = useState(false);
+    const [isRejecting, setIsRejecting] = useState(false);
+
+    if (!suggestedKategori && !aiSuggestionStatus) return null;
+
+    const handleAccept = () => {
+        setIsAccepting(true);
+        router.post(`/arsip-unit/${arsipUnitId}/ocr-accept`, {}, {
+            preserveScroll: true,
+            onFinish: () => setIsAccepting(false),
+        });
+    };
+
+    const handleReject = () => {
+        setIsRejecting(true);
+        router.post(`/arsip-unit/${arsipUnitId}/ocr-reject`, {}, {
+            preserveScroll: true,
+            onFinish: () => setIsRejecting(false),
+        });
+    };
+
+    const getConfidenceColor = (score: number) => {
+        if (score >= 0.8) return 'text-green-600 dark:text-green-400';
+        if (score >= 0.6) return 'text-yellow-600 dark:text-yellow-400';
+        return 'text-red-600 dark:text-red-400';
+    };
+
+    const isPending = aiSuggestionStatus === 'pending';
+    const isAccepted = aiSuggestionStatus === 'accepted';
+    const isRejected = aiSuggestionStatus === 'rejected';
+
+    return (
+        <Card className={isPending ? 'border-purple-200 dark:border-purple-800' : ''}>
+            <CardHeader>
+                <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                        <Brain className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        Saran Klasifikasi AI
+                    </CardTitle>
+                    <AiStatusBadge status={aiSuggestionStatus as 'pending' | 'accepted' | 'rejected'} />
+                </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                {/* Confidence Score */}
+                {aiConfidenceScore !== null && (
+                    <div>
+                        <label className="text-sm font-medium text-muted-foreground">Tingkat Keyakinan AI</label>
+                        <p className={`mt-1 text-lg font-bold ${getConfidenceColor(Number(aiConfidenceScore))}`}>
+                            {(Number(aiConfidenceScore) * 100).toFixed(1)}%
+                        </p>
+                    </div>
+                )}
+
+                <Separator />
+
+                {/* Current vs Suggested comparison */}
+                {suggestedKategori && (
+                    <div className="space-y-3">
+                        {/* Kategori comparison */}
+                        <div>
+                            <label className="text-sm font-medium text-muted-foreground">Kategori</label>
+                            <div className="mt-1 flex items-center gap-2 text-sm">
+                                <span className="rounded bg-gray-100 px-2 py-1 dark:bg-gray-800">
+                                    {currentKategori}
+                                </span>
+                                <ArrowRight className="h-4 w-4 text-purple-500" />
+                                <span className="rounded bg-purple-100 px-2 py-1 font-medium text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                                    {suggestedKategori.nama_kategori}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Sub Kategori comparison */}
+                        {suggestedSubKategori && (
+                            <div>
+                                <label className="text-sm font-medium text-muted-foreground">Sub Kategori</label>
+                                <div className="mt-1 flex items-center gap-2 text-sm">
+                                    <span className="rounded bg-gray-100 px-2 py-1 dark:bg-gray-800">
+                                        {currentSubKategori}
+                                    </span>
+                                    <ArrowRight className="h-4 w-4 text-purple-500" />
+                                    <span className="rounded bg-purple-100 px-2 py-1 font-medium text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                                        {suggestedSubKategori.nama_sub_kategori}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Action Buttons (only if pending) */}
+                {isPending && suggestedKategori && (
+                    <>
+                        <Separator />
+                        <div className="flex gap-2">
+                            <Button
+                                onClick={handleAccept}
+                                disabled={isAccepting || isRejecting}
+                                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                                size="sm"
+                            >
+                                <Check className="h-4 w-4 mr-1" />
+                                {isAccepting ? 'Menerima...' : 'Terima Saran'}
+                            </Button>
+                            <Button
+                                variant="outline"
+                                onClick={handleReject}
+                                disabled={isAccepting || isRejecting}
+                                className="flex-1 hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-400"
+                                size="sm"
+                            >
+                                <X className="h-4 w-4 mr-1" />
+                                {isRejecting ? 'Menolak...' : 'Tolak Saran'}
+                            </Button>
+                        </div>
+                    </>
+                )}
+
+                {/* Accepted message */}
+                {isAccepted && (
+                    <div className="rounded-lg border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-900/20">
+                        <p className="text-sm text-green-800 dark:text-green-300">
+                            Saran klasifikasi AI telah diterima dan diterapkan.
+                        </p>
+                    </div>
+                )}
+
+                {/* Rejected message */}
+                {isRejected && (
+                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+                        <p className="text-sm text-red-800 dark:text-red-300">
+                            Saran klasifikasi AI telah ditolak.
+                        </p>
+                    </div>
+                )}
+            </CardContent>
+        </Card>
+    );
+}

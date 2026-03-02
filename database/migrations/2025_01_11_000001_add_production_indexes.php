@@ -46,8 +46,8 @@ return new class extends Migration
             });
         }
 
-        // Kode Klasifikasi additional index
-        if (Schema::hasTable('kode_klasifikasi')) {
+        // Kode Klasifikasi additional index (MySQL only - partial index not supported on SQLite)
+        if (Schema::hasTable('kode_klasifikasi') && DB::getDriverName() === 'mysql') {
             Schema::table('kode_klasifikasi', function (Blueprint $table) {
                 // Index for uraian search (partial - first 191 chars for utf8mb4)
                 $table->index([DB::raw('uraian(191)')], 'kode_klasifikasi_uraian_index');
@@ -82,7 +82,7 @@ return new class extends Migration
             });
         }
 
-        if (Schema::hasTable('kode_klasifikasi')) {
+        if (Schema::hasTable('kode_klasifikasi') && DB::getDriverName() === 'mysql') {
             Schema::table('kode_klasifikasi', function (Blueprint $table) {
                 $table->dropIndex('kode_klasifikasi_uraian_index');
             });

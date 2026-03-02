@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { router, Link, usePage } from '@inertiajs/react';
-import { FileText, Plus, Search, Edit, Trash2, Printer } from 'lucide-react';
+import { FileText, Plus, Search, Edit, Trash2, Printer, QrCode } from 'lucide-react';
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { QrCodeLabelDialog } from '@/components/qr-code-label';
 
 interface BerkasArsip {
     nomor_berkas: number;
@@ -114,6 +115,32 @@ export default function BerkasArsipIndex() {
         item: null,
     });
     const [isDeleting, setIsDeleting] = useState(false);
+
+    // QR Label bulk selection state
+    const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+    const [qrDialogOpen, setQrDialogOpen] = useState(false);
+
+    const toggleSelectAll = () => {
+        if (selectedIds.size === berkasArsips.data.length) {
+            setSelectedIds(new Set());
+        } else {
+            setSelectedIds(new Set(berkasArsips.data.map((item) => item.nomor_berkas)));
+        }
+    };
+
+    const toggleSelect = (id: number) => {
+        setSelectedIds((prev) => {
+            const next = new Set(prev);
+            if (next.has(id)) {
+                next.delete(id);
+            } else {
+                next.add(id);
+            }
+            return next;
+        });
+    };
+
+    const selectedBerkasForQr = berkasArsips.data.filter((item) => selectedIds.has(item.nomor_berkas));
 
     const canCreateEdit = auth.user?.role !== 'operator';
     
@@ -223,6 +250,16 @@ export default function BerkasArsipIndex() {
                         </p>
                     </div>
                     <div className="flex gap-2">
+                        {selectedIds.size > 0 && (
+                            <Button
+                                variant="outline"
+                                className="bg-purple-600 hover:bg-purple-700 text-white border-purple-600"
+                                onClick={() => setQrDialogOpen(true)}
+                            >
+                                <QrCode className="h-4 w-4 mr-2" />
+                                QR Label ({selectedIds.size})
+                            </Button>
+                        )}
                         <Button 
                             variant="outline" 
                             className="bg-green-600 hover:bg-green-700 text-white border-green-600"
@@ -331,6 +368,14 @@ export default function BerkasArsipIndex() {
                         <table className="w-full">
                             <thead className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                                 <tr>
+                                    <th className="px-3 py-4 text-center" onClick={(e) => e.stopPropagation()}>
+                                        <input
+                                            type="checkbox"
+                                            className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                                            checked={berkasArsips.data.length > 0 && selectedIds.size === berkasArsips.data.length}
+                                            onChange={toggleSelectAll}
+                                        />
+                                    </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {'No'}
                                     </th>
@@ -360,7 +405,7 @@ export default function BerkasArsipIndex() {
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                                 {berkasArsips.data.length === 0 ? (
                                     <tr>
-                                        <td colSpan={8} className="px-6 py-12 text-center">
+                                        <td colSpan={9} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
                                                 {'Tidak ada data berkas arsip'}
@@ -374,6 +419,14 @@ export default function BerkasArsipIndex() {
                                             className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
                                             onClick={() => router.visit(`/berkas-arsip/${item.nomor_berkas}`)}
                                         >
+                                            <td className="px-3 py-4 text-center" onClick={(e) => e.stopPropagation()}>
+                                                <input
+                                                    type="checkbox"
+                                                    className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                                                    checked={selectedIds.has(item.nomor_berkas)}
+                                                    onChange={() => toggleSelect(item.nomor_berkas)}
+                                                />
+                                            </td>
                                             <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
                                                 {(berkasArsips.current_page - 1) * berkasArsips.per_page + index + 1}
                                             </td>
@@ -616,6 +669,14 @@ export default function BerkasArsipIndex() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
+            {/* QR Code Label Dialog */}
+            <QrCodeLabelDialog
+                open={qrDialogOpen}
+                onOpenChange={setQrDialogOpen}
+                berkas={selectedBerkasForQr}
+                baseUrl={typeof window !== 'undefined' ? window.location.origin : ''}
+            />
         </AppSidebarLayout>
     );
 }

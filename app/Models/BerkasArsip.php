@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BerkasArsip extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity, SoftDeletes;
+
+    protected static string $activityModelName = 'Berkas Arsip';
+
+    public function getActivityIdentifier(): string
+    {
+        return $this->nama_berkas ?: "#{$this->nomor_berkas}";
+    }
 
     protected $table = 'berkas_arsip';
     protected $primaryKey = 'nomor_berkas';

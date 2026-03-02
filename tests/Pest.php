@@ -45,3 +45,84 @@ function something()
 {
     // ..
 }
+
+/*
+|--------------------------------------------------------------------------
+| Test Helpers
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * Create a verified admin user.
+ */
+function createAdmin(array $attributes = []): \App\Models\User
+{
+    if (!isset($attributes['unit_pengolah_id'])) {
+        $unit = \App\Models\UnitPengolah::first() ?? \App\Models\UnitPengolah::create(['nama_unit' => 'Unit Admin']);
+        $attributes['unit_pengolah_id'] = $unit->id;
+    }
+
+    return \App\Models\User::factory()->withoutTwoFactor()->create(array_merge([
+        'role' => 'admin',
+        'email_verified_at' => now(),
+    ], $attributes));
+}
+
+/**
+ * Create a verified operator user.
+ */
+function createOperator(array $attributes = []): \App\Models\User
+{
+    if (!isset($attributes['unit_pengolah_id'])) {
+        $unit = \App\Models\UnitPengolah::first() ?? \App\Models\UnitPengolah::create(['nama_unit' => 'Unit Operator']);
+        $attributes['unit_pengolah_id'] = $unit->id;
+    }
+
+    return \App\Models\User::factory()->withoutTwoFactor()->create(array_merge([
+        'role' => 'operator',
+        'email_verified_at' => now(),
+    ], $attributes));
+}
+
+/**
+ * Create a verified regular user.
+ */
+function createUser(array $attributes = []): \App\Models\User
+{
+    if (!isset($attributes['unit_pengolah_id'])) {
+        $unit = \App\Models\UnitPengolah::first() ?? \App\Models\UnitPengolah::create(['nama_unit' => 'Unit User']);
+        $attributes['unit_pengolah_id'] = $unit->id;
+    }
+
+    return \App\Models\User::factory()->withoutTwoFactor()->create(array_merge([
+        'role' => 'user',
+        'email_verified_at' => now(),
+    ], $attributes));
+}
+
+/**
+ * Create base master data needed for arsip tests.
+ */
+function createMasterData(): array
+{
+    $unitPengolah = \App\Models\UnitPengolah::create(['nama_unit' => 'Unit Test']);
+    $kodeKlasifikasi = \App\Models\KodeKlasifikasi::create([
+        'kode_klasifikasi' => 'TS.01',
+        'uraian' => 'Test Klasifikasi',
+        'retensi_aktif' => 2,
+        'retensi_inaktif' => 3,
+        'status_akhir' => 'Musnah',
+        'klasifikasi_keamanan' => 'Biasa',
+    ]);
+    $kategori = \App\Models\Kategori::create([
+        'nama_kategori' => 'Test Kategori',
+        'deskripsi' => 'Deskripsi test',
+    ]);
+    $subKategori = \App\Models\SubKategori::create([
+        'kategori_id' => $kategori->id,
+        'nama_sub_kategori' => 'Test Sub Kategori',
+        'deskripsi' => 'Deskripsi sub test',
+    ]);
+
+    return compact('unitPengolah', 'kodeKlasifikasi', 'kategori', 'subKategori');
+}

@@ -3,42 +3,43 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Auth\Notifications\VerifyEmail;
+use App\Models\UnitPengolah;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
+/**
+ * This project uses custom admin-based verification.
+ * The standard verification.send route does not exist.
+ * Testing the custom verification flow instead.
+ */
 class VerificationNotificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_sends_verification_notification(): void
+    public function test_unverified_user_sees_pending_page(): void
     {
-        Notification::fake();
-
-        $user = User::factory()->create([
-            'email_verified_at' => null,
+        $unit = UnitPengolah::create(['nama_unit' => 'Test Unit']);
+        $user = User::factory()->unverified()->create([
+            'role' => 'user',
+            'unit_pengolah_id' => $unit->id,
         ]);
 
         $this->actingAs($user)
-            ->post(route('verification.send'))
-            ->assertRedirect(route('home'));
-
-        Notification::assertSentTo($user, VerifyEmail::class);
+            ->get('/verification/pending')
+            ->assertOk();
     }
 
-    public function test_does_not_send_verification_notification_if_email_is_verified(): void
+    public function test_verified_user_is_redirected_from_pending_page(): void
     {
-        Notification::fake();
-
+        $unit = UnitPengolah::create(['nama_unit' => 'Test Unit']);
         $user = User::factory()->create([
+            'role' => 'admin',
+            'unit_pengolah_id' => $unit->id,
             'email_verified_at' => now(),
         ]);
 
         $this->actingAs($user)
-            ->post(route('verification.send'))
-            ->assertRedirect(route('dashboard', absolute: false));
-
-        Notification::assertNothingSent();
+            ->get('/verification/pending')
+            ->assertRedirect('/dashboard');
     }
 }

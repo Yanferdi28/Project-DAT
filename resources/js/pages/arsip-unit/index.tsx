@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { router, Link, usePage } from '@inertiajs/react';
-import { FileText, Plus, Search, Edit, Trash2, FolderInput, Printer, Check, X, Clock, AlertCircle } from 'lucide-react';
+import { FileText, Plus, Search, Edit, Trash2, FolderInput, Printer, Check, X, Clock, AlertCircle, FileSearch } from 'lucide-react';
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +25,8 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { OcrStatusBadge } from '@/components/ocr-status-badge';
+import { ContentSearch } from '@/components/content-search';
 
 // Helper function for status translation
 const getStatusLabel = (status: string) => {
@@ -64,6 +66,9 @@ interface ArsipUnit {
     verifikasi_keterangan: string | null;
     verifikasi_oleh: number | null;
     verifikasi_tanggal: string | null;
+    // OCR fields
+    ocr_status: string | null;
+    ai_suggestion_status: string | null;
     kode_klasifikasi?: {
         id: number;
         kode_klasifikasi: string;
@@ -126,6 +131,7 @@ interface PageProps {
     unitPengolahs: UnitPengolah[];
     filters: {
         search?: string;
+        content_search?: string;
         status?: string;
         publish_status?: string;
         per_page?: number;
@@ -141,12 +147,14 @@ interface PageProps {
         };
     };
     userUnitPengolahId?: number | null;
+    ocrEnabled?: boolean;
     [key: string]: any;
 }
 
 export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs, filters, flash }: PageProps) {
-    const { auth, userUnitPengolahId } = usePage<PageProps>().props;
+    const { auth, userUnitPengolahId, ocrEnabled } = usePage<PageProps>().props;
     const [search, setSearch] = useState(filters.search || '');
+    const [contentSearch, setContentSearch] = useState(filters.content_search || '');
     const [status, setStatus] = useState(filters.status || '');
     const [publishStatus, setPublishStatus] = useState(filters.publish_status || '');
     const [perPage, setPerPage] = useState(filters.per_page || 10);
@@ -238,7 +246,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
         e.preventDefault();
         router.get(
             '/arsip-unit',
-            { search, status, publish_status: publishStatus, per_page: perPage },
+            { search, content_search: contentSearch, status, publish_status: publishStatus, per_page: perPage },
             { preserveState: true, preserveScroll: true }
         );
     };
@@ -248,13 +256,14 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
         setPerPage(newPerPage);
         router.get(
             '/arsip-unit',
-            { search, status, publish_status: publishStatus, per_page: newPerPage },
+            { search, content_search: contentSearch, status, publish_status: publishStatus, per_page: newPerPage },
             { preserveState: true, preserveScroll: true }
         );
     };
 
     const handleReset = () => {
         setSearch('');
+        setContentSearch('');
         setStatus('');
         setPublishStatus('');
         setPerPage(10);
@@ -519,6 +528,21 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             </div>
                         </div>
 
+                        {/* Content Search (OCR) */}
+                        {ocrEnabled && (
+                            <div className="relative">
+                                <ContentSearch
+                                    value={contentSearch}
+                                    onChange={setContentSearch}
+                                    onSearch={() => handleSearch({ preventDefault: () => {} } as React.FormEvent)}
+                                    onClear={() => {
+                                        setContentSearch('');
+                                        router.get('/arsip-unit', { search, status, publish_status: publishStatus, per_page: perPage }, { preserveState: true, preserveScroll: true });
+                                    }}
+                                />
+                            </div>
+                        )}
+
                         <div className="flex flex-col sm:flex-row gap-4 justify-between">
                             <div className="flex items-center gap-3">
                                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
@@ -540,7 +564,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                     <Search className="h-4 w-4 mr-2" />
                                     {'Cari'}
                                 </Button>
-                                {(search || status || publishStatus) && (
+                                {(search || contentSearch || status || publishStatus) && (
                                     <Button type="button" variant="outline" onClick={handleReset}>
                                         {'Reset'}
                                     </Button>
@@ -580,6 +604,11 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {'Status Publikasi'}
                                     </th>
+                                    {ocrEnabled && (
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                                            {'OCR'}
+                                        </th>
+                                    )}
                                     <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
                                         {'Aksi'}
                                     </th>
@@ -588,7 +617,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                                 {arsipUnits.data.length === 0 ? (
                                     <tr>
-                                        <td colSpan={9} className="px-6 py-12 text-center">
+                                        <td colSpan={ocrEnabled ? 10 : 9} className="px-6 py-12 text-center">
                                             <FileText className="h-12 w-12 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
                                             <p className="text-gray-500 dark:text-gray-400 text-sm">
                                                 {'Tidak ada data arsip unit'}
@@ -732,6 +761,11 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                                                     </span>
                                                 )}
                                             </td>
+                                            {ocrEnabled && (
+                                                <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
+                                                    <OcrStatusBadge status={item.ocr_status as any} />
+                                                </td>
+                                            )}
                                             <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
                                                 <div className="flex items-center justify-center gap-2">
                                                     {canAssignBerkas && (
