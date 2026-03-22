@@ -26,3 +26,14 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# RAG / ChromaDB
+ocr-service/chroma_db/
+
+# Tesseract trained data (large binary)
+*.traineddata

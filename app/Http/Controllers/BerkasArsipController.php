@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BerkasArsipStoreRequest;
+use App\Http\Requests\BerkasArsipUpdateRequest;
 use App\Models\BerkasArsip;
 use App\Models\KodeKlasifikasi;
 use App\Models\UnitPengolah;
@@ -107,10 +109,8 @@ class BerkasArsipController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BerkasArsipStoreRequest $request)
     {
-        $this->checkRestrictedRole();
-        
         $userUnitPengolahId = $this->getUserUnitPengolahId();
         
         // If user has unit_pengolah restriction, force the unit_pengolah_id to their unit
@@ -118,16 +118,7 @@ class BerkasArsipController extends Controller
             $request->merge(['unit_pengolah_id' => $userUnitPengolahId]);
         }
         
-        $validated = $request->validate([
-            'nama_berkas' => 'required|string|max:255',
-            'klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
-            'unit_pengolah_id' => 'nullable|exists:unit_pengolah,id',
-            'retensi_aktif' => 'nullable|integer|min:0',
-            'retensi_inaktif' => 'nullable|integer|min:0',
-            'penyusutan_akhir' => 'nullable|string|max:255',
-            'lokasi_fisik' => 'nullable|string|max:255',
-            'uraian' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         BerkasArsip::create($validated);
 
@@ -204,31 +195,16 @@ class BerkasArsipController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BerkasArsip $berkasArsip)
+    public function update(BerkasArsipUpdateRequest $request, BerkasArsip $berkasArsip)
     {
-        $this->checkRestrictedRole();
-        
-        // Check if user has permission to update this berkas arsip
         $userUnitPengolahId = $this->getUserUnitPengolahId();
-        if ($userUnitPengolahId !== null && $berkasArsip->unit_pengolah_id !== $userUnitPengolahId) {
-            abort(403, 'Anda tidak memiliki akses untuk mengupdate berkas arsip ini.');
-        }
         
         // If user has unit_pengolah restriction, force the unit_pengolah_id to their unit
         if ($userUnitPengolahId !== null) {
             $request->merge(['unit_pengolah_id' => $userUnitPengolahId]);
         }
         
-        $validated = $request->validate([
-            'nama_berkas' => 'required|string|max:255',
-            'klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
-            'unit_pengolah_id' => 'nullable|exists:unit_pengolah,id',
-            'retensi_aktif' => 'nullable|integer|min:0',
-            'retensi_inaktif' => 'nullable|integer|min:0',
-            'penyusutan_akhir' => 'nullable|string|max:255',
-            'lokasi_fisik' => 'nullable|string|max:255',
-            'uraian' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $berkasArsip->update($validated);
 

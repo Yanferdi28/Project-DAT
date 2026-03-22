@@ -3,6 +3,7 @@ Document Classifier using TF-IDF + Naive Bayes / SVM
 Classifies extracted text into document categories.
 """
 
+import logging
 import os
 import json
 import joblib
@@ -12,6 +13,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
+
+logger = logging.getLogger(__name__)
 
 
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models")
@@ -37,7 +40,7 @@ class DocumentClassifier:
                 self.label_encoder = joblib.load(encoder_path)
                 self.is_loaded = True
             except Exception as e:
-                print(f"Error loading model: {e}")
+                logger.error("Error loading model: %s", e)
                 self.is_loaded = False
 
     def predict(self, text: str) -> dict:

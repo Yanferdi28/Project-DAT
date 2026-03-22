@@ -1,0 +1,184 @@
+# Sistem Arsip Digital (Project-DAT)
+
+Sistem manajemen arsip digital untuk RRI Banjarmasin dengan fitur OCR otomatis dan klasifikasi dokumen berbasis AI.
+
+## Fitur Utama
+
+- **Manajemen Arsip Unit** — CRUD dokumen arsip dengan upload file, metadata lengkap, dan workflow verifikasi multi-tahap (pending → diterima/ditolak → published)
+- **Manajemen Berkas Arsip** — Pengelompokan arsip unit ke dalam berkas arsip dengan informasi retensi dan penyusutan
+- **OCR (Optical Character Recognition)** — Ekstraksi teks otomatis dari dokumen PDF/gambar menggunakan Tesseract OCR via microservice Python
+- **Klasifikasi AI** — Prediksi kategori dokumen menggunakan TF-IDF + Naive Bayes (scikit-learn)
+- **Role-Based Access Control** — 3 level akses: Admin, Operator, User dengan 32+ permission granular
+- **Activity Logging** — Audit trail lengkap dengan perbandingan nilai sebelum/sesudah perubahan
+- **Laporan & Export PDF** — Laporan penyusutan, status verifikasi, berita acara penyerahan, dan rekap unit pengolah
+- **Two-Factor Authentication** — Keamanan tambahan dengan TOTP dan recovery codes
+- **Dashboard Analytics** — Grafik tren bulanan, distribusi status, top klasifikasi, dan statistik OCR
+
+## Teknologi
+
+### Backend
+- **Laravel 12** — PHP framework
+- **Laravel Fortify** — Autentikasi (login, register, 2FA, reset password)
+- **DomPDF** — Generasi laporan PDF
+- **Queue (Database)** — Background job processing untuk OCR dan klasifikasi
+
+### Frontend
+- **React 19** + **TypeScript** — UI framework
+- **Inertia.js** — SPA tanpa API (SSR enabled)
+- **Tailwind CSS v4** — Styling utility-first
+- **Radix UI (shadcn/ui)** — Komponen UI accessible
+- **Recharts** — Grafik dashboard
+- **Vite 7** — Build tool
+
+### OCR Microservice (Python)
+- **FastAPI** — Web framework
+- **Tesseract OCR** (pytesseract) — Mesin OCR
+- **OpenCV** — Preprocessing gambar (grayscale, denoise, binarize, deskew)
+- **scikit-learn** — Machine learning (TF-IDF + Multinomial Naive Bayes)
+- **pdf2image** — Konversi PDF ke gambar
+
+### Database
+- **SQLite** (development) / **MySQL 8+** (production)
+
+## Prasyarat
+
+- PHP 8.2+
+- Composer 2.x
+- Node.js 20+ & npm
+- Python 3.10+
+- Tesseract OCR ([install](https://github.com/tesseract-ocr/tesseract))
+- Poppler (untuk konversi PDF, [Windows binary](https://github.com/oschwartz10612/poppler-windows))
+
+## Instalasi
+
+### 1. Clone & Setup Laravel
+
+```bash
+git clone <repository-url>
+cd Project-DAT
+
+composer install
+npm install
+
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+```
+
+### 2. Setup OCR Microservice
+
+```bash
+cd ocr-service
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+# Linux/Mac
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### 3. Konfigurasi Environment
+
+Edit `.env`:
+
+```env
+# Database
+DB_CONNECTION=sqlite
+
+# OCR Service
+OCR_SERVICE_URL=http://127.0.0.1:8100
+OCR_ENABLED=true
+OCR_CLASSIFICATION_ENABLED=true
+
+# Queue
+QUEUE_CONNECTION=database
+```
+
+## Menjalankan Aplikasi
+
+Jalankan semua service secara bersamaan:
+
+```bash
+# Terminal 1 — Laravel
+php artisan serve
+
+# Terminal 2 — Vite (frontend)
+npm run dev
+
+# Terminal 3 — Queue Worker (background jobs)
+php artisan queue:listen
+
+# Terminal 4 — OCR Service
+cd ocr-service
+python -m uvicorn main:app --host 127.0.0.1 --port 8100 --reload
+```
+
+Atau gunakan composer script:
+
+```bash
+composer dev
+```
+
+Akses aplikasi di: **http://localhost:8000**
+
+## Akun Default (Seeder)
+
+| Role     | Email                  | Password   |
+|----------|------------------------|------------|
+| Admin    | admin@example.com      | password   |
+| Operator | operator@example.com   | password   |
+| User     | user@example.com       | password   |
+
+## Struktur Proyek
+
+```
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/    # 13 controller
+│   │   ├── Middleware/      # Role, Verified, Inertia, Appearance
+│   │   └── Requests/       # FormRequest validation classes
+│   ├── Jobs/               # ProcessOcrJob, ClassifyDocumentJob
+│   ├── Models/             # 9 Eloquent models
+│   ├── Services/           # OcrService, DashboardService
+│   └── Traits/             # LogsActivity
+├── ocr-service/            # Python FastAPI microservice
+│   ├── routers/            # OCR & Classification endpoints
+│   ├── services/           # Preprocessor, OCR Engine, Classifier, dll.
+│   ├── models/             # Trained ML models
+│   └── data/               # Training data
+├── resources/js/           # React + TypeScript frontend
+│   ├── pages/              # Halaman Inertia
+│   ├── components/         # Komponen reusable + shadcn/ui
+│   └── layouts/            # Layout aplikasi
+├── database/
+│   ├── migrations/         # Schema database
+│   └── seeders/            # Data awal
+└── tests/                  # Pest PHP tests
+```
+
+## Testing
+
+```bash
+# Jalankan semua test
+php artisan test
+
+# Jalankan test secara paralel
+php artisan test --parallel
+```
+
+## Workflow Arsip
+
+1. **User** membuat arsip unit dengan upload dokumen
+2. **Sistem** otomatis menjalankan OCR → ekstraksi teks → klasifikasi AI
+3. **User** mereview dan menerima/menolak saran AI
+4. **Operator/Admin** memverifikasi arsip (diterima/ditolak)
+5. **Operator/Admin** mengubah status publikasi (draft → published)
+6. **User/Admin** mengelompokkan arsip ke dalam berkas arsip
+7. **Admin** membuat laporan dan berita acara penyerahan
+
+## Lisensi
+
+Dibuat untuk keperluan akademis — Skripsi.

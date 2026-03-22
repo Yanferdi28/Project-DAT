@@ -83,8 +83,7 @@ interface ArsipUnit {
     ocr_confidence: number | null;
     ocr_error: string | null;
     ocr_processed_at: string | null;
-    suggested_kategori?: { id: number; nama_kategori: string } | null;
-    suggested_sub_kategori?: { id: number; nama_sub_kategori: string } | null;
+    suggested_kode_klasifikasi?: { id: number; kode_klasifikasi: string; uraian: string } | null;
     ai_confidence_score: number | null;
     ai_suggestion_status: string | null;
 }
@@ -499,10 +498,8 @@ export default function Show({ arsipUnit, userUnitPengolahId, ocrEnabled, auth }
                                 />
                                 <AiSuggestionCard
                                     arsipUnitId={arsipUnit.id_berkas}
-                                    currentKategori={arsipUnit.kategori.nama}
-                                    currentSubKategori={arsipUnit.sub_kategori.nama}
-                                    suggestedKategori={arsipUnit.suggested_kategori}
-                                    suggestedSubKategori={arsipUnit.suggested_sub_kategori}
+                                    currentKodeKlasifikasi={arsipUnit.kode_klasifikasi ? `${arsipUnit.kode_klasifikasi.kode_klasifikasi} — ${arsipUnit.kode_klasifikasi.uraian}` : '-'}
+                                    suggestedKodeKlasifikasi={arsipUnit.suggested_kode_klasifikasi}
                                     aiConfidenceScore={arsipUnit.ai_confidence_score}
                                     aiSuggestionStatus={arsipUnit.ai_suggestion_status}
                                 />

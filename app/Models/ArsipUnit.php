@@ -24,6 +24,7 @@ class ArsipUnit extends Model
         'ai_suggestion_status',
         'suggested_kategori_id',
         'suggested_sub_kategori_id',
+        'suggested_kode_klasifikasi_id',
     ];
 
     public function getActivityIdentifier(): string
@@ -74,6 +75,7 @@ class ArsipUnit extends Model
         'ocr_processed_at',
         'suggested_kategori_id',
         'suggested_sub_kategori_id',
+        'suggested_kode_klasifikasi_id',
         'ai_confidence_score',
         'ai_suggestion_status',
     ];
@@ -133,6 +135,11 @@ class ArsipUnit extends Model
         return $this->belongsTo(SubKategori::class, 'suggested_sub_kategori_id');
     }
 
+    public function suggestedKodeKlasifikasi(): BelongsTo
+    {
+        return $this->belongsTo(KodeKlasifikasi::class, 'suggested_kode_klasifikasi_id');
+    }
+
     /**
      * Scope: search by extracted text content (full-text search).
      */
@@ -170,7 +177,7 @@ class ArsipUnit extends Model
      */
     public function hasAiSuggestion(): bool
     {
-        return $this->suggested_kategori_id !== null
+        return $this->suggested_kode_klasifikasi_id !== null
             && $this->ai_suggestion_status === null;
     }
 }

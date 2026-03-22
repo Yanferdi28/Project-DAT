@@ -8,27 +8,23 @@ import { router } from '@inertiajs/react';
 
 interface AiSuggestionCardProps {
     arsipUnitId: number;
-    currentKategori: string;
-    currentSubKategori: string;
-    suggestedKategori?: { id: number; nama_kategori: string } | null;
-    suggestedSubKategori?: { id: number; nama_sub_kategori: string } | null;
+    currentKodeKlasifikasi: string;
+    suggestedKodeKlasifikasi?: { id: number; kode_klasifikasi: string; uraian: string } | null;
     aiConfidenceScore: number | null;
     aiSuggestionStatus: string | null;
 }
 
 export function AiSuggestionCard({
     arsipUnitId,
-    currentKategori,
-    currentSubKategori,
-    suggestedKategori,
-    suggestedSubKategori,
+    currentKodeKlasifikasi,
+    suggestedKodeKlasifikasi,
     aiConfidenceScore,
     aiSuggestionStatus,
 }: AiSuggestionCardProps) {
     const [isAccepting, setIsAccepting] = useState(false);
     const [isRejecting, setIsRejecting] = useState(false);
 
-    if (!suggestedKategori && !aiSuggestionStatus) return null;
+    if (!suggestedKodeKlasifikasi && !aiSuggestionStatus) return null;
 
     const handleAccept = () => {
         setIsAccepting(true);
@@ -81,42 +77,26 @@ export function AiSuggestionCard({
                 <Separator />
 
                 {/* Current vs Suggested comparison */}
-                {suggestedKategori && (
+                {suggestedKodeKlasifikasi && (
                     <div className="space-y-3">
-                        {/* Kategori comparison */}
+                        {/* Kode Klasifikasi comparison */}
                         <div>
-                            <label className="text-sm font-medium text-muted-foreground">Kategori</label>
+                            <label className="text-sm font-medium text-muted-foreground">Kode Klasifikasi</label>
                             <div className="mt-1 flex items-center gap-2 text-sm">
                                 <span className="rounded bg-gray-100 px-2 py-1 dark:bg-gray-800">
-                                    {currentKategori}
+                                    {currentKodeKlasifikasi}
                                 </span>
                                 <ArrowRight className="h-4 w-4 text-purple-500" />
                                 <span className="rounded bg-purple-100 px-2 py-1 font-medium text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
-                                    {suggestedKategori.nama_kategori}
+                                    {suggestedKodeKlasifikasi.kode_klasifikasi} — {suggestedKodeKlasifikasi.uraian}
                                 </span>
                             </div>
                         </div>
-
-                        {/* Sub Kategori comparison */}
-                        {suggestedSubKategori && (
-                            <div>
-                                <label className="text-sm font-medium text-muted-foreground">Sub Kategori</label>
-                                <div className="mt-1 flex items-center gap-2 text-sm">
-                                    <span className="rounded bg-gray-100 px-2 py-1 dark:bg-gray-800">
-                                        {currentSubKategori}
-                                    </span>
-                                    <ArrowRight className="h-4 w-4 text-purple-500" />
-                                    <span className="rounded bg-purple-100 px-2 py-1 font-medium text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
-                                        {suggestedSubKategori.nama_sub_kategori}
-                                    </span>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 )}
 
                 {/* Action Buttons (only if pending) */}
-                {isPending && suggestedKategori && (
+                {isPending && suggestedKodeKlasifikasi && (
                     <>
                         <Separator />
                         <div className="flex gap-2">

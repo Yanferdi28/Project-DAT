@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArsipUnitStoreRequest;
+use App\Http\Requests\ArsipUnitUpdateRequest;
 use App\Jobs\ProcessOcrJob;
 use App\Models\ActivityLog;
 use App\Models\ArsipUnit;
@@ -133,10 +135,8 @@ class ArsipUnitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(ArsipUnitStoreRequest $request): RedirectResponse
     {
-        $this->checkRestrictedRole();
-
         $user = auth()->user();
         $userUnitPengolahId = $this->getUserUnitPengolahId();
 
@@ -145,33 +145,12 @@ class ArsipUnitController extends Controller
             $request->merge(['unit_pengolah_arsip_id' => $userUnitPengolahId]);
         }
 
-        $validated = $request->validate([
-            'kode_klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
-            'unit_pengolah_arsip_id' => 'required|exists:unit_pengolah,id',
-            'kategori_id' => 'required|exists:kategori,id',
-            'sub_kategori_id' => 'required|exists:sub_kategori,id',
-            'retensi_aktif' => 'nullable|integer|min:0',
-            'retensi_inaktif' => 'nullable|integer|min:0',
-            'indeks' => 'nullable|string|max:255',
-            'uraian_informasi' => 'required|string',
-            'tanggal' => 'required|date',
-            'jumlah_nilai' => 'required|integer|min:1',
-            'jumlah_satuan' => 'required|in:lembar,jilid,bundle',
-            'tingkat_perkembangan' => 'required|in:asli,salinan,tembusan,pertinggal',
-            'skkaad' => 'nullable|string|max:255',
-            'ruangan' => 'nullable|string|max:255',
-            'no_filling' => 'nullable|string|max:255',
-            'no_laci' => 'nullable|string|max:255',
-            'no_folder' => 'nullable|string|max:255',
-            'no_box' => 'nullable|string|max:255',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png|max:10240',
-            'keterangan' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         // Handle file upload
         if ($request->hasFile('dokumen')) {
             $file = $request->file('dokumen');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = uniqid('arsip_', true) . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('dokumen-arsip', $filename, 'public');
             $validated['dokumen'] = $path;
         }
@@ -208,8 +187,7 @@ class ArsipUnitController extends Controller
             'subKategori',
             'verifiedBy',
             'verifikasiOleh',
-            'suggestedKategori',
-            'suggestedSubKategori',
+            'suggestedKodeKlasifikasi',
         ]);
 
         $userUnitPengolahId = $this->getUserUnitPengolahId();
@@ -250,43 +228,16 @@ class ArsipUnitController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ArsipUnit $arsipUnit): RedirectResponse
+    public function update(ArsipUnitUpdateRequest $request, ArsipUnit $arsipUnit): RedirectResponse
     {
-        $this->checkRestrictedRole();
-
-        // Check if user has permission to update this arsip unit
         $userUnitPengolahId = $this->getUserUnitPengolahId();
-        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
-            abort(403, 'Anda tidak memiliki akses untuk mengupdate arsip unit ini.');
-        }
 
         // If user has unit_pengolah restriction, force the unit_pengolah_arsip_id to their unit
         if ($userUnitPengolahId !== null) {
             $request->merge(['unit_pengolah_arsip_id' => $userUnitPengolahId]);
         }
 
-        $validated = $request->validate([
-            'kode_klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
-            'unit_pengolah_arsip_id' => 'required|exists:unit_pengolah,id',
-            'kategori_id' => 'required|exists:kategori,id',
-            'sub_kategori_id' => 'required|exists:sub_kategori,id',
-            'retensi_aktif' => 'nullable|integer|min:0',
-            'retensi_inaktif' => 'nullable|integer|min:0',
-            'indeks' => 'nullable|string|max:255',
-            'uraian_informasi' => 'required|string',
-            'tanggal' => 'required|date',
-            'jumlah_nilai' => 'required|integer|min:1',
-            'jumlah_satuan' => 'required|in:lembar,jilid,bundle',
-            'tingkat_perkembangan' => 'required|in:asli,salinan,tembusan,pertinggal',
-            'skkaad' => 'nullable|string|max:255',
-            'ruangan' => 'nullable|string|max:255',
-            'no_filling' => 'nullable|string|max:255',
-            'no_laci' => 'nullable|string|max:255',
-            'no_folder' => 'nullable|string|max:255',
-            'no_box' => 'nullable|string|max:255',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png|max:10240',
-            'keterangan' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         // Handle file upload
         $newFileUploaded = false;
@@ -297,7 +248,7 @@ class ArsipUnitController extends Controller
             }
 
             $file = $request->file('dokumen');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = uniqid('arsip_', true) . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('dokumen-arsip', $filename, 'public');
             $validated['dokumen'] = $path;
             $newFileUploaded = true;
@@ -312,8 +263,7 @@ class ArsipUnitController extends Controller
                 'extracted_text' => null,
                 'ocr_confidence' => null,
                 'ocr_error' => null,
-                'suggested_kategori_id' => null,
-                'suggested_sub_kategori_id' => null,
+                'suggested_kode_klasifikasi_id' => null,
                 'ai_confidence_score' => null,
                 'ai_suggestion_status' => null,
             ]);
@@ -523,12 +473,24 @@ class ArsipUnitController extends Controller
      */
     public function previewFile(string $path)
     {
+        // Prevent path traversal attacks
+        if (str_contains($path, '..') || str_starts_with($path, '/') || str_starts_with($path, '\\')) {
+            abort(403, 'Akses ditolak.');
+        }
+
         // Check if file exists
         if (!Storage::disk('public')->exists($path)) {
             abort(404, 'File tidak ditemukan.');
         }
 
+        // Verify the resolved path is within the storage directory
         $fullPath = Storage::disk('public')->path($path);
+        $storagePath = realpath(Storage::disk('public')->path(''));
+        $realFullPath = realpath($fullPath);
+
+        if ($realFullPath === false || !str_starts_with($realFullPath, $storagePath)) {
+            abort(403, 'Akses ditolak.');
+        }
         $filename = basename($path);
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 

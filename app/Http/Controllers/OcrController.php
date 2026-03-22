@@ -27,8 +27,7 @@ class OcrController extends Controller
             'ocr_confidence' => $arsipUnit->ocr_confidence,
             'ocr_error' => $arsipUnit->ocr_error,
             'ocr_processed_at' => $arsipUnit->ocr_processed_at?->toDateTimeString(),
-            'suggested_kategori' => $arsipUnit->suggestedKategori?->only(['id', 'nama_kategori']),
-            'suggested_sub_kategori' => $arsipUnit->suggestedSubKategori?->only(['id', 'nama_sub_kategori']),
+            'suggested_kode_klasifikasi' => $arsipUnit->suggestedKodeKlasifikasi?->only(['id', 'kode_klasifikasi', 'uraian']),
             'ai_confidence_score' => $arsipUnit->ai_confidence_score,
             'ai_suggestion_status' => $arsipUnit->ai_suggestion_status,
         ]);
@@ -57,8 +56,7 @@ class OcrController extends Controller
             'ocr_error' => null,
             'extracted_text' => null,
             'ocr_confidence' => null,
-            'suggested_kategori_id' => null,
-            'suggested_sub_kategori_id' => null,
+            'suggested_kode_klasifikasi_id' => null,
             'ai_confidence_score' => null,
             'ai_suggestion_status' => null,
         ]);
@@ -74,21 +72,15 @@ class OcrController extends Controller
      */
     public function acceptSuggestion(ArsipUnit $arsipUnit): RedirectResponse
     {
-        if (!$arsipUnit->suggested_kategori_id) {
+        if (!$arsipUnit->suggested_kode_klasifikasi_id) {
             return redirect()->back()->with('error', 'Tidak ada saran klasifikasi AI.');
         }
 
-        // Apply the AI suggestion to the actual category fields
-        $updateData = [
-            'kategori_id' => $arsipUnit->suggested_kategori_id,
+        // Apply the AI suggestion to the actual kode_klasifikasi field
+        $arsipUnit->update([
+            'kode_klasifikasi_id' => $arsipUnit->suggested_kode_klasifikasi_id,
             'ai_suggestion_status' => 'accepted',
-        ];
-
-        if ($arsipUnit->suggested_sub_kategori_id) {
-            $updateData['sub_kategori_id'] = $arsipUnit->suggested_sub_kategori_id;
-        }
-
-        $arsipUnit->update($updateData);
+        ]);
 
         return redirect()->back()->with('success', 'Saran klasifikasi AI diterima dan diterapkan.');
     }
@@ -98,7 +90,7 @@ class OcrController extends Controller
      */
     public function rejectSuggestion(ArsipUnit $arsipUnit): RedirectResponse
     {
-        if (!$arsipUnit->suggested_kategori_id) {
+        if (!$arsipUnit->suggested_kode_klasifikasi_id) {
             return redirect()->back()->with('error', 'Tidak ada saran klasifikasi AI.');
         }
 

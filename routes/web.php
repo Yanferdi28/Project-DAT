@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ArsipUnitController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\BerkasArsipController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
@@ -65,11 +66,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('laporan/berita-acara-penyerahan', [LaporanController::class, 'storeBeritaAcaraPenyerahan'])->name('laporan.berita-acara-penyerahan.store');
     Route::get('laporan/berita-acara-penyerahan/{id}/export', [LaporanController::class, 'exportBeritaAcaraPdf'])->name('laporan.berita-acara-penyerahan.export');
 
-    // Laporan Rekap Unit Pengolah (admin only)
+    // Laporan Rekap Unit Pengolah, Statistik Klasifikasi, Log Aktivitas (admin only)
     Route::middleware('admin')->group(function () {
         Route::get('laporan/rekap-unit-pengolah', [LaporanController::class, 'rekapUnitPengolah'])->name('laporan.rekap-unit-pengolah');
         Route::get('laporan/rekap-unit-pengolah/export', [LaporanController::class, 'exportRekapUnitPengolahPdf'])->name('laporan.rekap-unit-pengolah.export');
+        Route::get('laporan/statistik-klasifikasi', [LaporanController::class, 'statistikKlasifikasi'])->name('laporan.statistik-klasifikasi');
+        Route::get('laporan/statistik-klasifikasi/export', [LaporanController::class, 'exportStatistikKlasifikasiPdf'])->name('laporan.statistik-klasifikasi.export');
+        Route::get('laporan/log-aktivitas', [LaporanController::class, 'logAktivitas'])->name('laporan.log-aktivitas');
+        Route::get('laporan/log-aktivitas/export', [LaporanController::class, 'exportLogAktivitasPdf'])->name('laporan.log-aktivitas.export');
     });
+
+    // Laporan Statistik OCR & AI (all authenticated users)
+    Route::get('laporan/statistik-ocr', [LaporanController::class, 'statistikOcr'])->name('laporan.statistik-ocr');
+    Route::get('laporan/statistik-ocr/export', [LaporanController::class, 'exportStatistikOcrPdf'])->name('laporan.statistik-ocr.export');
 
     // OCR routes
     Route::get('arsip-unit/{arsipUnit}/ocr-result', [OcrController::class, 'result'])->name('arsip-unit.ocr-result');
@@ -88,6 +97,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('bantuan', function () {
         return Inertia::render('bantuan/index');
     })->name('bantuan');
+
+    // RAG Chatbot routes
+    Route::post('chat/ask', [ChatController::class, 'ask'])->name('chat.ask');
+    Route::post('chat/index-all', [ChatController::class, 'indexAll'])->name('chat.index-all');
+    Route::get('chat/status', [ChatController::class, 'status'])->name('chat.status');
 
     // Arsip Unit status routes (operator and admin only)
     Route::middleware('role:operator,admin')->group(function () {

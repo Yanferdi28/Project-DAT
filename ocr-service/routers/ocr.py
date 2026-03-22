@@ -2,7 +2,9 @@
 OCR Router - Handles text extraction endpoints.
 """
 
+import glob
 import io
+import logging
 import os
 import tempfile
 from fastapi import APIRouter, File, UploadFile, HTTPException
@@ -10,6 +12,8 @@ from PIL import Image
 from services.preprocessor import ImagePreprocessor
 from services.ocr_engine import OcrEngine
 from services.text_cleaner import TextCleaner
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -19,6 +23,27 @@ text_cleaner = TextCleaner()
 
 # Supported image extensions
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".tif", ".tiff", ".bmp"}
+
+
+def _find_poppler_path() -> str | None:
+    """Find poppler binary path on Windows via environment or common locations."""
+    env_path = os.environ.get("POPPLER_PATH")
+    if env_path and os.path.isdir(env_path):
+        return env_path
+
+    # Search common install locations with glob to avoid version-specific paths
+    search_patterns = [
+        r"C:\poppler\poppler-*\Library\bin",
+        r"C:\poppler\poppler-*\bin",
+        r"C:\Program Files\poppler*\bin",
+        r"C:\Program Files\poppler*\Library\bin",
+    ]
+    for pattern in search_patterns:
+        matches = sorted(glob.glob(pattern), reverse=True)
+        if matches:
+            return matches[0]
+
+    return None
 
 
 def convert_pdf_to_images(file_bytes: bytes) -> list:
@@ -31,9 +56,8 @@ def convert_pdf_to_images(file_bytes: bytes) -> list:
 
         # On Windows, specify poppler path if not in PATH
         if platform.system() == "Windows":
-            import os
-            poppler_path = os.environ.get("POPPLER_PATH", r"C:\poppler\poppler-24.08.0\Library\bin")
-            if os.path.exists(poppler_path):
+            poppler_path = _find_poppler_path()
+            if poppler_path:
                 kwargs["poppler_path"] = poppler_path
 
         images = convert_from_bytes(file_bytes, **kwargs)

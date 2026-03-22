@@ -3,10 +3,13 @@ Tesseract OCR Engine Wrapper
 Handles text extraction with confidence scoring.
 """
 
+import logging
 import pytesseract
 from PIL import Image
 from typing import Optional
 import platform
+
+logger = logging.getLogger(__name__)
 
 
 class OcrEngine:
@@ -54,9 +57,9 @@ class OcrEngine:
             else:
                 # Fallback to eng if available, otherwise use first available
                 self.lang = "eng" if "eng" in available else available[0] if available else "eng"
-            print(f"[OCR] Using languages: {self.lang} (available: {available})")
+            logger.info("Using languages: %s (available: %s)", self.lang, available)
         except Exception as e:
-            print(f"[OCR] Could not validate languages, using default: {self.lang}. Error: {e}")
+            logger.warning("Could not validate languages, using default: %s. Error: %s", self.lang, e)
 
     def extract_text(self, image: Image.Image) -> dict:
         """

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\ArsipUnit;
 use App\Models\BerkasArsip;
+use App\Models\KodeKlasifikasi;
 use App\Models\UnitPengolah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -349,5 +352,285 @@ class LaporanController extends Controller
         // Replace / dengan - untuk nama file yang valid
         $safeFilename = str_replace('/', '-', $beritaAcara->nomor_berita_acara);
         return $pdf->stream('berita-acara-penyerahan-' . $safeFilename . '.pdf');
+    }
+
+    // ====================================================================
+    // Report 8: Statistik Klasifikasi Arsip
+    // ====================================================================
+
+    /**
+     * Display the statistik klasifikasi arsip page.
+     */
+    public function statistikKlasifikasi(): Response
+    {
+        $unitPengolahs = UnitPengolah::orderBy('nama_unit')->get();
+
+        return Inertia::render('laporan/statistik-klasifikasi', [
+            'unitPengolahs' => $unitPengolahs,
+            'userUnitPengolahId' => $this->getUserUnitPengolahId(),
+        ]);
+    }
+
+    /**
+     * Export statistik klasifikasi arsip to PDF.
+     */
+    public function exportStatistikKlasifikasiPdf(Request $request)
+    {
+        $unitPengolahId = $request->input('unit_pengolah_id');
+        $dariTanggal = $request->input('dari_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
+
+        $baseQuery = function () use ($unitPengolahId, $dariTanggal, $sampaiTanggal) {
+            $query = ArsipUnit::query();
+            if ($unitPengolahId) {
+                $query->where('unit_pengolah_arsip_id', $unitPengolahId);
+            }
+            if ($dariTanggal) {
+                $query->whereDate('created_at', '>=', $dariTanggal);
+            }
+            if ($sampaiTanggal) {
+                $query->whereDate('created_at', '<=', $sampaiTanggal);
+            }
+            return $query;
+        };
+
+        $totalArsip = $baseQuery()->count();
+
+        // Group by kode_klasifikasi
+        $perKlasifikasi = $baseQuery()
+            ->select('kode_klasifikasi_id', DB::raw('count(*) as jumlah'))
+            ->groupBy('kode_klasifikasi_id')
+            ->orderByDesc('jumlah')
+            ->get()
+            ->map(function ($item) use ($totalArsip) {
+                $kode = KodeKlasifikasi::find($item->kode_klasifikasi_id);
+                return [
+                    'kode_klasifikasi' => $kode?->kode_klasifikasi ?? '-',
+                    'uraian' => $kode?->uraian ?? 'Tidak Diketahui',
+                    'jumlah' => $item->jumlah,
+                    'persentase' => $totalArsip > 0 ? round(($item->jumlah / $totalArsip) * 100, 1) : 0,
+                ];
+            });
+
+        // Group by prefix (2 char, e.g. KU, PR, HK)
+        $perPrefix = $perKlasifikasi->groupBy(function ($item) {
+            return strtoupper(substr($item['kode_klasifikasi'], 0, 2));
+        })->map(function ($group, $prefix) use ($totalArsip) {
+            $jumlah = $group->sum('jumlah');
+            return [
+                'prefix' => $prefix,
+                'jumlah' => $jumlah,
+                'persentase' => $totalArsip > 0 ? round(($jumlah / $totalArsip) * 100, 1) : 0,
+                'detail' => $group->values()->toArray(),
+            ];
+        })->sortByDesc('jumlah')->values();
+
+        $unitPengolah = $unitPengolahId ? UnitPengolah::find($unitPengolahId) : null;
+
+        $pdf = Pdf::loadView('pdf.statistik-klasifikasi', compact(
+            'perKlasifikasi',
+            'perPrefix',
+            'totalArsip',
+            'unitPengolah',
+            'dariTanggal',
+            'sampaiTanggal'
+        ));
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->stream('laporan-statistik-klasifikasi-' . date('Y-m-d') . '.pdf');
+    }
+
+    // ====================================================================
+    // Report 9: Log Aktivitas (Audit Trail)
+    // ====================================================================
+
+    /**
+     * Display the log aktivitas report page.
+     */
+    public function logAktivitas(): Response
+    {
+        return Inertia::render('laporan/log-aktivitas', [
+            'userUnitPengolahId' => $this->getUserUnitPengolahId(),
+        ]);
+    }
+
+    /**
+     * Export log aktivitas to PDF.
+     */
+    public function exportLogAktivitasPdf(Request $request)
+    {
+        $dariTanggal = $request->input('dari_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
+        $action = $request->input('action');
+        $userId = $request->input('user_id');
+
+        $query = ActivityLog::with('user')->orderByDesc('created_at');
+
+        if ($dariTanggal) {
+            $query->whereDate('created_at', '>=', $dariTanggal);
+        }
+        if ($sampaiTanggal) {
+            $query->whereDate('created_at', '<=', $sampaiTanggal);
+        }
+        if ($action) {
+            $query->where('action', $action);
+        }
+        if ($userId) {
+            $query->where('user_id', $userId);
+        }
+
+        $logs = $query->limit(500)->get();
+
+        // Summary stats
+        $baseQuery = function () use ($dariTanggal, $sampaiTanggal) {
+            $q = ActivityLog::query();
+            if ($dariTanggal) {
+                $q->whereDate('created_at', '>=', $dariTanggal);
+            }
+            if ($sampaiTanggal) {
+                $q->whereDate('created_at', '<=', $sampaiTanggal);
+            }
+            return $q;
+        };
+
+        $stats = [
+            'total' => $baseQuery()->count(),
+            'created' => $baseQuery()->where('action', 'created')->count(),
+            'updated' => $baseQuery()->where('action', 'updated')->count(),
+            'deleted' => $baseQuery()->where('action', 'deleted')->count(),
+            'unique_users' => $baseQuery()->distinct('user_id')->count('user_id'),
+        ];
+
+        $perUser = $baseQuery()
+            ->select('user_id', DB::raw('count(*) as jumlah'))
+            ->groupBy('user_id')
+            ->orderByDesc('jumlah')
+            ->with('user')
+            ->limit(10)
+            ->get()
+            ->map(fn ($item) => [
+                'nama' => $item->user?->name ?? 'Unknown',
+                'jumlah' => $item->jumlah,
+            ]);
+
+        $pdf = Pdf::loadView('pdf.log-aktivitas', compact(
+            'logs',
+            'stats',
+            'perUser',
+            'dariTanggal',
+            'sampaiTanggal',
+            'action'
+        ));
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->stream('laporan-log-aktivitas-' . date('Y-m-d') . '.pdf');
+    }
+
+    // ====================================================================
+    // Report 10: Statistik OCR & AI
+    // ====================================================================
+
+    /**
+     * Display the statistik OCR & AI report page.
+     */
+    public function statistikOcr(): Response
+    {
+        return Inertia::render('laporan/statistik-ocr', [
+            'userUnitPengolahId' => $this->getUserUnitPengolahId(),
+        ]);
+    }
+
+    /**
+     * Export statistik OCR & AI to PDF.
+     */
+    public function exportStatistikOcrPdf(Request $request)
+    {
+        $dariTanggal = $request->input('dari_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
+
+        $baseQuery = function () use ($dariTanggal, $sampaiTanggal) {
+            $query = ArsipUnit::query();
+            if ($dariTanggal) {
+                $query->whereDate('created_at', '>=', $dariTanggal);
+            }
+            if ($sampaiTanggal) {
+                $query->whereDate('created_at', '<=', $sampaiTanggal);
+            }
+            return $query;
+        };
+
+        $totalArsip = $baseQuery()->count();
+
+        // OCR stats
+        $ocrCompleted = $baseQuery()->where('ocr_status', 'completed')->count();
+        $ocrPending = $baseQuery()->where(function ($q) {
+            $q->whereNull('ocr_status')->orWhere('ocr_status', 'pending');
+        })->count();
+        $ocrProcessing = $baseQuery()->where('ocr_status', 'processing')->count();
+        $ocrFailed = $baseQuery()->where('ocr_status', 'failed')->count();
+        $avgOcrConfidence = $baseQuery()->where('ocr_status', 'completed')->avg('ocr_confidence');
+
+        // AI classification stats
+        $aiSuggested = $baseQuery()->whereNotNull('suggested_kode_klasifikasi_id')->count();
+        $aiAccepted = $baseQuery()->where('ai_suggestion_status', 'accepted')->count();
+        $aiRejected = $baseQuery()->where('ai_suggestion_status', 'rejected')->count();
+        $aiPending = $baseQuery()->whereNotNull('suggested_kode_klasifikasi_id')
+            ->whereNull('ai_suggestion_status')->count();
+        $avgAiConfidence = $baseQuery()->whereNotNull('ai_confidence_score')->avg('ai_confidence_score');
+
+        // Confidence distribution
+        $confidenceBuckets = [];
+        foreach (['0-20', '20-40', '40-60', '60-80', '80-100'] as $bucket) {
+            [$min, $max] = explode('-', $bucket);
+            $count = $baseQuery()
+                ->where('ocr_status', 'completed')
+                ->whereBetween('ocr_confidence', [(float) $min / 100, (float) $max / 100])
+                ->count();
+            $confidenceBuckets[] = ['range' => $bucket . '%', 'count' => $count];
+        }
+
+        // AI confidence distribution
+        $aiConfidenceBuckets = [];
+        foreach (['0-20', '20-40', '40-60', '60-80', '80-100'] as $bucket) {
+            [$min, $max] = explode('-', $bucket);
+            $count = $baseQuery()
+                ->whereNotNull('ai_confidence_score')
+                ->whereBetween('ai_confidence_score', [(float) $min / 100, (float) $max / 100])
+                ->count();
+            $aiConfidenceBuckets[] = ['range' => $bucket . '%', 'count' => $count];
+        }
+
+        $ocrStats = [
+            'total_arsip' => $totalArsip,
+            'completed' => $ocrCompleted,
+            'pending' => $ocrPending,
+            'processing' => $ocrProcessing,
+            'failed' => $ocrFailed,
+            'avg_confidence' => $avgOcrConfidence ? round($avgOcrConfidence * 100, 1) : 0,
+            'success_rate' => ($ocrCompleted + $ocrFailed) > 0
+                ? round(($ocrCompleted / ($ocrCompleted + $ocrFailed)) * 100, 1) : 0,
+        ];
+
+        $aiStats = [
+            'total_suggested' => $aiSuggested,
+            'accepted' => $aiAccepted,
+            'rejected' => $aiRejected,
+            'pending' => $aiPending,
+            'avg_confidence' => $avgAiConfidence ? round($avgAiConfidence * 100, 1) : 0,
+            'acceptance_rate' => ($aiAccepted + $aiRejected) > 0
+                ? round(($aiAccepted / ($aiAccepted + $aiRejected)) * 100, 1) : 0,
+        ];
+
+        $pdf = Pdf::loadView('pdf.statistik-ocr', compact(
+            'ocrStats',
+            'aiStats',
+            'confidenceBuckets',
+            'aiConfidenceBuckets',
+            'dariTanggal',
+            'sampaiTanggal'
+        ));
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->stream('laporan-statistik-ocr-ai-' . date('Y-m-d') . '.pdf');
     }
 }

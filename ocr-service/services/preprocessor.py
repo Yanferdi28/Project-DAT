@@ -3,13 +3,39 @@ Image Preprocessing Pipeline for OCR
 Applies a series of image transformations to improve OCR accuracy.
 """
 
+import logging
 import cv2
 import numpy as np
 from PIL import Image
 
+logger = logging.getLogger(__name__)
+
 
 class ImagePreprocessor:
     """Preprocesses images to improve Tesseract OCR accuracy."""
+
+    # Minimum image height (in pixels) for reliable OCR results.
+    # Tesseract works best at ~300 DPI; 800px ensures adequate resolution.
+    MIN_HEIGHT = 800
+
+    # Denoising strength (h parameter for fastNlMeansDenoising).
+    # Higher values remove more noise but may blur text. 10 is a balanced default.
+    DENOISE_STRENGTH = 10
+
+    # Adaptive threshold block size (must be odd). Controls the size of the
+    # neighborhood area used to calculate threshold. 11 works well for documents.
+    BINARIZE_BLOCK_SIZE = 11
+
+    # Adaptive threshold constant subtracted from the mean.
+    # Small value (2) preserves thin strokes in printed text.
+    BINARIZE_C = 2
+
+    # Minimum skew angle (degrees) to trigger deskewing correction.
+    DESKEW_MIN_ANGLE = 0.5
+
+    # Maximum skew angle (degrees) allowed for deskewing.
+    # Angles beyond this likely indicate a different orientation, not skew.
+    DESKEW_MAX_ANGLE = 10
 
     def process(self, image: Image.Image) -> Image.Image:
         """
@@ -57,11 +83,11 @@ class ImagePreprocessor:
         # Convert back to PIL
         return Image.fromarray(deskewed)
 
-    def _resize_if_needed(self, img: np.ndarray, min_height: int = 800) -> np.ndarray:
+    def _resize_if_needed(self, img: np.ndarray) -> np.ndarray:
         """Upscale image if it's too small for good OCR results."""
         h, w = img.shape[:2]
-        if h < min_height:
-            scale = min_height / h
+        if h < self.MIN_HEIGHT:
+            scale = self.MIN_HEIGHT / h
             new_w = int(w * scale)
             new_h = int(h * scale)
             img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_CUBIC)
@@ -69,7 +95,12 @@ class ImagePreprocessor:
 
     def _denoise(self, img: np.ndarray) -> np.ndarray:
         """Apply non-local means denoising."""
-        return cv2.fastNlMeansDenoising(img, None, h=10, templateWindowSize=7, searchWindowSize=21)
+        return cv2.fastNlMeansDenoising(
+            img, None,
+            h=self.DENOISE_STRENGTH,
+            templateWindowSize=7,
+            searchWindowSize=21,
+        )
 
     def _binarize(self, img: np.ndarray) -> np.ndarray:
         """Apply adaptive thresholding for binarization."""
@@ -77,8 +108,8 @@ class ImagePreprocessor:
             img, 255,
             cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
             cv2.THRESH_BINARY,
-            blockSize=11,
-            C=2
+            blockSize=self.BINARIZE_BLOCK_SIZE,
+            C=self.BINARIZE_C,
         )
         return binary
 
@@ -100,7 +131,7 @@ class ImagePreprocessor:
                 angle = -angle
 
             # Only deskew if angle is significant but not too large
-            if abs(angle) > 0.5 and abs(angle) < 10:
+            if abs(angle) > self.DESKEW_MIN_ANGLE and abs(angle) < self.DESKEW_MAX_ANGLE:
                 (h, w) = img.shape[:2]
                 center = (w // 2, h // 2)
                 M = cv2.getRotationMatrix2D(center, angle, 1.0)
@@ -109,7 +140,7 @@ class ImagePreprocessor:
                     flags=cv2.INTER_CUBIC,
                     borderMode=cv2.BORDER_REPLICATE
                 )
-        except Exception:
-            pass  # If deskew fails, return original
+        except Exception as e:
+            logger.warning("Deskew failed, returning original image: %s", e)
 
         return img

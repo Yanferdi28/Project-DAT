@@ -3,9 +3,18 @@ OCR Microservice for Project-DAT
 Provides OCR text extraction and document classification endpoints.
 """
 
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import ocr, classify
+from routers import ocr, classify, chat
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Project-DAT OCR Service",
@@ -25,6 +34,7 @@ app.add_middleware(
 # Include routers
 app.include_router(ocr.router, prefix="/ocr", tags=["OCR"])
 app.include_router(classify.router, prefix="/classify", tags=["Classification"])
+app.include_router(chat.router, prefix="/chat", tags=["Chat"])
 
 
 @app.get("/")

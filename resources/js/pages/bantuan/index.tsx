@@ -47,7 +47,7 @@ const roleFeatures: RoleFeature[] = [
     { feature: 'Melihat Berkas Arsip', admin: true, operator: true, user: true },
     { feature: 'Membuat Berkas Arsip', admin: true, operator: false, user: true },
     { feature: 'Mengedit Berkas Arsip', admin: true, operator: false, user: true },
-    { feature: 'Menghapus Berkas Arsip', admin: true, operator: false, user: false },
+    { feature: 'Menghapus Berkas Arsip', admin: true, operator: false, user: true },
     { feature: 'Export PDF Arsip & Berkas', admin: true, operator: true, user: true },
     { feature: 'Melihat Laporan', admin: true, operator: true, user: true },
     { feature: 'Rekap Unit Pengolah', admin: true, operator: false, user: false },

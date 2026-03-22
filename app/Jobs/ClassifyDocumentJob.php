@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\ArsipUnit;
+use App\Models\KodeKlasifikasi;
 use App\Services\OcrService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -63,14 +64,24 @@ class ClassifyDocumentJob implements ShouldQueue
         // Only save suggestion if confidence is above minimum threshold
         $minConfidence = config('ocr.min_confidence', 50);
         if ($topPrediction['confidence'] >= $minConfidence) {
+            // Resolve kode_klasifikasi by its code string from the classifier
+            $kodeKlasifikasiCode = $topPrediction['kode_klasifikasi'] ?? null;
+            $kodeKlasifikasi = $kodeKlasifikasiCode
+                ? KodeKlasifikasi::where('kode_klasifikasi', $kodeKlasifikasiCode)->first()
+                : null;
+
+            if (!$kodeKlasifikasi) {
+                Log::warning("ClassifyDocumentJob: kode_klasifikasi '{$kodeKlasifikasiCode}' not found in database for ArsipUnit #{$this->arsipUnitId}");
+                return;
+            }
+
             $arsipUnit->update([
-                'suggested_kategori_id' => $topPrediction['kategori_id'],
-                'suggested_sub_kategori_id' => $topPrediction['sub_kategori_id'],
+                'suggested_kode_klasifikasi_id' => $kodeKlasifikasi->id,
                 'ai_confidence_score' => $topPrediction['confidence'],
                 'ai_suggestion_status' => null, // pending review
             ]);
 
-            Log::info("ClassifyDocumentJob: Classification completed for ArsipUnit #{$this->arsipUnitId} - Suggested kategori: {$topPrediction['label']} (confidence: {$topPrediction['confidence']}%)");
+            Log::info("ClassifyDocumentJob: Classification completed for ArsipUnit #{$this->arsipUnitId} - Suggested kode_klasifikasi: {$kodeKlasifikasiCode} (confidence: {$topPrediction['confidence']}%)");
         } else {
             Log::info("ClassifyDocumentJob: Confidence too low ({$topPrediction['confidence']}%) for ArsipUnit #{$this->arsipUnitId}");
         }
