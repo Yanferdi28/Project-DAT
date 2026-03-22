@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ArsipUnitController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\BerkasArsipController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
@@ -97,11 +96,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('bantuan', function () {
         return Inertia::render('bantuan/index');
     })->name('bantuan');
-
-    // RAG Chatbot routes
-    Route::post('chat/ask', [ChatController::class, 'ask'])->name('chat.ask');
-    Route::post('chat/index-all', [ChatController::class, 'indexAll'])->name('chat.index-all');
-    Route::get('chat/status', [ChatController::class, 'status'])->name('chat.status');
 
     // Arsip Unit status routes (operator and admin only)
     Route::middleware('role:operator,admin')->group(function () {

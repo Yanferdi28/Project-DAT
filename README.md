@@ -179,6 +179,61 @@ php artisan test --parallel
 6. **User/Admin** mengelompokkan arsip ke dalam berkas arsip
 7. **Admin** membuat laporan dan berita acara penyerahan
 
+## Training Ulang Klasifikasi AI
+
+Project ini sudah menyediakan command untuk membangun dataset dari data arsip yang sudah berlabel, lalu retrain model klasifikasi secara otomatis.
+
+### 1. Export dataset training dari database
+
+```bash
+php artisan ai:export-training-data
+```
+
+Opsi penting:
+
+- `--path=ocr-service/data/training_data.generated.json` lokasi output dataset
+- `--accepted-only` hanya gunakan data yang accepted/manual finalized
+- `--seed-from=ocr-service/data/training_data.json` gabungkan data seed agar dataset tidak kosong
+- `--min-text=30` panjang minimal teks OCR
+
+### 2. Retrain model classifier via API OCR service
+
+Pastikan OCR service aktif di `OCR_SERVICE_URL`, lalu jalankan:
+
+```bash
+php artisan ai:retrain-classifier --accepted-only
+```
+
+Command ini akan:
+
+1. mengekspor dataset terbaru,
+2. memanggil endpoint `/classify/train`,
+3. me-reload model classifier pada service OCR.
+
+### 3. Evaluasi kualitas model
+
+Gunakan script evaluasi untuk melihat metrik holdout (accuracy, macro F1, weighted F1, classification report, confusion matrix):
+
+```bash
+python ocr-service/models/evaluate_classifier.py --data ocr-service/data/training_data.generated.json
+```
+
+Laporan evaluasi disimpan di `ocr-service/models/evaluation_report.json`.
+
+### 4. Retrain otomatis mingguan
+
+Scheduler Laravel sudah didaftarkan untuk retrain mingguan:
+
+```bash
+php artisan schedule:list
+```
+
+Jalankan worker scheduler di server:
+
+```bash
+php artisan schedule:work
+```
+
 ## Lisensi
 
 Dibuat untuk keperluan akademis — Skripsi.

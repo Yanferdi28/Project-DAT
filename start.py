@@ -21,7 +21,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 OCR_DIR = ROOT_DIR / "ocr-service"
 VENV_DIR = ROOT_DIR / ".venv"
 
-# Parse .env file to get OCR port and RAG config
+# Parse .env file to get OCR port
 def _parse_dotenv():
     """Read key=value pairs from .env file."""
     env_vals = {}
@@ -173,10 +173,6 @@ def start_all():
     print(f"{BOLD}Starting services...{RESET}\n")
 
     env = os.environ.copy()
-    # Pass RAG/Gemini env vars to Python OCR service
-    for env_key in ["GEMINI_API_KEY", "RAG_EMBEDDING_MODEL", "RAG_TOP_K", "RAG_MAX_CONTEXT_LENGTH"]:
-        if env_key in _dotenv and env_key not in env:
-            env[env_key] = _dotenv[env_key]
 
     for svc in SERVICES:
         resolved_cmd = _resolve_cmd(svc["cmd"])
