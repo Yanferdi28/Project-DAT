@@ -7,10 +7,11 @@ import io
 import logging
 import os
 import tempfile
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from typing import Optional
+from fastapi import APIRouter, File, Query, UploadFile, HTTPException
 from PIL import Image
 from services.preprocessor import ImagePreprocessor
-from services.ocr_engine import OcrEngine
+from services.engine_factory import get_engine, get_default_engine_name, list_available_engines, VALID_ENGINES
 from services.text_cleaner import TextCleaner
 
 logger = logging.getLogger(__name__)
@@ -18,7 +19,6 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 preprocessor = ImagePreprocessor()
-ocr_engine = OcrEngine(lang="ind+eng")
 text_cleaner = TextCleaner()
 
 # Supported image extensions
@@ -75,18 +75,39 @@ def convert_pdf_to_images(file_bytes: bytes) -> list:
 
 
 @router.post("/extract")
-async def extract_text(file: UploadFile = File(...)):
+async def extract_text(
+    file: UploadFile = File(...),
+    engine: Optional[str] = Query(
+        default=None,
+        description="OCR engine to use: 'tesseract' or 'easyocr'. Defaults to server config.",
+    ),
+):
     """
     Extract text from an uploaded document (image or PDF).
 
     Args:
         file: Uploaded file (image or PDF)
+        engine: OCR engine to use ('tesseract' or 'easyocr'). Optional.
 
     Returns:
-        JSON with extracted text, confidence, and metadata
+        JSON with extracted text, confidence, metadata, and engine used
     """
     if not file.filename:
         raise HTTPException(status_code=400, detail="No filename provided")
+
+    # Validate engine parameter
+    engine_name = engine or get_default_engine_name()
+    if engine_name not in VALID_ENGINES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown engine '{engine_name}'. Valid options: {', '.join(VALID_ENGINES)}",
+        )
+
+    # Get the requested engine
+    try:
+        ocr_engine = get_engine(engine_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     extension = os.path.splitext(file.filename)[1].lower()
 
@@ -158,6 +179,7 @@ async def extract_text(file: UploadFile = File(...)):
             "word_count": total_words,
             "pages_processed": len(all_text),
             "filename": file.filename,
+            "engine_used": engine_name,
         }
 
     except HTTPException:
@@ -171,9 +193,9 @@ async def extract_text(file: UploadFile = File(...)):
 
 @router.get("/info")
 async def ocr_info():
-    """Get OCR engine information."""
+    """Get OCR engine information including all available engines."""
     return {
-        "tesseract_version": OcrEngine.get_tesseract_version(),
-        "available_languages": OcrEngine.get_available_languages(),
+        "default_engine": get_default_engine_name(),
+        "engines": list_available_engines(),
         "supported_extensions": list(IMAGE_EXTENSIONS) + [".pdf"],
     }

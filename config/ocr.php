@@ -12,6 +12,9 @@ return [
     |
     */
 
+    // OCR engine to use ('tesseract' or 'easyocr')
+    'engine' => env('OCR_ENGINE', 'tesseract'),
+
     // Python OCR microservice base URL
     'service_url' => env('OCR_SERVICE_URL', 'http://127.0.0.1:8100'),
 
@@ -54,5 +57,8 @@ return [
 
     // Tesseract language (for direct CLI usage fallback)
     'tesseract_lang' => env('OCR_TESSERACT_LANG', 'ind+eng'),
+
+    // Valid OCR engine options
+    'valid_engines' => ['tesseract', 'easyocr'],
 
 ];

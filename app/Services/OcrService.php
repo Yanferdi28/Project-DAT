@@ -12,12 +12,14 @@ class OcrService
     protected string $baseUrl;
     protected int $timeout;
     protected int $connectTimeout;
+    protected string $defaultEngine;
 
     public function __construct()
     {
         $this->baseUrl = config('ocr.service_url', 'http://127.0.0.1:8100');
         $this->timeout = config('ocr.timeout', 120);
         $this->connectTimeout = config('ocr.connect_timeout', 10);
+        $this->defaultEngine = config('ocr.engine', 'tesseract');
     }
 
     /**
@@ -41,9 +43,10 @@ class OcrService
      * Extract text from a document file using OCR.
      *
      * @param string $filePath Path relative to the public disk (e.g., 'dokumen-arsip/file.pdf')
-     * @return array{success: bool, text: ?string, confidence: ?float, error: ?string}
+     * @param string|null $engine OCR engine to use ('tesseract' or 'easyocr'). Null = default.
+     * @return array{success: bool, text: ?string, confidence: ?float, engine_used: ?string, error: ?string}
      */
-    public function extractText(string $filePath): array
+    public function extractText(string $filePath, ?string $engine = null): array
     {
         try {
             $fullPath = Storage::disk('public')->path($filePath);
@@ -53,6 +56,7 @@ class OcrService
                     'success' => false,
                     'text' => null,
                     'confidence' => null,
+                    'engine_used' => null,
                     'error' => "File not found: {$filePath}",
                 ];
             }
@@ -65,9 +69,12 @@ class OcrService
                     'success' => false,
                     'text' => null,
                     'confidence' => null,
+                    'engine_used' => null,
                     'error' => 'File too large for OCR processing',
                 ];
             }
+
+            $engineParam = $engine ?? $this->defaultEngine;
 
             $response = Http::timeout($this->timeout)
                 ->connectTimeout($this->connectTimeout)
@@ -76,7 +83,7 @@ class OcrService
                     file_get_contents($fullPath),
                     basename($filePath)
                 )
-                ->post("{$this->baseUrl}/ocr/extract");
+                ->post("{$this->baseUrl}/ocr/extract?engine={$engineParam}");
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -86,6 +93,7 @@ class OcrService
                     'confidence' => $data['confidence'] ?? 0,
                     'word_count' => $data['word_count'] ?? 0,
                     'pages_processed' => $data['pages_processed'] ?? 0,
+                    'engine_used' => $data['engine_used'] ?? $engineParam,
                     'error' => null,
                 ];
             }
@@ -94,6 +102,7 @@ class OcrService
                 'success' => false,
                 'text' => null,
                 'confidence' => null,
+                'engine_used' => null,
                 'error' => $response->json('detail', 'OCR service returned an error'),
             ];
         } catch (ConnectionException $e) {
@@ -102,6 +111,7 @@ class OcrService
                 'success' => false,
                 'text' => null,
                 'confidence' => null,
+                'engine_used' => null,
                 'error' => 'Cannot connect to OCR service. Is it running?',
             ];
         } catch (\Exception $e) {
@@ -110,6 +120,7 @@ class OcrService
                 'success' => false,
                 'text' => null,
                 'confidence' => null,
+                'engine_used' => null,
                 'error' => 'OCR processing failed: ' . $e->getMessage(),
             ];
         }
@@ -200,9 +211,10 @@ class OcrService
      * Extract text from an uploaded file (UploadedFile instance) without storing it first.
      *
      * @param \Illuminate\Http\UploadedFile $file
-     * @return array{success: bool, text: ?string, confidence: ?float, error: ?string}
+     * @param string|null $engine OCR engine to use ('tesseract' or 'easyocr'). Null = default.
+     * @return array{success: bool, text: ?string, confidence: ?float, engine_used: ?string, error: ?string}
      */
-    public function extractTextFromUpload(\Illuminate\Http\UploadedFile $file): array
+    public function extractTextFromUpload(\Illuminate\Http\UploadedFile $file, ?string $engine = null): array
     {
         try {
             $maxSize = config('ocr.max_file_size', 10 * 1024 * 1024);
@@ -211,9 +223,12 @@ class OcrService
                     'success' => false,
                     'text' => null,
                     'confidence' => null,
+                    'engine_used' => null,
                     'error' => 'File too large for OCR processing',
                 ];
             }
+
+            $engineParam = $engine ?? $this->defaultEngine;
 
             $response = Http::timeout($this->timeout)
                 ->connectTimeout($this->connectTimeout)
@@ -222,7 +237,7 @@ class OcrService
                     file_get_contents($file->getRealPath()),
                     $file->getClientOriginalName()
                 )
-                ->post("{$this->baseUrl}/ocr/extract");
+                ->post("{$this->baseUrl}/ocr/extract?engine={$engineParam}");
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -232,6 +247,7 @@ class OcrService
                     'confidence' => $data['confidence'] ?? 0,
                     'word_count' => $data['word_count'] ?? 0,
                     'pages_processed' => $data['pages_processed'] ?? 0,
+                    'engine_used' => $data['engine_used'] ?? $engineParam,
                     'error' => null,
                 ];
             }
@@ -240,6 +256,7 @@ class OcrService
                 'success' => false,
                 'text' => null,
                 'confidence' => null,
+                'engine_used' => null,
                 'error' => $response->json('detail', 'OCR service returned an error'),
             ];
         } catch (ConnectionException $e) {
@@ -248,6 +265,7 @@ class OcrService
                 'success' => false,
                 'text' => null,
                 'confidence' => null,
+                'engine_used' => null,
                 'error' => 'Cannot connect to OCR service. Is it running?',
             ];
         } catch (\Exception $e) {
@@ -256,6 +274,7 @@ class OcrService
                 'success' => false,
                 'text' => null,
                 'confidence' => null,
+                'engine_used' => null,
                 'error' => 'OCR processing failed: ' . $e->getMessage(),
             ];
         }
