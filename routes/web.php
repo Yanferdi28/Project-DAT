@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KodeKlasifikasiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\OcrController;
+use App\Http\Controllers\PeminjamanArsipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubKategoriController;
 use App\Http\Controllers\UnitPengolahController;
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('berkas-arsip/{berkasArsip}/add-arsip-unit', [BerkasArsipController::class, 'addArsipUnit'])->name('berkas-arsip.add-arsip-unit');
     Route::delete('berkas-arsip/{berkasArsip}/remove-arsip-unit/{arsipUnit}', [BerkasArsipController::class, 'removeArsipUnit'])->name('berkas-arsip.remove-arsip-unit');
 
+    // Peminjaman Arsip routes (accessible by all authenticated users)
+    Route::resource('peminjaman-arsip', PeminjamanArsipController::class)->only(['index', 'create', 'store', 'show']);
+    Route::patch('peminjaman-arsip/{peminjamanArsip}/kembalikan', [PeminjamanArsipController::class, 'kembalikan'])->name('peminjaman-arsip.kembalikan');
+
     // Laporan routes
     Route::get('laporan/penyusutan', [LaporanController::class, 'penyusutan'])->name('laporan.penyusutan');
     Route::get('laporan/status-verifikasi', [LaporanController::class, 'statusVerifikasi'])->name('laporan.status-verifikasi');
@@ -64,6 +69,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('laporan/berita-acara-penyerahan', [LaporanController::class, 'beritaAcaraPenyerahan'])->name('laporan.berita-acara-penyerahan');
     Route::post('laporan/berita-acara-penyerahan', [LaporanController::class, 'storeBeritaAcaraPenyerahan'])->name('laporan.berita-acara-penyerahan.store');
     Route::get('laporan/berita-acara-penyerahan/{id}/export', [LaporanController::class, 'exportBeritaAcaraPdf'])->name('laporan.berita-acara-penyerahan.export');
+
+    // Laporan Peminjaman/Pengembalian (all authenticated users)
+    Route::get('laporan/peminjaman', [LaporanController::class, 'laporanPeminjaman'])->name('laporan.peminjaman');
+    Route::get('laporan/peminjaman/export', [LaporanController::class, 'exportLaporanPeminjamanPdf'])->name('laporan.peminjaman.export');
 
     // Laporan Rekap Unit Pengolah, Statistik Klasifikasi, Log Aktivitas (admin only)
     Route::middleware('admin')->group(function () {

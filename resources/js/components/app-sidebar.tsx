@@ -3,7 +3,7 @@ import * as usersRoutes from '@/routes/users';
 import * as myprofileRoutes from '@/routes/myprofile';
 import { type NavItem } from '@/types';
 import { Link, usePage, router } from '@inertiajs/react';
-import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2, Activity, HelpCircle, BarChart3, ScanLine } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronRight, Folder, LayoutGrid, LogOut, User, Users, UserCog, FileText, ClipboardList, CalendarClock, FileCheck, FileSignature, Building2, Activity, HelpCircle, BarChart3, ScanLine, ArrowLeftRight, FolderKanban } from 'lucide-react';
 import { type SharedData } from '@/types';
 import { useState, useRef, useEffect } from 'react';
 import AppLogoIcon from './app-logo-icon';
@@ -45,6 +45,11 @@ export function AppSidebar({
             title: 'Berkas Arsip',
             href: '/berkas-arsip',
             icon: Folder,
+        },
+        {
+            title: 'Peminjaman Arsip',
+            href: '/peminjaman-arsip',
+            icon: ArrowLeftRight,
         },
     ];
 
@@ -271,6 +276,13 @@ export function AppSidebar({
                                     >
                                         <FileSignature className="h-3.5 w-3.5" />
                                         Berita Acara Penyerahan
+                                    </Link>
+                                    <Link
+                                        href="/laporan/peminjaman"
+                                        className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/peminjaman') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                    >
+                                        <ArrowLeftRight className="h-3.5 w-3.5" />
+                                        Laporan Peminjaman
                                     </Link>
                                     {/* Statistik Klasifikasi - Admin only */}
                                     {auth.user?.role === 'admin' && (

@@ -633,4 +633,89 @@ class LaporanController extends Controller
 
         return $pdf->stream('laporan-statistik-ocr-ai-' . date('Y-m-d') . '.pdf');
     }
+
+    // ====================================================================
+    // Report 11: Laporan Peminjaman / Pengembalian Arsip
+    // ====================================================================
+
+    /**
+     * Display the laporan peminjaman page.
+     */
+    public function laporanPeminjaman(): Response
+    {
+        $unitPengolahs = UnitPengolah::orderBy('nama_unit')->get();
+
+        return Inertia::render('laporan/peminjaman', [
+            'unitPengolahs' => $unitPengolahs,
+            'userUnitPengolahId' => $this->getUserUnitPengolahId(),
+        ]);
+    }
+
+    /**
+     * Export laporan peminjaman/pengembalian to PDF.
+     */
+    public function exportLaporanPeminjamanPdf(Request $request)
+    {
+        $filterStatus = $request->input('status');
+        $unitPengolahId = $request->input('unit_pengolah_id');
+        $dariTanggal = $request->input('dari_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
+
+        // Auto-update status terlambat
+        \App\Models\PeminjamanArsip::where('status', 'dipinjam')
+            ->whereDate('tanggal_harus_kembali', '<', now())
+            ->update(['status' => 'terlambat']);
+
+        $baseQuery = function () use ($unitPengolahId, $dariTanggal, $sampaiTanggal) {
+            $query = \App\Models\PeminjamanArsip::with([
+                'arsipUnit.kodeKlasifikasi',
+                'arsipUnit.unitPengolah',
+                'peminjam',
+                'unitPengolah',
+                'dicatatOleh',
+                'dikembalikanOleh',
+            ]);
+
+            if ($unitPengolahId) {
+                $query->where('unit_pengolah_id', $unitPengolahId);
+            }
+            if ($dariTanggal) {
+                $query->whereDate('tanggal_pinjam', '>=', $dariTanggal);
+            }
+            if ($sampaiTanggal) {
+                $query->whereDate('tanggal_pinjam', '<=', $sampaiTanggal);
+            }
+
+            return $query;
+        };
+
+        // Statistics
+        $stats = [
+            'total' => $baseQuery()->count(),
+            'dipinjam' => $baseQuery()->where('status', 'dipinjam')->count(),
+            'dikembalikan' => $baseQuery()->where('status', 'dikembalikan')->count(),
+            'terlambat' => $baseQuery()->where('status', 'terlambat')->count(),
+        ];
+
+        // Get data
+        if ($filterStatus) {
+            $peminjaman = $baseQuery()->where('status', $filterStatus)->orderByDesc('tanggal_pinjam')->get();
+        } else {
+            $peminjaman = $baseQuery()->orderByDesc('tanggal_pinjam')->get();
+        }
+
+        $unitPengolah = $unitPengolahId ? UnitPengolah::find($unitPengolahId) : null;
+
+        $pdf = Pdf::loadView('pdf.laporan-peminjaman', compact(
+            'peminjaman',
+            'stats',
+            'filterStatus',
+            'unitPengolah',
+            'dariTanggal',
+            'sampaiTanggal'
+        ));
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->stream('laporan-peminjaman-' . date('Y-m-d') . '.pdf');
+    }
 }

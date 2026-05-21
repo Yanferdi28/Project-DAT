@@ -26,6 +26,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/.antigravitycli
 
 # Python
 __pycache__/
