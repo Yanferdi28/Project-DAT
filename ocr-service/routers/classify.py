@@ -7,11 +7,13 @@ from pydantic import BaseModel
 from typing import Optional
 from services.classifier import DocumentClassifier
 from services.text_extractor import TextFieldExtractor
+from services.llm_extractor import LLMExtractor
 
 router = APIRouter()
 
 classifier = DocumentClassifier()
 extractor = TextFieldExtractor()
+llm_extractor = LLMExtractor()
 
 
 class ClassifyRequest(BaseModel):
@@ -39,8 +41,12 @@ async def predict_category(request: ClassifyRequest):
             detail="Text too short for classification. Minimum 10 characters required.",
         )
 
-    # Always extract structured fields from the text, regardless of classification
-    extracted_fields = extractor.extract_all(request.text)
+    # Try LLM extraction first if configured
+    extracted_fields = llm_extractor.extract_all(request.text)
+    
+    # Fallback to regex extraction if LLM is not configured or fails
+    if not extracted_fields:
+        extracted_fields = extractor.extract_all(request.text)
 
     result = classifier.predict(request.text)
 

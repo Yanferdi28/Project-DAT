@@ -142,6 +142,7 @@ export default function Edit({
             kode_klasifikasi_uraian: string | null;
             confidence: number;
             indeks: string | null;
+            tanggal: string | null;
             jumlah_nilai: string | null;
             uraian_informasi: string | null;
         } | null;
@@ -209,6 +210,9 @@ export default function Edit({
                 }
                 if (result.suggestions.indeks) {
                     updates.indeks = result.suggestions.indeks;
+                }
+                if (result.suggestions.tanggal) {
+                    updates.tanggal = result.suggestions.tanggal;
                 }
                 if (result.suggestions.jumlah_nilai) {
                     updates.jumlah_nilai = result.suggestions.jumlah_nilai;
@@ -887,6 +891,11 @@ export default function Edit({
                                                                         {scanResult.suggestions.indeks && (
                                                                             <p className="text-sm text-gray-700 dark:text-gray-300">
                                                                                 <strong>Indeks:</strong> {scanResult.suggestions.indeks}
+                                                                            </p>
+                                                                        )}
+                                                                        {scanResult.suggestions.tanggal && (
+                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
+                                                                                <strong>Tanggal:</strong> {scanResult.suggestions.tanggal}
                                                                             </p>
                                                                         )}
                                                                         {scanResult.suggestions.uraian_informasi && (

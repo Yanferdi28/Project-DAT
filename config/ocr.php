@@ -16,7 +16,7 @@ return [
     'engine' => env('OCR_ENGINE', 'tesseract'),
 
     // Python OCR microservice base URL
-    'service_url' => env('OCR_SERVICE_URL', 'http://127.0.0.1:8100'),
+    'service_url' => env('OCR_SERVICE_URL', 'http://127.0.0.1:8102'),
 
     // Request timeout in seconds
     'timeout' => env('OCR_TIMEOUT', 120),

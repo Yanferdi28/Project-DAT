@@ -145,6 +145,12 @@ class ArsipUnit extends Model
      */
     public function scopeSearchByContent($query, string $search)
     {
+        $driver = $query->getConnection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            return $query->where('extracted_text', 'LIKE', '%' . $search . '%');
+        }
+
         return $query->whereRaw(
             'MATCH(extracted_text) AGAINST(? IN BOOLEAN MODE)',
             [$search]

@@ -16,7 +16,7 @@ class OcrService
 
     public function __construct()
     {
-        $this->baseUrl = config('ocr.service_url', 'http://127.0.0.1:8100');
+        $this->baseUrl = config('ocr.service_url', 'http://127.0.0.1:8102');
         $this->timeout = config('ocr.timeout', 120);
         $this->connectTimeout = config('ocr.connect_timeout', 10);
         $this->defaultEngine = config('ocr.engine', 'tesseract');

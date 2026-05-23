@@ -39,11 +39,11 @@ def _parse_dotenv():
 _dotenv = _parse_dotenv()
 
 # Determine OCR port from .env OCR_SERVICE_URL
-_ocr_url = _dotenv.get("OCR_SERVICE_URL", "http://127.0.0.1:8100")
+_ocr_url = _dotenv.get("OCR_SERVICE_URL", "http://127.0.0.1:8102")
 try:
     OCR_PORT = _ocr_url.rsplit(":", 1)[-1].split("/")[0]
 except Exception:
-    OCR_PORT = "8100"
+    OCR_PORT = "8102"
 
 # Tambahkan Tesseract ke PATH jika terinstall di lokasi umum Windows
 if sys.platform == "win32":

@@ -89,7 +89,7 @@ Edit `.env`:
 DB_CONNECTION=sqlite
 
 # OCR Service
-OCR_SERVICE_URL=http://127.0.0.1:8100
+OCR_SERVICE_URL=http://127.0.0.1:8102
 OCR_ENABLED=true
 OCR_CLASSIFICATION_ENABLED=true
 
@@ -113,7 +113,7 @@ php artisan queue:listen
 
 # Terminal 4 — OCR Service
 cd ocr-service
-python -m uvicorn main:app --host 127.0.0.1 --port 8100 --reload
+python -m uvicorn main:app --host 127.0.0.1 --port 8102 --reload
 ```
 
 Atau gunakan composer script:

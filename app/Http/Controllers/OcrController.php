@@ -186,6 +186,7 @@ class OcrController extends Controller
                 'kode_klasifikasi_uraian' => $kodeKlasifikasiUraian,
                 'confidence' => $confidence,
                 'indeks' => $extractedFields['indeks'] ?? null,
+                'tanggal' => $extractedFields['tanggal'] ?? null,
                 'jumlah_nilai' => (string) $pageCount,
                 'uraian_informasi' => $extractedFields['uraian_informasi'] ?? null,
                 'all_predictions' => $allPredictions,
