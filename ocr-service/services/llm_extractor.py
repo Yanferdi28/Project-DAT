@@ -7,7 +7,8 @@ import json
 import logging
 from typing import Optional
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 # Load environment variables
 load_dotenv()
@@ -16,17 +17,16 @@ load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 USE_LLM = os.getenv("USE_LLM_EXTRACTION", "false").lower() == "true"
 
-if API_KEY:
-    genai.configure(api_key=API_KEY)
-
 class LLMExtractor:
     """Extracts structured fields from OCR text using LLM."""
 
     def __init__(self):
         self.is_configured = bool(API_KEY and USE_LLM)
         if self.is_configured:
-            # We use gemini-2.5-flash for fast, cheap, and good JSON extraction
-            self.model = genai.GenerativeModel('gemini-2.5-flash')
+            # Initialize client and models
+            self.client = genai.Client(api_key=API_KEY)
+            self.model_primary = 'gemini-2.5-flash'
+            self.model_fallback = 'gemini-2.0-flash'
 
     def extract_all(self, text: str) -> Optional[dict]:
         """
@@ -50,30 +50,40 @@ Aturan penting:
 Teks OCR:
 {text}
 """
+        # Try Primary Model (gemini-2.5-flash)
+        result = self._try_extract(self.model_primary, prompt)
+        if result:
+            return result
+            
+        logging.warning("Primary LLM failed (possibly rate limit). Falling back to gemini-2.0-flash...")
+        
+        # Try Fallback Model (gemini-2.0-flash)
+        result = self._try_extract(self.model_fallback, prompt)
+        if result:
+            return result
+            
+        logging.error("Both LLM models failed. Falling back to Regex extraction.")
+        return None
 
+    def _try_extract(self, model_name: str, prompt: str) -> Optional[dict]:
         try:
-            # We ask for JSON specifically
-            response = self.model.generate_content(
-                prompt,
-                generation_config=genai.GenerationConfig(
+            response = self.client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
                     response_mime_type="application/json",
                     temperature=0.1, # Low temp for factual extraction
                 )
             )
-            
-            # The output should be a JSON string
             result_json = response.text.strip()
-            
-            # Parse it
             data = json.loads(result_json)
             
-            # Ensure all required keys exist
             return {
                 "indeks": data.get("indeks"),
                 "tanggal": data.get("tanggal"),
                 "uraian_informasi": data.get("uraian_informasi"),
             }
-            
         except Exception as e:
-            logging.error(f"LLM Extraction failed: {str(e)}")
+            logging.error(f"Model {model_name} failed: {str(e)}")
             return None
+

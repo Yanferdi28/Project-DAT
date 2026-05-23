@@ -779,6 +779,19 @@ export default function Create({
                                     <Label htmlFor="dokumen">
                                         {'Dokumen'}
                                     </Label>
+                                    
+                                    {ocrEnabled && (
+                                        <div className="rounded-lg bg-purple-50/60 p-3 border border-purple-100 dark:bg-purple-950/20 dark:border-purple-900/30 flex items-start gap-2.5 text-xs text-purple-800 dark:text-purple-300 mb-2">
+                                            <Brain className="h-4 w-4 mt-0.5 text-purple-600 dark:text-purple-400 shrink-0" />
+                                            <div>
+                                                <span className="font-semibold text-purple-900 dark:text-purple-200">Info Pindai Otomatis (OCR & AI):</span>
+                                                <p className="mt-0.5 text-purple-700 dark:text-purple-300/90 leading-relaxed">
+                                                    Unggah file <strong>PDF</strong> atau <strong>Gambar (JPG, JPEG, PNG)</strong>, lalu klik tombol <strong>"Scan OCR & Isi Otomatis"</strong> yang muncul setelah file terpilih. Sistem akan mendeteksi teks dan mengisi form (Klasifikasi, Tanggal, Indeks, Uraian) secara otomatis.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className="flex items-center gap-4">
                                         <Input
                                             id="dokumen"

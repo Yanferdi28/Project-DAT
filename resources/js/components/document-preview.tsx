@@ -355,7 +355,7 @@ function PreviewDialog({
         >
             <DialogContent
                 className={
-                    'flex flex-col p-0 ' +
+                    'flex flex-col p-0 [&>button]:hidden ' +
                     (isFullscreen
                         ? 'h-screen max-h-screen w-screen max-w-none rounded-none'
                         : 'h-[90vh] w-full max-w-6xl')
@@ -440,6 +440,16 @@ function PreviewDialog({
                                 <Download className="h-4 w-4" />
                             </Button>
                         </a>
+                        <div className="mx-1 h-5 w-px bg-gray-200 dark:bg-gray-700" />
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setIsOpen(false)}
+                            className="h-8 w-8 p-0 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                            title="Tutup"
+                        >
+                            <X className="h-4 w-4" />
+                        </Button>
                     </div>
                 </div>
 
