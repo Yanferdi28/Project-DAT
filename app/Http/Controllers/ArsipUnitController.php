@@ -18,18 +18,11 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Gate;
 
 class ArsipUnitController extends Controller
 {
-    /**
-     * Check if the current user has permission to perform the action.
-     */
-    private function checkRestrictedRole(): void
-    {
-        if (auth()->user()->role === 'operator') {
-            abort(403, 'Unauthorized action.');
-        }
-    }
+    // Removed checkRestrictedRole as we now use Policies
 
     /**
      * Get the unit pengolah ID for filtering based on user role.
@@ -116,7 +109,7 @@ class ArsipUnitController extends Controller
      */
     public function create(): Response
     {
-        $this->checkRestrictedRole();
+        Gate::authorize('create', ArsipUnit::class);
 
         $userUnitPengolahId = $this->getUserUnitPengolahId();
 
@@ -137,6 +130,7 @@ class ArsipUnitController extends Controller
      */
     public function store(ArsipUnitStoreRequest $request): RedirectResponse
     {
+        Gate::authorize('create', ArsipUnit::class);
         $user = auth()->user();
         $userUnitPengolahId = $this->getUserUnitPengolahId();
 
@@ -204,13 +198,9 @@ class ArsipUnitController extends Controller
      */
     public function edit(ArsipUnit $arsipUnit): Response
     {
-        $this->checkRestrictedRole();
+        Gate::authorize('update', $arsipUnit);
 
-        // Check if user has permission to edit this arsip unit
         $userUnitPengolahId = $this->getUserUnitPengolahId();
-        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
-            abort(403, 'Anda tidak memiliki akses untuk mengedit arsip unit ini.');
-        }
 
         return Inertia::render('arsip-unit/edit', [
             'arsipUnit' => $arsipUnit,
@@ -230,6 +220,7 @@ class ArsipUnitController extends Controller
      */
     public function update(ArsipUnitUpdateRequest $request, ArsipUnit $arsipUnit): RedirectResponse
     {
+        Gate::authorize('update', $arsipUnit);
         $userUnitPengolahId = $this->getUserUnitPengolahId();
 
         // If user has unit_pengolah restriction, force the unit_pengolah_arsip_id to their unit
@@ -279,13 +270,7 @@ class ArsipUnitController extends Controller
      */
     public function destroy(ArsipUnit $arsipUnit): RedirectResponse
     {
-        $this->checkRestrictedRole();
-
-        // Check if user has permission to delete this arsip unit
-        $userUnitPengolahId = $this->getUserUnitPengolahId();
-        if ($userUnitPengolahId !== null && $arsipUnit->unit_pengolah_arsip_id !== $userUnitPengolahId) {
-            abort(403, 'Anda tidak memiliki akses untuk menghapus arsip unit ini.');
-        }
+        Gate::authorize('delete', $arsipUnit);
 
         $arsipUnit->delete();
 

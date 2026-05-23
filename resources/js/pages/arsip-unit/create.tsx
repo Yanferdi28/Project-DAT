@@ -29,6 +29,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ArrowLeft, Upload, Check, ChevronsUpDown, Brain, Loader2, FileSearch, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import axios from 'axios';
+import { OcrScanResult, OcrScanResultData } from '@/components/ocr-scan-result';
 
 interface KodeKlasifikasi {
     id: number;
@@ -108,22 +109,7 @@ export default function Create({
 
     // OCR scan state
     const [isScanning, setIsScanning] = useState(false);
-    const [scanResult, setScanResult] = useState<{
-        success: boolean;
-        extracted_text?: string;
-        ocr_confidence?: number;
-        suggestions?: {
-            kode_klasifikasi_id: number | null;
-            kode_klasifikasi_kode: string | null;
-            kode_klasifikasi_uraian: string | null;
-            confidence: number;
-            indeks: string | null;
-            tanggal: string | null;
-            jumlah_nilai: string | null;
-            uraian_informasi: string | null;
-        } | null;
-        error?: string;
-    } | null>(null);
+    const [scanResult, setScanResult] = useState<OcrScanResultData | null>(null);
 
     // Auto-fill retensi and skkaad when kode_klasifikasi changes
     useEffect(() => {
@@ -257,6 +243,22 @@ export default function Create({
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
+                                {ocrEnabled && (
+                                    <div className="mb-6 rounded-lg border border-purple-200 bg-purple-50 p-4 dark:border-purple-900/50 dark:bg-purple-900/20">
+                                        <div className="flex items-start gap-3">
+                                            <Brain className="mt-0.5 h-5 w-5 text-purple-600 dark:text-purple-400" />
+                                            <div>
+                                                <h3 className="font-medium text-purple-900 dark:text-purple-200">
+                                                    ✨ Tips Cepat: Gunakan Fitur AI & OCR
+                                                </h3>
+                                                <p className="mt-1 text-sm text-purple-700 dark:text-purple-300">
+                                                    Anda tidak perlu mengisi form ini secara manual! <strong>Gulir ke bagian paling bawah</strong> dan unggah dokumen Anda terlebih dahulu. Sistem AI kami akan memindai dokumen Anda dan <strong>mengisi formulir ini secara otomatis</strong>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     {/* Kode Klasifikasi */}
                                     <div className="space-y-2">
@@ -832,88 +834,7 @@ export default function Create({
                                             </Button>
 
                                             {/* Scan Result */}
-                                            {scanResult && (
-                                                <div className={`rounded-lg border p-4 ${
-                                                    scanResult.success
-                                                        ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'
-                                                        : 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20'
-                                                }`}>
-                                                    {scanResult.success ? (
-                                                        <div className="space-y-3">
-                                                            <div className="flex items-center gap-2">
-                                                                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                                                                <span className="text-sm font-medium text-green-800 dark:text-green-300">
-                                                                    Dokumen berhasil dipindai
-                                                                </span>
-                                                                {scanResult.ocr_confidence != null && (
-                                                                    <span className="text-xs text-green-600 dark:text-green-400">
-                                                                        (kepercayaan: {scanResult.ocr_confidence.toFixed(1)}%)
-                                                                    </span>
-                                                                )}
-                                                            </div>
-
-                                                            {scanResult.suggestions ? (
-                                                                <div className="space-y-2">
-                                                                    <p className="text-sm text-green-700 dark:text-green-300">
-                                                                        <Brain className="inline h-3 w-3 mr-1" />
-                                                                        AI menyarankan klasifikasi:
-                                                                    </p>
-                                                                    <div className="ml-4 space-y-1">
-                                                                        {scanResult.suggestions.kode_klasifikasi_kode && (
-                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
-                                                                                <strong>Kode Klasifikasi:</strong> {scanResult.suggestions.kode_klasifikasi_kode} - {scanResult.suggestions.kode_klasifikasi_uraian}
-                                                                            </p>
-                                                                        )}
-                                                                        {scanResult.suggestions.indeks && (
-                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
-                                                                                <strong>Indeks:</strong> {scanResult.suggestions.indeks}
-                                                                            </p>
-                                                                        )}
-                                                                        {scanResult.suggestions.tanggal && (
-                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
-                                                                                <strong>Tanggal:</strong> {scanResult.suggestions.tanggal}
-                                                                            </p>
-                                                                        )}
-                                                                        {scanResult.suggestions.uraian_informasi && (
-                                                                            <p className="text-sm text-gray-700 dark:text-gray-300">
-                                                                                <strong>Uraian Informasi:</strong> {scanResult.suggestions.uraian_informasi}
-                                                                            </p>
-                                                                        )}
-                                                                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                            Keyakinan AI: {(scanResult.suggestions.confidence * 100).toFixed(1)}%
-                                                                        </p>
-                                                                    </div>
-                                                                    <p className="text-xs text-green-600 dark:text-green-400 italic">
-                                                                        Field telah diisi otomatis berdasarkan hasil OCR. Anda masih bisa mengubahnya.
-                                                                    </p>
-                                                                </div>
-                                                            ) : (
-                                                                <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                                                                    Teks berhasil diekstrak tetapi AI tidak dapat menentukan klasifikasi.
-                                                                </p>
-                                                            )}
-
-                                                            {scanResult.extracted_text && (
-                                                                <details className="mt-2">
-                                                                    <summary className="cursor-pointer text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700">
-                                                                        Lihat teks hasil OCR
-                                                                    </summary>
-                                                                    <pre className="mt-2 max-h-40 overflow-y-auto rounded border bg-white p-2 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 whitespace-pre-wrap font-mono">
-                                                                        {scanResult.extracted_text}
-                                                                    </pre>
-                                                                </details>
-                                                            )}
-                                                        </div>
-                                                    ) : (
-                                                        <div className="flex items-center gap-2">
-                                                            <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
-                                                            <span className="text-sm text-red-800 dark:text-red-300">
-                                                                {scanResult.error || 'Gagal memindai dokumen.'}
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
+                                            {scanResult && <OcrScanResult scanResult={scanResult} />}
                                         </div>
                                     )}
                                 </div>
