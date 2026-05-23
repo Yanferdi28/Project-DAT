@@ -358,7 +358,7 @@ function PreviewDialog({
                     'flex flex-col p-0 [&>button]:hidden ' +
                     (isFullscreen
                         ? 'h-screen max-h-screen w-screen max-w-none rounded-none'
-                        : 'h-[90vh] w-full max-w-6xl')
+                        : 'h-[90vh] w-full sm:max-w-6xl')
                 }
             >
                 {/* Toolbar */}
