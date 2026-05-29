@@ -103,8 +103,18 @@ export function AppSidebar({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const isActive = (href: string) => {
-        return page.url.startsWith(href);
+    const hrefToString = (href: NavItem['href']) => {
+        return typeof href === 'string' ? href : href.url;
+    };
+
+    const isActive = (href: NavItem['href']) => {
+        const url = hrefToString(href);
+
+        if (!url) {
+            return false;
+        }
+
+        return page.url.startsWith(url);
     };
 
     const handleLogout = () => {

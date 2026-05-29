@@ -48,9 +48,10 @@ export function AiSuggestionCard({
         return 'text-red-600 dark:text-red-400';
     };
 
-    const isPending = aiSuggestionStatus === 'pending';
+    const isPending = aiSuggestionStatus === null || aiSuggestionStatus === 'pending';
     const isAccepted = aiSuggestionStatus === 'accepted';
     const isRejected = aiSuggestionStatus === 'rejected';
+    const isCorrected = aiSuggestionStatus === 'corrected';
 
     return (
         <Card className={isPending ? 'border-purple-200 dark:border-purple-800' : ''}>
@@ -60,7 +61,7 @@ export function AiSuggestionCard({
                         <Brain className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                         Saran Klasifikasi AI
                     </CardTitle>
-                    <AiStatusBadge status={aiSuggestionStatus as 'pending' | 'accepted' | 'rejected'} />
+                    <AiStatusBadge status={(aiSuggestionStatus ?? 'pending') as 'pending' | 'accepted' | 'rejected' | 'corrected'} />
                 </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -137,6 +138,15 @@ export function AiSuggestionCard({
                     <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
                         <p className="text-sm text-red-800 dark:text-red-300">
                             Saran klasifikasi AI telah ditolak.
+                        </p>
+                    </div>
+                )}
+
+                {/* Corrected message */}
+                {isCorrected && (
+                    <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 dark:border-blue-800 dark:bg-blue-900/20">
+                        <p className="text-sm text-blue-800 dark:text-blue-300">
+                            Kode klasifikasi telah dikoreksi manual dan akan ikut menjadi data training.
                         </p>
                     </div>
                 )}

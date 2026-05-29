@@ -1,8 +1,23 @@
 import AppLayout from '@/layouts/app-layout';
 import { type SharedData } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Check, ChevronsUpDown } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 interface UnitPengolah {
     id: number;
@@ -24,16 +39,7 @@ interface PageProps extends SharedData {
 
 export default function Create() {
     const { unitPengolahs, arsipUnits } = usePage<PageProps>().props;
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const filteredArsip = arsipUnits.filter((arsip) => {
-        const searchStr = searchTerm.toLowerCase();
-        return (
-            arsip.indeks.toLowerCase().includes(searchStr) ||
-            (arsip.uraian_informasi && arsip.uraian_informasi.toLowerCase().includes(searchStr)) ||
-            (arsip.kode_klasifikasi && arsip.kode_klasifikasi.toLowerCase().includes(searchStr))
-        );
-    });
+    const [openArsip, setOpenArsip] = useState(false);
 
     const { data, setData, post, processing, errors } = useForm({
         arsip_unit_id: '',
@@ -88,33 +94,71 @@ export default function Create() {
                             <label htmlFor="arsip_unit_id" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Arsip yang Dipinjam <span className="text-red-500">*</span>
                             </label>
-                            
-                            <div className="mb-2">
-                                <input
-                                    type="text"
-                                    placeholder="Cari arsip berdasarkan indeks atau uraian..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                />
-                            </div>
 
-                            <select
-                                id="arsip_unit_id"
-                                value={data.arsip_unit_id}
-                                onChange={(e) => setData('arsip_unit_id', e.target.value)}
-                                className={`block w-full rounded-lg border bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 ${
-                                    errors.arsip_unit_id ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-700'
-                                }`}
-                                size={5}
-                            >
-                                <option value="" disabled>-- Pilih Arsip --</option>
-                                {filteredArsip.map((arsip) => (
-                                    <option key={arsip.id_berkas} value={arsip.id_berkas}>
-                                        {arsip.indeks} - {arsip.uraian_informasi} ({arsip.kode_klasifikasi})
-                                    </option>
-                                ))}
-                            </select>
+                            <Popover open={openArsip} onOpenChange={setOpenArsip}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        role="combobox"
+                                        aria-expanded={openArsip}
+                                        className={cn(
+                                            "w-full justify-between font-normal text-left rounded-lg border bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-sm text-gray-900 dark:text-white px-3 py-2.5 h-auto flex items-center min-w-0",
+                                            errors.arsip_unit_id ? "border-red-500 dark:border-red-500" : "border-gray-300 dark:border-gray-700"
+                                        )}
+                                    >
+                                        <span className="truncate text-left mr-2">
+                                            {data.arsip_unit_id
+                                                ? (() => {
+                                                      const selected = arsipUnits.find(
+                                                          (item) => item.id_berkas.toString() === data.arsip_unit_id.toString()
+                                                      );
+                                                      return selected
+                                                          ? `${selected.indeks} - ${selected.uraian_informasi} (${selected.kode_klasifikasi})`
+                                                          : 'Pilih Arsip';
+                                                  })()
+                                                : 'Pilih Arsip'}
+                                        </span>
+                                        <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+                                    <Command>
+                                        <CommandInput placeholder="Cari arsip..." />
+                                        <CommandList>
+                                            <CommandEmpty>Tidak ada arsip ditemukan.</CommandEmpty>
+                                            <CommandGroup>
+                                                {arsipUnits.map((arsip) => (
+                                                    <CommandItem
+                                                        key={arsip.id_berkas}
+                                                        value={`${arsip.indeks} ${arsip.uraian_informasi || ''} ${arsip.kode_klasifikasi || ''}`}
+                                                        onSelect={() => {
+                                                            setData('arsip_unit_id', arsip.id_berkas.toString());
+                                                            setOpenArsip(false);
+                                                        }}
+                                                    >
+                                                        <Check
+                                                            className={cn(
+                                                                "mr-2 h-4 w-4",
+                                                                data.arsip_unit_id.toString() === arsip.id_berkas.toString()
+                                                                    ? "opacity-100"
+                                                                    : "opacity-0"
+                                                            )}
+                                                        />
+                                                        <div className="flex flex-col">
+                                                            <span className="font-medium text-gray-900 dark:text-white">
+                                                                {arsip.indeks}
+                                                            </span>
+                                                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                                {arsip.uraian_informasi} ({arsip.kode_klasifikasi})
+                                                            </span>
+                                                        </div>
+                                                    </CommandItem>
+                                                ))}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
                             {errors.arsip_unit_id && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.arsip_unit_id}</p>}
                             <p className="mt-1 text-xs text-gray-500">Hanya arsip dengan status "Diterima" yang dapat dipinjam.</p>
                         </div>

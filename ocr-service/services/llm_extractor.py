@@ -25,8 +25,8 @@ class LLMExtractor:
         if self.is_configured:
             # Initialize client and models
             self.client = genai.Client(api_key=API_KEY)
-            self.model_primary = 'gemini-2.5-flash'
-            self.model_fallback = 'gemini-2.0-flash'
+            self.model_primary = 'gemini-3.1-flash-lite'
+            self.model_fallback = 'gemini-2.5-flash'
 
     def extract_all(self, text: str) -> Optional[dict]:
         """
@@ -50,14 +50,14 @@ Aturan penting:
 Teks OCR:
 {text}
 """
-        # Try Primary Model (gemini-2.5-flash)
+        # Try Primary Model (gemini-3.1-flash-lite)
         result = self._try_extract(self.model_primary, prompt)
         if result:
             return result
             
-        logging.warning("Primary LLM failed (possibly rate limit). Falling back to gemini-2.0-flash...")
+        logging.warning("Primary LLM failed (possibly rate limit). Falling back to gemini-2.5-flash...")
         
-        # Try Fallback Model (gemini-2.0-flash)
+        # Try Fallback Model (gemini-2.5-flash)
         result = self._try_extract(self.model_fallback, prompt)
         if result:
             return result

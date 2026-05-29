@@ -294,16 +294,18 @@ export default function Edit({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openKodeKlasifikasi}
-                                                    className="w-full justify-between"
+                                                    className="w-full justify-between flex items-center min-w-0"
                                                 >
-                                                    {data.kode_klasifikasi_id
-                                                        ? kodeKlasifikasis.find(
-                                                              (item) => item.id.toString() === data.kode_klasifikasi_id
-                                                          )?.kode_klasifikasi + ' - ' + kodeKlasifikasis.find(
-                                                              (item) => item.id.toString() === data.kode_klasifikasi_id
-                                                          )?.uraian
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.kode_klasifikasi_id
+                                                            ? kodeKlasifikasis.find(
+                                                                  (item) => item.id.toString() === data.kode_klasifikasi_id
+                                                              )?.kode_klasifikasi + ' - ' + kodeKlasifikasis.find(
+                                                                  (item) => item.id.toString() === data.kode_klasifikasi_id
+                                                              )?.uraian
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[500px] p-0">
@@ -355,15 +357,17 @@ export default function Edit({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openUnitPengolah}
-                                                    className="w-full justify-between"
+                                                    className={cn("w-full justify-between flex items-center min-w-0", isUnitPengolahLocked && "cursor-not-allowed opacity-70")}
                                                     disabled={isUnitPengolahLocked}
                                                 >
-                                                    {data.unit_pengolah_arsip_id
-                                                        ? unitPengolahs.find(
-                                                              (item) => item.id.toString() === data.unit_pengolah_arsip_id
-                                                          )?.nama
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.unit_pengolah_arsip_id
+                                                            ? unitPengolahs.find(
+                                                                  (item) => item.id.toString() === data.unit_pengolah_arsip_id
+                                                              )?.nama
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[400px] p-0">
@@ -420,14 +424,16 @@ export default function Edit({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openKategori}
-                                                    className="w-full justify-between"
+                                                    className="w-full justify-between flex items-center min-w-0"
                                                 >
-                                                    {data.kategori_id
-                                                        ? kategoris.find(
-                                                              (item) => item.id.toString() === data.kategori_id
-                                                          )?.nama
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.kategori_id
+                                                            ? kategoris.find(
+                                                                  (item) => item.id.toString() === data.kategori_id
+                                                              )?.nama
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[400px] p-0">
@@ -479,15 +485,17 @@ export default function Edit({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openSubKategori}
-                                                    className="w-full justify-between"
+                                                    className="w-full justify-between flex items-center min-w-0"
                                                     disabled={!data.kategori_id}
                                                 >
-                                                    {data.sub_kategori_id
-                                                        ? filteredSubKategoris.find(
-                                                              (item) => item.id.toString() === data.sub_kategori_id
-                                                          )?.nama
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.sub_kategori_id
+                                                            ? filteredSubKategoris.find(
+                                                                  (item) => item.id.toString() === data.sub_kategori_id
+                                                              )?.nama
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[400px] p-0">

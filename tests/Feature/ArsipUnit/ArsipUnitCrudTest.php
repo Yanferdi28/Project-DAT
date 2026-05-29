@@ -2,6 +2,7 @@
 
 use App\Models\ArsipUnit;
 use App\Models\BerkasArsip;
+use App\Models\KodeKlasifikasi;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -101,6 +102,36 @@ test('arsip unit index supports status filter', function () {
 });
 
 // ─── CREATE ───────────────────────────────────────────────
+
+test('arsip unit index provides status summary counts', function () {
+    $admin = createAdmin();
+    $master = $this->masterData;
+
+    foreach (['pending', 'diterima', 'ditolak'] as $status) {
+        ArsipUnit::create([
+            'kode_klasifikasi_id' => $master['kodeKlasifikasi']->id,
+            'unit_pengolah_arsip_id' => $master['unitPengolah']->id,
+            'kategori_id' => $master['kategori']->id,
+            'sub_kategori_id' => $master['subKategori']->id,
+            'uraian_informasi' => "Status {$status}",
+            'tanggal' => '2025-01-15',
+            'jumlah_nilai' => 1,
+            'jumlah_satuan' => 'lembar',
+            'tingkat_perkembangan' => 'asli',
+            'status' => $status,
+        ]);
+    }
+
+    $this->actingAs($admin)
+        ->get('/arsip-unit')
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->where('statusSummary.total', 3)
+            ->where('statusSummary.pending', 1)
+            ->where('statusSummary.diterima', 1)
+            ->where('statusSummary.ditolak', 1)
+        );
+});
 
 test('admin can access arsip unit create form', function () {
     $admin = createAdmin();
@@ -279,6 +310,51 @@ test('admin can update arsip unit', function () {
     $arsip->refresh();
     expect($arsip->uraian_informasi)->toBe('Updated');
     expect($arsip->jumlah_satuan)->toBe('jilid');
+});
+
+test('manual kode correction marks ai suggestion as corrected', function () {
+    $admin = createAdmin();
+    $master = $this->masterData;
+    $correctKode = KodeKlasifikasi::create([
+        'kode_klasifikasi' => 'TS.02',
+        'uraian' => 'Corrected Klasifikasi',
+        'retensi_aktif' => 2,
+        'retensi_inaktif' => 3,
+        'status_akhir' => 'Musnah',
+        'klasifikasi_keamanan' => 'Biasa',
+    ]);
+
+    $arsip = ArsipUnit::create([
+        'kode_klasifikasi_id' => $master['kodeKlasifikasi']->id,
+        'suggested_kode_klasifikasi_id' => $master['kodeKlasifikasi']->id,
+        'ai_suggestion_status' => 'rejected',
+        'unit_pengolah_arsip_id' => $master['unitPengolah']->id,
+        'kategori_id' => $master['kategori']->id,
+        'sub_kategori_id' => $master['subKategori']->id,
+        'uraian_informasi' => 'Original',
+        'tanggal' => '2025-06-15',
+        'jumlah_nilai' => 1,
+        'jumlah_satuan' => 'lembar',
+        'tingkat_perkembangan' => 'asli',
+    ]);
+
+    $this->actingAs($admin)
+        ->put("/arsip-unit/{$arsip->id_berkas}", [
+            'kode_klasifikasi_id' => $correctKode->id,
+            'unit_pengolah_arsip_id' => $master['unitPengolah']->id,
+            'kategori_id' => $master['kategori']->id,
+            'sub_kategori_id' => $master['subKategori']->id,
+            'uraian_informasi' => 'Updated with corrected code',
+            'tanggal' => '2025-07-01',
+            'jumlah_nilai' => 2,
+            'jumlah_satuan' => 'jilid',
+            'tingkat_perkembangan' => 'salinan',
+        ])
+        ->assertRedirect();
+
+    $arsip->refresh();
+    expect($arsip->kode_klasifikasi_id)->toBe($correctKode->id);
+    expect($arsip->ai_suggestion_status)->toBe('corrected');
 });
 
 test('operator cannot update arsip unit', function () {

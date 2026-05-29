@@ -21,7 +21,7 @@ $buildTrainingRows = function (bool $acceptedOnly, int $minTextLength): array {
         ->whereNotNull('extracted_text')
         ->when($acceptedOnly, function ($query) {
             $query->where(function ($q) {
-                $q->where('ai_suggestion_status', 'accepted')
+                $q->whereIn('ai_suggestion_status', ['accepted', 'corrected'])
                     ->orWhereNull('ai_suggestion_status');
             });
         })
@@ -61,7 +61,7 @@ Artisan::command('inspire', function () {
 
 Artisan::command('ai:export-training-data
     {--path=ocr-service/data/training_data.generated.json : Relative path for exported JSON}
-    {--accepted-only : Use only rows that were accepted by AI or manually finalized}
+    {--accepted-only : Use only rows accepted by AI, manually corrected, or manually finalized}
     {--seed-from=ocr-service/data/training_data.json : Optional seed JSON merged into exported dataset}
     {--min-text=30 : Minimum extracted text length}', function () use ($buildTrainingRows) {
     $relativePath = (string) $this->option('path');
@@ -130,7 +130,7 @@ Artisan::command('ai:export-training-data
 
 Artisan::command('ai:retrain-classifier
     {--path=ocr-service/data/training_data.generated.json : Relative path for generated training JSON}
-    {--accepted-only : Use only rows that were accepted by AI or manually finalized}
+    {--accepted-only : Use only rows accepted by AI, manually corrected, or manually finalized}
     {--min-text=30 : Minimum extracted text length}
     {--service= : OCR service base URL (default from OCR_SERVICE_URL)}
     {--timeout=180 : HTTP timeout in seconds}', function () {

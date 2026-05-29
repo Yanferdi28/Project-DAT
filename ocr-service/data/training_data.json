@@ -1,234 +1,4394 @@
 [
-    {
-        "text": "Rencana Kerja dan Anggaran Kementerian Lembaga tahun anggaran 2025 program pengelolaan penyiaran publik alokasi dana DIPA realisasi anggaran belanja pegawai belanja barang belanja modal",
-        "label": "KU.01.01|DIPA (Rincian RKA-KL)"
-    },
-    {
-        "text": "Laporan Realisasi Anggaran semester pertama tahun anggaran realisasi pendapatan negara penerimaan belanja pegawai belanja barang dan jasa belanja modal persentase realisasi",
-        "label": "PR.02.01|Pelaporan Anggaran dan Kinerja"
-    },
-    {
-        "text": "Surat Keputusan mutasi pegawai kepindahan karyawan dari unit kerja ke unit kerja lain penempatan baru jabatan fungsional struktural",
-        "label": "HK.02.05|Keputusan Dewan Direksi"
-    },
-    {
-        "text": "Laporan Harta Kekayaan Penyelenggara Negara LHKPN pejabat dewan pengawas direksi komisaris harta kekayaan formulir pelaporan KPK",
-        "label": "PW.01.05|LHKPN"
-    },
-    {
-        "text": "Perjanjian kerjasama memorandum of understanding MOU nota kesepahaman kontrak kerja sama pihak pertama pihak kedua ketentuan jangka waktu",
-        "label": "HK.03.02|Dalam Negeri"
-    },
-    {
-        "text": "Laporan tahunan kinerja LPP RRI pencapaian program siaran pemberitaan teknologi media baru evaluasi tahun berjalan sasaran strategis",
-        "label": "PR.02.03|Program dan Kegiatan Berkala (Triwulan, Semester, dan Tahunan)"
-    },
-    {
-        "text": "Surat tugas perjalanan dinas dalam rangka koordinasi narasumber rapat monitoring hari tanggal tujuan biaya transportasi akomodasi uang harian",
-        "label": "UM.01.01|Administrasi Persuratan"
-    },
-    {
-        "text": "Standar operasional prosedur SOP pelayanan publik informasi tata cara alur kerja input proses output penanggung jawab waktu pelaksanaan",
-        "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
-    },
-    {
-        "text": "Daftar inventaris barang milik negara BMN asset peralatan mesin gedung bangunan tanah kendaraan bermotor kondisi baik rusak ringan rusak berat",
-        "label": "PL.04.01|Inventarisasi Umum/Mutasi Barang/Serah Terima Aset"
-    },
-    {
-        "text": "Pengumuman penerimaan calon pegawai CPNS PPPK seleksi administrasi tes kompetensi dasar kompetensi bidang wawancara persyaratan pendaftaran jadwal",
-        "label": "KP.03.01|Seleksi Pegawai"
-    },
-    {
-        "text": "Laporan keuangan audited opini wajar tanpa pengecualian BPK neraca arus kas catatan atas laporan keuangan aset kewajiban ekuitas",
-        "label": "KU.01.07|Neraca (semesteran, Tahunan)"
-    },
-    {
-        "text": "Profil pimpinan direktur utama kepala satuan kerja riwayat pendidikan pengalaman kerja jabatan foto kontak alamat kantor visi misi",
-        "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
-    },
-    {
-        "text": "Informasi penanggulangan bencana alam gempa bumi tsunami banjir longsor evakuasi darurat posko bantuan logistik korban selamat",
-        "label": "HM.01.01|Dokumentasi/Liputan Kegiatan Dinas"
-    },
-    {
-        "text": "Dokumen rahasia negara terbatas keamanan nasional intelijen pertahanan persandian tidak boleh dipublikasikan pengecualian undang undang keterbukaan informasi",
-        "label": "HK.01.01|Undang-Undang"
-    },
-    {
-        "text": "Rencana strategis renstra program kerja jangka menengah visi misi tujuan sasaran strategi indikator kinerja target pencapaian roadmap",
-        "label": "PR.01.01|Perencanaan Kegiatan"
-    },
-    {
-        "text": "Laporan bidang teknik media baru TMB peralatan studio transmisi tower antena frekuensi daya pancar signal coverage area maintenance",
-        "label": "DT.01.02|Piranti Teknologi Penyiaran"
-    },
-    {
-        "text": "Rapat koordinasi risalah notulen agenda pembahasan peserta pimpinan rapat keputusan rapat tindak lanjut jadwal pertemuan berikutnya",
-        "label": "KJM.02.02|Notulen Rapat Pembahasan"
-    },
-    {
-        "text": "Kontrak pengadaan barang jasa pelelangan tender penunjukan langsung penyedia rekanan harga penawaran HPS spesifikasi teknis dokumen lelang",
-        "label": "PL.02.02|Tender dan Kontrak"
-    },
-    {
-        "text": "Laporan akuntabilitas kinerja instansi pemerintah LAKIP evaluasi program pencapaian indikator kinerja utama IKU capaian output outcome",
-        "label": "PR.02.04|Akuntabilitas Kinerja Instansi Pemerintah (LAKIP)"
-    },
-    {
-        "text": "Neraca keuangan posisi keuangan aset lancar kas bank piutang persediaan aset tetap kewajiban jangka pendek jangka panjang ekuitas",
-        "label": "KU.01.07|Neraca (semesteran, Tahunan)"
-    },
-    {
-        "text": "Peraturan pemerintah keputusan presiden menteri kebijakan regulasi hukum undang undang pengesahan perubahan pencabutan pemberlakuan",
-        "label": "HK.02.04|Peraturan Dewan Direksi"
-    },
-    {
-        "text": "Laporan bidang siaran konten media baru program acara podcast streaming radio digital live broadcast jadwal siaran",
-        "label": "PPS.05.06|Laporan Evaluasi dan Monitoring"
-    },
-    {
-        "text": "Laporan bidang pemberitaan berita redaksi jurnalistik reporter narasumber liputan wawancara editorial press release siaran pers",
-        "label": "PPP.03.06|Laporan Evaluasi dan Monitoring Pemberitaan"
-    },
-    {
-        "text": "Laporan bidang layanan publik LPU pengaduan masyarakat talkshow interaktif layanan siaran iklan jingle spot kampanye sosial",
-        "label": "HM.01.02|Hubungan Antar Lembaga"
-    },
-    {
-        "text": "Laporan bidang SDM sumber daya manusia umum kepegawaian administrasi tata usaha rumah tangga keamanan kebersihan perjalanan dinas",
-        "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
-    },
-    {
-        "text": "Tata kelola pejabat pengelola informasi dan dokumentasi PPID struktur organisasi tugas fungsi pemohon informasi keberatan sengketa",
-        "label": "HM.02.01|Sosialisasi"
-    },
-    {
-        "text": "Daftar informasi publik yang dikuasai badan publik register jenis informasi format penyimpanan jangka waktu retensi penanggung jawab",
-        "label": "HM.02.02|Pers/Media Massa/Website"
-    },
-    {
-        "text": "Hasil penelitian kajian akademis studi riset data analisis temuan rekomendasi metodologi observasi survei kuesioner sampel populasi",
-        "label": "LT.01|Penelitian Teknologi Sistem Penyiaran"
-    },
-    {
-        "text": "Maklumat pelayanan janji layanan standar pelayanan minimal waktu penyelesaian biaya pelayanan pengaduan komitmen peningkatan kualitas",
-        "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
-    },
-    {
-        "text": "Kebijakan program kerja pedoman petunjuk teknis juknis petunjuk pelaksanaan juklak surat edaran instruksi himbauan arahan",
-        "label": "HK.02.06|Instruksi Dewan Direksi"
-    },
-    {
-        "text": "Prosedur pelayanan publik mekanisme alur proses tahapan persyaratan administrasi formulir berkas kelengkapan loket pendaftaran antrian",
-        "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
-    },
-    {
-        "text": "Peringatan dini siaga darurat pengumuman mendadak urgent segera ancaman keselamatan publik evakuasi jalur penyelamatan titik kumpul",
-        "label": "HM.01.01|Dokumentasi/Liputan Kegiatan Dinas"
-    },
-    {
-        "text": "DIPA daftar isian pelaksanaan anggaran pagu anggaran penerimaan negara bukan pajak PNBP satuan kerja revisi anggaran pencairan dana",
-        "label": "KU.01.01|DIPA (Rincian RKA-KL)"
-    },
-    {
-        "text": "Statistik data kepegawaian jumlah pegawai golongan pangkat jabatan pendidikan usia gender distribusi unit kerja formasi kebutuhan",
-        "label": "KP.01.05|Daftar Nominatif/Data Pegawai"
-    },
-    {
-        "text": "Statistik keuangan data penerimaan pengeluaran grafik tren realisasi target anggaran perbandingan tahun semester triwulan bulanan",
-        "label": "PR.02.02|Pelaksanaan Anggaran"
-    },
-    {
-        "text": "Opini BPK Badan Pemeriksa Keuangan audit pemeriksaan wajar tanpa pengecualian WTP disclaimer tidak wajar temuan rekomendasi tindak lanjut",
-        "label": "PW.01.07|Pelaksanaan Pengawasan Internal dan Eksternal"
-    },
-    {
-        "text": "Bintang Radio RRI kompetisi lomba penyiar penyanyi nyanyi lagu daerah nasional peserta juri penilaian grand final juara pemenang penghargaan",
-        "label": "HM.01.05|Lomba, Festival, Penghargaan"
-    },
-    {
-        "text": "Monitoring evaluasi keterbukaan informasi publik KIP penilaian self-assessment kuesioner SAQ dokumen indikator skor peringkat komisi informasi",
-        "label": "PW.01.01|Pemantauan"
-    },
-    {
-        "text": "Agenda pelaksanaan tugas jadwal kegiatan kalender acara timeline rencana program bulanan mingguan harian kunjungan kerja inspeksi",
-        "label": "UM.01.01|Administrasi Persuratan"
-    },
-    {
-        "text": "Profil sejarah LPP RRI visi misi logo lambang alamat kantor pusat daerah struktur organisasi tupoksi dasar hukum pendirian",
-        "label": "OT.01.01|Organisasi (Rencana, Penetapan Struktur dan Evaluasi)"
-    },
-    {
-        "text": "Rencana umum pengadaan RUP paket pekerjaan metode pemilihan anggaran kategori belanja tahun anggaran SIRUP LKPP tender",
-        "label": "PL.01.03|Rencana Kebutuhan Pengadaan"
-    },
-    {
-        "text": "Press release siaran pers keterangan pers resmi juru bicara informasi terkini klarifikasi tanggapan pernyataan resmi media",
-        "label": "HM.01.01|Dokumentasi/Liputan Kegiatan Dinas"
-    },
-    {
-        "text": "Penghargaan prestasi apresiasi sertifikat piagam trophy medali kompetisi perlombaan inovasi pelayanan publik pengelolaan keuangan",
-        "label": "KP.01.07|Penghargaan/Piala/Piagam"
-    },
-    {
-        "text": "Standar pelayanan minimal SPM pelayanan publik indikator target pencapaian mutu kualitas kepuasan masyarakat survei IKM",
-        "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
-    },
-    {
-        "text": "Satu data Indonesia portal data terbuka dataset metadata interoperabilitas statistik sektoral pengelolaan data walidata produsen",
-        "label": "DT.02.03|Pengumpulan Data"
-    },
-    {
-        "text": "Berita acara penyerahan arsip serah terima dokumen catatan daftar arsip yang diserahkan unit pengolah penyimpanan",
-        "label": "UM.02.01|Penyimpanan dan Pemeliharaan Arsip"
-    },
-    {
-        "text": "Informasi covid-19 corona virus pandemi protokol kesehatan vaksinasi tracing testing masker jaga jarak cuci tangan imbauan",
-        "label": "HM.02.01|Sosialisasi"
-    },
-    {
-        "text": "Program strategis ringkasan pencapaian target kinerja utama prioritas nasional program unggulan transformasi digital modernisasi",
-        "label": "PR.01.03|Analisis Program"
-    },
-    {
-        "text": "Pedoman HUT hari ulang tahun perayaan anniversary seremoni upacara peringatan rangkaian acara panitia logo tema",
-        "label": "HM.01.05|Lomba, Festival, Penghargaan"
-    },
-    {
-        "text": "Rencana proyek anggaran tahunan program kegiatan output volume satuan biaya total alokasi dana sumber pembiayaan APBN",
-        "label": "PR.01.02|Penyusunan Anggaran"
-    },
-    {
-        "text": "Bahasa isyarat Indonesia BISINDO informasi publik disabilitas tuna rungu aksesibilitas inklusif penerjemah video visual",
-        "label": "HM.02.01|Sosialisasi"
-    },
-    {
-        "text": "Regulasi rancangan kebijakan keterbukaan informasi publik draft peraturan revisi undang undang pasal ayat bab ketentuan peralihan",
-        "label": "HK.01.07|Keputusan/Peraturan Lembaga/Badan"
-    },
-    {
-        "text": "Pelanggaran pegawai sanksi disiplin hukuman teguran peringatan pemecatan skorsing pemeriksaan investigasi kode etik penyalahgunaan wewenang",
-        "label": "KP.06.03|Teguran/Peringatan/Penundaan gaji dan Pangkat"
-    },
-    {
-        "text": "PPID pejabat pengelola informasi dokumentasi struktur tugas wewenang atasan langsung pengguna informasi pemohon sengketa ajudikasi",
-        "label": "HM.02.01|Sosialisasi"
-    },
-    {
-        "text": "Laporan arus kas cash flow aktivitas operasi investasi pendanaan saldo awal akhir kas setara kas rekening penerimaan pengeluaran",
-        "label": "KU.01.07|Neraca (semesteran, Tahunan)"
-    },
-    {
-        "text": "Acara siaran radio jadwal programa satu dua tiga empat luar negeri frekuensi gelombang AM FM streaming podcast konten",
-        "label": "PPS.01.07|Juknis Pro1, 2, dan 4"
-    },
-    {
-        "text": "LHKPN kepala RRI seluruh Indonesia satuan kerja daerah stasiun radio pucuk pimpinan formulir harta kekayaan KPK annual",
-        "label": "PW.01.05|LHKPN"
-    },
-    {
-        "text": "Daftar dokumen kontrak pengadaan barang jasa rekap register nomor tanggal nilai penyedia pekerjaan jangka waktu pelaksanaan selesai",
-        "label": "PL.02.02|Tender dan Kontrak"
-    }
+  {
+    "text": "Laporan evaluasi analisis program dan capaian kinerja",
+    "label": "PR.03.03|Evaluasi Analisis Program"
+  },
+  {
+    "text": "Dokumen perancangan aplikasi dan sistem informasi RRI",
+    "label": "DT.03.01|Perancangan Aplikasi"
+  },
+  {
+    "text": "Pelaporan penerimaan gratifikasi kepada unit pengawasan",
+    "label": "PW.01.06|Gratifikasi"
+  },
+  {
+    "text": "Pengajuan ABT dan anggaran belanja tambahan program",
+    "label": "KU.01.02|ABT (Anggaran Belanja Tambahan)"
+  },
+  {
+    "text": "Penanganan kasus kejahatan terkait aset dan operasi lembaga",
+    "label": "HK.05.01|Kejahatan"
+  },
+  {
+    "text": "Dokumen penawaran dan proposal dari rekanan vendor",
+    "label": "PL.02.01|Rekanan/Penawaran/Proposal/Brosur"
+  },
+  {
+    "text": "Pemantauan penyelesaian temuan audit internal dan pengawasan masyarakat",
+    "label": "PW.02.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Penyajian informasi dan dokumentasi kegiatan dinas",
+    "label": "HM.01.01|Dokumentasi/liputan kegiatan dinas pimpinan, pengumpulan, pengolahan dan penyajian informasi kegiatan"
+  },
+  {
+    "text": "Surat keputusan pemberian piala dan penghargaan dinas",
+    "label": "KP.01.07|Penghargaan/Piala/Piagam/tanda Kehormatan"
+  },
+  {
+    "text": "Peraturan Dewas tentang mekanisme pengawasan",
+    "label": "HK.02.01|Peraturan Dewan Pengawas"
+  },
+  {
+    "text": "Berita acara serah terima pekerjaan dan kontrak pengadaan",
+    "label": "KU.01.03|Berita Acara, Kontrak/SPK"
+  },
+  {
+    "text": "Himpunan peraturan pemerintah bidang penyiaran",
+    "label": "HK.01.02|Peraturan Pemerintah"
+  },
+  {
+    "text": "Pemeriksaan kondisi dan pemanfaatan aset negara",
+    "label": "PL.03.03|Pemeriksaan Pemanfaatan"
+  },
+  {
+    "text": "Permohonan kartu istri kartu suami dan data keluarga",
+    "label": "KP.01.04|Pendaftaran/Keluarga/Perkawinan/Anak/Karis/Karsu"
+  },
+  {
+    "text": "Proses pelelangan dan penjualan barang hapus BMN",
+    "label": "PL.05.05|Pelelangan/Penjualan"
+  },
+  {
+    "text": "Inventaris peralatan studio audio dan mixing",
+    "label": "STO.01.01|Katalog Peralatan Studio"
+  },
+  {
+    "text": "Penyusunan formasi CPNS dan kebutuhan pegawai baru",
+    "label": "KP.02.02|Formasi Pegawai"
+  },
+  {
+    "text": "Dokumen pemeliharaan dan update konten digital",
+    "label": "DT.02.02|Pemeliharaan konten"
+  },
+  {
+    "text": "Analisis kebutuhan dan perencanaan pengadaan BMN",
+    "label": "PL.01.01|Analisis Data Perencanaan"
+  },
+  {
+    "text": "Penetapan tim penyusun kebijakan program dan produksi",
+    "label": "PPS.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Program kerja insidental dan laporan kegiatan tahunan",
+    "label": "PR.02.03|Program dan Kegiatan Berkala (Triwulan, Semester, dan Tahunan) serta Insidental"
+  },
+  {
+    "text": "Hukuman disiplin penundaan kenaikan gaji dan pangkat",
+    "label": "KP.06.03|Teguran/Peringatan/Penundaan gaji dan Pangkat/Penurunan Pangkat"
+  },
+  {
+    "text": "Dokumen evaluasi perencanaan program dan kegiatan RRI",
+    "label": "PR.03.01|Evaluasi Perencanaan Kegiatan"
+  },
+  {
+    "text": "Proses rehabilitasi dan pengembalian hak-hak pegawai",
+    "label": "KP.06.05|Rehabilitasi/Permohonan Kerja Kembali"
+  },
+  {
+    "text": "Laporan ikhtisar kegiatan yang dibiayai bantuan luar negeri",
+    "label": "KU.02.02|Ikhtisar Kegiatan"
+  },
+  {
+    "text": "Dokumen serah terima jabatan dan inventaris kantor",
+    "label": "KP.04.09|Serah Terima Jabatan/Tugas"
+  },
+  {
+    "text": "Dokumen penunjukan pejabat pembuat komitmen PPK",
+    "label": "KU.04.03|Pengelolaan Anggaran (Kuasa Pengguna Anggaran/KPA, Pejabat Pembuat Komitmen/PPK, Pejabat Penguji dan Penandatanganan SPM, Bendahara Pengeluaran, Bendahara Penerimaan)"
+  },
+  {
+    "text": "Surat dispensasi dan izin meninggalkan kantor",
+    "label": "KP.01.15|Izin Kerja/izin Belajar/Izin Dispensasi"
+  },
+  {
+    "text": "Aturan penggunaan pakaian dinas di lingkungan kerja",
+    "label": "UM.01.06|Pakaian Dinas"
+  },
+  {
+    "text": "Dokumen mutasi barang dan inventarisasi tahunan",
+    "label": "PL.04.01|Inventarisasi Umum/Mutasi Barang/Serah Terima Aset/Berita Acara Hibah"
+  },
+  {
+    "text": "Dokumen sumbangan sosial dan bantuan kemanusiaan RRI",
+    "label": "UM.01.08|Sumbangan/Bantuan"
+  },
+  {
+    "text": "Surat edaran tentang jam kerja dan disiplin kehadiran",
+    "label": "KP.06.06|Jam Kerja/Disiplin"
+  },
+  {
+    "text": "Arahan kebijakan Dewan Pengawas kepada manajemen",
+    "label": "HK.02.03|Instruksi Dewan Pengawas"
+  },
+  {
+    "text": "SPM dan SPP untuk pembayaran belanja negara",
+    "label": "KU.02.08|SPP/SPM"
+  },
+  {
+    "text": "Pengelolaan jaringan internet dan bandwidth RRI",
+    "label": "IT.01.02|Jaringan/Bandwidth"
+  },
+  {
+    "text": "Rehabilitasi jabatan dan pemulihan hak pegawai",
+    "label": "KP.06.05|Rehabilitasi/Permohonan Kerja Kembali"
+  },
+  {
+    "text": "Kegiatan koperasi pegawai dan rapat anggota tahunan",
+    "label": "KP.09.03|Koperasi"
+  },
+  {
+    "text": "Laporan pertanggungjawaban anggaran dan kinerja program",
+    "label": "PR.02.01|Pelaporan Anggaran dan Kinerja"
+  },
+  {
+    "text": "Apresiasi dan penghargaan kepada pendengar setia RRI",
+    "label": "HM.01.05|Lomba, festival, penghargaan/tanda kenang-kenangan kepada masyarakat/publik"
+  },
+  {
+    "text": "Surat keputusan pembentukan tim kerjasama multimedia",
+    "label": "KJM.01.01|SK Tim penyusun kebijakan kerjasama dan multimedia"
+  },
+  {
+    "text": "Sanggahan dan dokumen pasca kualifikasi pengadaan",
+    "label": "PL.02.02|Tender dan Kontrak/Prakualifikasi dan Pasca Kualifikasi, Penunjukan Pemenang, Sanggahan/ Surat Kuasa Kontrak/Berita Acara"
+  },
+  {
+    "text": "Pengadaan seragam dinas dan pakaian kerja pegawai",
+    "label": "UM.01.06|Pakaian Dinas"
+  },
+  {
+    "text": "Pemberhentian pegawai dengan tidak hormat dari PNS",
+    "label": "KP.08.02|Pemberhentian Dengan Tidak Hormat"
+  },
+  {
+    "text": "Program anti korupsi dan pencegahan KKN",
+    "label": "HK.05.03|Korupsi Kolusi Nepotisme (KKN)"
+  },
+  {
+    "text": "Administrasi BPJS dan jaminan sosial tenaga kerja",
+    "label": "KP.07.02|Taspen/Askes/Jasmostek/Bapertarum"
+  },
+  {
+    "text": "LAKIP dan evaluasi kinerja instansi pemerintah tahunan",
+    "label": "PR.02.04|Akuntabilitas Kinerja Instansi Pemerintah (LAKIP)"
+  },
+  {
+    "text": "Hasil analisis pelaksanaan program dan evaluasi capaian",
+    "label": "PR.01.03|Analisis Program"
+  },
+  {
+    "text": "Dokumen hukum perdata tentang perikatan dan kontrak",
+    "label": "HK.04.03|Tentang Perikatan"
+  },
+  {
+    "text": "Dokumen tagihan dinas dan kwitansi pembayaran",
+    "label": "KU.04.05|Tagihan Dinas"
+  },
+  {
+    "text": "Pengawasan partisipasi masyarakat terhadap layanan publik",
+    "label": "PW.02.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Survei harga pasar dan evaluasi mutu barang",
+    "label": "PL.02.03|Harga dan Mutu"
+  },
+  {
+    "text": "Maintenance aplikasi dan perbaikan bug sistem",
+    "label": "DT.03.03|Pemeliharaan Aplikasi"
+  },
+  {
+    "text": "Instruksi pimpinan tentang penghematan dan efisiensi",
+    "label": "HK.02.06|Instruksi Dewan Direksi"
+  },
+  {
+    "text": "Penyusunan SOP dan standar operasional prosedur",
+    "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
+  },
+  {
+    "text": "Pemeliharaan dan pengembangan aplikasi internal",
+    "label": "DT.03.03|Pemeliharaan Aplikasi"
+  },
+  {
+    "text": "Dokumen data perorangan DRH dan statistik kepegawaian",
+    "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
+  },
+  {
+    "text": "Dokumen SPP LS dan pembayaran tagihan pihak ketiga",
+    "label": "KU.01.05|SPP/Surat Permintaan Pembayaran (Belanja Pegawai, Belanja Barang, Belanja Modal, Belanja Lain-lain)"
+  },
+  {
+    "text": "Pelaksanaan pelatihan dasar CPNS dan prajabatan",
+    "label": "KP.05.03|Diklat Prajabatan"
+  },
+  {
+    "text": "Bahan evaluasi tindak lanjut temuan pengawasan internal",
+    "label": "PW.02.01|Penyiapan Bahan Evaluasi Atas Laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Perjanjian kerjasama program siaran dan partnership",
+    "label": "KJM.02.01|Surat-surat MOU Program Siaran"
+  },
+  {
+    "text": "Dokumen persiapan tindak lanjut temuan audit eksternal",
+    "label": "PW.03.01|Penyiapan Bahan Evaluasi Atas laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Sertifikat STTPL dan dokumen kediklatan pegawai",
+    "label": "KP.05.01|Tata Usaha Kediklatan (Kurikulum, Modul, Dokumen Adminstrasi, Dokumen Akademik, Dokumen Evaluasi, Sertifikat/STTPL)"
+  },
+  {
+    "text": "Keputusan Dewan Direksi tentang kebijakan operasional",
+    "label": "HK.02.05|Keputusan Dewan Direksi"
+  },
+  {
+    "text": "Rencana pelaksanaan kegiatan program prioritas LPP RRI tahun anggaran",
+    "label": "PR.01.01|Perencanaan Kegiatan"
+  },
+  {
+    "text": "Penanganan somasi dan sengketa hukum perdata",
+    "label": "HK.04.01|Tentang Orang/Pengaduan/Somasi/Sengketa/Perlindungan Hukum"
+  },
+  {
+    "text": "Spesifikasi teknis peralatan studio siaran RRI",
+    "label": "STO.02.01|Spesifikasi Peralatan Studio"
+  },
+  {
+    "text": "Hasil assessment center dan evaluasi kompetensi pegawai",
+    "label": "KP.06.01|Assesment Pegawai"
+  },
+  {
+    "text": "Penunjukan pejabat pengelola anggaran KPA dan PPK",
+    "label": "KU.04.03|Pengelolaan Anggaran (Kuasa Pengguna Anggaran/KPA, Pejabat Pembuat Komitmen/PPK, Pejabat Penguji dan Penandatanganan SPM, Bendahara Pengeluaran, Bendahara Penerimaan)"
+  },
+  {
+    "text": "Progress penyelesaian tindak lanjut rekomendasi audit lembaga",
+    "label": "PW.03.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Surat undangan rapat pengurus KORPRI unit kerja",
+    "label": "KP.09.01|KORPRI"
+  },
+  {
+    "text": "Pengumpulan pengolahan dan penyajian informasi kegiatan",
+    "label": "HM.01.01|Dokumentasi/liputan kegiatan dinas pimpinan, pengumpulan, pengolahan dan penyajian informasi kegiatan"
+  },
+  {
+    "text": "Dokumen hukum perdata tentang status kepemilikan",
+    "label": "HK.04.02|Tentang Kebendaan"
+  },
+  {
+    "text": "Kebijakan pengamanan informasi dan keamanan data RRI",
+    "label": "DT.01.03|Pengamanan informasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Penyesuaian pendidikan dan mutasi kualifikasi pegawai",
+    "label": "KP.04.05|Mutasi Pendidikan"
+  },
+  {
+    "text": "Pembakuan mekanisme kerja dan prosedur baku",
+    "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
+  },
+  {
+    "text": "Dokumen permohonan kerja kembali setelah hukuman disiplin",
+    "label": "KP.06.05|Rehabilitasi/Permohonan Kerja Kembali"
+  },
+  {
+    "text": "Surat masuk dan surat keluar administrasi perkantoran RRI",
+    "label": "UM.01.01|Administrasi Persuratan"
+  },
+  {
+    "text": "Surat Perintah Perjalanan Dinas SPPD pegawai RRI",
+    "label": "KU.01.04|SPPD"
+  },
+  {
+    "text": "Permohonan izin belajar melanjutkan pendidikan pegawai",
+    "label": "KP.01.15|Izin Kerja/izin Belajar/Izin Dispensasi"
+  },
+  {
+    "text": "Dokumen DIPA dan rincian RKA-KL satuan kerja RRI",
+    "label": "KU.01.01|DIPA (Rincian RKA-KL, Petunjuk Operasional (PO), Pergeseran/Perubahan/Revisi DIPA dan PO DIPA, APBN)"
+  },
+  {
+    "text": "Realisasi pelaksanaan anggaran belanja modal dan pegawai",
+    "label": "PR.02.02|Pelaksanaan Anggaran"
+  },
+  {
+    "text": "Penetapan penghapusan barang dari neraca BMN",
+    "label": "PL.05.04|Penetapan Penghapusan"
+  },
+  {
+    "text": "Daftar hadir kerja dan rekapitulasi absensi bulanan",
+    "label": "KP.01.14|Absensi"
+  },
+  {
+    "text": "Pelaporan pengawasan triwulanan dan temuan audit",
+    "label": "PW.01.04|Pelaporan"
+  },
+  {
+    "text": "Keputusan Dewas tentang evaluasi kinerja direksi",
+    "label": "HK.02.02|Keputusan Dewan Pengawas"
+  },
+  {
+    "text": "Monitoring pelaksanaan anggaran dan belanja negara",
+    "label": "PR.02.02|Pelaksanaan Anggaran"
+  },
+  {
+    "text": "Dokumen organisasi sosial dan kegiatan kemasyarakatan",
+    "label": "KP.09.04|Organisasi Lainnya"
+  },
+  {
+    "text": "Ikhtisar kegiatan program bantuan dan pinjaman luar negeri",
+    "label": "KU.02.02|Ikhtisar Kegiatan"
+  },
+  {
+    "text": "Pengelolaan pusat arsip dan pemeliharaan berkas unit",
+    "label": "UM.02.01|Penyimpanan dan Pemeliharaan Arsip"
+  },
+  {
+    "text": "Putusan pengadilan tata usaha negara dan PTUN",
+    "label": "HK.06.02|Putusan"
+  },
+  {
+    "text": "Keputusan Dewan Pengawas tentang penetapan anggaran",
+    "label": "HK.02.02|Keputusan Dewan Pengawas"
+  },
+  {
+    "text": "Surat Keputusan Direktur Utama LPP RRI tentang organisasi",
+    "label": "HK.02.05|Keputusan Dewan Direksi"
+  },
+  {
+    "text": "Dokumen hubungan kelembagaan dan kerjasama institusi",
+    "label": "HM.01.02|Hubungan antar lembaga"
+  },
+  {
+    "text": "Daftar barang bergerak dan kendaraan dinas unit",
+    "label": "PL.04.02|Barang-barang Bergerak"
+  },
+  {
+    "text": "Peta jabatan struktural dan fungsional unit kerja",
+    "label": "KP.02.03|Peta Jabatan"
+  },
+  {
+    "text": "Penyusunan bahan pidato dan materi sidang kabinet",
+    "label": "HM.01.04|Sosialisasi, bahan/materi pidato/sidang MPR, DPR, DPD, kabinet, DPRD Provinsi/Kabupaten/Kota"
+  },
+  {
+    "text": "Penyelenggaraan diklat kepemimpinan pejabat administrator",
+    "label": "KP.05.04|Diklat Pimpinan"
+  },
+  {
+    "text": "Dokumen usul penghapusan BMN dan foto barang",
+    "label": "PL.05.02|Usul Penghapusan dan Data Pendukung"
+  },
+  {
+    "text": "Spesifikasi perangkat keras studio penyiaran",
+    "label": "STO.02.01|Spesifikasi Peralatan Studio"
+  },
+  {
+    "text": "Bukti pembelian dan kwitansi pengadaan perlengkapan",
+    "label": "PL.02.04|Pembelian"
+  },
+  {
+    "text": "Dokumen inventaris barang bergerak mesin dan peralatan",
+    "label": "PL.04.02|Barang-barang Bergerak"
+  },
+  {
+    "text": "Dokumen instruksi Dewan Pengawas untuk perbaikan",
+    "label": "HK.02.03|Instruksi Dewan Pengawas"
+  },
+  {
+    "text": "Proses pemberhentian dengan tidak hormat pegawai",
+    "label": "KP.08.02|Pemberhentian Dengan Tidak Hormat"
+  },
+  {
+    "text": "Pembuatan kartu pegawai NIP dan identitas resmi PNS",
+    "label": "KP.01.02|NIP/Kartu Pegawai/Kartu PPNS/Tanda Pengenal"
+  },
+  {
+    "text": "Penyusunan RKA dan estimasi kebutuhan anggaran",
+    "label": "KU.04.04|Rencana Kerja Anggaran (RKA)"
+  },
+  {
+    "text": "Pengangkatan kepala bagian dan kepala sub bagian",
+    "label": "KP.04.06|Pengangkatan, Pemindahan, dan Pemberhentian dalam Jabatan Struktural"
+  },
+  {
+    "text": "Keputusan penghapusan BMN dari daftar inventaris",
+    "label": "PL.05.04|Penetapan Penghapusan"
+  },
+  {
+    "text": "Surat usulan penghapusan dan dokumentasi pendukung",
+    "label": "PL.05.02|Usul Penghapusan dan Data Pendukung"
+  },
+  {
+    "text": "Laporan polisi dan penanganan kasus pidana kejahatan",
+    "label": "HK.05.01|Kejahatan"
+  },
+  {
+    "text": "Akuntabilitas kinerja dan capaian sasaran strategis lembaga",
+    "label": "PR.02.04|Akuntabilitas Kinerja Instansi Pemerintah (LAKIP)"
+  },
+  {
+    "text": "Pengelolaan hubungan media dan pers release lembaga",
+    "label": "HM.02.02|Pers/Media Massa/Website"
+  },
+  {
+    "text": "Laporan pelaksanaan pengawasan non-reguler lembaga",
+    "label": "PW.01.08|Pelaksanaan Pengawasan Lainnya"
+  },
+  {
+    "text": "Dokumen kontrak proyek bantuan dan pinjaman asing",
+    "label": "KU.02.06|Dokumen Kontrak"
+  },
+  {
+    "text": "Pengelolaan koneksi jaringan dan kapasitas bandwidth",
+    "label": "IT.01.02|Jaringan/Bandwidth"
+  },
+  {
+    "text": "Pembakuan SOP dan mekanisme kerja pelayanan",
+    "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
+  },
+  {
+    "text": "Pengelolaan penyimpanan arsip dinamis dan statis RRI",
+    "label": "UM.02.01|Penyimpanan dan Pemeliharaan Arsip"
+  },
+  {
+    "text": "Dokumen analisis pengawasan dan pemeriksaan lembaga",
+    "label": "PW.01.02|Analisis"
+  },
+  {
+    "text": "Audit teknologi informasi dan aplikasi digital",
+    "label": "DT.03.04|Audit aplikasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Dokumentasi perpustakaan dan kehumasan lembaga",
+    "label": "PB.02.01|Kehumasan, kepustakaan dan perpustakaan di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Laporan penilaian kinerja dan sasaran kerja tahunan",
+    "label": "KP.06.07|DP3/SKP"
+  },
+  {
+    "text": "Pengolahan database dan sistem informasi lembaga",
+    "label": "DT.02.04|Pengolahan data di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Dokumen bantuan teknis dan hibah dari negara asing",
+    "label": "KU.02.01|Loan Agreement/Hibah Luar Negeri"
+  },
+  {
+    "text": "Dokumen katalog alat dan peralatan studio radio",
+    "label": "STO.01.01|Katalog Peralatan Studio"
+  },
+  {
+    "text": "Rapat anggota dan laporan keuangan koperasi pegawai",
+    "label": "KP.09.03|Koperasi"
+  },
+  {
+    "text": "Penetapan hak pensiun pegawai yang meninggal dunia",
+    "label": "KP.08.07|Pensiun Meninggal Dunia/Tewas"
+  },
+  {
+    "text": "Tahapan seleksi dan pengadaan pegawai negeri sipil",
+    "label": "KP.03.01|Seleksi Pegawai"
+  },
+  {
+    "text": "Pelaksanaan sosialisasi kebijakan kepada masyarakat",
+    "label": "HM.02.01|Sosialisasi"
+  },
+  {
+    "text": "Administrasi cuti tahunan cuti besar cuti alasan penting",
+    "label": "KP.01.11|Cuti"
+  },
+  {
+    "text": "Pemeriksaan pemanfaatan BMN dan aset lembaga",
+    "label": "PL.03.03|Pemeriksaan Pemanfaatan"
+  },
+  {
+    "text": "Pencairan dana melalui SP2D dan bukti transfer",
+    "label": "KU.01.06|SP2D (Surat Perintah Pencairan Dana)"
+  },
+  {
+    "text": "Inpres tentang pemberantasan korupsi dan tata kelola",
+    "label": "HK.01.05|Instruksi Presiden"
+  },
+  {
+    "text": "Perpres tentang tunjangan kinerja dan remunerasi",
+    "label": "HK.01.03|Peraturan Presiden"
+  },
+  {
+    "text": "Katalog perangkat pemancar stasiun RRI daerah",
+    "label": "TX.01.01|Katalog Pemancar"
+  },
+  {
+    "text": "Proses distribusi peralatan siaran ke stasiun RRI",
+    "label": "PL.03.02|Distribusi/Pengiriman"
+  },
+  {
+    "text": "Laporan pemantauan pelaksanaan kegiatan dan anggaran",
+    "label": "PW.01.01|Pemantauan"
+  },
+  {
+    "text": "Surat edaran pemerintah tentang kebijakan baru",
+    "label": "HK.01.06|Surat Edaran"
+  },
+  {
+    "text": "Proses pengangkatan CPNS dan pengunduran diri pegawai",
+    "label": "KP.03.03|Pengangkatan dan Pengunduran Diri CPNS"
+  },
+  {
+    "text": "Serah terima aset hibah dan berita acara penerimaan",
+    "label": "PL.04.01|Inventarisasi Umum/Mutasi Barang/Serah Terima Aset/Berita Acara Hibah"
+  },
+  {
+    "text": "Berita acara tukar guling BMN dan aset pengganti",
+    "label": "PL.05.06|Tukar Guling/Ruislag"
+  },
+  {
+    "text": "Skorsing pejabat struktural karena pelanggaran disiplin",
+    "label": "KP.06.04|Skorsing/Hukuman Jabatan"
+  },
+  {
+    "text": "Laporan harta kekayaan pejabat negara RRI ke KPK",
+    "label": "PW.01.05|LHKPN"
+  },
+  {
+    "text": "Dokumen rencana kebutuhan dan pengadaan aset",
+    "label": "PL.01.03|Rencana Kebutuhan Pengadaan"
+  },
+  {
+    "text": "Dokumen nominatif pegawai yang akan pensiun BUP",
+    "label": "KP.08.08|Nominatif Pensiun"
+  },
+  {
+    "text": "Surat Perintah Tugas dalam rangka perjalanan dinas RRI",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Pendaftaran anggota keluarga dan kartu istri suami pegawai",
+    "label": "KP.01.04|Pendaftaran/Keluarga/Perkawinan/Anak/Karis/Karsu"
+  },
+  {
+    "text": "Dokumen keputusan Dewan Pengawas bidang organisasi",
+    "label": "HK.02.02|Keputusan Dewan Pengawas"
+  },
+  {
+    "text": "Laporan tindak lanjut penyelesaian hasil pengawasan internal dan publik",
+    "label": "PW.02.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Penyusunan RAB dan rincian biaya pelaksanaan kegiatan",
+    "label": "KU.02.05|Rincian Anggaran Biaya (RAB)"
+  },
+  {
+    "text": "Pemeliharaan instalasi listrik telepon dan AC gedung",
+    "label": "UM.01.07|Listrik/PAM/Telepon/AC"
+  },
+  {
+    "text": "Rapat dengar pendapat dengan Komisi I DPR RI",
+    "label": "HM.01.03|Dengar Pendapat (RDP) Komisi I DPR RI"
+  },
+  {
+    "text": "Surat penunjukan pelaksana harian PLH jabatan",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Dokumen pengangkatan calon pegawai negeri sipil",
+    "label": "KP.03.03|Pengangkatan dan Pengunduran Diri CPNS"
+  },
+  {
+    "text": "Permohonan penyesuaian ijazah dan mutasi pendidikan",
+    "label": "KP.04.05|Mutasi Pendidikan"
+  },
+  {
+    "text": "Brosur dan katalog penawaran barang dari penyedia",
+    "label": "PL.02.01|Rekanan/Penawaran/Proposal/Brosur"
+  },
+  {
+    "text": "Dokumentasi topologi jaringan dan data recovery center",
+    "label": "DT.01.01|Topologi jaringan Backup/Data Recovery Center"
+  },
+  {
+    "text": "Penelitian dan pengembangan sistem teknologi siaran",
+    "label": "LT.01|Penelitian Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Bahan pidato dan materi sosialisasi ke DPRD",
+    "label": "HM.01.04|Sosialisasi, bahan/materi pidato/sidang MPR, DPR, DPD, kabinet, DPRD Provinsi/Kabupaten/Kota"
+  },
+  {
+    "text": "Pemantauan pelaksanaan tugas dan fungsi unit kerja",
+    "label": "PW.01.01|Pemantauan"
+  },
+  {
+    "text": "Pergeseran anggaran dan revisi DIPA tahun berjalan",
+    "label": "KU.01.01|DIPA (Rincian RKA-KL, Petunjuk Operasional (PO), Pergeseran/Perubahan/Revisi DIPA dan PO DIPA, APBN)"
+  },
+  {
+    "text": "Administrasi pajak dan bukti potong pajak pegawai",
+    "label": "KU.03.01|Pajak-pajak"
+  },
+  {
+    "text": "Daftar aset tidak bergerak gedung dan infrastruktur",
+    "label": "PL.04.03|Barang-barang Tidak Bergerak"
+  },
+  {
+    "text": "Usulan penghapusan barang rusak berat dan data pendukung",
+    "label": "PL.05.02|Usul Penghapusan dan Data Pendukung"
+  },
+  {
+    "text": "Pengadaan pakaian dinas harian dan seragam pegawai RRI",
+    "label": "UM.01.06|Pakaian Dinas"
+  },
+  {
+    "text": "Dokumen pengajuan anggaran tambahan satuan kerja",
+    "label": "KU.01.02|ABT (Anggaran Belanja Tambahan)"
+  },
+  {
+    "text": "Dokumen MOU program siaran dengan mitra media",
+    "label": "KJM.02.01|Surat-surat MOU Program Siaran"
+  },
+  {
+    "text": "Surat keterangan sumpah jabatan pegawai negeri sipil",
+    "label": "KP.01.09|Sumpah Pegawai"
+  },
+  {
+    "text": "Dokumen pelaporan gratifikasi ke Komisi Pemberantasan Korupsi",
+    "label": "PW.01.06|Gratifikasi"
+  },
+  {
+    "text": "Hasil uji kesehatan dan medical check up pegawai",
+    "label": "KP.01.16|Uji Kesehatan"
+  },
+  {
+    "text": "Pemantauan tindak lanjut temuan pengawasan eksternal BPK",
+    "label": "PW.03.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Koordinasi lintas sektor dengan kementerian lembaga",
+    "label": "KS.01.01|Koordinasi Lintas Sektorat"
+  },
+  {
+    "text": "Pelaksanaan ujian dinas dan ujian penyesuaian ijazah",
+    "label": "KP.06.02|Ujian Dinas, Ujian Penyesuaian Ijazah"
+  },
+  {
+    "text": "Laporan analisis risiko dan kepatuhan pengawasan",
+    "label": "PW.01.02|Analisis"
+  },
+  {
+    "text": "Rencana pengadaan barang modal dan operasional",
+    "label": "PL.01.03|Rencana Kebutuhan Pengadaan"
+  },
+  {
+    "text": "Pengelolaan koperasi simpan pinjam di lingkungan RRI",
+    "label": "KP.09.03|Koperasi"
+  },
+  {
+    "text": "Penyaluran sumbangan dan bantuan sosial dari lembaga",
+    "label": "UM.01.08|Sumbangan/Bantuan"
+  },
+  {
+    "text": "Inventarisasi umum barang milik negara dan mutasi aset",
+    "label": "PL.04.01|Inventarisasi Umum/Mutasi Barang/Serah Terima Aset/Berita Acara Hibah"
+  },
+  {
+    "text": "Pengangkatan dalam jabatan fungsional tertentu dan umum",
+    "label": "KP.04.07|Pengangkatan, Pemindahan, Pemberhentian dan Pembebasan Sementara dalam Jabatan Fungsional"
+  },
+  {
+    "text": "Konten website dan media sosial resmi LPP RRI",
+    "label": "HM.02.02|Pers/Media Massa/Website"
+  },
+  {
+    "text": "Evaluasi kinerja pengawasan dan kepatuhan regulasi",
+    "label": "PW.01.03|Evaluasi"
+  },
+  {
+    "text": "Pelaksanaan audit sistem dan aplikasi penyiaran",
+    "label": "DT.03.04|Audit aplikasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Dokumen penetapan dan evaluasi SOP tata laksana",
+    "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
+  },
+  {
+    "text": "Pengelolaan fasilitas gedung dan perkantoran lembaga",
+    "label": "UM.01.05|Gedung/Perkantoran/Gudang"
+  },
+  {
+    "text": "Dokumen klasifikasi data perlengkapan dan peralatan",
+    "label": "PL.01.02|Klasifikasi Data"
+  },
+  {
+    "text": "Bahan dan materi RDP Komisi I DPR RI",
+    "label": "HM.01.03|Dengar Pendapat (RDP) Komisi I DPR RI"
+  },
+  {
+    "text": "Hubungan antar lembaga penyiaran dan media",
+    "label": "HM.01.02|Hubungan antar lembaga"
+  },
+  {
+    "text": "Proses alih media arsip konvensional ke format digital",
+    "label": "UM.02.04|Berkas Proses Alih Media Arsip"
+  },
+  {
+    "text": "Dokumen inventaris barang tidak bergerak lembaga",
+    "label": "PL.04.03|Barang-barang Tidak Bergerak"
+  },
+  {
+    "text": "Surat tentang ketentuan pemakaian pakaian dinas harian",
+    "label": "UM.01.06|Pakaian Dinas"
+  },
+  {
+    "text": "Dokumen pelaporan realisasi anggaran belanja LPP RRI",
+    "label": "PR.02.01|Pelaporan Anggaran dan Kinerja"
+  },
+  {
+    "text": "Penetapan prosedur kerja dan evaluasi tata laksana",
+    "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
+  },
+  {
+    "text": "Tata usaha keuangan dan akuntansi instansi pemerintah",
+    "label": "KU.04.02|Tata Usaha Keuangan Negara"
+  },
+  {
+    "text": "Pelaporan capaian kinerja dan realisasi anggaran semester",
+    "label": "PR.02.01|Pelaporan Anggaran dan Kinerja"
+  },
+  {
+    "text": "Rekapitulasi kegiatan berkala semesteran dan tahunan lembaga",
+    "label": "PR.02.03|Program dan Kegiatan Berkala (Triwulan, Semester, dan Tahunan) serta Insidental"
+  },
+  {
+    "text": "SK panitia kerjasama multimedia dan partnership",
+    "label": "KJM.01.01|SK Tim penyusun kebijakan kerjasama dan multimedia"
+  },
+  {
+    "text": "Proses seleksi dan rekrutmen calon pegawai negeri",
+    "label": "KP.03.01|Seleksi Pegawai"
+  },
+  {
+    "text": "Dokumen laporan persediaan dan neraca BMN",
+    "label": "PL.04.05|Pelaporan Persediaan dan BMN"
+  },
+  {
+    "text": "Kegiatan pameran dan promosi program RRI",
+    "label": "HM.02.03|Pameran/Festival"
+  },
+  {
+    "text": "Dokumen pemeliharaan dan update aplikasi RRI",
+    "label": "DT.03.03|Pemeliharaan Aplikasi"
+  },
+  {
+    "text": "SK Dirut tentang penetapan tim dan panitia kerja",
+    "label": "HK.02.05|Keputusan Dewan Direksi"
+  },
+  {
+    "text": "Dokumen penetapan hak pensiun dan pesangon PNS",
+    "label": "KP.08.04|Penetapan Uang Pensiun/Pesangon"
+  },
+  {
+    "text": "SK pensiun janda duda dan anak PNS yang meninggal",
+    "label": "KP.08.06|Pensiun Janda/Duda/Anak"
+  },
+  {
+    "text": "Verifikasi dan pembayaran tagihan dinas operasional",
+    "label": "KU.04.05|Tagihan Dinas"
+  },
+  {
+    "text": "Program reformasi birokrasi di lingkungan LPP RRI",
+    "label": "OT.01.02|Reformasi Birokrasi"
+  },
+  {
+    "text": "Surat tentang organisasi kemasyarakatan di lingkungan kantor",
+    "label": "KP.09.04|Organisasi Lainnya"
+  },
+  {
+    "text": "Arahan dan instruksi Dewas tentang pelaksanaan tugas",
+    "label": "HK.02.03|Instruksi Dewan Pengawas"
+  },
+  {
+    "text": "Proses penerbitan SPM dan verifikasi SPP",
+    "label": "KU.02.08|SPP/SPM"
+  },
+  {
+    "text": "Dokumen pengadaan melalui pembelian langsung",
+    "label": "PL.02.04|Pembelian"
+  },
+  {
+    "text": "Penetapan pensiun janda duda atas meninggalnya PNS",
+    "label": "KP.08.06|Pensiun Janda/Duda/Anak"
+  },
+  {
+    "text": "Petunjuk Operasional PO DIPA dan revisi anggaran",
+    "label": "KU.01.01|DIPA (Rincian RKA-KL, Petunjuk Operasional (PO), Pergeseran/Perubahan/Revisi DIPA dan PO DIPA, APBN)"
+  },
+  {
+    "text": "Estimasi biaya dan rincian anggaran kegiatan proyek",
+    "label": "KU.02.05|Rincian Anggaran Biaya (RAB)"
+  },
+  {
+    "text": "Ringkasan dan ikhtisar pelaksanaan kegiatan keuangan",
+    "label": "KU.02.02|Ikhtisar Kegiatan"
+  },
+  {
+    "text": "Kartu stok gudang dan manajemen penyimpanan barang",
+    "label": "PL.03.05|Pergudangan/Penyimpanan"
+  },
+  {
+    "text": "Dokumen pengangkatan jabatan fungsional pranata siaran",
+    "label": "KP.04.07|Pengangkatan, Pemindahan, Pemberhentian dan Pembebasan Sementara dalam Jabatan Fungsional"
+  },
+  {
+    "text": "Rencana data recovery dan topologi infrastruktur TI",
+    "label": "DT.01.01|Topologi jaringan Backup/Data Recovery Center"
+  },
+  {
+    "text": "SPK dan berita acara penyelesaian pekerjaan",
+    "label": "KU.01.03|Berita Acara, Kontrak/SPK"
+  },
+  {
+    "text": "Dokumen perpajakan dan SPT tahunan satuan kerja",
+    "label": "KU.03.01|Pajak-pajak"
+  },
+  {
+    "text": "Pengelolaan kendaraan dinas dan rumah jabatan RRI",
+    "label": "UM.01.04|Perumahan Dinas/Kendaraan Dinas"
+  },
+  {
+    "text": "Pengelolaan peta jabatan dan posisi dalam organisasi",
+    "label": "KP.02.03|Peta Jabatan"
+  },
+  {
+    "text": "Publikasi informasi melalui penerbitan cetak dan digital",
+    "label": "PB.01.01|Kehumasan melalui penerbitan/website dalam lingkup Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Keputusan Direksi tentang pengelolaan program siaran",
+    "label": "HK.02.05|Keputusan Dewan Direksi"
+  },
+  {
+    "text": "Forum koordinasi internal dan kerjasama eksternal",
+    "label": "KS.01.03|Koordinasi Internal dan Eksternal LPP RRI"
+  },
+  {
+    "text": "Dokumen persiapan evaluasi laporan audit APIP",
+    "label": "PW.02.01|Penyiapan Bahan Evaluasi Atas Laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Administrasi sertifikat pelatihan dan STTPL peserta",
+    "label": "KP.05.01|Tata Usaha Kediklatan (Kurikulum, Modul, Dokumen Adminstrasi, Dokumen Akademik, Dokumen Evaluasi, Sertifikat/STTPL)"
+  },
+  {
+    "text": "Rekapitulasi persediaan dan laporan aset tahunan",
+    "label": "PL.04.05|Pelaporan Persediaan dan BMN"
+  },
+  {
+    "text": "Pendataan tanah bangunan dan aset tidak bergerak",
+    "label": "PL.04.03|Barang-barang Tidak Bergerak"
+  },
+  {
+    "text": "SPMT surat pernyataan melaksanakan tugas pegawai baru",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Susunan pengurus dan kegiatan KORPRI unit RRI",
+    "label": "KP.09.01|KORPRI"
+  },
+  {
+    "text": "Surat peringatan dan teguran hukum kepada pelanggar",
+    "label": "HK.05.02|Pelanggaran/Peringatan/Teguran/Pencabutan"
+  },
+  {
+    "text": "Dokumen neraca dan posisi keuangan akhir tahun",
+    "label": "KU.01.07|Neraca (semesteran, Tahunan)"
+  },
+  {
+    "text": "Penilaian kondisi barang untuk proses penghapusan BMN",
+    "label": "PL.05.03|Penilaian"
+  },
+  {
+    "text": "Dokumen desain logo dan identitas korporat",
+    "label": "OT.02.03|Logo"
+  },
+  {
+    "text": "Diklat fungsional keahlian dan keterampilan pegawai",
+    "label": "KP.05.05|Diklat Fungsional"
+  },
+  {
+    "text": "Kartu inventaris barang bergerak dan kendaraan",
+    "label": "PL.04.02|Barang-barang Bergerak"
+  },
+  {
+    "text": "SK pensiun pegawai yang telah mencapai batas usia",
+    "label": "KP.08.05|Pensiun (BUP)"
+  },
+  {
+    "text": "Penyelesaian sengketa kebendaan tanah dan bangunan",
+    "label": "HK.04.02|Tentang Kebendaan"
+  },
+  {
+    "text": "Dokumen standarisasi penomoran dan kodefikasi aset",
+    "label": "PL.04.04|Standarisasi/Kodefikasi"
+  },
+  {
+    "text": "Pendataan nominatif calon pensiunan pegawai RRI",
+    "label": "KP.08.08|Nominatif Pensiun"
+  },
+  {
+    "text": "Dokumen foto dan video kegiatan pimpinan RRI",
+    "label": "HM.01.01|Dokumentasi/liputan kegiatan dinas pimpinan, pengumpulan, pengolahan dan penyajian informasi kegiatan"
+  },
+  {
+    "text": "Uji kesehatan berkala dan pemeriksaan kesehatan pegawai",
+    "label": "KP.01.16|Uji Kesehatan"
+  },
+  {
+    "text": "Audit keamanan aplikasi dan sistem informasi RRI",
+    "label": "DT.03.04|Audit aplikasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Daftar gaji pegawai dan kenaikan gaji berkala KGB",
+    "label": "KP.01.03|Penggajian/KGB/Tunjangan Jabatan/Daftar gaji"
+  },
+  {
+    "text": "Surat keputusan pengangkatan pegawai negeri sipil",
+    "label": "KP.03.04|Pengangkatan PNS"
+  },
+  {
+    "text": "PP tentang tata cara pengelolaan barang milik negara",
+    "label": "HK.01.02|Peraturan Pemerintah"
+  },
+  {
+    "text": "Dokumen pengangkatan dan pelantikan PNS definitif",
+    "label": "KP.03.04|Pengangkatan PNS"
+  },
+  {
+    "text": "Dokumen koleksi pustaka dan arsip perpustakaan RRI",
+    "label": "PB.02.01|Kehumasan, kepustakaan dan perpustakaan di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Hasil evaluasi analisis efektivitas program siaran RRI",
+    "label": "PR.03.03|Evaluasi Analisis Program"
+  },
+  {
+    "text": "Bimbingan teknis kearsipan dan tata kelola arsip unit",
+    "label": "UM.02.05|Pembinaan Kearsipan"
+  },
+  {
+    "text": "Laporan Akuntabilitas Kinerja Instansi Pemerintah LAKIP LPP RRI",
+    "label": "PR.02.04|Akuntabilitas Kinerja Instansi Pemerintah (LAKIP)"
+  },
+  {
+    "text": "Instruksi Presiden bidang pengembangan penyiaran",
+    "label": "HK.01.05|Instruksi Presiden"
+  },
+  {
+    "text": "Kegiatan pembinaan mental dan rohani di kantor",
+    "label": "KP.05.02|Pembinaan Mental"
+  },
+  {
+    "text": "Dokumen mutasi pendidikan pegawai yang melanjutkan studi",
+    "label": "KP.04.05|Mutasi Pendidikan"
+  },
+  {
+    "text": "Surat kelulusan ujian dinas dan penyesuaian ijazah",
+    "label": "KP.06.02|Ujian Dinas, Ujian Penyesuaian Ijazah"
+  },
+  {
+    "text": "Monitoring penyelesaian rekomendasi audit eksternal",
+    "label": "PW.03.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Dokumen diklat pimpinan administrator dan pengawas",
+    "label": "KP.05.04|Diklat Pimpinan"
+  },
+  {
+    "text": "Dokumen penelitian inovasi sistem penyiaran",
+    "label": "LT.01|Penelitian Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Program masa persiapan pensiun MPP bagi pegawai",
+    "label": "KP.08.03|Masa Persiapan Pensiun (MPP)/Pembekalan Pensiun"
+  },
+  {
+    "text": "Dokumen audit dan evaluasi aplikasi lembaga",
+    "label": "DT.03.04|Audit aplikasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Digitalisasi arsip dan alih media dokumen penting lembaga",
+    "label": "UM.02.04|Berkas Proses Alih Media Arsip"
+  },
+  {
+    "text": "Perjanjian sewa pemanfaatan aset barang milik negara",
+    "label": "KU.03.03|Sewa Pemanfaatan Aset/barang Milik Negara"
+  },
+  {
+    "text": "Penetapan struktur organisasi dan tata kerja LPP RRI",
+    "label": "OT.01.01|Organisasi (Rencana, Penetapan Struktur dan Evaluasi)"
+  },
+  {
+    "text": "Pemberian penghargaan dan tanda kenang-kenangan publik",
+    "label": "HM.01.05|Lomba, festival, penghargaan/tanda kenang-kenangan kepada masyarakat/publik"
+  },
+  {
+    "text": "Dokumen peraturan Dewas tentang pengawasan lembaga",
+    "label": "HK.02.01|Peraturan Dewan Pengawas"
+  },
+  {
+    "text": "Pengaturan jam kerja dan kedisiplinan pegawai RRI",
+    "label": "KP.06.06|Jam Kerja/Disiplin"
+  },
+  {
+    "text": "Pengawasan publik terkait pelayanan dan kinerja lembaga",
+    "label": "PW.03.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Dokumen penerbitan obligasi dan instrumen keuangan",
+    "label": "KU.02.09|Pembukaan LC (Letter of Credit)/Valuta Asing/Penerbitan/Obligasi"
+  },
+  {
+    "text": "Dokumen daftar honor narasumber dan uang lembur",
+    "label": "KU.01.08|Daftar uang Makan/Uang Lembur/Remunerasi/Honor"
+  },
+  {
+    "text": "Inventarisasi barang bergerak kendaraan dan peralatan",
+    "label": "PL.04.02|Barang-barang Bergerak"
+  },
+  {
+    "text": "Pelaksanaan sumpah janji PNS dan sumpah jabatan",
+    "label": "KP.01.09|Sumpah Pegawai"
+  },
+  {
+    "text": "Kuasa khusus pengurusan administrasi kepegawaian",
+    "label": "KP.01.13|Surat Kuasa"
+  },
+  {
+    "text": "Pelaksanaan kegiatan sosial Dharma Wanita Persatuan",
+    "label": "KP.09.02|Dharma Wanita"
+  },
+  {
+    "text": "Surat keputusan skorsing dan hukuman disiplin berat",
+    "label": "KP.06.04|Skorsing/Hukuman Jabatan"
+  },
+  {
+    "text": "RKA dan perencanaan anggaran program kegiatan",
+    "label": "KU.04.04|Rencana Kerja Anggaran (RKA)"
+  },
+  {
+    "text": "Dokumen sewa BMN dan pemanfaatan aset lembaga",
+    "label": "KU.03.03|Sewa Pemanfaatan Aset/barang Milik Negara"
+  },
+  {
+    "text": "Penetapan dan evaluasi struktur organisasi tata kerja",
+    "label": "OT.01.01|Organisasi (Rencana, Penetapan Struktur dan Evaluasi)"
+  },
+  {
+    "text": "Laporan evaluasi penyusunan RKA-KL dan DIPA",
+    "label": "PR.03.02|Evaluasi Penyusunan Anggaran"
+  },
+  {
+    "text": "Tindak lanjut pengawasan publik dan aspirasi masyarakat",
+    "label": "PW.02.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Surat keterangan sehat untuk persyaratan kepegawaian",
+    "label": "KP.01.16|Uji Kesehatan"
+  },
+  {
+    "text": "Laporan persediaan dan barang milik negara semesteran",
+    "label": "PL.04.05|Pelaporan Persediaan dan BMN"
+  },
+  {
+    "text": "Instruksi Dewan Direksi tentang peningkatan kinerja",
+    "label": "HK.02.06|Instruksi Dewan Direksi"
+  },
+  {
+    "text": "Nota dinas tentang kebijakan dan arahan pimpinan",
+    "label": "HK.02.07|Surat Edaran/Nota Dinas"
+  },
+  {
+    "text": "Daftar rekanan dan penawaran penyedia barang jasa",
+    "label": "PL.02.01|Rekanan/Penawaran/Proposal/Brosur"
+  },
+  {
+    "text": "Dokumen perikatan hukum dan kewajiban kontraktual",
+    "label": "HK.04.03|Tentang Perikatan"
+  },
+  {
+    "text": "Rencana kebutuhan pengadaan barang dan jasa tahunan",
+    "label": "PL.01.03|Rencana Kebutuhan Pengadaan"
+  },
+  {
+    "text": "Susunan pengurus Dharma Wanita dan agenda kegiatan",
+    "label": "KP.09.02|Dharma Wanita"
+  },
+  {
+    "text": "Kesepakatan bersama dengan lembaga siaran luar negeri",
+    "label": "HK.03.01|Luar Negeri"
+  },
+  {
+    "text": "Pendaftaran dan klaim asuransi Taspen pegawai PNS",
+    "label": "KP.07.02|Taspen/Askes/Jasmostek/Bapertarum"
+  },
+  {
+    "text": "Dokumen RKP dan rencana umum pengadaan",
+    "label": "PL.01.03|Rencana Kebutuhan Pengadaan"
+  },
+  {
+    "text": "Penyusunan rencana organisasi dan evaluasi kelembagaan",
+    "label": "OT.01.01|Organisasi (Rencana, Penetapan Struktur dan Evaluasi)"
+  },
+  {
+    "text": "Penetapan bendahara pengeluaran dan penerimaan",
+    "label": "KU.04.03|Pengelolaan Anggaran (Kuasa Pengguna Anggaran/KPA, Pejabat Pembuat Komitmen/PPK, Pejabat Penguji dan Penandatanganan SPM, Bendahara Pengeluaran, Bendahara Penerimaan)"
+  },
+  {
+    "text": "Diklat teknis operasional peralatan siaran dan IT",
+    "label": "KP.05.06|Diklat Teknis"
+  },
+  {
+    "text": "Penanganan gugatan tata usaha negara di pengadilan",
+    "label": "HK.06.01|Gugatan"
+  },
+  {
+    "text": "Surat Perintah Kerja SPK dan kontrak pekerjaan",
+    "label": "KU.01.03|Berita Acara, Kontrak/SPK"
+  },
+  {
+    "text": "SK pengangkatan pejabat struktural eselon di lingkungan RRI",
+    "label": "KP.04.06|Pengangkatan, Pemindahan, dan Pemberhentian dalam Jabatan Struktural"
+  },
+  {
+    "text": "Inventaris piranti teknologi penyiaran dan studio",
+    "label": "DT.01.02|Piranti teknologi penyiaran"
+  },
+  {
+    "text": "Penyelenggaraan diklat teknis di bidang kompetensi kerja",
+    "label": "KP.05.06|Diklat Teknis"
+  },
+  {
+    "text": "Evaluasi kesesuaian penyusunan anggaran dengan kebijakan",
+    "label": "PR.03.02|Evaluasi Penyusunan Anggaran"
+  },
+  {
+    "text": "Nota Dinas perihal kebersihan ketertiban dan keamanan kantor",
+    "label": "UM.01.02|Kebersihan, Ketertiban dan Keamanan"
+  },
+  {
+    "text": "Dokumen pembinaan BMN dan aset perlengkapan lembaga",
+    "label": "PL.03.01|Pembinaan BMN Perlengkapan"
+  },
+  {
+    "text": "Proposal penghapusan BMN dan bukti kerusakan",
+    "label": "PL.05.02|Usul Penghapusan dan Data Pendukung"
+  },
+  {
+    "text": "Pengumpulan data sistem informasi dan statistik siaran",
+    "label": "DT.02.03|Pengumpulan data"
+  },
+  {
+    "text": "Konten kehumasan melalui website resmi dan media sosial",
+    "label": "PB.01.01|Kehumasan melalui penerbitan/website dalam lingkup Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Pelaporan perubahan status perkawinan pegawai negeri",
+    "label": "KP.01.12|Pelaporan Nikah/Cerai/Rujuk/Izin Perkawinan"
+  },
+  {
+    "text": "Penyelesaian sengketa hukum perdata di pengadilan",
+    "label": "HK.04.01|Tentang Orang/Pengaduan/Somasi/Sengketa/Perlindungan Hukum"
+  },
+  {
+    "text": "Permohonan rumah dinas dan kendaraan operasional",
+    "label": "UM.01.04|Perumahan Dinas/Kendaraan Dinas"
+  },
+  {
+    "text": "Dokumen TP/TGR dan penyelesaian kerugian negara",
+    "label": "KU.04.01|Tuntutan Perbendaharaan/Tuntutan Ganti Rugi (TP/TGR)"
+  },
+  {
+    "text": "Penyiapan bahan evaluasi laporan hasil pengawasan APIP",
+    "label": "PW.02.01|Penyiapan Bahan Evaluasi Atas Laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Pengelolaan perpustakaan dan kepustakaan lembaga RRI",
+    "label": "PB.02.01|Kehumasan, kepustakaan dan perpustakaan di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Surat edaran internal tentang ketentuan pelaksanaan",
+    "label": "HK.02.07|Surat Edaran/Nota Dinas"
+  },
+  {
+    "text": "Proses alih media dan pengumpulan audio video berita",
+    "label": "KJM.08.01|Pengumpulan data audio/video berita"
+  },
+  {
+    "text": "Pemutakhiran data riwayat hidup dan database pegawai",
+    "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
+  },
+  {
+    "text": "Penghargaan pegawai teladan dan piagam kehormatan",
+    "label": "KP.01.07|Penghargaan/Piala/Piagam/tanda Kehormatan"
+  },
+  {
+    "text": "Dokumen pembentukan tim kebijakan bidang multimedia",
+    "label": "KJM.01.01|SK Tim penyusun kebijakan kerjasama dan multimedia"
+  },
+  {
+    "text": "Pelaksanaan agenda reformasi birokrasi lembaga",
+    "label": "OT.01.02|Reformasi Birokrasi"
+  },
+  {
+    "text": "Diklat teknis broadcasting dan teknologi penyiaran",
+    "label": "KP.05.06|Diklat Teknis"
+  },
+  {
+    "text": "Dokumen penyusunan Rencana Kerja dan Anggaran RRI",
+    "label": "PR.01.02|Penyusunan Anggaran"
+  },
+  {
+    "text": "Persetujuan penyusutan dan pemusnahan arsip lembaga",
+    "label": "UM.02.03|Penyusutan Arsip"
+  },
+  {
+    "text": "Surat izin dispensasi untuk keperluan pribadi pegawai",
+    "label": "KP.01.15|Izin Kerja/izin Belajar/Izin Dispensasi"
+  },
+  {
+    "text": "Diklat PIM dan pelatihan kepemimpinan pejabat struktural",
+    "label": "KP.05.04|Diklat Pimpinan"
+  },
+  {
+    "text": "Dokumen pembentukan tim program produksi siaran",
+    "label": "PPS.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Standar harga dan mutu barang pengadaan lembaga",
+    "label": "PL.02.03|Harga dan Mutu"
+  },
+  {
+    "text": "Penyusunan dokumen anjab dan ABK unit kerja",
+    "label": "KP.02.01|Analisis Jabatan"
+  },
+  {
+    "text": "Berkas proses scanning dan alih media arsip vital",
+    "label": "UM.02.04|Berkas Proses Alih Media Arsip"
+  },
+  {
+    "text": "Dokumen putusan hukum administrasi negara",
+    "label": "HK.06.02|Putusan"
+  },
+  {
+    "text": "Penempatan dan distribusi pegawai pada satuan kerja",
+    "label": "KP.03.02|Penempatan Pegawai"
+  },
+  {
+    "text": "Surat perjanjian MOU konten siaran dan kolaborasi",
+    "label": "KJM.02.01|Surat-surat MOU Program Siaran"
+  },
+  {
+    "text": "Surat Perintah Membayar SPM dan SPP keuangan",
+    "label": "KU.02.08|SPP/SPM"
+  },
+  {
+    "text": "Tagihan dan pengelolaan utilitas perkantoran bulanan",
+    "label": "UM.01.07|Listrik/PAM/Telepon/AC"
+  },
+  {
+    "text": "Laporan pemeriksaan penggunaan peralatan dan aset",
+    "label": "PL.03.03|Pemeriksaan Pemanfaatan"
+  },
+  {
+    "text": "Pengelolaan administrasi surat menyurat dan tata naskah",
+    "label": "UM.01.01|Administrasi Persuratan"
+  },
+  {
+    "text": "Dokumen SPP dan SPM pencairan dana kegiatan",
+    "label": "KU.02.08|SPP/SPM"
+  },
+  {
+    "text": "Dokumen SPPD dan pertanggungjawaban perjalanan dinas",
+    "label": "KU.01.04|SPPD"
+  },
+  {
+    "text": "Laporan evaluasi perencanaan kegiatan strategis lembaga",
+    "label": "PR.03.01|Evaluasi Perencanaan Kegiatan"
+  },
+  {
+    "text": "Penyelesaian tindak lanjut hasil pengawasan dan pengaduan publik",
+    "label": "PW.02.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Dokumen loan agreement dan perjanjian hibah luar negeri",
+    "label": "KU.02.01|Loan Agreement/Hibah Luar Negeri"
+  },
+  {
+    "text": "Dokumen kartu PPNS dan tanda pengenal dinas pegawai",
+    "label": "KP.01.02|NIP/Kartu Pegawai/Kartu PPNS/Tanda Pengenal"
+  },
+  {
+    "text": "Press release dan siaran pers kegiatan RRI",
+    "label": "HM.02.02|Pers/Media Massa/Website"
+  },
+  {
+    "text": "Pengelompokan dan klasifikasi aset barang milik negara",
+    "label": "PL.01.02|Klasifikasi Data"
+  },
+  {
+    "text": "Surat Permintaan Pembayaran SPP belanja pegawai",
+    "label": "KU.01.05|SPP/Surat Permintaan Pembayaran (Belanja Pegawai, Belanja Barang, Belanja Modal, Belanja Lain-lain)"
+  },
+  {
+    "text": "Penetapan pengangkatan CPNS dan surat keputusan PNS",
+    "label": "KP.03.03|Pengangkatan dan Pengunduran Diri CPNS"
+  },
+  {
+    "text": "Pengaduan dan perlindungan hukum kepentingan lembaga",
+    "label": "HK.04.01|Tentang Orang/Pengaduan/Somasi/Sengketa/Perlindungan Hukum"
+  },
+  {
+    "text": "Pengelolaan pergudangan dan barang persediaan kantor",
+    "label": "PL.03.05|Pergudangan/Penyimpanan"
+  },
+  {
+    "text": "Proses lelang barang inventaris yang telah dihapus",
+    "label": "PL.05.05|Pelelangan/Penjualan"
+  },
+  {
+    "text": "Peraturan badan tentang standar pelayanan publik",
+    "label": "HK.01.07|Keputusan/Peraturan Lembaga/Badan"
+  },
+  {
+    "text": "Pelaksanaan serah terima tugas dan jabatan pimpinan",
+    "label": "KP.04.09|Serah Terima Jabatan/Tugas"
+  },
+  {
+    "text": "Surat permohonan mutasi antar instansi pemerintah",
+    "label": "KP.04.02|Pemindahan PNS/Non PNS Antar Instansi"
+  },
+  {
+    "text": "Pelaksanaan pengawasan khusus dan pemeriksaan insidental",
+    "label": "PW.01.08|Pelaksanaan Pengawasan Lainnya"
+  },
+  {
+    "text": "Pendataan statistik kepegawaian dan profil pegawai RRI",
+    "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
+  },
+  {
+    "text": "Katalog peralatan studio siaran dan rekaman RRI",
+    "label": "STO.01.01|Katalog Peralatan Studio"
+  },
+  {
+    "text": "Tagihan listrik telepon dan utilitas kantor",
+    "label": "KU.04.05|Tagihan Dinas"
+  },
+  {
+    "text": "Dokumen bukti dan penghitungan kadaluwarsa hak gugat",
+    "label": "HK.04.04|Tentang Pembuktian dan Kadaluwarsa"
+  },
+  {
+    "text": "Dokumen terms of reference dan kerangka acuan program",
+    "label": "KU.02.03|Kerangka Acuan Kerja"
+  },
+  {
+    "text": "Dokumen Perpres dan kebijakan tata kelola pemerintahan",
+    "label": "HK.01.03|Peraturan Presiden"
+  },
+  {
+    "text": "Penetapan tim kebijakan kerjasama dan pengembangan multimedia",
+    "label": "KJM.01.01|SK Tim penyusun kebijakan kerjasama dan multimedia"
+  },
+  {
+    "text": "Penyusunan rencana kebutuhan pengadaan perlengkapan",
+    "label": "PL.01.03|Rencana Kebutuhan Pengadaan"
+  },
+  {
+    "text": "Hasil evaluasi pengawasan dan audit internal RRI",
+    "label": "PW.01.03|Evaluasi"
+  },
+  {
+    "text": "Penetapan santunan dan pensiun pegawai yang tewas",
+    "label": "KP.08.07|Pensiun Meninggal Dunia/Tewas"
+  },
+  {
+    "text": "Dokumen pembinaan dan peningkatan kompetensi SDM",
+    "label": "LT.03|Pembinaan dan Pengembangan SDM Penyiaran"
+  },
+  {
+    "text": "Rapat dengar pendapat DPR tentang penyiaran RRI",
+    "label": "HM.01.03|Dengar Pendapat (RDP) Komisi I DPR RI"
+  },
+  {
+    "text": "Program olahraga dan kesenian di lingkungan kerja",
+    "label": "KP.07.03|Olahraga/Kesenian dan Budaya"
+  },
+  {
+    "text": "Laporan mutasi dan posisi BMN per semester",
+    "label": "PL.04.05|Pelaporan Persediaan dan BMN"
+  },
+  {
+    "text": "Pengembangan teknologi sistem penyiaran radio digital",
+    "label": "LT.02|Pengembangan Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Peraturan Direksi tentang manajemen sumber daya",
+    "label": "HK.02.04|Peraturan Dewan Direksi"
+  },
+  {
+    "text": "Laporan pelaksanaan anggaran belanja satuan kerja",
+    "label": "PR.02.02|Pelaksanaan Anggaran"
+  },
+  {
+    "text": "Dokumen teknis spesifikasi alat studio broadcasting",
+    "label": "STO.02.01|Spesifikasi Peralatan Studio"
+  },
+  {
+    "text": "Evaluasi perencanaan kegiatan dan program kerja tahunan",
+    "label": "PR.03.01|Evaluasi Perencanaan Kegiatan"
+  },
+  {
+    "text": "SK pengangkatan dalam jabatan eselon dan administrator",
+    "label": "KP.04.06|Pengangkatan, Pemindahan, dan Pemberhentian dalam Jabatan Struktural"
+  },
+  {
+    "text": "Dokumen pembelian barang dan peralatan kantor",
+    "label": "PL.02.04|Pembelian"
+  },
+  {
+    "text": "Dokumen proses digitalisasi dan alih media arsip unit",
+    "label": "UM.02.04|Berkas Proses Alih Media Arsip"
+  },
+  {
+    "text": "Laporan kegiatan semester I dan evaluasi program",
+    "label": "PR.02.03|Program dan Kegiatan Berkala (Triwulan, Semester, dan Tahunan) serta Insidental"
+  },
+  {
+    "text": "Pelaksanaan kegiatan organisasi lain di lingkungan RRI",
+    "label": "KP.09.04|Organisasi Lainnya"
+  },
+  {
+    "text": "Surat ucapan selamat dan belasungkawa dari pimpinan",
+    "label": "HM.01.06|Ucapan terima kasih, ucapan selamat, belasungkawa, dan permohonan maaf di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Administrasi hibah luar negeri dan loan agreement",
+    "label": "KU.02.01|Loan Agreement/Hibah Luar Negeri"
+  },
+  {
+    "text": "Dokumen pensiun BUP dan penetapan hak pensiun",
+    "label": "KP.08.05|Pensiun (BUP)"
+  },
+  {
+    "text": "Pengaturan keamanan dan ketertiban di lingkungan kerja",
+    "label": "UM.01.02|Kebersihan, Ketertiban dan Keamanan"
+  },
+  {
+    "text": "Surat keputusan pemberhentian dengan hormat pegawai",
+    "label": "KP.08.01|Pemberhentian Dengan Hormat/Mengundurkan Diri"
+  },
+  {
+    "text": "UAT dan pengujian penerimaan pengguna sistem",
+    "label": "DT.03.02|User Acceptance Test"
+  },
+  {
+    "text": "Pengelolaan klinik kesehatan di lingkungan kantor RRI",
+    "label": "KP.07.01|Kesehatan/Klinik"
+  },
+  {
+    "text": "Monitoring disiplin kehadiran dan jam kerja harian",
+    "label": "KP.06.06|Jam Kerja/Disiplin"
+  },
+  {
+    "text": "Assessment pegawai untuk pengisian jabatan struktural",
+    "label": "KP.06.01|Assesment Pegawai"
+  },
+  {
+    "text": "Berita acara pelantikan dan sumpah jabatan pegawai",
+    "label": "KP.01.09|Sumpah Pegawai"
+  },
+  {
+    "text": "Kegiatan sosialisasi informasi dan program lembaga",
+    "label": "HM.02.01|Sosialisasi"
+  },
+  {
+    "text": "Permohonan penggunaan arsip dan peminjaman dokumen",
+    "label": "UM.02.02|Layanan Arsip (Peminjaman dan Penggunaan Arsip)"
+  },
+  {
+    "text": "Kegiatan olahraga bersama dan senam pagi pegawai RRI",
+    "label": "KP.07.03|Olahraga/Kesenian dan Budaya"
+  },
+  {
+    "text": "Program pembinaan aset dan barang milik negara",
+    "label": "PL.03.01|Pembinaan BMN Perlengkapan"
+  },
+  {
+    "text": "Pembayaran uang makan harian dan tunjangan kinerja",
+    "label": "KU.01.08|Daftar uang Makan/Uang Lembur/Remunerasi/Honor"
+  },
+  {
+    "text": "Pemeliharaan database konten dan arsip digital",
+    "label": "DT.02.02|Pemeliharaan konten"
+  },
+  {
+    "text": "Penyusunan DUK dan daftar kepangkatan unit kerja",
+    "label": "KP.01.10|Daftar Kepangkatan/DUK"
+  },
+  {
+    "text": "Peraturan lembaga tentang tata kelola organisasi",
+    "label": "HK.01.07|Keputusan/Peraturan Lembaga/Badan"
+  },
+  {
+    "text": "Proses hukum pidana kejahatan di lingkungan RRI",
+    "label": "HK.05.01|Kejahatan"
+  },
+  {
+    "text": "Dokumen Keppres dan penetapan kebijakan nasional",
+    "label": "HK.01.04|Keputusan Presiden"
+  },
+  {
+    "text": "Pemeliharaan rutin portal web dan sistem online",
+    "label": "DT.02.01|Pemeliharaan portal"
+  },
+  {
+    "text": "Hukuman jabatan berupa pembebasan dari jabatan",
+    "label": "KP.06.04|Skorsing/Hukuman Jabatan"
+  },
+  {
+    "text": "Dokumen lelang dan penjualan aset yang dihapuskan",
+    "label": "PL.05.05|Pelelangan/Penjualan"
+  },
+  {
+    "text": "Dokumen penyimpanan dan pengelolaan gudang satker",
+    "label": "PL.03.05|Pergudangan/Penyimpanan"
+  },
+  {
+    "text": "Dokumen surat edaran lembaga terkait pelaksanaan tugas",
+    "label": "HK.01.06|Surat Edaran"
+  },
+  {
+    "text": "Transaksi LC dan pembukaan kredit dokumenter",
+    "label": "KU.02.09|Pembukaan LC (Letter of Credit)/Valuta Asing/Penerbitan/Obligasi"
+  },
+  {
+    "text": "SK panitia program produksi pemberitaan RRI",
+    "label": "PPP.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Panduan penggunaan logo dan branding lembaga",
+    "label": "OT.02.03|Logo"
+  },
+  {
+    "text": "Dokumen surat menyurat program dan produksi siaran",
+    "label": "PPS.01.02|Surat masuk dan keluar"
+  },
+  {
+    "text": "Evaluasi dan rencana perubahan organisasi lembaga",
+    "label": "OT.01.01|Organisasi (Rencana, Penetapan Struktur dan Evaluasi)"
+  },
+  {
+    "text": "Surat izin cuti sakit dan cuti melahirkan pegawai",
+    "label": "KP.01.11|Cuti"
+  },
+  {
+    "text": "Pelaksanaan pengawasan internal terhadap pengelolaan keuangan",
+    "label": "PW.01.07|Pelaksanaan Pengawasan Internal dan Eksternal"
+  },
+  {
+    "text": "Kompilasi data operasional dan teknis penyiaran",
+    "label": "DT.02.03|Pengumpulan data"
+  },
+  {
+    "text": "Kontrak kerja pegawai honorer dan tenaga tidak tetap",
+    "label": "KP.01.05|Daftar Nominatif/Data Pegawai Honorer (kontrak)"
+  },
+  {
+    "text": "Memorandum of Understanding dengan broadcaster asing",
+    "label": "HK.03.01|Luar Negeri"
+  },
+  {
+    "text": "SK impasing dan penyesuaian kualifikasi pendidikan",
+    "label": "KP.04.08|Impasing/Penyesuaian Ijazah"
+  },
+  {
+    "text": "Jadwal retensi arsip dan penyusutan berkas unit kerja",
+    "label": "UM.02.03|Penyusutan Arsip"
+  },
+  {
+    "text": "Pengelolaan klasifikasi data aset dan perlengkapan",
+    "label": "PL.01.02|Klasifikasi Data"
+  },
+  {
+    "text": "Kajian analisis program strategis lembaga penyiaran publik",
+    "label": "PR.01.03|Analisis Program"
+  },
+  {
+    "text": "Penerbitan SPPD untuk perjalanan dinas dalam negeri",
+    "label": "KU.01.04|SPPD"
+  },
+  {
+    "text": "Surat pendelegasian wewenang pejabat kepada bawahan",
+    "label": "KP.01.08|Pendelegasian Wewenang"
+  },
+  {
+    "text": "Dokumen pensiun janda dan daftar ahli waris pegawai",
+    "label": "KP.08.06|Pensiun Janda/Duda/Anak"
+  },
+  {
+    "text": "Pengajuan dan penilaian angka kredit jabatan fungsional",
+    "label": "KP.06.08|Angka Kredit Jabatan Fungsional"
+  },
+  {
+    "text": "Salinan instruksi presiden untuk kementerian lembaga",
+    "label": "HK.01.05|Instruksi Presiden"
+  },
+  {
+    "text": "Pemeliharaan konten digital dan arsip siaran online",
+    "label": "DT.02.02|Pemeliharaan konten"
+  },
+  {
+    "text": "Manajemen perpustakaan dan sistem informasi pustaka",
+    "label": "PB.02.01|Kehumasan, kepustakaan dan perpustakaan di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Daftar barang multimedia dan peralatan informasi teknologi",
+    "label": "IT.01.01|Barang/Peralatan Multimedia"
+  },
+  {
+    "text": "Dokumen peta jabatan dan struktur organisasi",
+    "label": "KP.02.03|Peta Jabatan"
+  },
+  {
+    "text": "Sertifikat pelatihan teknis dan workshop keahlian",
+    "label": "KP.05.06|Diklat Teknis"
+  },
+  {
+    "text": "Evaluasi pelaksanaan reformasi birokrasi tahunan",
+    "label": "OT.01.02|Reformasi Birokrasi"
+  },
+  {
+    "text": "Dokumen formasi jabatan dan rencana kebutuhan pegawai",
+    "label": "KP.02.02|Formasi Pegawai"
+  },
+  {
+    "text": "Surat keterangan aktif bekerja dan penugasan pegawai",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Pengajuan SPP belanja operasional dan belanja lain-lain",
+    "label": "KU.01.05|SPP/Surat Permintaan Pembayaran (Belanja Pegawai, Belanja Barang, Belanja Modal, Belanja Lain-lain)"
+  },
+  {
+    "text": "Dokumen ujian penyesuaian ijazah dan kenaikan pangkat",
+    "label": "KP.06.02|Ujian Dinas, Ujian Penyesuaian Ijazah"
+  },
+  {
+    "text": "Evaluasi harga penawaran dan spesifikasi teknis",
+    "label": "PL.02.03|Harga dan Mutu"
+  },
+  {
+    "text": "Peraturan Presiden bidang informasi dan komunikasi",
+    "label": "HK.01.03|Peraturan Presiden"
+  },
+  {
+    "text": "Program pengembangan SDM dan pelatihan karyawan siaran",
+    "label": "LT.03|Pembinaan dan Pengembangan SDM Penyiaran"
+  },
+  {
+    "text": "Berita acara penilaian fisik barang milik negara",
+    "label": "PL.05.03|Penilaian"
+  },
+  {
+    "text": "Laporan pajak bulanan dan setoran pajak ke kas negara",
+    "label": "KU.03.01|Pajak-pajak"
+  },
+  {
+    "text": "Permohonan pengunduran diri CPNS dari status pegawai",
+    "label": "KP.03.03|Pengangkatan dan Pengunduran Diri CPNS"
+  },
+  {
+    "text": "Analisis data perencanaan kebutuhan perlengkapan",
+    "label": "PL.01.01|Analisis Data Perencanaan"
+  },
+  {
+    "text": "Laporan analisis program kegiatan triwulan LPP RRI",
+    "label": "PR.01.03|Analisis Program"
+  },
+  {
+    "text": "Dokumen pembinaan mental dan kegiatan keagamaan",
+    "label": "KP.05.02|Pembinaan Mental"
+  },
+  {
+    "text": "Penetapan dan pengangkatan PNS dari status CPNS",
+    "label": "KP.03.04|Pengangkatan PNS"
+  },
+  {
+    "text": "Himpunan undang-undang terkait penyiaran dan kearsipan",
+    "label": "HK.01.01|Undang-Undang"
+  },
+  {
+    "text": "Penyusunan neraca tahunan dan laporan keuangan",
+    "label": "KU.01.07|Neraca (semesteran, Tahunan)"
+  },
+  {
+    "text": "Pembinaan dan pengembangan kompetensi pegawai siaran",
+    "label": "LT.03|Pembinaan dan Pengembangan SDM Penyiaran"
+  },
+  {
+    "text": "Klaim jaminan sosial Taspen dan asuransi kesehatan",
+    "label": "KP.07.02|Taspen/Askes/Jasmostek/Bapertarum"
+  },
+  {
+    "text": "Dokumen pengumpulan rencana pengadaan barang lembaga",
+    "label": "PL.01.04|Pengumpulan Data rencana Pengadaan Lembaga"
+  },
+  {
+    "text": "Dokumen LAKIP tahun anggaran Lembaga Penyiaran Publik",
+    "label": "PR.02.04|Akuntabilitas Kinerja Instansi Pemerintah (LAKIP)"
+  },
+  {
+    "text": "Festival penyiaran dan pameran produk siaran",
+    "label": "HM.02.03|Pameran/Festival"
+  },
+  {
+    "text": "Permohonan cuti tahunan dan cuti besar pegawai",
+    "label": "KP.01.11|Cuti"
+  },
+  {
+    "text": "Rencana formasi dan kebutuhan sumber daya manusia",
+    "label": "KP.02.02|Formasi Pegawai"
+  },
+  {
+    "text": "Pedoman identitas visual dan logo organisasi",
+    "label": "OT.02.03|Logo"
+  },
+  {
+    "text": "Proses rehabilitasi dan renovasi ruang kerja kantor",
+    "label": "PL.03.04|Rehabilitasi/Pemulihan/Renovasi"
+  },
+  {
+    "text": "Surat perintah pemanggilan pegawai untuk keperluan dinas",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Dokumen pencegahan dan penindakan korupsi di lembaga",
+    "label": "HK.05.03|Korupsi Kolusi Nepotisme (KKN)"
+  },
+  {
+    "text": "Dokumen SOP dan pedoman kerja unit organisasi",
+    "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
+  },
+  {
+    "text": "Dokumen diklat prajabatan dan lulus latsar CPNS",
+    "label": "KP.05.03|Diklat Prajabatan"
+  },
+  {
+    "text": "Penanganan laporan gratifikasi pejabat dan pegawai",
+    "label": "PW.01.06|Gratifikasi"
+  },
+  {
+    "text": "Pelaksanaan ceramah agama dan pembinaan mental pegawai",
+    "label": "KP.05.02|Pembinaan Mental"
+  },
+  {
+    "text": "Perjanjian kontrak dan administrasi dokumen keuangan",
+    "label": "KU.02.06|Dokumen Kontrak"
+  },
+  {
+    "text": "Pembuktian sengketa perdata dan tenggat waktu hukum",
+    "label": "HK.04.04|Tentang Pembuktian dan Kadaluwarsa"
+  },
+  {
+    "text": "Implementasi teknologi baru untuk sistem siaran",
+    "label": "LT.02|Pengembangan Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "SK tim penyusun program dan kebijakan siaran RRI",
+    "label": "PPS.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Hasil evaluasi proses penyusunan anggaran tahunan",
+    "label": "PR.03.02|Evaluasi Penyusunan Anggaran"
+  },
+  {
+    "text": "Formasi pegawai negeri sipil tahun anggaran berjalan",
+    "label": "KP.02.02|Formasi Pegawai"
+  },
+  {
+    "text": "Pengumpulan data audio video non berita dan hiburan",
+    "label": "KJM.09.01|Pengumpulan data audio/video non berita"
+  },
+  {
+    "text": "Analisis data rencana pengadaan barang inventaris",
+    "label": "PL.01.01|Analisis Data Perencanaan"
+  },
+  {
+    "text": "Proses penyusutan arsip inaktif dan pemindahan ke pusat arsip",
+    "label": "UM.02.03|Penyusutan Arsip"
+  },
+  {
+    "text": "Administrasi perumahan dinas dan kendaraan jabatan",
+    "label": "UM.01.04|Perumahan Dinas/Kendaraan Dinas"
+  },
+  {
+    "text": "Nota Dinas tentang administrasi persuratan dan tata naskah dinas",
+    "label": "UM.01.01|Administrasi Persuratan"
+  },
+  {
+    "text": "Skenario UAT dan laporan pengujian sistem",
+    "label": "DT.03.02|User Acceptance Test"
+  },
+  {
+    "text": "Sertifikat diklat pimpinan tingkat pratama dan madya",
+    "label": "KP.05.04|Diklat Pimpinan"
+  },
+  {
+    "text": "Pemanfaatan BMN melalui sewa dan kerja sama",
+    "label": "KU.03.03|Sewa Pemanfaatan Aset/barang Milik Negara"
+  },
+  {
+    "text": "Penyelesaian sengketa tata usaha negara di PTUN",
+    "label": "HK.06.01|Gugatan"
+  },
+  {
+    "text": "Pemeliharaan gedung kantor dan fasilitas perkantoran RRI",
+    "label": "UM.01.05|Gedung/Perkantoran/Gudang"
+  },
+  {
+    "text": "Dokumen undang-undang penyiaran nomor 32 tahun 2002",
+    "label": "HK.01.01|Undang-Undang"
+  },
+  {
+    "text": "Proses kenaikan pangkat berkala pegawai negeri sipil",
+    "label": "KP.04.04|Kenaikan Pangkat Struktural dan Fungsional"
+  },
+  {
+    "text": "Bukti-bukti hukum dan batas waktu kadaluwarsa gugatan",
+    "label": "HK.04.04|Tentang Pembuktian dan Kadaluwarsa"
+  },
+  {
+    "text": "Dokumen hasil pemeriksaan kesehatan jasmani dan rohani",
+    "label": "KP.01.16|Uji Kesehatan"
+  },
+  {
+    "text": "Permohonan rehabilitasi nama baik pegawai yang dibebaskan",
+    "label": "KP.06.05|Rehabilitasi/Permohonan Kerja Kembali"
+  },
+  {
+    "text": "Penundaan kenaikan pangkat sebagai hukuman disiplin",
+    "label": "KP.06.03|Teguran/Peringatan/Penundaan gaji dan Pangkat/Penurunan Pangkat"
+  },
+  {
+    "text": "Proses pengumpulan data untuk analisis dan laporan",
+    "label": "DT.02.03|Pengumpulan data"
+  },
+  {
+    "text": "Penetapan tim penyusun kebijakan program berita RRI",
+    "label": "PPP.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Kontrak pengadaan dengan sumber dana pinjaman luar negeri",
+    "label": "KU.02.06|Dokumen Kontrak"
+  },
+  {
+    "text": "Surat perintah piket keamanan dan ketertiban lingkungan kerja",
+    "label": "UM.01.02|Kebersihan, Ketertiban dan Keamanan"
+  },
+  {
+    "text": "Hasil ujian dinas tingkat I dan II pegawai negeri",
+    "label": "KP.06.02|Ujian Dinas, Ujian Penyesuaian Ijazah"
+  },
+  {
+    "text": "Izin penggunaan lapangan dan fasilitas gedung kantor",
+    "label": "UM.01.03|Izin Peyewaan/peminjaman (Alat-alat, Ruangan, Lapangan, dll)"
+  },
+  {
+    "text": "Penerimaan hibah dari lembaga internasional dan donor",
+    "label": "KU.02.01|Loan Agreement/Hibah Luar Negeri"
+  },
+  {
+    "text": "Dokumen pelanggaran pidana ringan dan peringatan",
+    "label": "HK.05.02|Pelanggaran/Peringatan/Teguran/Pencabutan"
+  },
+  {
+    "text": "Pengumpulan data rencana pengadaan dari unit kerja",
+    "label": "PL.01.04|Pengumpulan Data rencana Pengadaan Lembaga"
+  },
+  {
+    "text": "Dokumen penilaian assessment kompetensi pejabat",
+    "label": "KP.06.01|Assesment Pegawai"
+  },
+  {
+    "text": "Pengawasan internal dan eksternal pelaksanaan program",
+    "label": "PW.01.07|Pelaksanaan Pengawasan Internal dan Eksternal"
+  },
+  {
+    "text": "SE internal tentang tata tertib dan aturan kantor",
+    "label": "HK.02.07|Surat Edaran/Nota Dinas"
+  },
+  {
+    "text": "Rapat koordinasi eksternal dengan mitra kerja lembaga",
+    "label": "KS.01.03|Koordinasi Internal dan Eksternal LPP RRI"
+  },
+  {
+    "text": "Update peta jabatan dan hierarki organisasi lembaga",
+    "label": "KP.02.03|Peta Jabatan"
+  },
+  {
+    "text": "Partisipasi RRI dalam pameran teknologi dan media",
+    "label": "HM.02.03|Pameran/Festival"
+  },
+  {
+    "text": "Dokumen Bapertarum dan tabungan perumahan PNS",
+    "label": "KP.07.02|Taspen/Askes/Jasmostek/Bapertarum"
+  },
+  {
+    "text": "Dokumentasi dan liputan kegiatan dinas pimpinan RRI",
+    "label": "HM.01.01|Dokumentasi/liputan kegiatan dinas pimpinan, pengumpulan, pengolahan dan penyajian informasi kegiatan"
+  },
+  {
+    "text": "Permohonan izin belajar dan tugas belajar pegawai",
+    "label": "KP.01.15|Izin Kerja/izin Belajar/Izin Dispensasi"
+  },
+  {
+    "text": "Rincian DIPA dan alokasi anggaran APBN lembaga",
+    "label": "KU.01.01|DIPA (Rincian RKA-KL, Petunjuk Operasional (PO), Pergeseran/Perubahan/Revisi DIPA dan PO DIPA, APBN)"
+  },
+  {
+    "text": "Pelatihan diklat fungsional arsiparis dan pranata siaran",
+    "label": "KP.05.05|Diklat Fungsional"
+  },
+  {
+    "text": "Penilaian angka kredit pranata siaran dan pustakawan",
+    "label": "KP.06.08|Angka Kredit Jabatan Fungsional"
+  },
+  {
+    "text": "Penugasan pegawai dengan status diperbantukan ke instansi lain",
+    "label": "KP.04.03|Pemindahan PNS/Non PNS dengan Status Dipekerjakan/Diperbantukan"
+  },
+  {
+    "text": "Surat kuasa pendelegasian wewenang jabatan",
+    "label": "KP.01.08|Pendelegasian Wewenang"
+  },
+  {
+    "text": "Proses pensiun karena batas usia pensiun 58/60 tahun",
+    "label": "KP.08.05|Pensiun (BUP)"
+  },
+  {
+    "text": "Penyelenggaraan ujian dinas untuk kenaikan golongan",
+    "label": "KP.06.02|Ujian Dinas, Ujian Penyesuaian Ijazah"
+  },
+  {
+    "text": "Daftar pembayaran uang makan dan uang lembur pegawai",
+    "label": "KU.01.08|Daftar uang Makan/Uang Lembur/Remunerasi/Honor"
+  },
+  {
+    "text": "Prosedur penyimpanan arsip aktif dan inaktif di records center",
+    "label": "UM.02.01|Penyimpanan dan Pemeliharaan Arsip"
+  },
+  {
+    "text": "Mutasi pemindahan PNS dari satu unit ke unit lainnya",
+    "label": "KP.04.01|Pemindahan PNS/Non PNS Antar Unit"
+  },
+  {
+    "text": "Pengumuman seleksi penerimaan pegawai baru RRI",
+    "label": "KP.03.01|Seleksi Pegawai"
+  },
+  {
+    "text": "Perjanjian ruislag dan tukar menukar barang negara",
+    "label": "PL.05.06|Tukar Guling/Ruislag"
+  },
+  {
+    "text": "Distribusi dan pengiriman barang ke satuan kerja daerah",
+    "label": "PL.03.02|Distribusi/Pengiriman"
+  },
+  {
+    "text": "Update daftar urut kepangkatan pegawai instansi",
+    "label": "KP.01.10|Daftar Kepangkatan/DUK"
+  },
+  {
+    "text": "Pengelolaan konten website dan publikasi berita lembaga",
+    "label": "PB.01.01|Kehumasan melalui penerbitan/website dalam lingkup Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Laporan pengawasan pelaksanaan tugas dan anggaran",
+    "label": "PW.01.04|Pelaporan"
+  },
+  {
+    "text": "Dokumen perangkat teknologi siaran analog dan digital",
+    "label": "DT.01.02|Piranti teknologi penyiaran"
+  },
+  {
+    "text": "Instruksi Presiden tentang reformasi birokrasi",
+    "label": "HK.01.05|Instruksi Presiden"
+  },
+  {
+    "text": "Permohonan pengunduran diri dan pemberhentian pegawai",
+    "label": "KP.08.01|Pemberhentian Dengan Hormat/Mengundurkan Diri"
+  },
+  {
+    "text": "Dokumen juknis penghapusan aset dan barang rusak",
+    "label": "PL.05.01|Standarisasi/Petunjuk Teknis Penghapusan"
+  },
+  {
+    "text": "Standar dan prosedur penghapusan BMN dari daftar",
+    "label": "PL.05.01|Standarisasi/Petunjuk Teknis Penghapusan"
+  },
+  {
+    "text": "Salinan keputusan presiden terkait lembaga penyiaran",
+    "label": "HK.01.04|Keputusan Presiden"
+  },
+  {
+    "text": "Dokumen organisasi Korps Pegawai Republik Indonesia",
+    "label": "KP.09.01|KORPRI"
+  },
+  {
+    "text": "Kegiatan pembinaan kearsipan untuk petugas arsip unit",
+    "label": "UM.02.05|Pembinaan Kearsipan"
+  },
+  {
+    "text": "Pengumpulan data pendengar dan statistik penyiaran",
+    "label": "DT.02.03|Pengumpulan data"
+  },
+  {
+    "text": "Pemberhentian PNS dengan hormat karena pensiun dini",
+    "label": "KP.08.01|Pemberhentian Dengan Hormat/Mengundurkan Diri"
+  },
+  {
+    "text": "Jadwal pemeliharaan rutin peralatan dan gedung kantor",
+    "label": "PL.03.06|Pemeliharaan BMN"
+  },
+  {
+    "text": "Nota Dinas perihal penyusunan anggaran tahun berikutnya",
+    "label": "PR.01.02|Penyusunan Anggaran"
+  },
+  {
+    "text": "Kontrak pengadaan dan berita acara hasil tender",
+    "label": "PL.02.02|Tender dan Kontrak/Prakualifikasi dan Pasca Kualifikasi, Penunjukan Pemenang, Sanggahan/ Surat Kuasa Kontrak/Berita Acara"
+  },
+  {
+    "text": "Pemberian kuasa hukum dan surat kuasa resmi pegawai",
+    "label": "KP.01.13|Surat Kuasa"
+  },
+  {
+    "text": "Pengelolaan tata usaha keuangan dan pembukuan",
+    "label": "KU.04.02|Tata Usaha Keuangan Negara"
+  },
+  {
+    "text": "Kontrak pengadaan barang jasa dan berita acara",
+    "label": "KU.01.03|Berita Acara, Kontrak/SPK"
+  },
+  {
+    "text": "Inventaris peralatan multimedia dan perangkat IT",
+    "label": "IT.01.01|Barang/Peralatan Multimedia"
+  },
+  {
+    "text": "Daftar gaji bulanan dan tunjangan kinerja pegawai RRI",
+    "label": "KP.01.03|Penggajian/KGB/Tunjangan Jabatan/Daftar gaji"
+  },
+  {
+    "text": "Pengelolaan BPJS Kesehatan dan Ketenagakerjaan pegawai",
+    "label": "KP.07.02|Taspen/Askes/Jasmostek/Bapertarum"
+  },
+  {
+    "text": "Spesifikasi peralatan pemancar digital dan analog",
+    "label": "TX.02.01|Spesifikasi Jenis Pemancar"
+  },
+  {
+    "text": "SOP penghapusan barang milik negara dan inventaris",
+    "label": "PL.05.01|Standarisasi/Petunjuk Teknis Penghapusan"
+  },
+  {
+    "text": "Rapat koordinasi lintas sektoral bidang penyiaran",
+    "label": "KS.01.01|Koordinasi Lintas Sektorat"
+  },
+  {
+    "text": "Standarisasi dan kodefikasi barang milik negara",
+    "label": "PL.04.04|Standarisasi/Kodefikasi"
+  },
+  {
+    "text": "Dokumen evaluasi analisis program kerja tahunan RRI",
+    "label": "PR.03.03|Evaluasi Analisis Program"
+  },
+  {
+    "text": "Infrastruktur backup dan disaster recovery IT RRI",
+    "label": "DT.01.01|Topologi jaringan Backup/Data Recovery Center"
+  },
+  {
+    "text": "Pembayaran tagihan listrik PAM telepon dan AC kantor",
+    "label": "UM.01.07|Listrik/PAM/Telepon/AC"
+  },
+  {
+    "text": "Kegiatan festival dan lomba kreasi masyarakat RRI",
+    "label": "HM.01.05|Lomba, festival, penghargaan/tanda kenang-kenangan kepada masyarakat/publik"
+  },
+  {
+    "text": "Dokumen SOTK dan struktur organisasi satuan kerja",
+    "label": "OT.01.01|Organisasi (Rencana, Penetapan Struktur dan Evaluasi)"
+  },
+  {
+    "text": "Penugasan DPK dan status diperbantukan pegawai negeri",
+    "label": "KP.04.03|Pemindahan PNS/Non PNS dengan Status Dipekerjakan/Diperbantukan"
+  },
+  {
+    "text": "Dokumen sengketa perdata dan penanganan gugatan",
+    "label": "HK.04.01|Tentang Orang/Pengaduan/Somasi/Sengketa/Perlindungan Hukum"
+  },
+  {
+    "text": "Perdirut tentang standar operasional prosedur",
+    "label": "HK.02.04|Peraturan Dewan Direksi"
+  },
+  {
+    "text": "Berita acara serah terima jabatan pejabat lama dan baru",
+    "label": "KP.04.09|Serah Terima Jabatan/Tugas"
+  },
+  {
+    "text": "Laporan neraca keuangan dan aset satuan kerja",
+    "label": "KU.01.07|Neraca (semesteran, Tahunan)"
+  },
+  {
+    "text": "Dokumen penempatan CPNS dan orientasi pegawai baru",
+    "label": "KP.03.02|Penempatan Pegawai"
+  },
+  {
+    "text": "Pengawasan lainnya di luar program pengawasan reguler",
+    "label": "PW.01.08|Pelaksanaan Pengawasan Lainnya"
+  },
+  {
+    "text": "Pelaksanaan penyusutan arsip sesuai jadwal retensi",
+    "label": "UM.02.03|Penyusutan Arsip"
+  },
+  {
+    "text": "Sengketa perdata terkait perikatan dan perjanjian kerja",
+    "label": "HK.04.03|Tentang Perikatan"
+  },
+  {
+    "text": "Dokumen PNBP dan pendapatan non-pajak lembaga",
+    "label": "KU.03.02|Pendapatan Bukan Pajak"
+  },
+  {
+    "text": "Pelaporan BMN dan posisi persediaan barang habis pakai",
+    "label": "PL.04.05|Pelaporan Persediaan dan BMN"
+  },
+  {
+    "text": "Dokumen kerangka acuan kerja pengadaan barang jasa",
+    "label": "KU.02.03|Kerangka Acuan Kerja"
+  },
+  {
+    "text": "Pemeliharaan aplikasi dan sistem informasi lembaga",
+    "label": "DT.03.03|Pemeliharaan Aplikasi"
+  },
+  {
+    "text": "Spesifikasi teknis jenis pemancar AM FM dan SW",
+    "label": "TX.02.01|Spesifikasi Jenis Pemancar"
+  },
+  {
+    "text": "Pemindahan dan pemberhentian pejabat dalam jabatan struktural",
+    "label": "KP.04.06|Pengangkatan, Pemindahan, dan Pemberhentian dalam Jabatan Struktural"
+  },
+  {
+    "text": "Dokumen prakualifikasi dan penetapan pemenang lelang",
+    "label": "PL.02.02|Tender dan Kontrak/Prakualifikasi dan Pasca Kualifikasi, Penunjukan Pemenang, Sanggahan/ Surat Kuasa Kontrak/Berita Acara"
+  },
+  {
+    "text": "Kompilasi data rencana pengadaan barang dan jasa",
+    "label": "PL.01.04|Pengumpulan Data rencana Pengadaan Lembaga"
+  },
+  {
+    "text": "SK pengangkatan CPNS menjadi PNS setelah masa percobaan",
+    "label": "KP.03.03|Pengangkatan dan Pengunduran Diri CPNS"
+  },
+  {
+    "text": "Dokumen mutasi pegawai dari RRI ke instansi lain",
+    "label": "KP.04.02|Pemindahan PNS/Non PNS Antar Instansi"
+  },
+  {
+    "text": "Laporan hasil RDP dan tindak lanjut arahan DPR",
+    "label": "HM.01.03|Dengar Pendapat (RDP) Komisi I DPR RI"
+  },
+  {
+    "text": "DUPAK dan angka kredit jabatan fungsional tertentu",
+    "label": "KP.06.08|Angka Kredit Jabatan Fungsional"
+  },
+  {
+    "text": "Mutasi pemindahan pegawai antar instansi pemerintah",
+    "label": "KP.04.02|Pemindahan PNS/Non PNS Antar Instansi"
+  },
+  {
+    "text": "Dokumen pengumpulan konten audio video pemberitaan",
+    "label": "KJM.08.01|Pengumpulan data audio/video berita"
+  },
+  {
+    "text": "Koordinasi lintas daerah antar satuan kerja RRI",
+    "label": "KS.01.02|Koordinasi Lintas Daerah"
+  },
+  {
+    "text": "Pertandingan olahraga dan lomba seni antar pegawai",
+    "label": "KP.07.03|Olahraga/Kesenian dan Budaya"
+  },
+  {
+    "text": "MoU kerjasama bilateral dengan lembaga penyiaran asing",
+    "label": "HK.03.01|Luar Negeri"
+  },
+  {
+    "text": "Pelaksanaan tender dan proses pengadaan barang jasa",
+    "label": "PL.02.02|Tender dan Kontrak/Prakualifikasi dan Pasca Kualifikasi, Penunjukan Pemenang, Sanggahan/ Surat Kuasa Kontrak/Berita Acara"
+  },
+  {
+    "text": "Proses pengangkatan dan penempatan PNS baru",
+    "label": "KP.03.04|Pengangkatan PNS"
+  },
+  {
+    "text": "MoU kerjasama dengan universitas dan lembaga domestik",
+    "label": "HK.03.02|Dalam Negeri"
+  },
+  {
+    "text": "Surat-surat MOU program siaran dan kerjasama konten",
+    "label": "KJM.02.01|Surat-surat MOU Program Siaran"
+  },
+  {
+    "text": "Pelayanan kesehatan klinik dan poliklinik pegawai",
+    "label": "KP.07.01|Kesehatan/Klinik"
+  },
+  {
+    "text": "Dokumen pegawai yang dipekerjakan di instansi pemerintah lain",
+    "label": "KP.04.03|Pemindahan PNS/Non PNS dengan Status Dipekerjakan/Diperbantukan"
+  },
+  {
+    "text": "Pelaksanaan event lomba dan pemberian cinderamata",
+    "label": "HM.01.05|Lomba, festival, penghargaan/tanda kenang-kenangan kepada masyarakat/publik"
+  },
+  {
+    "text": "Pengajuan penghapusan aset dengan data kondisi barang",
+    "label": "PL.05.02|Usul Penghapusan dan Data Pendukung"
+  },
+  {
+    "text": "Penyelenggaraan kebersihan gedung dan lingkungan kantor RRI",
+    "label": "UM.01.02|Kebersihan, Ketertiban dan Keamanan"
+  },
+  {
+    "text": "Setoran PNBP ke kas negara dan laporan pendapatan",
+    "label": "KU.03.02|Pendapatan Bukan Pajak"
+  },
+  {
+    "text": "Penanganan kasus korupsi kolusi dan nepotisme KKN",
+    "label": "HK.05.03|Korupsi Kolusi Nepotisme (KKN)"
+  },
+  {
+    "text": "SK penunjukan KPA PPK dan bendahara pengeluaran",
+    "label": "KU.04.03|Pengelolaan Anggaran (Kuasa Pengguna Anggaran/KPA, Pejabat Pembuat Komitmen/PPK, Pejabat Penguji dan Penandatanganan SPM, Bendahara Pengeluaran, Bendahara Penerimaan)"
+  },
+  {
+    "text": "Gugatan perdata tentang hak atas benda dan properti",
+    "label": "HK.04.02|Tentang Kebendaan"
+  },
+  {
+    "text": "Pelatihan teknis fungsional bagi pejabat fungsional",
+    "label": "KP.05.05|Diklat Fungsional"
+  },
+  {
+    "text": "Dokumen Karis Karsu dan pendaftaran keluarga PNS",
+    "label": "KP.01.04|Pendaftaran/Keluarga/Perkawinan/Anak/Karis/Karsu"
+  },
+  {
+    "text": "Perancangan aplikasi mobile dan platform digital",
+    "label": "DT.03.01|Perancangan Aplikasi"
+  },
+  {
+    "text": "Daftar remunerasi dan honor kegiatan bulanan",
+    "label": "KU.01.08|Daftar uang Makan/Uang Lembur/Remunerasi/Honor"
+  },
+  {
+    "text": "Surat tentang perencanaan kegiatan tahunan dan program kerja LPP RRI",
+    "label": "PR.01.01|Perencanaan Kegiatan"
+  },
+  {
+    "text": "Penerimaan iklan dan jasa siaran sebagai PNBP",
+    "label": "KU.03.02|Pendapatan Bukan Pajak"
+  },
+  {
+    "text": "Penilaian mandiri pelaksanaan reformasi birokrasi",
+    "label": "OT.01.02|Reformasi Birokrasi"
+  },
+  {
+    "text": "Izin kerja paruh waktu dan dispensasi kehadiran",
+    "label": "KP.01.15|Izin Kerja/izin Belajar/Izin Dispensasi"
+  },
+  {
+    "text": "SE tentang ketentuan dan pedoman pelaksanaan",
+    "label": "HK.01.06|Surat Edaran"
+  },
+  {
+    "text": "Dokumen keamanan siber dan proteksi informasi lembaga",
+    "label": "DT.01.03|Pengamanan informasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Proses tuntutan ganti rugi atas kerugian keuangan negara",
+    "label": "KU.04.01|Tuntutan Perbendaharaan/Tuntutan Ganti Rugi (TP/TGR)"
+  },
+  {
+    "text": "Laporan neraca keuangan semesteran satuan kerja",
+    "label": "KU.01.07|Neraca (semesteran, Tahunan)"
+  },
+  {
+    "text": "Dokumen masa persiapan pensiun dan orientasi purna tugas",
+    "label": "KP.08.03|Masa Persiapan Pensiun (MPP)/Pembekalan Pensiun"
+  },
+  {
+    "text": "Detail teknis peralatan rekaman dan siaran studio",
+    "label": "STO.02.01|Spesifikasi Peralatan Studio"
+  },
+  {
+    "text": "Program pembinaan mental spiritual pegawai RRI",
+    "label": "KP.05.02|Pembinaan Mental"
+  },
+  {
+    "text": "Pembekalan pensiun dan persiapan memasuki masa pensiun",
+    "label": "KP.08.03|Masa Persiapan Pensiun (MPP)/Pembekalan Pensiun"
+  },
+  {
+    "text": "Perjanjian kerjasama luar negeri dan MoU bilateral",
+    "label": "HK.03.01|Luar Negeri"
+  },
+  {
+    "text": "Administrasi tagihan dinas dan bukti pembayaran",
+    "label": "KU.04.05|Tagihan Dinas"
+  },
+  {
+    "text": "Penetapan kode dan standar klasifikasi barang BMN",
+    "label": "PL.04.04|Standarisasi/Kodefikasi"
+  },
+  {
+    "text": "Sosialisasi informasi publik melalui media massa",
+    "label": "HM.02.01|Sosialisasi"
+  },
+  {
+    "text": "Desain jaringan backup dan pusat pemulihan data",
+    "label": "DT.01.01|Topologi jaringan Backup/Data Recovery Center"
+  },
+  {
+    "text": "SK penetapan penghapusan barang milik negara",
+    "label": "PL.05.04|Penetapan Penghapusan"
+  },
+  {
+    "text": "Laporan berkala program dan kegiatan triwulanan RRI",
+    "label": "PR.02.03|Program dan Kegiatan Berkala (Triwulan, Semester, dan Tahunan) serta Insidental"
+  },
+  {
+    "text": "Proses penyesuaian ijazah terakhir pegawai negeri",
+    "label": "KP.04.08|Impasing/Penyesuaian Ijazah"
+  },
+  {
+    "text": "Dokumen maintenance portal berita dan streaming",
+    "label": "DT.02.01|Pemeliharaan portal"
+  },
+  {
+    "text": "Dokumen DP3 dan penilaian prestasi kerja PNS",
+    "label": "KP.06.07|DP3/SKP"
+  },
+  {
+    "text": "Dokumen pengumpulan data operasional dan teknis",
+    "label": "DT.02.03|Pengumpulan data"
+  },
+  {
+    "text": "Sertifikat diklat prajabatan calon pegawai negeri sipil",
+    "label": "KP.05.03|Diklat Prajabatan"
+  },
+  {
+    "text": "Pengelolaan anggaran oleh Kuasa Pengguna Anggaran",
+    "label": "KU.04.03|Pengelolaan Anggaran (Kuasa Pengguna Anggaran/KPA, Pejabat Pembuat Komitmen/PPK, Pejabat Penguji dan Penandatanganan SPM, Bendahara Pengeluaran, Bendahara Penerimaan)"
+  },
+  {
+    "text": "Dokumen LHKPN pejabat struktural LPP RRI",
+    "label": "PW.01.05|LHKPN"
+  },
+  {
+    "text": "Dokumen instruksi Direksi untuk perbaikan layanan",
+    "label": "HK.02.06|Instruksi Dewan Direksi"
+  },
+  {
+    "text": "Mutasi dan pembebasan sementara pejabat fungsional",
+    "label": "KP.04.07|Pengangkatan, Pemindahan, Pemberhentian dan Pembebasan Sementara dalam Jabatan Fungsional"
+  },
+  {
+    "text": "Evaluasi tata laksana dan mekanisme kerja unit",
+    "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
+  },
+  {
+    "text": "Surat keputusan kenaikan gaji berkala KGB pegawai",
+    "label": "KP.01.03|Penggajian/KGB/Tunjangan Jabatan/Daftar gaji"
+  },
+  {
+    "text": "Pelaksanaan anggaran program dan kegiatan tahun berjalan",
+    "label": "PR.02.02|Pelaksanaan Anggaran"
+  },
+  {
+    "text": "Koleksi audio video sandiwara radio dan drama",
+    "label": "KJM.09.01|Pengumpulan data audio/video non berita"
+  },
+  {
+    "text": "Daftar urut kepangkatan DUK pegawai negeri sipil",
+    "label": "KP.01.10|Daftar Kepangkatan/DUK"
+  },
+  {
+    "text": "Proses pemindahan pegawai antar kementerian lembaga",
+    "label": "KP.04.02|Pemindahan PNS/Non PNS Antar Instansi"
+  },
+  {
+    "text": "Penyelenggaraan diklat prajabatan CPNS golongan III",
+    "label": "KP.05.03|Diklat Prajabatan"
+  },
+  {
+    "text": "Daftar nominatif pensiun dan jadwal pemberhentian",
+    "label": "KP.08.08|Nominatif Pensiun"
+  },
+  {
+    "text": "Administrasi data keluarga perkawinan dan Karis/Karsu",
+    "label": "KP.01.04|Pendaftaran/Keluarga/Perkawinan/Anak/Karis/Karsu"
+  },
+  {
+    "text": "Dokumen pendelegasian tugas dan wewenang pejabat",
+    "label": "KP.01.08|Pendelegasian Wewenang"
+  },
+  {
+    "text": "Dokumen organisasi dan program Dharma Wanita",
+    "label": "KP.09.02|Dharma Wanita"
+  },
+  {
+    "text": "Evaluasi capaian perencanaan kegiatan dan program kerja",
+    "label": "PR.03.01|Evaluasi Perencanaan Kegiatan"
+  },
+  {
+    "text": "Surat peringatan keras dan sanksi disiplin pegawai",
+    "label": "KP.06.03|Teguran/Peringatan/Penundaan gaji dan Pangkat/Penurunan Pangkat"
+  },
+  {
+    "text": "Pengawasan dan penanganan aspirasi masyarakat melalui media",
+    "label": "PW.03.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Pengelolaan dan pemeliharaan portal informasi lembaga",
+    "label": "DT.02.01|Pemeliharaan portal"
+  },
+  {
+    "text": "Dokumen publikasi kehumasan melalui media cetak dan online",
+    "label": "PB.01.01|Kehumasan melalui penerbitan/website dalam lingkup Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Nota kesepakatan bersama dengan radio internasional",
+    "label": "HK.03.01|Luar Negeri"
+  },
+  {
+    "text": "Dokumen pelayanan kesehatan dan rujukan pegawai",
+    "label": "KP.07.01|Kesehatan/Klinik"
+  },
+  {
+    "text": "Dokumen impasing dan kenaikan pangkat penyesuaian ijazah",
+    "label": "KP.04.08|Impasing/Penyesuaian Ijazah"
+  },
+  {
+    "text": "Pelatihan dan pembinaan pengelolaan arsip dinamis",
+    "label": "UM.02.05|Pembinaan Kearsipan"
+  },
+  {
+    "text": "Laporan program kegiatan berkala triwulan I LPP RRI",
+    "label": "PR.02.03|Program dan Kegiatan Berkala (Triwulan, Semester, dan Tahunan) serta Insidental"
+  },
+  {
+    "text": "Program kesehatan kerja dan klinik kantor RRI",
+    "label": "KP.07.01|Kesehatan/Klinik"
+  },
+  {
+    "text": "Sosialisasi dan bimbingan teknis pengelolaan kearsipan",
+    "label": "UM.02.05|Pembinaan Kearsipan"
+  },
+  {
+    "text": "Layanan peminjaman arsip untuk keperluan dinas dan audit",
+    "label": "UM.02.02|Layanan Arsip (Peminjaman dan Penggunaan Arsip)"
+  },
+  {
+    "text": "Peraturan Direksi tentang tata kelola operasional RRI",
+    "label": "HK.02.04|Peraturan Dewan Direksi"
+  },
+  {
+    "text": "Dokumen peraturan Dewan Direksi bidang siaran",
+    "label": "HK.02.04|Peraturan Dewan Direksi"
+  },
+  {
+    "text": "Instruksi Dewas tentang tindak lanjut rekomendasi",
+    "label": "HK.02.03|Instruksi Dewan Pengawas"
+  },
+  {
+    "text": "Pembukaan letter of credit LC untuk transaksi internasional",
+    "label": "KU.02.09|Pembukaan LC (Letter of Credit)/Valuta Asing/Penerbitan/Obligasi"
+  },
+  {
+    "text": "Dokumen perdata terkait kepemilikan aset dan barang",
+    "label": "HK.04.02|Tentang Kebendaan"
+  },
+  {
+    "text": "Penyiapan bahan evaluasi temuan audit BPK dan BPKP",
+    "label": "PW.03.01|Penyiapan Bahan Evaluasi Atas laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Arahan Direktur Utama kepada seluruh unit kerja",
+    "label": "HK.02.06|Instruksi Dewan Direksi"
+  },
+  {
+    "text": "Pengelolaan gudang dan penyimpanan barang persediaan",
+    "label": "PL.03.05|Pergudangan/Penyimpanan"
+  },
+  {
+    "text": "Pelatihan kepemimpinan dan manajemen pejabat eselon",
+    "label": "KP.05.04|Diklat Pimpinan"
+  },
+  {
+    "text": "Dokumentasi pemberitaan media massa tentang RRI",
+    "label": "HM.02.02|Pers/Media Massa/Website"
+  },
+  {
+    "text": "Pelatihan teknis keahlian khusus bagi pegawai RRI",
+    "label": "KP.05.06|Diklat Teknis"
+  },
+  {
+    "text": "Pemindahan pegawai dengan status diperbantukan DPK",
+    "label": "KP.04.03|Pemindahan PNS/Non PNS dengan Status Dipekerjakan/Diperbantukan"
+  },
+  {
+    "text": "Dokumen evaluasi rencana anggaran dan belanja negara",
+    "label": "PR.03.02|Evaluasi Penyusunan Anggaran"
+  },
+  {
+    "text": "Surat izin peminjaman ruangan aula untuk kegiatan rapat",
+    "label": "UM.01.03|Izin Peyewaan/peminjaman (Alat-alat, Ruangan, Lapangan, dll)"
+  },
+  {
+    "text": "Pengelolaan surat masuk keluar bidang program siaran",
+    "label": "PPS.01.02|Surat masuk dan keluar"
+  },
+  {
+    "text": "Pengelolaan utilitas listrik air telepon dan pendingin ruangan",
+    "label": "UM.01.07|Listrik/PAM/Telepon/AC"
+  },
+  {
+    "text": "Proses reimbursement keuangan kepada lembaga pemberi",
+    "label": "KU.02.07|Reimburstment Kepada Negara/Badan Pemberian Bantuan"
+  },
+  {
+    "text": "Penyelesaian tuntutan perbendaharaan bendahara",
+    "label": "KU.04.01|Tuntutan Perbendaharaan/Tuntutan Ganti Rugi (TP/TGR)"
+  },
+  {
+    "text": "Kartu inventaris barang tidak bergerak dan sertifikat",
+    "label": "PL.04.03|Barang-barang Tidak Bergerak"
+  },
+  {
+    "text": "Hasil evaluasi rencana kegiatan tahun anggaran berjalan",
+    "label": "PR.03.01|Evaluasi Perencanaan Kegiatan"
+  },
+  {
+    "text": "Dokumen kontrak kerja sama dan perjanjian keuangan",
+    "label": "KU.02.06|Dokumen Kontrak"
+  },
+  {
+    "text": "Laporan penggunaan listrik dan air bersih kantor RRI",
+    "label": "UM.01.07|Listrik/PAM/Telepon/AC"
+  },
+  {
+    "text": "Dokumen pembuktian dan tenggat kadaluwarsa perkara",
+    "label": "HK.04.04|Tentang Pembuktian dan Kadaluwarsa"
+  },
+  {
+    "text": "Kegiatan hubungan kelembagaan dan networking",
+    "label": "HM.01.02|Hubungan antar lembaga"
+  },
+  {
+    "text": "Pedoman teknis penghapusan dan pemusnahan BMN",
+    "label": "PL.05.01|Standarisasi/Petunjuk Teknis Penghapusan"
+  },
+  {
+    "text": "Blueprint perancangan sistem aplikasi penyiaran",
+    "label": "DT.03.01|Perancangan Aplikasi"
+  },
+  {
+    "text": "Dokumen pengunduran diri dan pemberhentian secara hormat",
+    "label": "KP.08.01|Pemberhentian Dengan Hormat/Mengundurkan Diri"
+  },
+  {
+    "text": "Pengembalian dana dan reimbursement ke badan donor",
+    "label": "KU.02.07|Reimburstment Kepada Negara/Badan Pemberian Bantuan"
+  },
+  {
+    "text": "Administrasi pembayaran uang pensiun dan pesangon",
+    "label": "KP.08.04|Penetapan Uang Pensiun/Pesangon"
+  },
+  {
+    "text": "Materi sosialisasi dan bahan presentasi ke parlemen",
+    "label": "HM.01.04|Sosialisasi, bahan/materi pidato/sidang MPR, DPR, DPD, kabinet, DPRD Provinsi/Kabupaten/Kota"
+  },
+  {
+    "text": "Dokumen analisis jabatan dan beban kerja pegawai",
+    "label": "KP.02.01|Analisis Jabatan"
+  },
+  {
+    "text": "Perbandingan harga dan mutu produk dari penyedia",
+    "label": "PL.02.03|Harga dan Mutu"
+  },
+  {
+    "text": "Surat peminjaman peralatan dan ruangan untuk acara",
+    "label": "UM.01.03|Izin Peyewaan/peminjaman (Alat-alat, Ruangan, Lapangan, dll)"
+  },
+  {
+    "text": "Penyesuaian pangkat berdasarkan ijazah yang diperoleh",
+    "label": "KP.04.08|Impasing/Penyesuaian Ijazah"
+  },
+  {
+    "text": "Penyelenggaraan pameran dan festival budaya RRI",
+    "label": "HM.02.03|Pameran/Festival"
+  },
+  {
+    "text": "Evaluasi hasil analisis program kegiatan lembaga",
+    "label": "PR.03.03|Evaluasi Analisis Program"
+  },
+  {
+    "text": "Pelaksanaan seleksi penerimaan pegawai baru CPNS",
+    "label": "KP.03.01|Seleksi Pegawai"
+  },
+  {
+    "text": "Dokumen koordinasi antar stasiun RRI daerah",
+    "label": "KS.01.02|Koordinasi Lintas Daerah"
+  },
+  {
+    "text": "Dokumen koordinasi antar lembaga pemerintah sektoral",
+    "label": "KS.01.01|Koordinasi Lintas Sektorat"
+  },
+  {
+    "text": "Evaluasi laporan hasil pengawasan aparat intern pemerintah",
+    "label": "PW.02.01|Penyiapan Bahan Evaluasi Atas Laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Dokumen pemantauan kinerja dan kepatuhan pegawai",
+    "label": "PW.01.01|Pemantauan"
+  },
+  {
+    "text": "Spesifikasi perangkat teknologi siaran RRI",
+    "label": "DT.01.02|Piranti teknologi penyiaran"
+  },
+  {
+    "text": "Proses pengolahan dan analisis data penyiaran",
+    "label": "DT.02.04|Pengolahan data di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Surat permintaan pembayaran dan dokumen pendukung",
+    "label": "KU.01.05|SPP/Surat Permintaan Pembayaran (Belanja Pegawai, Belanja Barang, Belanja Modal, Belanja Lain-lain)"
+  },
+  {
+    "text": "Program pemeliharaan aset dan barang inventaris",
+    "label": "PL.03.06|Pemeliharaan BMN"
+  },
+  {
+    "text": "Dokumen analisis harga dan kualitas penawaran vendor",
+    "label": "PL.02.03|Harga dan Mutu"
+  },
+  {
+    "text": "Daftar pegawai pemerintah non PNS dan data kontrak",
+    "label": "KP.01.05|Daftar Nominatif/Data Pegawai Honorer (kontrak)"
+  },
+  {
+    "text": "Kurikulum modul dan evaluasi hasil diklat pegawai",
+    "label": "KP.05.01|Tata Usaha Kediklatan (Kurikulum, Modul, Dokumen Adminstrasi, Dokumen Akademik, Dokumen Evaluasi, Sertifikat/STTPL)"
+  },
+  {
+    "text": "Surat tugas mengikuti kegiatan rapat koordinasi",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Dokumen analisis kebutuhan peralatan dan perlengkapan",
+    "label": "PL.01.01|Analisis Data Perencanaan"
+  },
+  {
+    "text": "Surat keputusan penempatan pegawai baru di unit kerja",
+    "label": "KP.03.02|Penempatan Pegawai"
+  },
+  {
+    "text": "Penyusunan peta jabatan organisasi LPP RRI",
+    "label": "KP.02.03|Peta Jabatan"
+  },
+  {
+    "text": "Administrasi sumbangan dan bantuan dana sosial pegawai",
+    "label": "UM.01.08|Sumbangan/Bantuan"
+  },
+  {
+    "text": "Dokumen piranti teknologi penyiaran radio digital",
+    "label": "DT.01.02|Piranti teknologi penyiaran"
+  },
+  {
+    "text": "Evaluasi atas temuan hasil pengawasan aparat pengawasan eksternal",
+    "label": "PW.03.01|Penyiapan Bahan Evaluasi Atas laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Laporan pemantauan penyelesaian tindak lanjut temuan eksternal",
+    "label": "PW.03.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Hasil analisis jabatan dan uraian tugas pejabat",
+    "label": "KP.02.01|Analisis Jabatan"
+  },
+  {
+    "text": "Dokumen penggunaan dan pemeliharaan kendaraan dinas",
+    "label": "UM.01.04|Perumahan Dinas/Kendaraan Dinas"
+  },
+  {
+    "text": "Bahan evaluasi laporan pengawasan eksternal pemerintah",
+    "label": "PW.03.01|Penyiapan Bahan Evaluasi Atas laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Administrasi pergudangan dan stok barang inventaris",
+    "label": "PL.03.05|Pergudangan/Penyimpanan"
+  },
+  {
+    "text": "SK mutasi dan pemindahan pegawai internal antar unit",
+    "label": "KP.04.01|Pemindahan PNS/Non PNS Antar Unit"
+  },
+  {
+    "text": "Surat keputusan tim program dan kebijakan pemberitaan",
+    "label": "PPP.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Pemeliharaan barang milik negara dan aset lembaga",
+    "label": "PL.03.06|Pemeliharaan BMN"
+  },
+  {
+    "text": "Rencana anggaran biaya program dan kegiatan LPP RRI",
+    "label": "PR.01.02|Penyusunan Anggaran"
+  },
+  {
+    "text": "Pengelolaan piranti teknologi dan peralatan siaran",
+    "label": "DT.01.02|Piranti teknologi penyiaran"
+  },
+  {
+    "text": "Kesepakatan bersama dengan lembaga pendidikan dalam negeri",
+    "label": "HK.03.02|Dalam Negeri"
+  },
+  {
+    "text": "Klasifikasi jenis barang dan kodefikasi inventaris",
+    "label": "PL.01.02|Klasifikasi Data"
+  },
+  {
+    "text": "Perpindahan PNS ke instansi lain di luar LPP RRI",
+    "label": "KP.04.02|Pemindahan PNS/Non PNS Antar Instansi"
+  },
+  {
+    "text": "RAB detail dan rincian biaya operasional program",
+    "label": "KU.02.05|Rincian Anggaran Biaya (RAB)"
+  },
+  {
+    "text": "Dokumen roadmap reformasi birokrasi dan rencana aksi",
+    "label": "OT.01.02|Reformasi Birokrasi"
+  },
+  {
+    "text": "Salinan peraturan presiden terkait operasional lembaga",
+    "label": "HK.01.03|Peraturan Presiden"
+  },
+  {
+    "text": "Penempatan pegawai sesuai formasi dan kebutuhan unit",
+    "label": "KP.03.02|Penempatan Pegawai"
+  },
+  {
+    "text": "Pelaksanaan assessment pegawai untuk promosi jabatan",
+    "label": "KP.06.01|Assesment Pegawai"
+  },
+  {
+    "text": "Surat kuasa pengambilan berkas dan dokumen dinas",
+    "label": "KP.01.13|Surat Kuasa"
+  },
+  {
+    "text": "Salinan peraturan pemerintah terkait kepegawaian",
+    "label": "HK.01.02|Peraturan Pemerintah"
+  },
+  {
+    "text": "Program bimbingan spiritual dan pembinaan mental kerja",
+    "label": "KP.05.02|Pembinaan Mental"
+  },
+  {
+    "text": "Dokumen pelaporan tindak pidana dan kejahatan",
+    "label": "HK.05.01|Kejahatan"
+  },
+  {
+    "text": "Hasil penilaian kondisi barang yang akan dihapuskan",
+    "label": "PL.05.03|Penilaian"
+  },
+  {
+    "text": "Surat Perintah Pencairan Dana SP2D dari KPPN",
+    "label": "KU.01.06|SP2D (Surat Perintah Pencairan Dana)"
+  },
+  {
+    "text": "Instruksi Dewan Pengawas kepada Direksi RRI",
+    "label": "HK.02.03|Instruksi Dewan Pengawas"
+  },
+  {
+    "text": "Studi kelayakan teknis dan ekonomi proyek lembaga",
+    "label": "KU.02.04|Studi Kelayakan"
+  },
+  {
+    "text": "Laporan penerimaan gratifikasi pegawai LPP RRI",
+    "label": "PW.01.06|Gratifikasi"
+  },
+  {
+    "text": "Monitoring tindak lanjut rekomendasi hasil pemeriksaan",
+    "label": "PW.02.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Pengelolaan valuta asing dan letter of credit bank",
+    "label": "KU.02.09|Pembukaan LC (Letter of Credit)/Valuta Asing/Penerbitan/Obligasi"
+  },
+  {
+    "text": "Rekapitulasi kebutuhan pengadaan seluruh unit RRI",
+    "label": "PL.01.04|Pengumpulan Data rencana Pengadaan Lembaga"
+  },
+  {
+    "text": "Dokumen UAT dan persetujuan pengguna akhir",
+    "label": "DT.03.02|User Acceptance Test"
+  },
+  {
+    "text": "Penyusunan rencana anggaran pendapatan dan belanja tahunan",
+    "label": "PR.01.02|Penyusunan Anggaran"
+  },
+  {
+    "text": "Formulir LHKPN dan bukti pelaporan harta kekayaan",
+    "label": "PW.01.05|LHKPN"
+  },
+  {
+    "text": "Surat keputusan penghapusan dan pemusnahan BMN",
+    "label": "PL.05.04|Penetapan Penghapusan"
+  },
+  {
+    "text": "Daftar nominatif pegawai yang akan memasuki pensiun",
+    "label": "KP.08.08|Nominatif Pensiun"
+  },
+  {
+    "text": "Dokumen pemindahan tugas pegawai dari unit kerja",
+    "label": "KP.04.01|Pemindahan PNS/Non PNS Antar Unit"
+  },
+  {
+    "text": "Pelatihan pengelolaan dan pembinaan BMN unit kerja",
+    "label": "PL.03.01|Pembinaan BMN Perlengkapan"
+  },
+  {
+    "text": "Rencana dan penetapan tata laksana prosedur kerja",
+    "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
+  },
+  {
+    "text": "Permohonan izin pemakaian ruang rapat dan alat presentasi",
+    "label": "UM.01.03|Izin Peyewaan/peminjaman (Alat-alat, Ruangan, Lapangan, dll)"
+  },
+  {
+    "text": "Jadwal pemeliharaan rutin aplikasi dan database",
+    "label": "DT.03.03|Pemeliharaan Aplikasi"
+  },
+  {
+    "text": "Produk hukum Dewan Pengawas tentang kebijakan RRI",
+    "label": "HK.02.01|Peraturan Dewan Pengawas"
+  },
+  {
+    "text": "Surat izin perkawinan dan perceraian PNS",
+    "label": "KP.01.12|Pelaporan Nikah/Cerai/Rujuk/Izin Perkawinan"
+  },
+  {
+    "text": "Dokumen desain dan perancangan aplikasi internal",
+    "label": "DT.03.01|Perancangan Aplikasi"
+  },
+  {
+    "text": "Penanganan pelanggaran hukum dan pemberian teguran",
+    "label": "HK.05.02|Pelanggaran/Peringatan/Teguran/Pencabutan"
+  },
+  {
+    "text": "Surat masuk dan keluar bidang program produksi siaran",
+    "label": "PPS.01.02|Surat masuk dan keluar"
+  },
+  {
+    "text": "Medical check up dan surat keterangan sehat pegawai baru",
+    "label": "KP.01.16|Uji Kesehatan"
+  },
+  {
+    "text": "Laporan mutasi pendidikan dan ijazah baru pegawai",
+    "label": "KP.04.05|Mutasi Pendidikan"
+  },
+  {
+    "text": "Perjanjian pinjaman luar negeri dan grant agreement",
+    "label": "KU.02.01|Loan Agreement/Hibah Luar Negeri"
+  },
+  {
+    "text": "Laporan pemotongan dan penyetoran pajak PPh pegawai",
+    "label": "KU.03.01|Pajak-pajak"
+  },
+  {
+    "text": "Dokumen pengolahan data statistik dan informasi RRI",
+    "label": "DT.02.04|Pengolahan data di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Pelaksanaan rehabilitasi dan renovasi gedung kantor",
+    "label": "PL.03.04|Rehabilitasi/Pemulihan/Renovasi"
+  },
+  {
+    "text": "Dokumen spesifikasi mixer audio dan peralatan studio",
+    "label": "STO.02.01|Spesifikasi Peralatan Studio"
+  },
+  {
+    "text": "Koordinasi pengawasan internal dengan BPK dan BPKP",
+    "label": "PW.01.07|Pelaksanaan Pengawasan Internal dan Eksternal"
+  },
+  {
+    "text": "Konsolidasi data kebutuhan pengadaan seluruh satker",
+    "label": "PL.01.04|Pengumpulan Data rencana Pengadaan Lembaga"
+  },
+  {
+    "text": "Evaluasi penyusunan anggaran dan alokasi dana program",
+    "label": "PR.03.02|Evaluasi Penyusunan Anggaran"
+  },
+  {
+    "text": "Penyusunan rencana kerja anggaran RKA satuan kerja",
+    "label": "KU.04.04|Rencana Kerja Anggaran (RKA)"
+  },
+  {
+    "text": "Detail teknis pemancar siaran dan frekuensi",
+    "label": "TX.02.01|Spesifikasi Jenis Pemancar"
+  },
+  {
+    "text": "Dokumen user acceptance test aplikasi baru RRI",
+    "label": "DT.03.02|User Acceptance Test"
+  },
+  {
+    "text": "Penerimaan negara bukan pajak PNBP dari jasa siaran",
+    "label": "KU.03.02|Pendapatan Bukan Pajak"
+  },
+  {
+    "text": "Disposisi surat masuk untuk ditindaklanjuti unit terkait",
+    "label": "UM.01.01|Administrasi Persuratan"
+  },
+  {
+    "text": "Penetapan angka kredit pejabat fungsional arsiparis",
+    "label": "KP.06.08|Angka Kredit Jabatan Fungsional"
+  },
+  {
+    "text": "Formulir pengajuan cuti dan persetujuan atasan",
+    "label": "KP.01.11|Cuti"
+  },
+  {
+    "text": "Pelaksanaan sensus BMN dan inventarisasi aset",
+    "label": "PL.04.01|Inventarisasi Umum/Mutasi Barang/Serah Terima Aset/Berita Acara Hibah"
+  },
+  {
+    "text": "Laporan dugaan korupsi dan tindak pidana korupsi",
+    "label": "HK.05.03|Korupsi Kolusi Nepotisme (KKN)"
+  },
+  {
+    "text": "Dokumen RKA-KL dan rencana kerja anggaran tahunan",
+    "label": "KU.04.04|Rencana Kerja Anggaran (RKA)"
+  },
+  {
+    "text": "Kegiatan koordinasi lintas daerah dan regional",
+    "label": "KS.01.02|Koordinasi Lintas Daerah"
+  },
+  {
+    "text": "Permohonan kartu pegawai dan tanda pengenal baru",
+    "label": "KP.01.02|NIP/Kartu Pegawai/Kartu PPNS/Tanda Pengenal"
+  },
+  {
+    "text": "Laporan pelaksanaan audit internal dan eksternal lembaga",
+    "label": "PW.01.07|Pelaksanaan Pengawasan Internal dan Eksternal"
+  },
+  {
+    "text": "Penerbitan SP2D untuk pembayaran belanja negara",
+    "label": "KU.01.06|SP2D (Surat Perintah Pencairan Dana)"
+  },
+  {
+    "text": "Keppres tentang hari besar dan peringatan nasional",
+    "label": "HK.01.04|Keputusan Presiden"
+  },
+  {
+    "text": "Dokumen kegiatan pameran dan expo lembaga",
+    "label": "HM.02.03|Pameran/Festival"
+  },
+  {
+    "text": "Sosialisasi kebijakan dan materi sidang DPR MPR",
+    "label": "HM.01.04|Sosialisasi, bahan/materi pidato/sidang MPR, DPR, DPD, kabinet, DPRD Provinsi/Kabupaten/Kota"
+  },
+  {
+    "text": "SPP belanja barang dan belanja modal satuan kerja",
+    "label": "KU.01.05|SPP/Surat Permintaan Pembayaran (Belanja Pegawai, Belanja Barang, Belanja Modal, Belanja Lain-lain)"
+  },
+  {
+    "text": "Kegiatan organisasi profesi dan paguyuban pegawai",
+    "label": "KP.09.04|Organisasi Lainnya"
+  },
+  {
+    "text": "Analisis dan pengolahan data operasional RRI",
+    "label": "DT.02.04|Pengolahan data di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "SK Direksi tentang pengangkatan pejabat struktural",
+    "label": "HK.02.05|Keputusan Dewan Direksi"
+  },
+  {
+    "text": "Hasil analisis temuan pengawasan dan rekomendasi",
+    "label": "PW.01.02|Analisis"
+  },
+  {
+    "text": "Dokumen kenaikan pangkat golongan dan ruang pegawai",
+    "label": "KP.04.04|Kenaikan Pangkat Struktural dan Fungsional"
+  },
+  {
+    "text": "Nota kesepakatan bersama dengan instansi dalam negeri",
+    "label": "HK.03.02|Dalam Negeri"
+  },
+  {
+    "text": "Dokumen rincian anggaran biaya pengadaan dan jasa",
+    "label": "KU.02.05|Rincian Anggaran Biaya (RAB)"
+  },
+  {
+    "text": "Peraturan Presiden tentang pengadaan barang dan jasa",
+    "label": "HK.01.03|Peraturan Presiden"
+  },
+  {
+    "text": "Tuntutan perbendaharaan dan ganti rugi kerugian negara",
+    "label": "KU.04.01|Tuntutan Perbendaharaan/Tuntutan Ganti Rugi (TP/TGR)"
+  },
+  {
+    "text": "Liputan kegiatan resmi dan dokumentasi acara lembaga",
+    "label": "HM.01.01|Dokumentasi/liputan kegiatan dinas pimpinan, pengumpulan, pengolahan dan penyajian informasi kegiatan"
+  },
+  {
+    "text": "Nominasi dan pemberian tanda kehormatan Satyalancana",
+    "label": "KP.01.07|Penghargaan/Piala/Piagam/tanda Kehormatan"
+  },
+  {
+    "text": "Surat keputusan mutasi pemindahan pegawai antar unit kerja",
+    "label": "KP.04.01|Pemindahan PNS/Non PNS Antar Unit"
+  },
+  {
+    "text": "Surat edaran Direksi tentang pelaksanaan kebijakan",
+    "label": "HK.02.07|Surat Edaran/Nota Dinas"
+  },
+  {
+    "text": "Permohonan dan penyaluran bantuan sosial lembaga",
+    "label": "UM.01.08|Sumbangan/Bantuan"
+  },
+  {
+    "text": "Dokumen anggaran belanja tambahan ABT satuan kerja",
+    "label": "KU.01.02|ABT (Anggaran Belanja Tambahan)"
+  },
+  {
+    "text": "Hasil audit keamanan dan performa aplikasi",
+    "label": "DT.03.04|Audit aplikasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Pemulihan kondisi gedung dan sarana prasarana",
+    "label": "PL.03.04|Rehabilitasi/Pemulihan/Renovasi"
+  },
+  {
+    "text": "Dokumen katalog alat pemancar dan antena radio",
+    "label": "TX.01.01|Katalog Pemancar"
+  },
+  {
+    "text": "Peraturan pemerintah tentang pelaksanaan undang-undang",
+    "label": "HK.01.02|Peraturan Pemerintah"
+  },
+  {
+    "text": "Petunjuk teknis penghapusan barang milik negara",
+    "label": "PL.05.01|Standarisasi/Petunjuk Teknis Penghapusan"
+  },
+  {
+    "text": "Sengketa hukum tentang kebendaan dan hak milik",
+    "label": "HK.04.02|Tentang Kebendaan"
+  },
+  {
+    "text": "Surat penempatan kerja dan lokasi tugas pegawai",
+    "label": "KP.03.02|Penempatan Pegawai"
+  },
+  {
+    "text": "SK pemberian hak pensiun keluarga pegawai yang tewas",
+    "label": "KP.08.07|Pensiun Meninggal Dunia/Tewas"
+  },
+  {
+    "text": "Ucapan selamat hari raya dan hari besar nasional",
+    "label": "HM.01.06|Ucapan terima kasih, ucapan selamat, belasungkawa, dan permohonan maaf di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Surat permohonan kembali bekerja setelah skorsing",
+    "label": "KP.06.05|Rehabilitasi/Permohonan Kerja Kembali"
+  },
+  {
+    "text": "Dokumen rencana kegiatan strategis lembaga penyiaran publik radio",
+    "label": "PR.01.01|Perencanaan Kegiatan"
+  },
+  {
+    "text": "Surat teguran dan peringatan tertulis kepada pegawai",
+    "label": "KP.06.03|Teguran/Peringatan/Penundaan gaji dan Pangkat/Penurunan Pangkat"
+  },
+  {
+    "text": "Administrasi layanan peminjaman dan pengembalian arsip",
+    "label": "UM.02.02|Layanan Arsip (Peminjaman dan Penggunaan Arsip)"
+  },
+  {
+    "text": "Penanganan gratifikasi dan potensi korupsi di RRI",
+    "label": "HK.05.03|Korupsi Kolusi Nepotisme (KKN)"
+  },
+  {
+    "text": "Penyusunan dan penilaian SKP pegawai negeri sipil",
+    "label": "KP.06.07|DP3/SKP"
+  },
+  {
+    "text": "Pemberian penghargaan Satyalancana kepada pegawai berprestasi",
+    "label": "KP.01.07|Penghargaan/Piala/Piagam/tanda Kehormatan"
+  },
+  {
+    "text": "Administrasi organisasi non-kedinasan pegawai",
+    "label": "KP.09.04|Organisasi Lainnya"
+  },
+  {
+    "text": "Dokumen penyidikan dan penuntutan kasus kejahatan",
+    "label": "HK.05.01|Kejahatan"
+  },
+  {
+    "text": "Forum koordinasi stasiun penyiaran se-Indonesia",
+    "label": "KS.01.02|Koordinasi Lintas Daerah"
+  },
+  {
+    "text": "Berita acara penyusutan dan pemusnahan arsip yang telah habis retensi",
+    "label": "UM.02.03|Penyusutan Arsip"
+  },
+  {
+    "text": "Rekapitulasi penggunaan hak cuti pegawai tahunan",
+    "label": "KP.01.11|Cuti"
+  },
+  {
+    "text": "Surat edaran tentang penghematan anggaran belanja",
+    "label": "HK.01.06|Surat Edaran"
+  },
+  {
+    "text": "Penanganan pengaduan masyarakat dan publik terkait layanan",
+    "label": "PW.02.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Laporan realisasi anggaran dan kinerja triwulan",
+    "label": "PR.02.01|Pelaporan Anggaran dan Kinerja"
+  },
+  {
+    "text": "Rincian anggaran biaya RAB kegiatan program",
+    "label": "KU.02.05|Rincian Anggaran Biaya (RAB)"
+  },
+  {
+    "text": "Pengiriman barang inventaris ke unit kerja penerima",
+    "label": "PL.03.02|Distribusi/Pengiriman"
+  },
+  {
+    "text": "Arsip audio video non-berita dan program hiburan",
+    "label": "KJM.09.01|Pengumpulan data audio/video non berita"
+  },
+  {
+    "text": "Perjanjian kerjasama dalam negeri dengan pemerintah daerah",
+    "label": "HK.03.02|Dalam Negeri"
+  },
+  {
+    "text": "Dokumen pengumpulan konten lagu jingle dan filler",
+    "label": "KJM.09.01|Pengumpulan data audio/video non berita"
+  },
+  {
+    "text": "Pensiun karena batas usia pensiun BUP pegawai negeri",
+    "label": "KP.08.05|Pensiun (BUP)"
+  },
+  {
+    "text": "Formulir pelaporan gratifikasi dan hadiah jabatan",
+    "label": "PW.01.06|Gratifikasi"
+  },
+  {
+    "text": "Dokumen infrastruktur jaringan dan bandwidth stasiun",
+    "label": "IT.01.02|Jaringan/Bandwidth"
+  },
+  {
+    "text": "Kegiatan organisasi KORPRI di lingkungan LPP RRI",
+    "label": "KP.09.01|KORPRI"
+  },
+  {
+    "text": "Pencabutan izin dan pelanggaran ketentuan hukum",
+    "label": "HK.05.02|Pelanggaran/Peringatan/Teguran/Pencabutan"
+  },
+  {
+    "text": "Update database status pegawai dan data personal PNS",
+    "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
+  },
+  {
+    "text": "Kebijakan cyber security dan pengamanan sistem TI",
+    "label": "DT.01.03|Pengamanan informasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Perbaikan dan pemeliharaan gedung studio dan kantor",
+    "label": "UM.01.05|Gedung/Perkantoran/Gudang"
+  },
+  {
+    "text": "Pengajuan pensiun anak yatim dan hak pensiun keluarga",
+    "label": "KP.08.06|Pensiun Janda/Duda/Anak"
+  },
+  {
+    "text": "Kegiatan kehumasan dan dokumentasi perpustakaan",
+    "label": "PB.02.01|Kehumasan, kepustakaan dan perpustakaan di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Penyelesaian sengketa perikatan dan perjanjian hukum",
+    "label": "HK.04.03|Tentang Perikatan"
+  },
+  {
+    "text": "Tunjangan jabatan dan komponen penggajian pegawai",
+    "label": "KP.01.03|Penggajian/KGB/Tunjangan Jabatan/Daftar gaji"
+  },
+  {
+    "text": "Laporan absensi kehadiran dan ketidakhadiran pegawai",
+    "label": "KP.01.14|Absensi"
+  },
+  {
+    "text": "Tindak lanjut pengaduan publik terkait pengawasan eksternal",
+    "label": "PW.03.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Berita acara serah terima jabatan kepala satuan kerja",
+    "label": "KP.04.09|Serah Terima Jabatan/Tugas"
+  },
+  {
+    "text": "Referensi undang-undang yang berlaku di lingkungan RRI",
+    "label": "HK.01.01|Undang-Undang"
+  },
+  {
+    "text": "Rekapitulasi nilai SKP dan capaian kinerja pegawai",
+    "label": "KP.06.07|DP3/SKP"
+  },
+  {
+    "text": "Dokumen evaluasi temuan dan tindak lanjut pengawasan",
+    "label": "PW.01.03|Evaluasi"
+  },
+  {
+    "text": "Pemantauan tindak lanjut temuan pengawasan internal",
+    "label": "PW.02.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Bimbingan teknis pengelolaan BMN dan perlengkapan",
+    "label": "PL.03.01|Pembinaan BMN Perlengkapan"
+  },
+  {
+    "text": "Dokumen audit pemanfaatan barang milik negara",
+    "label": "PL.03.03|Pemeriksaan Pemanfaatan"
+  },
+  {
+    "text": "Administrasi surat terkait program dan produksi RRI",
+    "label": "PPS.01.02|Surat masuk dan keluar"
+  },
+  {
+    "text": "Analisis hasil pengawasan internal dan temuan audit",
+    "label": "PW.01.02|Analisis"
+  },
+  {
+    "text": "Salinan undang-undang dan peraturan perundang-undangan",
+    "label": "HK.01.01|Undang-Undang"
+  },
+  {
+    "text": "Kegiatan organisasi Dharma Wanita Persatuan RRI",
+    "label": "KP.09.02|Dharma Wanita"
+  },
+  {
+    "text": "Layanan kesehatan dan fasilitas klinik untuk pegawai",
+    "label": "KP.07.01|Kesehatan/Klinik"
+  },
+  {
+    "text": "Penetapan penggunaan logo dan identitas visual RRI",
+    "label": "OT.02.03|Logo"
+  },
+  {
+    "text": "Kegiatan diklat prajabatan bagi calon pegawai baru",
+    "label": "KP.05.03|Diklat Prajabatan"
+  },
+  {
+    "text": "Keputusan pemecatan dan pemberhentian tidak hormat",
+    "label": "KP.08.02|Pemberhentian Dengan Tidak Hormat"
+  },
+  {
+    "text": "Dokumen pemulihan dan rehabilitasi fasilitas lembaga",
+    "label": "PL.03.04|Rehabilitasi/Pemulihan/Renovasi"
+  },
+  {
+    "text": "Penyelesaian pengaduan masyarakat dan pengawasan publik",
+    "label": "PW.02.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Laporan pengawasan berdasarkan aduan masyarakat",
+    "label": "PW.02.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Pengajuan kartu pengenal dan nomor induk pegawai baru",
+    "label": "KP.01.02|NIP/Kartu Pegawai/Kartu PPNS/Tanda Pengenal"
+  },
+  {
+    "text": "Dokumen penetapan angka kredit dan kenaikan jenjang",
+    "label": "KP.06.08|Angka Kredit Jabatan Fungsional"
+  },
+  {
+    "text": "Hubungan dan komunikasi antar lembaga pemerintah",
+    "label": "HM.01.02|Hubungan antar lembaga"
+  },
+  {
+    "text": "Pembuktian fakta hukum dan masa kadaluwarsa klaim",
+    "label": "HK.04.04|Tentang Pembuktian dan Kadaluwarsa"
+  },
+  {
+    "text": "Instruksi Direksi tentang pelaksanaan kegiatan program",
+    "label": "HK.02.06|Instruksi Dewan Direksi"
+  },
+  {
+    "text": "Surat kuasa pengurusan dokumen kepegawaian",
+    "label": "KP.01.13|Surat Kuasa"
+  },
+  {
+    "text": "Laporan RAT koperasi pegawai dan SHU tahunan",
+    "label": "KP.09.03|Koperasi"
+  },
+  {
+    "text": "Kontrak sewa gedung dan fasilitas milik negara",
+    "label": "KU.03.03|Sewa Pemanfaatan Aset/barang Milik Negara"
+  },
+  {
+    "text": "Laporan pendapatan bukan pajak satuan kerja RRI",
+    "label": "KU.03.02|Pendapatan Bukan Pajak"
+  },
+  {
+    "text": "Pengadaan peralatan multimedia komputer dan jaringan",
+    "label": "IT.01.01|Barang/Peralatan Multimedia"
+  },
+  {
+    "text": "Surat permohonan penggunaan perumahan dinas pegawai",
+    "label": "UM.01.04|Perumahan Dinas/Kendaraan Dinas"
+  },
+  {
+    "text": "Penetapan standar operasional prosedur satuan kerja",
+    "label": "OT.02.02|Pembakuan Mekanisme Kerja/SOP"
+  },
+  {
+    "text": "Piagam penghargaan dan tanda kehormatan pegawai RRI",
+    "label": "KP.01.07|Penghargaan/Piala/Piagam/tanda Kehormatan"
+  },
+  {
+    "text": "Koordinasi internal antar direktorat di LPP RRI",
+    "label": "KS.01.03|Koordinasi Internal dan Eksternal LPP RRI"
+  },
+  {
+    "text": "Dokumen pemeliharaan dan perawatan BMN berkala",
+    "label": "PL.03.06|Pemeliharaan BMN"
+  },
+  {
+    "text": "Koleksi audio video berita dan liputan jurnalistik",
+    "label": "KJM.08.01|Pengumpulan data audio/video berita"
+  },
+  {
+    "text": "Pelaporan perkawinan dan perceraian pegawai negeri",
+    "label": "KP.01.12|Pelaporan Nikah/Cerai/Rujuk/Izin Perkawinan"
+  },
+  {
+    "text": "Neraca percobaan dan laporan realisasi semester",
+    "label": "KU.01.07|Neraca (semesteran, Tahunan)"
+  },
+  {
+    "text": "Proses hukum gugatan keputusan pejabat pemerintah",
+    "label": "HK.06.01|Gugatan"
+  },
+  {
+    "text": "Permohonan impasing dan penyesuaian ijazah pegawai",
+    "label": "KP.04.08|Impasing/Penyesuaian Ijazah"
+  },
+  {
+    "text": "Penyusunan Laporan Kinerja Instansi Pemerintah RRI",
+    "label": "PR.02.04|Akuntabilitas Kinerja Instansi Pemerintah (LAKIP)"
+  },
+  {
+    "text": "Pelaporan temuan pengawasan dan rekomendasi perbaikan",
+    "label": "PW.01.04|Pelaporan"
+  },
+  {
+    "text": "Pemutakhiran daftar kepangkatan dan DUK tahunan",
+    "label": "KP.01.10|Daftar Kepangkatan/DUK"
+  },
+  {
+    "text": "Evaluasi hasil pengawasan internal dan eksternal",
+    "label": "PW.01.03|Evaluasi"
+  },
+  {
+    "text": "Dokumen pengembangan infrastruktur teknologi siaran",
+    "label": "LT.02|Pengembangan Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Dokumen penilaian aset dan appraisal barang inventaris",
+    "label": "PL.05.03|Penilaian"
+  },
+  {
+    "text": "Pengisian dan pelaporan LHKPN penyelenggara negara",
+    "label": "PW.01.05|LHKPN"
+  },
+  {
+    "text": "Surat penyusunan anggaran belanja dan pendapatan lembaga",
+    "label": "PR.01.02|Penyusunan Anggaran"
+  },
+  {
+    "text": "Pelimpahan wewenang pimpinan kepada pejabat di bawahnya",
+    "label": "KP.01.08|Pendelegasian Wewenang"
+  },
+  {
+    "text": "Putusan TUN dan tindak lanjut putusan pengadilan",
+    "label": "HK.06.02|Putusan"
+  },
+  {
+    "text": "Dokumen daftar urut kepangkatan pegawai RRI",
+    "label": "KP.01.10|Daftar Kepangkatan/DUK"
+  },
+  {
+    "text": "Reimbursement dan pengembalian dana bantuan luar negeri",
+    "label": "KU.02.07|Reimburstment Kepada Negara/Badan Pemberian Bantuan"
+  },
+  {
+    "text": "Penyelenggaraan tata usaha keuangan dan laporan",
+    "label": "KU.04.02|Tata Usaha Keuangan Negara"
+  },
+  {
+    "text": "Dokumen pelaksanaan dan penyerapan anggaran DIPA",
+    "label": "PR.02.02|Pelaksanaan Anggaran"
+  },
+  {
+    "text": "Proses serah terima tugas dari pejabat yang digantikan",
+    "label": "KP.04.09|Serah Terima Jabatan/Tugas"
+  },
+  {
+    "text": "Pengelolaan keamanan informasi dan data penyiaran",
+    "label": "DT.01.03|Pengamanan informasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Dokumen sumpah pegawai dan pengangkatan jabatan resmi",
+    "label": "KP.01.09|Sumpah Pegawai"
+  },
+  {
+    "text": "Rekapitulasi daftar hadir dan absensi bulanan pegawai",
+    "label": "KP.01.14|Absensi"
+  },
+  {
+    "text": "Administrasi persuratan dinas dan penomoran naskah",
+    "label": "UM.01.01|Administrasi Persuratan"
+  },
+  {
+    "text": "Hak pensiun keluarga dan tunjangan janda duda anak",
+    "label": "KP.08.06|Pensiun Janda/Duda/Anak"
+  },
+  {
+    "text": "Remunerasi dan honorarium kegiatan pegawai RRI",
+    "label": "KU.01.08|Daftar uang Makan/Uang Lembur/Remunerasi/Honor"
+  },
+  {
+    "text": "Penetapan besaran uang pensiun dan pesangon pegawai",
+    "label": "KP.08.04|Penetapan Uang Pensiun/Pesangon"
+  },
+  {
+    "text": "Daftar inventaris pemancar dan transmisi stasiun",
+    "label": "TX.01.01|Katalog Pemancar"
+  },
+  {
+    "text": "Berita acara distribusi barang dan serah terima",
+    "label": "PL.03.02|Distribusi/Pengiriman"
+  },
+  {
+    "text": "Pelaksanaan pemeliharaan rutin dan insidentil BMN",
+    "label": "PL.03.06|Pemeliharaan BMN"
+  },
+  {
+    "text": "Pengolahan data informasi dan analisis data lembaga",
+    "label": "DT.02.04|Pengolahan data di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Usulan kenaikan pangkat struktural dan fungsional pegawai",
+    "label": "KP.04.04|Kenaikan Pangkat Struktural dan Fungsional"
+  },
+  {
+    "text": "Dokumen penetapan penghapusan aset dan barang rusak",
+    "label": "PL.05.04|Penetapan Penghapusan"
+  },
+  {
+    "text": "Daftar nominatif pegawai honorer dan tenaga kontrak",
+    "label": "KP.01.05|Daftar Nominatif/Data Pegawai Honorer (kontrak)"
+  },
+  {
+    "text": "Sistem kodefikasi dan standarisasi barang inventaris",
+    "label": "PL.04.04|Standarisasi/Kodefikasi"
+  },
+  {
+    "text": "Katalog peralatan pemancar radio AM FM SW RRI",
+    "label": "TX.01.01|Katalog Pemancar"
+  },
+  {
+    "text": "Manajemen konten dan pemeliharaan aset digital",
+    "label": "DT.02.02|Pemeliharaan konten"
+  },
+  {
+    "text": "Dokumen sosialisasi program kepada legislatif dan eksekutif",
+    "label": "HM.01.04|Sosialisasi, bahan/materi pidato/sidang MPR, DPR, DPD, kabinet, DPRD Provinsi/Kabupaten/Kota"
+  },
+  {
+    "text": "Studi penelitian teknologi broadcasting modern",
+    "label": "LT.01|Penelitian Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "SK pemberhentian dengan hormat atas permintaan sendiri",
+    "label": "KP.08.01|Pemberhentian Dengan Hormat/Mengundurkan Diri"
+  },
+  {
+    "text": "Perencanaan kebutuhan perlengkapan dan peralatan kantor",
+    "label": "PL.01.01|Analisis Data Perencanaan"
+  },
+  {
+    "text": "Dokumen ikhtisar kegiatan dan realisasi program bantuan",
+    "label": "KU.02.02|Ikhtisar Kegiatan"
+  },
+  {
+    "text": "Hasil user acceptance testing dan evaluasi aplikasi",
+    "label": "DT.03.02|User Acceptance Test"
+  },
+  {
+    "text": "Tanda terima peminjaman arsip dan surat penggunaan dokumen",
+    "label": "UM.02.02|Layanan Arsip (Peminjaman dan Penggunaan Arsip)"
+  },
+  {
+    "text": "Kontrak kerja sama keuangan dengan lembaga internasional",
+    "label": "KU.02.06|Dokumen Kontrak"
+  },
+  {
+    "text": "Dokumen koperasi pegawai dan administrasi keanggotaan",
+    "label": "KP.09.03|Koperasi"
+  },
+  {
+    "text": "Renovasi gedung studio dan perbaikan fasilitas",
+    "label": "PL.03.04|Rehabilitasi/Pemulihan/Renovasi"
+  },
+  {
+    "text": "Permohonan penyewaan alat dan ruangan studio RRI",
+    "label": "UM.01.03|Izin Peyewaan/peminjaman (Alat-alat, Ruangan, Lapangan, dll)"
+  },
+  {
+    "text": "Jadwal piket kebersihan ketertiban dan keamanan satker",
+    "label": "UM.01.02|Kebersihan, Ketertiban dan Keamanan"
+  },
+  {
+    "text": "SK Dewas tentang pengangkatan dan pemberhentian direksi",
+    "label": "HK.02.02|Keputusan Dewan Pengawas"
+  },
+  {
+    "text": "Kerangka acuan kerja untuk kegiatan yang dibiayai pinjaman",
+    "label": "KU.02.03|Kerangka Acuan Kerja"
+  },
+  {
+    "text": "Inventaris pemancar siaran dan peralatan transmisi",
+    "label": "TX.01.01|Katalog Pemancar"
+  },
+  {
+    "text": "Laporan Harta Kekayaan Penyelenggara Negara LHKPN",
+    "label": "PW.01.05|LHKPN"
+  },
+  {
+    "text": "Gugatan wanprestasi dan pelanggaran perikatan",
+    "label": "HK.04.03|Tentang Perikatan"
+  },
+  {
+    "text": "Dokumen RKA-KL dan petunjuk operasional kegiatan",
+    "label": "KU.01.01|DIPA (Rincian RKA-KL, Petunjuk Operasional (PO), Pergeseran/Perubahan/Revisi DIPA dan PO DIPA, APBN)"
+  },
+  {
+    "text": "Dokumen PP tentang pengelolaan keuangan negara",
+    "label": "HK.01.02|Peraturan Pemerintah"
+  },
+  {
+    "text": "Dokumen pelaksanaan pengawasan melekat dan khusus",
+    "label": "PW.01.08|Pelaksanaan Pengawasan Lainnya"
+  },
+  {
+    "text": "Pelaksanaan pengawasan internal oleh Satuan Pengawas Intern",
+    "label": "PW.01.07|Pelaksanaan Pengawasan Internal dan Eksternal"
+  },
+  {
+    "text": "Penelitian teknologi sistem penyiaran digital RRI",
+    "label": "LT.01|Penelitian Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Komunikasi dan hubungan dengan lembaga mitra",
+    "label": "HM.01.02|Hubungan antar lembaga"
+  },
+  {
+    "text": "Dokumen permohonan izin menikah dan laporan perkawinan",
+    "label": "KP.01.12|Pelaporan Nikah/Cerai/Rujuk/Izin Perkawinan"
+  },
+  {
+    "text": "Analisis data pengawasan dan evaluasi kinerja unit",
+    "label": "PW.01.02|Analisis"
+  },
+  {
+    "text": "Laporan nikah cerai rujuk pegawai kepada instansi",
+    "label": "KP.01.12|Pelaporan Nikah/Cerai/Rujuk/Izin Perkawinan"
+  },
+  {
+    "text": "SK penugasan pegawai dipekerjakan pada lembaga mitra",
+    "label": "KP.04.03|Pemindahan PNS/Non PNS dengan Status Dipekerjakan/Diperbantukan"
+  },
+  {
+    "text": "Somasi dan perlindungan hukum terhadap lembaga",
+    "label": "HK.04.01|Tentang Orang/Pengaduan/Somasi/Sengketa/Perlindungan Hukum"
+  },
+  {
+    "text": "Teguran hukum dan sanksi atas pelanggaran peraturan",
+    "label": "HK.05.02|Pelanggaran/Peringatan/Teguran/Pencabutan"
+  },
+  {
+    "text": "Rapat koordinasi wilayah dan lintas provinsi",
+    "label": "KS.01.02|Koordinasi Lintas Daerah"
+  },
+  {
+    "text": "Sertifikat diklat fungsional dan kompetensi jabatan",
+    "label": "KP.05.05|Diklat Fungsional"
+  },
+  {
+    "text": "Penerbitan majalah internal dan publikasi website RRI",
+    "label": "PB.01.01|Kehumasan melalui penerbitan/website dalam lingkup Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Laporan kinerja instansi dan realisasi anggaran tahunan",
+    "label": "PR.02.01|Pelaporan Anggaran dan Kinerja"
+  },
+  {
+    "text": "Permohonan anggaran belanja tambahan untuk kegiatan",
+    "label": "KU.01.02|ABT (Anggaran Belanja Tambahan)"
+  },
+  {
+    "text": "Dokumen mutasi jabatan struktural dan pelantikan pejabat",
+    "label": "KP.04.06|Pengangkatan, Pemindahan, dan Pemberhentian dalam Jabatan Struktural"
+  },
+  {
+    "text": "Penyelesaian tagihan dinas dan pembayaran pihak ketiga",
+    "label": "KU.04.05|Tagihan Dinas"
+  },
+  {
+    "text": "Nota Dinas perihal rencana kegiatan tahun anggaran berikutnya di lingkungan LPP RRI",
+    "label": "PR.01.01|Perencanaan Kegiatan"
+  },
+  {
+    "text": "Penyusunan kerangka acuan kerja KAK dan TOR kegiatan",
+    "label": "KU.02.03|Kerangka Acuan Kerja"
+  },
+  {
+    "text": "Produk hukum Direksi tentang kebijakan internal",
+    "label": "HK.02.04|Peraturan Dewan Direksi"
+  },
+  {
+    "text": "Pengembangan kapasitas SDM penyiaran dan teknis",
+    "label": "LT.03|Pembinaan dan Pengembangan SDM Penyiaran"
+  },
+  {
+    "text": "Formulir peminjaman arsip dan penggunaan dokumen unit",
+    "label": "UM.02.02|Layanan Arsip (Peminjaman dan Penggunaan Arsip)"
+  },
+  {
+    "text": "Program sosialisasi dan edukasi masyarakat RRI",
+    "label": "HM.02.01|Sosialisasi"
+  },
+  {
+    "text": "Ujian assessment dan penilaian potensi pegawai",
+    "label": "KP.06.01|Assesment Pegawai"
+  },
+  {
+    "text": "Dokumen pemeliharaan portal dan update konten",
+    "label": "DT.02.01|Pemeliharaan portal"
+  },
+  {
+    "text": "Pendaftaran anak dan keluarga pegawai negeri sipil",
+    "label": "KP.01.04|Pendaftaran/Keluarga/Perkawinan/Anak/Karis/Karsu"
+  },
+  {
+    "text": "Klasifikasi data barang dan perlengkapan inventaris",
+    "label": "PL.01.02|Klasifikasi Data"
+  },
+  {
+    "text": "Monitoring bandwidth dan kualitas jaringan internet",
+    "label": "IT.01.02|Jaringan/Bandwidth"
+  },
+  {
+    "text": "Proses pembelian langsung dan pengadaan barang",
+    "label": "PL.02.04|Pembelian"
+  },
+  {
+    "text": "Gugatan TUN dan sengketa administrasi pemerintahan",
+    "label": "HK.06.01|Gugatan"
+  },
+  {
+    "text": "Perpindahan pegawai antar satuan kerja di lingkungan RRI",
+    "label": "KP.04.01|Pemindahan PNS/Non PNS Antar Unit"
+  },
+  {
+    "text": "Surat penawaran harga dan proposal pengadaan barang",
+    "label": "PL.02.01|Rekanan/Penawaran/Proposal/Brosur"
+  },
+  {
+    "text": "Aturan penggunaan logo resmi LPP RRI",
+    "label": "OT.02.03|Logo"
+  },
+  {
+    "text": "Penyiapan bahan untuk evaluasi hasil pemeriksaan BPK",
+    "label": "PW.03.01|Penyiapan Bahan Evaluasi Atas laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Ucapan terima kasih dan apresiasi kepada mitra kerja",
+    "label": "HM.01.06|Ucapan terima kasih, ucapan selamat, belasungkawa, dan permohonan maaf di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Dokumen SP2D pencairan anggaran satuan kerja",
+    "label": "KU.01.06|SP2D (Surat Perintah Pencairan Dana)"
+  },
+  {
+    "text": "Program pembinaan kearsipan di lingkungan LPP RRI",
+    "label": "UM.02.05|Pembinaan Kearsipan"
+  },
+  {
+    "text": "Peraturan Dewan Pengawas bidang keuangan dan SDM",
+    "label": "HK.02.01|Peraturan Dewan Pengawas"
+  },
+  {
+    "text": "SPPD dan laporan hasil perjalanan dinas pegawai",
+    "label": "KU.01.04|SPPD"
+  },
+  {
+    "text": "Desain dan perancangan aplikasi streaming radio",
+    "label": "DT.03.01|Perancangan Aplikasi"
+  },
+  {
+    "text": "Berita acara pelelangan dan penjualan BMN hapus",
+    "label": "PL.05.05|Pelelangan/Penjualan"
+  },
+  {
+    "text": "Kegiatan koordinasi lintas sektor dan kementerian",
+    "label": "KS.01.01|Koordinasi Lintas Sektorat"
+  },
+  {
+    "text": "Dokumen tukar menukar BMN dan ruislag lembaga",
+    "label": "PL.05.06|Tukar Guling/Ruislag"
+  },
+  {
+    "text": "Penyusunan rencana kegiatan dan program kerja tahunan RRI",
+    "label": "PR.01.01|Perencanaan Kegiatan"
+  },
+  {
+    "text": "Dokumen pensiun karena tewas dalam melaksanakan tugas",
+    "label": "KP.08.07|Pensiun Meninggal Dunia/Tewas"
+  },
+  {
+    "text": "Dokumen peralatan IT multimedia dan infrastruktur",
+    "label": "IT.01.01|Barang/Peralatan Multimedia"
+  },
+  {
+    "text": "Kegiatan MPP dan bimbingan purna tugas pegawai",
+    "label": "KP.08.03|Masa Persiapan Pensiun (MPP)/Pembekalan Pensiun"
+  },
+  {
+    "text": "SK pengangkatan PNS setelah lulus masa percobaan",
+    "label": "KP.03.04|Pengangkatan PNS"
+  },
+  {
+    "text": "Pembinaan sumber daya manusia di bidang penyiaran",
+    "label": "LT.03|Pembinaan dan Pengembangan SDM Penyiaran"
+  },
+  {
+    "text": "Administrasi pendidikan dan pelatihan kurikulum dan modul",
+    "label": "KP.05.01|Tata Usaha Kediklatan (Kurikulum, Modul, Dokumen Adminstrasi, Dokumen Akademik, Dokumen Evaluasi, Sertifikat/STTPL)"
+  },
+  {
+    "text": "Pembelian peralatan dan perlengkapan operasional",
+    "label": "PL.02.04|Pembelian"
+  },
+  {
+    "text": "Penetapan keputusan Dewan Pengawas LPP RRI",
+    "label": "HK.02.02|Keputusan Dewan Pengawas"
+  },
+  {
+    "text": "Usulan formasi pegawai dan kebutuhan tenaga kerja",
+    "label": "KP.02.02|Formasi Pegawai"
+  },
+  {
+    "text": "Surat edaran menteri tentang kebijakan operasional",
+    "label": "HK.01.06|Surat Edaran"
+  },
+  {
+    "text": "Feasibility study dan kajian kelayakan kegiatan",
+    "label": "KU.02.04|Studi Kelayakan"
+  },
+  {
+    "text": "Kegiatan koordinasi lintas unit dan stakeholder",
+    "label": "KS.01.03|Koordinasi Internal dan Eksternal LPP RRI"
+  },
+  {
+    "text": "Inventarisasi barang tidak bergerak tanah dan bangunan",
+    "label": "PL.04.03|Barang-barang Tidak Bergerak"
+  },
+  {
+    "text": "Pemantauan status tindak lanjut hasil pemeriksaan BPK/BPKP",
+    "label": "PW.03.03|Pemantauan Penyelesaian Tindak Lanjut Hasil Pengawasan Internal dan Masyarakat/Publik"
+  },
+  {
+    "text": "Proses tukar guling aset dan ruislag tanah bangunan",
+    "label": "PL.05.06|Tukar Guling/Ruislag"
+  },
+  {
+    "text": "Pemeliharaan portal website dan aplikasi digital RRI",
+    "label": "DT.02.01|Pemeliharaan portal"
+  },
+  {
+    "text": "Dokumen analisis program kerja dan capaian kinerja",
+    "label": "PR.01.03|Analisis Program"
+  },
+  {
+    "text": "Riset pengembangan teknologi radio dan streaming",
+    "label": "LT.01|Penelitian Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Pengelolaan konten website dan media sosial RRI",
+    "label": "DT.02.02|Pemeliharaan konten"
+  },
+  {
+    "text": "Dokumen klaim penggantian biaya kepada badan bantuan",
+    "label": "KU.02.07|Reimburstment Kepada Negara/Badan Pemberian Bantuan"
+  },
+  {
+    "text": "Monitoring kehadiran dan absensi harian pegawai RRI",
+    "label": "KP.01.14|Absensi"
+  },
+  {
+    "text": "Infrastruktur jaringan LAN WAN dan internet lembaga",
+    "label": "IT.01.02|Jaringan/Bandwidth"
+  },
+  {
+    "text": "Surat undangan dan rapat pengurus Dharma Wanita",
+    "label": "KP.09.02|Dharma Wanita"
+  },
+  {
+    "text": "Standar pengamanan informasi dan proteksi data",
+    "label": "DT.01.03|Pengamanan informasi di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Penjatuhan hukuman disiplin berupa penurunan pangkat",
+    "label": "KP.06.03|Teguran/Peringatan/Penundaan gaji dan Pangkat/Penurunan Pangkat"
+  },
+  {
+    "text": "Penjatuhan hukuman jabatan dan pembebasan tugas",
+    "label": "KP.06.04|Skorsing/Hukuman Jabatan"
+  },
+  {
+    "text": "Modernisasi dan pengembangan sistem penyiaran RRI",
+    "label": "LT.02|Pengembangan Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Rencana kerja dan anggaran kementerian lembaga",
+    "label": "KU.04.04|Rencana Kerja Anggaran (RKA)"
+  },
+  {
+    "text": "Kegiatan rekreasi olahraga dan budaya pegawai",
+    "label": "KP.07.03|Olahraga/Kesenian dan Budaya"
+  },
+  {
+    "text": "SK tim penyusun program pemberitaan dan kebijakan berita",
+    "label": "PPP.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Nota dinas edaran tentang prosedur administrasi baru",
+    "label": "HK.02.07|Surat Edaran/Nota Dinas"
+  },
+  {
+    "text": "Dokumen spesifikasi pemancar radio dan daya pancar",
+    "label": "TX.02.01|Spesifikasi Jenis Pemancar"
+  },
+  {
+    "text": "Proposal dan brosur penawaran dari supplier peralatan",
+    "label": "PL.02.01|Rekanan/Penawaran/Proposal/Brosur"
+  },
+  {
+    "text": "Pemberian bantuan dan sumbangan kepada pegawai yang membutuhkan",
+    "label": "UM.01.08|Sumbangan/Bantuan"
+  },
+  {
+    "text": "Penanganan laporan dan pengawasan dari masyarakat umum",
+    "label": "PW.03.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Rencana perbaikan tata laksana dan standar kerja",
+    "label": "OT.02.01|Rencana, Penetapan dan Evaluasi"
+  },
+  {
+    "text": "Evaluasi analisis dampak program dan kegiatan operasional",
+    "label": "PR.03.03|Evaluasi Analisis Program"
+  },
+  {
+    "text": "Keputusan lembaga dan badan terkait operasional RRI",
+    "label": "HK.01.07|Keputusan/Peraturan Lembaga/Badan"
+  },
+  {
+    "text": "Dokumen teknis jenis pemancar dan karakteristik",
+    "label": "TX.02.01|Spesifikasi Jenis Pemancar"
+  },
+  {
+    "text": "Dokumen berita acara pemeriksaan dan penerimaan barang",
+    "label": "KU.01.03|Berita Acara, Kontrak/SPK"
+  },
+  {
+    "text": "SP2D LS dan pencairan dana langsung dari KPPN",
+    "label": "KU.01.06|SP2D (Surat Perintah Pencairan Dana)"
+  },
+  {
+    "text": "Pengelolaan gudang penyimpanan barang inventaris kantor",
+    "label": "UM.01.05|Gedung/Perkantoran/Gudang"
+  },
+  {
+    "text": "Pendelegasian kewenangan penandatanganan dokumen dinas",
+    "label": "KP.01.08|Pendelegasian Wewenang"
+  },
+  {
+    "text": "Penyelenggaraan diklat fungsional tertentu dan umum",
+    "label": "KP.05.05|Diklat Fungsional"
+  },
+  {
+    "text": "Penilaian sasaran kerja pegawai SKP tahunan",
+    "label": "KP.06.07|DP3/SKP"
+  },
+  {
+    "text": "Surat tuntutan ganti rugi dan perbendaharaan TP TGR",
+    "label": "KU.04.01|Tuntutan Perbendaharaan/Tuntutan Ganti Rugi (TP/TGR)"
+  },
+  {
+    "text": "SK tim penyusun kebijakan kerjasama dan multimedia RRI",
+    "label": "KJM.01.01|SK Tim penyusun kebijakan kerjasama dan multimedia"
+  },
+  {
+    "text": "SK pemberhentian dengan tidak hormat karena pelanggaran",
+    "label": "KP.08.02|Pemberhentian Dengan Tidak Hormat"
+  },
+  {
+    "text": "Administrasi tata usaha keuangan negara satuan kerja",
+    "label": "KU.04.02|Tata Usaha Keuangan Negara"
+  },
+  {
+    "text": "Dokumen Inpres dan arahan kebijakan pemerintah",
+    "label": "HK.01.05|Instruksi Presiden"
+  },
+  {
+    "text": "Penyusunan analisis jabatan di lingkungan LPP RRI",
+    "label": "KP.02.01|Analisis Jabatan"
+  },
+  {
+    "text": "Hasil studi kelayakan dan analisis biaya manfaat",
+    "label": "KU.02.04|Studi Kelayakan"
+  },
+  {
+    "text": "Dokumen valuta asing dan penerbitan obligasi lembaga",
+    "label": "KU.02.09|Pembukaan LC (Letter of Credit)/Valuta Asing/Penerbitan/Obligasi"
+  },
+  {
+    "text": "Keputusan Presiden penetapan struktur organisasi",
+    "label": "HK.01.04|Keputusan Presiden"
+  },
+  {
+    "text": "Surat kuasa mewakili dalam urusan kepegawaian",
+    "label": "KP.01.13|Surat Kuasa"
+  },
+  {
+    "text": "Dokumen pengadaan barang dan peralatan multimedia IT",
+    "label": "IT.01.01|Barang/Peralatan Multimedia"
+  },
+  {
+    "text": "Analisis jabatan struktural dan fungsional lembaga",
+    "label": "KP.02.01|Analisis Jabatan"
+  },
+  {
+    "text": "Katalog perangkat studio siaran analog dan digital",
+    "label": "STO.01.01|Katalog Peralatan Studio"
+  },
+  {
+    "text": "Program pengembangan teknologi broadcasting",
+    "label": "LT.02|Pengembangan Teknologi Sistem Penyiaran"
+  },
+  {
+    "text": "Pembinaan pengelolaan barang milik negara perlengkapan",
+    "label": "PL.03.01|Pembinaan BMN Perlengkapan"
+  },
+  {
+    "text": "Surat belasungkawa dan duka cita keluarga pegawai",
+    "label": "HM.01.06|Ucapan terima kasih, ucapan selamat, belasungkawa, dan permohonan maaf di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Dokumen koordinasi internal dan hubungan eksternal",
+    "label": "KS.01.03|Koordinasi Internal dan Eksternal LPP RRI"
+  },
+  {
+    "text": "Nota Dinas apel kedisiplinan dan jam kerja pegawai",
+    "label": "KP.06.06|Jam Kerja/Disiplin"
+  },
+  {
+    "text": "Surat perjalanan dinas dan biaya transport pegawai",
+    "label": "KU.01.04|SPPD"
+  },
+  {
+    "text": "Inspeksi pemanfaatan BMN di unit kerja RRI",
+    "label": "PL.03.03|Pemeriksaan Pemanfaatan"
+  },
+  {
+    "text": "Surat perintah perjalanan dinas dalam dan luar daerah",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Penetapan kenaikan pangkat reguler periode April/Oktober",
+    "label": "KP.04.04|Kenaikan Pangkat Struktural dan Fungsional"
+  },
+  {
+    "text": "Surat keputusan pembentukan tim program siaran",
+    "label": "PPS.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Forum koordinasi sektoral dan lintas instansi",
+    "label": "KS.01.01|Koordinasi Lintas Sektorat"
+  },
+  {
+    "text": "Pemotongan pajak PPh 21 dan PPh pasal 23",
+    "label": "KU.03.01|Pajak-pajak"
+  },
+  {
+    "text": "Dokumen topologi jaringan server dan sistem backup",
+    "label": "DT.01.01|Topologi jaringan Backup/Data Recovery Center"
+  },
+  {
+    "text": "Dokumen ucapan dan permohonan maaf resmi lembaga",
+    "label": "HM.01.06|Ucapan terima kasih, ucapan selamat, belasungkawa, dan permohonan maaf di lingkungan Lembaga Penyiaran Publik Radio Republik Indonesia"
+  },
+  {
+    "text": "Penunjukan panitia pelaksana kegiatan dan surat tugas",
+    "label": "KP.01.06|Penugasan/Penunjukan/Surat Perintah/Pemanggilan/PLH/Surat Pernyataan/Surat Keterangan/SPMT"
+  },
+  {
+    "text": "Dokumen pelaporan hasil pengawasan unit kerja",
+    "label": "PW.01.04|Pelaporan"
+  },
+  {
+    "text": "Dokumen studi kelayakan proyek dan program investasi",
+    "label": "KU.02.04|Studi Kelayakan"
+  },
+  {
+    "text": "Memorandum of Understanding dengan mitra kerja domestik",
+    "label": "HK.03.02|Dalam Negeri"
+  },
+  {
+    "text": "Proses tender dan penunjukan pemenang penyedia",
+    "label": "PL.02.02|Tender dan Kontrak/Prakualifikasi dan Pasca Kualifikasi, Penunjukan Pemenang, Sanggahan/ Surat Kuasa Kontrak/Berita Acara"
+  },
+  {
+    "text": "Pengumpulan data audio dan video berita untuk arsip",
+    "label": "KJM.08.01|Pengumpulan data audio/video berita"
+  },
+  {
+    "text": "Rekapitulasi data nominatif calon pensiunan tahun",
+    "label": "KP.08.08|Nominatif Pensiun"
+  },
+  {
+    "text": "Aspirasi dan pengaduan masyarakat kepada lembaga pengawas",
+    "label": "PW.03.02|Pengawasan Masyarakat/Publik"
+  },
+  {
+    "text": "Dokumen pengiriman peralatan dan perlengkapan kantor",
+    "label": "PL.03.02|Distribusi/Pengiriman"
+  },
+  {
+    "text": "Perhitungan uang pensiun bulanan dan tunjangan",
+    "label": "KP.08.04|Penetapan Uang Pensiun/Pesangon"
+  },
+  {
+    "text": "Dokumen kajian kelayakan investasi dan pengembangan",
+    "label": "KU.02.04|Studi Kelayakan"
+  },
+  {
+    "text": "Keputusan badan pengawas dan regulator penyiaran",
+    "label": "HK.01.07|Keputusan/Peraturan Lembaga/Badan"
+  },
+  {
+    "text": "Pengelolaan portal website dan media digital lembaga",
+    "label": "HM.02.02|Pers/Media Massa/Website"
+  },
+  {
+    "text": "Pemberhentian dan pembebasan sementara jabatan fungsional",
+    "label": "KP.04.07|Pengangkatan, Pemindahan, Pemberhentian dan Pembebasan Sementara dalam Jabatan Fungsional"
+  },
+  {
+    "text": "Proses alih media audio video konten non-berita",
+    "label": "KJM.09.01|Pengumpulan data audio/video non berita"
+  },
+  {
+    "text": "Tata usaha diklat dan pengelolaan dokumen pelatihan",
+    "label": "KP.05.01|Tata Usaha Kediklatan (Kurikulum, Modul, Dokumen Adminstrasi, Dokumen Akademik, Dokumen Evaluasi, Sertifikat/STTPL)"
+  },
+  {
+    "text": "Distribusi pakaian dinas dan seragam kerja pegawai",
+    "label": "UM.01.06|Pakaian Dinas"
+  },
+  {
+    "text": "TOR dan KAK program bantuan dan pinjaman luar negeri",
+    "label": "KU.02.03|Kerangka Acuan Kerja"
+  },
+  {
+    "text": "Penyelenggaraan kegiatan seni budaya dan kesenian kantor",
+    "label": "KP.07.03|Olahraga/Kesenian dan Budaya"
+  },
+  {
+    "text": "Laporan penilaian dan estimasi nilai sisa aset",
+    "label": "PL.05.03|Penilaian"
+  },
+  {
+    "text": "Keputusan Presiden tentang pengangkatan pejabat negara",
+    "label": "HK.01.04|Keputusan Presiden"
+  },
+  {
+    "text": "SK pengangkatan pejabat fungsional arsiparis dan pustakawan",
+    "label": "KP.04.07|Pengangkatan, Pemindahan, Pemberhentian dan Pembebasan Sementara dalam Jabatan Fungsional"
+  },
+  {
+    "text": "Dokumen UU tentang informasi publik dan penyiaran",
+    "label": "HK.01.01|Undang-Undang"
+  },
+  {
+    "text": "Penyelenggaraan lomba dan festival untuk masyarakat",
+    "label": "HM.01.05|Lomba, festival, penghargaan/tanda kenang-kenangan kepada masyarakat/publik"
+  },
+  {
+    "text": "Surat-surat administrasi bidang produksi program",
+    "label": "PPS.01.02|Surat masuk dan keluar"
+  },
+  {
+    "text": "SK panitia dan tim penyusun program siaran RRI",
+    "label": "PPS.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Data pegawai honorer dan daftar nominatif PPNPN",
+    "label": "KP.01.05|Daftar Nominatif/Data Pegawai Honorer (kontrak)"
+  },
+  {
+    "text": "Administrasi MOU kerjasama program siaran RRI",
+    "label": "KJM.02.01|Surat-surat MOU Program Siaran"
+  },
+  {
+    "text": "Dokumen penyimpanan dan pemeliharaan arsip vital lembaga",
+    "label": "UM.02.01|Penyimpanan dan Pemeliharaan Arsip"
+  },
+  {
+    "text": "Persetujuan sewa pemanfaatan aset dan barang inventaris",
+    "label": "KU.03.03|Sewa Pemanfaatan Aset/barang Milik Negara"
+  },
+  {
+    "text": "Asuransi kematian dan pensiun pegawai meninggal dunia",
+    "label": "KP.08.07|Pensiun Meninggal Dunia/Tewas"
+  },
+  {
+    "text": "Penyiapan bahan tindak lanjut hasil pemeriksaan internal pemerintah",
+    "label": "PW.02.01|Penyiapan Bahan Evaluasi Atas Laporan hasil pengawasan Aparat Pengawasan Internal Pemerintah"
+  },
+  {
+    "text": "Dokumen perawatan gedung perkantoran dan gudang",
+    "label": "UM.01.05|Gedung/Perkantoran/Gudang"
+  },
+  {
+    "text": "Keputusan pemberhentian sementara dari jabatan skorsing",
+    "label": "KP.06.04|Skorsing/Hukuman Jabatan"
+  },
+  {
+    "text": "Pelaksanaan tukar guling aset tanah dan gedung",
+    "label": "PL.05.06|Tukar Guling/Ruislag"
+  },
+  {
+    "text": "Dokumen tata usaha keuangan dan pencatatan transaksi",
+    "label": "KU.04.02|Tata Usaha Keuangan Negara"
+  },
+  {
+    "text": "Pemeliharaan dan perawatan arsip unit kerja lembaga",
+    "label": "UM.02.01|Penyimpanan dan Pemeliharaan Arsip"
+  },
+  {
+    "text": "Dokumen keputusan dan peraturan lembaga pemerintah",
+    "label": "HK.01.07|Keputusan/Peraturan Lembaga/Badan"
+  },
+  {
+    "text": "Data absensi elektronik dan finger print pegawai",
+    "label": "KP.01.14|Absensi"
+  },
+  {
+    "text": "Dokumen sosialisasi program dan layanan RRI",
+    "label": "HM.02.01|Sosialisasi"
+  },
+  {
+    "text": "Pengawasan dengan tujuan tertentu di lingkungan RRI",
+    "label": "PW.01.08|Pelaksanaan Pengawasan Lainnya"
+  },
+  {
+    "text": "Ikhtisar pelaksanaan program dan penggunaan dana hibah",
+    "label": "KU.02.02|Ikhtisar Kegiatan"
+  },
+  {
+    "text": "Penerapan kode barang dan standar inventaris",
+    "label": "PL.04.04|Standarisasi/Kodefikasi"
+  },
+  {
+    "text": "Pelaksanaan penjualan barang bekas melalui lelang",
+    "label": "PL.05.05|Pelelangan/Penjualan"
+  },
+  {
+    "text": "Dokumen penggajian dan tunjangan jabatan fungsional",
+    "label": "KP.01.03|Penggajian/KGB/Tunjangan Jabatan/Daftar gaji"
+  },
+  {
+    "text": "Peraturan Dewan Pengawas LPP RRI tentang tata kelola",
+    "label": "HK.02.01|Peraturan Dewan Pengawas"
+  },
+  {
+    "text": "Pengelolaan data perorangan dan daftar riwayat hidup",
+    "label": "KP.01.01|Data Perorangan/Status/Database/DRH/Statistik"
+  },
+  {
+    "text": "Arsip audio video berita dan pengumpulan data siaran",
+    "label": "KJM.08.01|Pengumpulan data audio/video berita"
+  },
+  {
+    "text": "Berita acara serah terima aset dan hibah barang",
+    "label": "PL.04.01|Inventarisasi Umum/Mutasi Barang/Serah Terima Aset/Berita Acara Hibah"
+  },
+  {
+    "text": "Dokumen pemberhentian tidak hormat karena tindak pidana",
+    "label": "KP.08.02|Pemberhentian Dengan Tidak Hormat"
+  },
+  {
+    "text": "SK kenaikan pangkat reguler dan pilihan PNS",
+    "label": "KP.04.04|Kenaikan Pangkat Struktural dan Fungsional"
+  },
+  {
+    "text": "Dokumen pembentukan tim program berita dan informasi",
+    "label": "PPP.01.01|SK Tim penyusun program dan kebijakan"
+  },
+  {
+    "text": "Pengelolaan dan pendataan aset barang bergerak",
+    "label": "PL.04.02|Barang-barang Bergerak"
+  },
+  {
+    "text": "Salinan putusan pengadilan dan pelaksanaan putusan",
+    "label": "HK.06.02|Putusan"
+  },
+  {
+    "text": "Update data pendidikan dan ijazah pegawai negeri",
+    "label": "KP.04.05|Mutasi Pendidikan"
+  },
+  {
+    "text": "Analisis program siaran dan kegiatan operasional RRI",
+    "label": "PR.01.03|Analisis Program"
+  },
+  {
+    "text": "Penerbitan SPM LS dan UP untuk pembayaran",
+    "label": "KU.02.08|SPP/SPM"
+  },
+  {
+    "text": "Dokumen RDP dan pertemuan dengan DPR Komisi I",
+    "label": "HM.01.03|Dengar Pendapat (RDP) Komisi I DPR RI"
+  },
+  {
+    "text": "SK penetapan uang pensiun janda duda dan anak",
+    "label": "KP.08.04|Penetapan Uang Pensiun/Pesangon"
+  },
+  {
+    "text": "Dokumen gugatan administrasi negara dan PTUN",
+    "label": "HK.06.01|Gugatan"
+  },
+  {
+    "text": "Aturan jam kerja fleksibel dan ketentuan disiplin PNS",
+    "label": "KP.06.06|Jam Kerja/Disiplin"
+  },
+  {
+    "text": "Laporan hasil pemantauan pengawasan operasional lembaga",
+    "label": "PW.01.01|Pemantauan"
+  },
+  {
+    "text": "Daftar inventaris peralatan studio penyiaran",
+    "label": "STO.01.01|Katalog Peralatan Studio"
+  },
+  {
+    "text": "Pelaksanaan HUT KORPRI dan kegiatan organisasi",
+    "label": "KP.09.01|KORPRI"
+  },
+  {
+    "text": "Pelatihan pembekalan pensiun bagi pegawai yang akan purna",
+    "label": "KP.08.03|Masa Persiapan Pensiun (MPP)/Pembekalan Pensiun"
+  },
+  {
+    "text": "Penerbitan NIP dan kartu identitas pegawai negeri",
+    "label": "KP.01.02|NIP/Kartu Pegawai/Kartu PPNS/Tanda Pengenal"
+  },
+  {
+    "text": "Laporan evaluasi pelaksanaan pengawasan lembaga",
+    "label": "PW.01.03|Evaluasi"
+  },
+  {
+    "text": "Laporan hasil pengawasan dan pemeriksaan internal",
+    "label": "PW.01.04|Pelaporan"
+  },
+  {
+    "text": "Dokumen putusan hakim dan eksekusi keputusan hukum",
+    "label": "HK.06.02|Putusan"
+  },
+  {
+    "text": "Pelaksanaan alih media arsip fisik ke elektronik",
+    "label": "UM.02.04|Berkas Proses Alih Media Arsip"
+  },
+  {
+    "text": "Nominatif pegawai honorer dan dokumen kontrak kerja",
+    "label": "KP.01.05|Daftar Nominatif/Data Pegawai Honorer (kontrak)"
+  },
+  {
+    "text": "Dokumen seleksi administrasi dan ujian CPNS",
+    "label": "KP.03.01|Seleksi Pegawai"
+  },
+  {
+    "text": "Penetapan pensiun pegawai yang mencapai BUP",
+    "label": "KP.08.05|Pensiun (BUP)"
+  },
+  {
+    "text": "ABT dan tambahan alokasi anggaran kegiatan prioritas",
+    "label": "KU.01.02|ABT (Anggaran Belanja Tambahan)"
+  },
+  {
+    "text": "Dokumen reimbursement dana kepada negara pemberi bantuan",
+    "label": "KU.02.07|Reimburstment Kepada Negara/Badan Pemberian Bantuan"
+  },
+  {
+    "text": "Hasil pemantauan pengawasan internal lembaga RRI",
+    "label": "PW.01.01|Pemantauan"
+  },
+  {
+    "text": "Berita acara pengambilan sumpah jabatan pegawai negeri",
+    "label": "KP.01.09|Sumpah Pegawai"
+  }
 ]

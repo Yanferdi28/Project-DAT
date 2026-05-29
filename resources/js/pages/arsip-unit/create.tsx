@@ -249,7 +249,7 @@ export default function Create({
                                             <Brain className="mt-0.5 h-5 w-5 text-purple-600 dark:text-purple-400" />
                                             <div>
                                                 <h3 className="font-medium text-purple-900 dark:text-purple-200">
-                                                    ✨ Tips Cepat: Gunakan Fitur AI & OCR
+                                                     Tips Cepat: Gunakan Fitur AI & OCR
                                                 </h3>
                                                 <p className="mt-1 text-sm text-purple-700 dark:text-purple-300">
                                                     Anda tidak perlu mengisi form ini secara manual! <strong>Gulir ke bagian paling bawah</strong> dan unggah dokumen Anda terlebih dahulu. Sistem AI kami akan memindai dokumen Anda dan <strong>mengisi formulir ini secara otomatis</strong>.
@@ -271,16 +271,18 @@ export default function Create({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openKodeKlasifikasi}
-                                                    className="w-full justify-between"
+                                                    className="w-full justify-between flex items-center min-w-0"
                                                 >
-                                                    {data.kode_klasifikasi_id
-                                                        ? kodeKlasifikasis.find(
-                                                              (item) => item.id.toString() === data.kode_klasifikasi_id
-                                                          )?.kode_klasifikasi + ' - ' + kodeKlasifikasis.find(
-                                                              (item) => item.id.toString() === data.kode_klasifikasi_id
-                                                          )?.uraian
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.kode_klasifikasi_id
+                                                            ? kodeKlasifikasis.find(
+                                                                  (item) => item.id.toString() === data.kode_klasifikasi_id
+                                                              )?.kode_klasifikasi + ' - ' + kodeKlasifikasis.find(
+                                                                  (item) => item.id.toString() === data.kode_klasifikasi_id
+                                                              )?.uraian
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[500px] p-0">
@@ -332,15 +334,17 @@ export default function Create({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openUnitPengolah}
-                                                    className={`w-full justify-between ${isUnitPengolahLocked ? 'cursor-not-allowed opacity-70' : ''}`}
+                                                    className={cn("w-full justify-between flex items-center min-w-0", isUnitPengolahLocked && "cursor-not-allowed opacity-70")}
                                                     disabled={isUnitPengolahLocked}
                                                 >
-                                                    {data.unit_pengolah_arsip_id
-                                                        ? unitPengolahs.find(
-                                                              (item) => item.id.toString() === data.unit_pengolah_arsip_id
-                                                          )?.nama
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.unit_pengolah_arsip_id
+                                                            ? unitPengolahs.find(
+                                                                  (item) => item.id.toString() === data.unit_pengolah_arsip_id
+                                                              )?.nama
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[400px] p-0">
@@ -399,14 +403,16 @@ export default function Create({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openKategori}
-                                                    className="w-full justify-between"
+                                                    className="w-full justify-between flex items-center min-w-0"
                                                 >
-                                                    {data.kategori_id
-                                                        ? kategoris.find(
-                                                              (item) => item.id.toString() === data.kategori_id
-                                                          )?.nama
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.kategori_id
+                                                            ? kategoris.find(
+                                                                  (item) => item.id.toString() === data.kategori_id
+                                                              )?.nama
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[400px] p-0">
@@ -458,15 +464,17 @@ export default function Create({
                                                     variant="outline"
                                                     role="combobox"
                                                     aria-expanded={openSubKategori}
-                                                    className="w-full justify-between"
+                                                    className="w-full justify-between flex items-center min-w-0"
                                                     disabled={!data.kategori_id}
                                                 >
-                                                    {data.sub_kategori_id
-                                                        ? filteredSubKategoris.find(
-                                                              (item) => item.id.toString() === data.sub_kategori_id
-                                                          )?.nama
-                                                        : 'Pilih'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    <span className="truncate text-left mr-2">
+                                                        {data.sub_kategori_id
+                                                            ? filteredSubKategoris.find(
+                                                                  (item) => item.id.toString() === data.sub_kategori_id
+                                                              )?.nama
+                                                            : 'Pilih'}
+                                                    </span>
+                                                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[400px] p-0">

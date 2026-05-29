@@ -50,7 +50,7 @@ export function OcrStatusBadge({ status, className = '' }: OcrStatusBadgeProps) 
     );
 }
 
-type AiSuggestionStatus = 'pending' | 'accepted' | 'rejected' | null;
+type AiSuggestionStatus = 'pending' | 'accepted' | 'rejected' | 'corrected' | null;
 
 interface AiStatusBadgeProps {
     status: AiSuggestionStatus;
@@ -72,6 +72,11 @@ const aiStatusConfig: Record<string, { label: string; className: string; icon: R
         label: 'Saran AI Ditolak',
         className: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800',
         icon: <XCircle className="h-3 w-3" />,
+    },
+    corrected: {
+        label: 'Dikoreksi Manual',
+        className: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800',
+        icon: <CheckCircle className="h-3 w-3" />,
     },
 };
 

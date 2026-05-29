@@ -127,6 +127,12 @@ interface PaginatedData {
 
 interface PageProps {
     arsipUnits: PaginatedData;
+    statusSummary: {
+        total: number;
+        diterima: number;
+        pending: number;
+        ditolak: number;
+    };
     berkasArsips: BerkasArsip[];
     unitPengolahs: UnitPengolah[];
     filters: {
@@ -151,7 +157,7 @@ interface PageProps {
     [key: string]: any;
 }
 
-export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs, filters, flash }: PageProps) {
+export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips, unitPengolahs, filters, flash }: PageProps) {
     const { auth, userUnitPengolahId, ocrEnabled } = usePage<PageProps>().props;
     const [search, setSearch] = useState(filters.search || '');
     const [contentSearch, setContentSearch] = useState(filters.content_search || '');
@@ -409,6 +415,37 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
     // User can assign berkas (admin and user, not operator)
     const canAssignBerkas = auth.user?.role !== 'operator';
 
+    const summaryCards = [
+        {
+            label: 'Total Arsip Unit',
+            value: statusSummary.total,
+            icon: FileText,
+            className: 'border-blue-600/60 bg-blue-950/10 text-blue-600 dark:bg-blue-950/30 dark:text-blue-300',
+            iconClassName: 'bg-blue-500/15 text-blue-600 dark:text-blue-300',
+        },
+        {
+            label: 'Diterima',
+            value: statusSummary.diterima,
+            icon: Check,
+            className: 'border-emerald-600/60 bg-emerald-950/10 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-300',
+            iconClassName: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300',
+        },
+        {
+            label: 'Pending',
+            value: statusSummary.pending,
+            icon: Clock,
+            className: 'border-yellow-600/60 bg-yellow-950/10 text-yellow-600 dark:bg-yellow-950/30 dark:text-yellow-300',
+            iconClassName: 'bg-yellow-500/15 text-yellow-600 dark:text-yellow-300',
+        },
+        {
+            label: 'Ditolak',
+            value: statusSummary.ditolak,
+            icon: X,
+            className: 'border-red-600/60 bg-red-950/10 text-red-600 dark:bg-red-950/30 dark:text-red-300',
+            iconClassName: 'bg-red-500/15 text-red-600 dark:text-red-300',
+        },
+    ];
+
     // Check if user can edit/delete a specific arsip unit
     // Admin can edit/delete all, regular users can only edit/delete their own unit's arsip
     const canEditDelete = (item: ArsipUnit) => {
@@ -463,7 +500,7 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             {'Arsip Unit'}
                         </h1>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {'Total'} {arsipUnits.total} {'Arsip Unit'.toLowerCase()}
+                            {'Kelola'} {'Data Arsip Unit'.toLowerCase()}
                         </p>
                     </div>
                     <div className="flex gap-2">
@@ -484,6 +521,28 @@ export default function ArsipUnitIndex({ arsipUnits, berkasArsips, unitPengolahs
                             </Link>
                         )}
                     </div>
+                </div>
+
+                {/* Status Summary */}
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {summaryCards.map((card) => (
+                        <div
+                            key={card.label}
+                            className={`rounded-lg border p-4 ${card.className}`}
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${card.iconClassName}`}>
+                                    <card.icon className="h-4 w-4" />
+                                </div>
+                                <div className="min-w-0">
+                                    <p className="text-sm font-semibold">{card.label}</p>
+                                    <p className="mt-1 text-2xl font-bold leading-none">
+                                        {card.value.toLocaleString('id-ID')}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
 
                 {/* Filters */}

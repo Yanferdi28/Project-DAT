@@ -39,6 +39,28 @@ class ArsipUnitController extends Controller
     }
 
     /**
+     * Mark AI feedback as corrected when a user chooses a different final code.
+     */
+    private function applyAiCorrectionStatus(array $validated, ArsipUnit $arsipUnit): array
+    {
+        if (
+            !$arsipUnit->suggested_kode_klasifikasi_id
+            || !array_key_exists('kode_klasifikasi_id', $validated)
+        ) {
+            return $validated;
+        }
+
+        $selectedKodeId = (int) $validated['kode_klasifikasi_id'];
+        $suggestedKodeId = (int) $arsipUnit->suggested_kode_klasifikasi_id;
+
+        if ($selectedKodeId !== $suggestedKodeId) {
+            $validated['ai_suggestion_status'] = 'corrected';
+        }
+
+        return $validated;
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request): Response
@@ -76,14 +98,27 @@ class ArsipUnitController extends Controller
             $query->searchByContent($request->content_search);
         }
 
-        // Filter by status
-        if ($request->has('status') && $request->status != '') {
-            $query->where('status', $request->status);
-        }
-
         // Filter by publish_status
         if ($request->has('publish_status') && $request->publish_status != '') {
             $query->where('publish_status', $request->publish_status);
+        }
+
+        $statusSummaryQuery = clone $query;
+        $statusCounts = (clone $statusSummaryQuery)
+            ->selectRaw('status, count(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        $statusSummary = [
+            'total' => (clone $statusSummaryQuery)->count(),
+            'diterima' => (int) ($statusCounts['diterima'] ?? 0),
+            'pending' => (int) ($statusCounts['pending'] ?? 0),
+            'ditolak' => (int) ($statusCounts['ditolak'] ?? 0),
+        ];
+
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
         }
 
         $perPage = $request->input('per_page', 10);
@@ -97,6 +132,7 @@ class ArsipUnitController extends Controller
         return Inertia::render('arsip-unit/index', [
             'arsipUnits' => $arsipUnits,
             'filters' => array_merge($request->only(['search', 'content_search', 'status', 'publish_status']), ['per_page' => $perPage]),
+            'statusSummary' => $statusSummary,
             'berkasArsips' => Inertia::lazy(fn() => $berkasArsipsQuery->orderBy('nama_berkas')->get()),
             'unitPengolahs' => Inertia::lazy(fn() => UnitPengolah::select('id', 'nama_unit')->orderBy('nama_unit')->get()),
             'userUnitPengolahId' => $userUnitPengolahId,
@@ -229,6 +265,7 @@ class ArsipUnitController extends Controller
         }
 
         $validated = $request->validated();
+        $validated = $this->applyAiCorrectionStatus($validated, $arsipUnit);
 
         // Handle file upload
         $newFileUploaded = false;
