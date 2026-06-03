@@ -180,6 +180,18 @@ export default function Show() {
         });
     };
 
+    const getArsipUnitTitle = (arsip: ArsipUnit) => {
+        return arsip.indeks || arsip.no_item_arsip || `ID: ${arsip.id_berkas}`;
+    };
+
+    const getArsipUnitSummary = (arsip: ArsipUnit) => {
+        return arsip.uraian_informasi || 'Tanpa uraian informasi';
+    };
+
+    const selectedArsipUnit = availableArsipUnits.find(
+        (arsip) => arsip.id_berkas.toString() === selectedArsipUnitId
+    );
+
     return (
         <AppLayout
             breadcrumbs={[
@@ -452,27 +464,27 @@ export default function Show() {
 
             {/* Add Arsip Unit Dialog */}
             <Dialog open={addDialog} onOpenChange={setAddDialog}>
-                <DialogContent>
-                    <DialogHeader>
+                <DialogContent className="w-[calc(100vw-2rem)] overflow-hidden sm:max-w-xl">
+                    <DialogHeader className="min-w-0">
                         <DialogTitle>Tambah Arsip Unit ke Berkas</DialogTitle>
-                        <DialogDescription>
+                        <DialogDescription className="max-w-full">
                             Pilih arsip unit yang akan ditambahkan ke berkas arsip ini. Hanya arsip unit dengan kode klasifikasi dan unit pengolah yang sama yang ditampilkan.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="py-4">
+                    <div className="min-w-0 py-4">
                         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Arsip Unit
                         </label>
                         {availableArsipUnits.length > 0 ? (
-                            <div className="space-y-2">
-                                <div className="relative">
+                            <div className="min-w-0 space-y-2">
+                                <div className="relative min-w-0">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                                     <input
                                         type="text"
                                         placeholder="Cari arsip unit..."
                                         value={arsipUnitSearch}
                                         onChange={(e) => setArsipUnitSearch(e.target.value)}
-                                        className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                        className="block w-full min-w-0 rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
                                     />
                                 </div>
                                 {filteredArsipUnits.length === 0 ? (
@@ -483,19 +495,31 @@ export default function Show() {
                                     </div>
                                 ) : (
                                     <Select value={selectedArsipUnitId} onValueChange={setSelectedArsipUnitId}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih arsip unit..." />
+                                        <SelectTrigger className="h-10 w-full min-w-0 max-w-full overflow-hidden">
+                                            {selectedArsipUnit ? (
+                                                <SelectValue className="min-w-0 flex-1 overflow-hidden">
+                                                    <span className="block min-w-0 max-w-full truncate text-left">
+                                                        {getArsipUnitTitle(selectedArsipUnit)}
+                                                    </span>
+                                                </SelectValue>
+                                            ) : (
+                                                <SelectValue className="min-w-0 flex-1 overflow-hidden" placeholder="Pilih arsip unit..." />
+                                            )}
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="w-[var(--radix-select-trigger-width)] max-w-[calc(100vw-2rem)]">
                                             {filteredArsipUnits.map((arsip) => (
-                                                <SelectItem key={arsip.id_berkas} value={arsip.id_berkas.toString()}>
-                                                    <div className="flex flex-col">
-                                                        <span>
-                                                            {arsip.indeks || arsip.no_item_arsip || `ID: ${arsip.id_berkas}`}
+                                                <SelectItem
+                                                    key={arsip.id_berkas}
+                                                    value={arsip.id_berkas.toString()}
+                                                    textValue={getArsipUnitTitle(arsip)}
+                                                    className="min-w-0 items-start py-2 pr-8"
+                                                >
+                                                    <div className="min-w-0 max-w-full overflow-hidden">
+                                                        <span className="block truncate font-medium text-gray-900 dark:text-gray-100">
+                                                            {getArsipUnitTitle(arsip)}
                                                         </span>
-                                                        <span className="text-xs text-gray-500">
-                                                            {arsip.uraian_informasi?.substring(0, 50)}
-                                                            {arsip.uraian_informasi && arsip.uraian_informasi.length > 50 ? '...' : ''}
+                                                        <span className="mt-0.5 block truncate text-xs text-gray-500 dark:text-gray-400">
+                                                            {getArsipUnitSummary(arsip)}
                                                         </span>
                                                     </div>
                                                 </SelectItem>

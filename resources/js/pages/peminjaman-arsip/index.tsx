@@ -12,7 +12,7 @@ import {
     Eye,
     CornerDownLeft
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type KeyboardEvent } from 'react';
 
 interface PeminjamanArsip {
     id: number;
@@ -80,6 +80,17 @@ export default function Index() {
             month: 'long',
             year: 'numeric'
         });
+    };
+
+    const openDetail = (id: number) => {
+        router.visit(`/peminjaman-arsip/${id}`);
+    };
+
+    const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, id: number) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openDetail(id);
+        }
     };
 
     return (
@@ -212,7 +223,15 @@ export default function Index() {
                         <tbody>
                             {peminjaman.data.length > 0 ? (
                                 peminjaman.data.map((item, index) => (
-                                    <tr key={item.id} className="border-b dark:border-gray-700">
+                                    <tr
+                                        key={item.id}
+                                        role="link"
+                                        tabIndex={0}
+                                        aria-label={`Lihat detail peminjaman ${item.nama_peminjam}`}
+                                        onClick={() => openDetail(item.id)}
+                                        onKeyDown={(event) => handleRowKeyDown(event, item.id)}
+                                        className="cursor-pointer border-b transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800/70"
+                                    >
                                         <td className="px-4 py-3">
                                             {(peminjaman.current_page - 1) * 15 + index + 1}
                                         </td>
@@ -248,7 +267,11 @@ export default function Index() {
                                                 </span>
                                             )}
                                         </td>
-                                        <td className="px-4 py-3 text-right">
+                                        <td
+                                            className="px-4 py-3 text-right"
+                                            onClick={(event) => event.stopPropagation()}
+                                            onKeyDown={(event) => event.stopPropagation()}
+                                        >
                                             <div className="flex justify-end gap-2">
                                                 <Link
                                                     href={`/peminjaman-arsip/${item.id}`}
@@ -257,15 +280,6 @@ export default function Index() {
                                                 >
                                                     <Eye className="h-4 w-4" />
                                                 </Link>
-                                                {item.status !== 'dikembalikan' && (
-                                                    <Link
-                                                        href={`/peminjaman-arsip/${item.id}`}
-                                                        className="inline-flex items-center justify-center rounded-lg bg-blue-100 p-2 text-blue-700 transition-colors hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
-                                                        title="Kembalikan Arsip"
-                                                    >
-                                                        <CornerDownLeft className="h-4 w-4" />
-                                                    </Link>
-                                                )}
                                             </div>
                                         </td>
                                     </tr>

@@ -5,7 +5,7 @@ import { ArrowLeft, Clock, Save, FileText, User, Calendar, AlertCircle, CornerDo
 
 interface PeminjamanArsip {
     id: number;
-    arsipUnit: {
+    arsip_unit: {
         id_berkas: number;
         indeks: string;
         uraian_informasi: string;
@@ -17,15 +17,15 @@ interface PeminjamanArsip {
     nama_peminjam: string;
     jabatan_peminjam: string | null;
     tujuan_peminjaman: string;
-    unitPengolah?: { nama_unit: string };
+    unit_pengolah?: { nama_unit: string };
     tanggal_pinjam: string;
     tanggal_harus_kembali: string;
     tanggal_kembali: string | null;
     status: 'dipinjam' | 'dikembalikan' | 'terlambat';
     kondisi_pengembalian: string | null;
     catatan: string | null;
-    dicatatOleh: { name: string };
-    dikembalikanOleh?: { name: string };
+    dicatat_oleh: { name: string };
+    dikembalikan_oleh?: { name: string };
     created_at: string;
 }
 
@@ -110,34 +110,34 @@ export default function Show() {
                         <div className="grid gap-4 sm:grid-cols-2">
                             <div>
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Indeks Arsip</p>
-                                <p className="mt-1 font-medium text-gray-900 dark:text-white">{peminjaman.arsipUnit?.indeks || '-'}</p>
+                                <p className="mt-1 font-medium text-gray-900 dark:text-white">{peminjaman.arsip_unit?.indeks || '-'}</p>
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Unit Pencipta/Pengolah</p>
-                                <p className="mt-1 font-medium text-gray-900 dark:text-white">{peminjaman.arsipUnit?.unit_pengolah?.nama_unit || '-'}</p>
+                                <p className="mt-1 font-medium text-gray-900 dark:text-white">{peminjaman.arsip_unit?.unit_pengolah?.nama_unit || '-'}</p>
                             </div>
                             <div className="sm:col-span-2">
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Uraian Informasi</p>
-                                <p className="mt-1 text-gray-900 dark:text-white">{peminjaman.arsipUnit?.uraian_informasi || '-'}</p>
+                                <p className="mt-1 text-gray-900 dark:text-white">{peminjaman.arsip_unit?.uraian_informasi || '-'}</p>
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Kode Klasifikasi</p>
                                 <p className="mt-1 text-gray-900 dark:text-white">
-                                    {peminjaman.arsipUnit?.kode_klasifikasi?.kode_klasifikasi || '-'} 
-                                    {peminjaman.arsipUnit?.kode_klasifikasi?.uraian ? ` - ${peminjaman.arsipUnit.kode_klasifikasi.uraian}` : ''}
+                                    {peminjaman.arsip_unit?.kode_klasifikasi?.kode_klasifikasi || '-'} 
+                                    {peminjaman.arsip_unit?.kode_klasifikasi?.uraian ? ` - ${peminjaman.arsip_unit.kode_klasifikasi.uraian}` : ''}
                                 </p>
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Kategori</p>
                                 <p className="mt-1 text-gray-900 dark:text-white">
-                                    {peminjaman.arsipUnit?.kategori?.nama_kategori || '-'}
-                                    {peminjaman.arsipUnit?.sub_kategori?.nama_sub_kategori ? ` / ${peminjaman.arsipUnit.sub_kategori.nama_sub_kategori}` : ''}
+                                    {peminjaman.arsip_unit?.kategori?.nama_kategori || '-'}
+                                    {peminjaman.arsip_unit?.sub_kategori?.nama_sub_kategori ? ` / ${peminjaman.arsip_unit.sub_kategori.nama_sub_kategori}` : ''}
                                 </p>
                             </div>
                         </div>
                         <div className="mt-4 flex justify-end">
                             <Link
-                                href={`/arsip-unit/${peminjaman.arsipUnit?.id_berkas}`}
+                                href={`/arsip-unit/${peminjaman.arsip_unit?.id_berkas}`}
                                 className="text-sm text-blue-600 hover:underline dark:text-blue-400"
                             >
                                 Lihat Detail Arsip &rarr;
@@ -163,7 +163,7 @@ export default function Show() {
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Unit / Instansi</p>
-                                <p className="mt-1 text-gray-900 dark:text-white">{peminjaman.unitPengolah?.nama_unit || '-'}</p>
+                                <p className="mt-1 text-gray-900 dark:text-white">{peminjaman.unit_pengolah?.nama_unit || '-'}</p>
                             </div>
                             <div className="sm:col-span-2">
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Tujuan Peminjaman</p>
@@ -192,7 +192,7 @@ export default function Show() {
                                 </span>
                                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Dipinjam</h3>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">{formatDate(peminjaman.tanggal_pinjam)}</p>
-                                <p className="mt-1 text-xs text-gray-500">Dicatat oleh: {peminjaman.dicatatOleh?.name}</p>
+                                <p className="mt-1 text-xs text-gray-500">Dicatat oleh: {peminjaman.dicatat_oleh?.name}</p>
                             </div>
 
                             {/* Deadline */}
@@ -225,7 +225,7 @@ export default function Show() {
                                 {peminjaman.status === 'dikembalikan' ? (
                                     <>
                                         <p className="text-sm text-gray-600 dark:text-gray-400">{formatDate(peminjaman.tanggal_kembali)}</p>
-                                        <p className="mt-1 text-xs text-gray-500">Diterima oleh: {peminjaman.dikembalikanOleh?.name}</p>
+                                        <p className="mt-1 text-xs text-gray-500">Diterima oleh: {peminjaman.dikembalikan_oleh?.name}</p>
                                         <p className="mt-1 text-xs text-gray-500">Kondisi: <span className="font-medium">{peminjaman.kondisi_pengembalian}</span></p>
                                     </>
                                 ) : (
