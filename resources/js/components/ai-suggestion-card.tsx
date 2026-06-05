@@ -43,8 +43,8 @@ export function AiSuggestionCard({
     };
 
     const getConfidenceColor = (score: number) => {
-        if (score >= 0.8) return 'text-green-600 dark:text-green-400';
-        if (score >= 0.6) return 'text-yellow-600 dark:text-yellow-400';
+        if (score >= 80) return 'text-green-600 dark:text-green-400';
+        if (score >= 60) return 'text-yellow-600 dark:text-yellow-400';
         return 'text-red-600 dark:text-red-400';
     };
 
@@ -70,7 +70,7 @@ export function AiSuggestionCard({
                     <div>
                         <label className="text-sm font-medium text-muted-foreground">Tingkat Keyakinan AI</label>
                         <p className={`mt-1 text-lg font-bold ${getConfidenceColor(Number(aiConfidenceScore))}`}>
-                            {(Number(aiConfidenceScore) * 100).toFixed(1)}%
+                            {Number(aiConfidenceScore).toFixed(1)}%
                         </p>
                     </div>
                 )}

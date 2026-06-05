@@ -85,16 +85,18 @@ class ProcessOcrJob implements ShouldQueue
             return;
         }
 
+        $confidence = max(0, min(100, (float) $result['confidence']));
+
         // Save OCR result
         $arsipUnit->update([
             'extracted_text' => $result['text'],
-            'ocr_confidence' => $result['confidence'],
+            'ocr_confidence' => $confidence,
             'ocr_status' => 'completed',
             'ocr_error' => null,
             'ocr_processed_at' => now(),
         ]);
 
-        Log::info("ProcessOcrJob: OCR completed for ArsipUnit #{$this->arsipUnitId} (confidence: {$result['confidence']}%)");
+        Log::info("ProcessOcrJob: OCR completed for ArsipUnit #{$this->arsipUnitId} (confidence: {$confidence}%)");
 
         // Step 2: Dispatch classification job if text was extracted
         if (!empty($result['text']) && config('ocr.classification_enabled', true)) {

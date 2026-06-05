@@ -16,7 +16,9 @@ class ImagePreprocessor:
 
     # Minimum image height (in pixels) for reliable OCR results.
     # Tesseract works best at ~300 DPI; 800px ensures adequate resolution.
-    MIN_HEIGHT = 800
+    MIN_HEIGHT = 1200
+    MIN_WIDTH = 900
+    MAX_DIMENSION = 2600
 
     # Denoising strength (h parameter for fastNlMeansDenoising).
     # Higher values remove more noise but may blur text. 10 is a balanced default.
@@ -44,10 +46,11 @@ class ImagePreprocessor:
         Steps:
         1. Convert to grayscale
         2. Resize if too small
-        3. Denoise
-        4. Binarize (adaptive thresholding)
-        5. Deskew
-        6. Remove borders
+        3. Normalize contrast
+        4. Denoise
+        5. Sharpen text strokes
+        6. Binarize (adaptive thresholding)
+        7. Deskew
 
         Args:
             image: PIL Image object
@@ -71,13 +74,19 @@ class ImagePreprocessor:
         # 2. Resize if too small (minimum 300 DPI equivalent)
         gray = self._resize_if_needed(gray)
 
-        # 3. Denoise
-        denoised = self._denoise(gray)
+        # 3. Normalize local contrast
+        contrasted = self._normalize_contrast(gray)
 
-        # 4. Binarize using adaptive thresholding
-        binary = self._binarize(denoised)
+        # 4. Denoise
+        denoised = self._denoise(contrasted)
 
-        # 5. Deskew
+        # 5. Sharpen text strokes
+        sharpened = self._sharpen(denoised)
+
+        # 6. Binarize using adaptive thresholding
+        binary = self._binarize(sharpened)
+
+        # 7. Deskew
         deskewed = self._deskew(binary)
 
         # Convert back to PIL
@@ -86,12 +95,23 @@ class ImagePreprocessor:
     def _resize_if_needed(self, img: np.ndarray) -> np.ndarray:
         """Upscale image if it's too small for good OCR results."""
         h, w = img.shape[:2]
-        if h < self.MIN_HEIGHT:
-            scale = self.MIN_HEIGHT / h
+        scale = max(
+            self.MIN_HEIGHT / h if h < self.MIN_HEIGHT else 1,
+            self.MIN_WIDTH / w if w < self.MIN_WIDTH else 1,
+        )
+
+        if scale > 1:
+            max_scale = self.MAX_DIMENSION / max(h, w)
+            scale = max(1, min(scale, max_scale))
             new_w = int(w * scale)
             new_h = int(h * scale)
             img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_CUBIC)
         return img
+
+    def _normalize_contrast(self, img: np.ndarray) -> np.ndarray:
+        """Improve local contrast so faint text is easier for OCR to read."""
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        return clahe.apply(img)
 
     def _denoise(self, img: np.ndarray) -> np.ndarray:
         """Apply non-local means denoising."""
@@ -101,6 +121,11 @@ class ImagePreprocessor:
             templateWindowSize=7,
             searchWindowSize=21,
         )
+
+    def _sharpen(self, img: np.ndarray) -> np.ndarray:
+        """Apply a light unsharp mask to make character edges clearer."""
+        blurred = cv2.GaussianBlur(img, (0, 0), 1.0)
+        return cv2.addWeighted(img, 1.5, blurred, -0.5, 0)
 
     def _binarize(self, img: np.ndarray) -> np.ndarray:
         """Apply adaptive thresholding for binarization."""

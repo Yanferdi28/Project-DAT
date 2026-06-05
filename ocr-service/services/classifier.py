@@ -77,7 +77,7 @@ class DocumentClassifier:
             predictions = []
             for idx in top_indices:
                 label = self.label_encoder.inverse_transform([idx])[0]
-                confidence = round(float(probabilities[idx]) * 100, 2)
+                confidence = round(max(0.0, min(100.0, float(probabilities[idx]) * 100)), 2)
 
                 # Parse label: format is "kode_klasifikasi|uraian"
                 parts = label.split("|", 1)

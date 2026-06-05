@@ -60,10 +60,11 @@ class ClassifyDocumentJob implements ShouldQueue
         }
 
         $topPrediction = $result['top_prediction'] ?? $result['predictions'][0];
+        $confidence = max(0, min(100, (float) ($topPrediction['confidence'] ?? 0)));
 
         // Only save suggestion if confidence is above minimum threshold
         $minConfidence = config('ocr.min_confidence', 50);
-        if ($topPrediction['confidence'] >= $minConfidence) {
+        if ($confidence >= $minConfidence) {
             // Resolve kode_klasifikasi by its code string from the classifier
             $kodeKlasifikasiCode = $topPrediction['kode_klasifikasi'] ?? null;
             $kodeKlasifikasi = $kodeKlasifikasiCode
@@ -77,13 +78,13 @@ class ClassifyDocumentJob implements ShouldQueue
 
             $arsipUnit->update([
                 'suggested_kode_klasifikasi_id' => $kodeKlasifikasi->id,
-                'ai_confidence_score' => $topPrediction['confidence'],
+                'ai_confidence_score' => $confidence,
                 'ai_suggestion_status' => null, // pending review
             ]);
 
-            Log::info("ClassifyDocumentJob: Classification completed for ArsipUnit #{$this->arsipUnitId} - Suggested kode_klasifikasi: {$kodeKlasifikasiCode} (confidence: {$topPrediction['confidence']}%)");
+            Log::info("ClassifyDocumentJob: Classification completed for ArsipUnit #{$this->arsipUnitId} - Suggested kode_klasifikasi: {$kodeKlasifikasiCode} (confidence: {$confidence}%)");
         } else {
-            Log::info("ClassifyDocumentJob: Confidence too low ({$topPrediction['confidence']}%) for ArsipUnit #{$this->arsipUnitId}");
+            Log::info("ClassifyDocumentJob: Confidence too low ({$confidence}%) for ArsipUnit #{$this->arsipUnitId}");
         }
     }
 

@@ -925,7 +925,7 @@ export default function Edit({
                                                                             </p>
                                                                         )}
                                                                         <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                            Keyakinan AI: {(scanResult.suggestions.confidence * 100).toFixed(1)}%
+                                                                            Keyakinan AI: {scanResult.suggestions.confidence.toFixed(1)}%
                                                                         </p>
                                                                     </div>
                                                                     <p className="text-xs text-green-600 dark:text-green-400 italic">

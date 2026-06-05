@@ -8,12 +8,28 @@ import pytesseract
 from PIL import Image
 from typing import Optional
 import platform
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
 
+@dataclass
+class OcrCandidate:
+    text: str
+    confidence: float
+    word_count: int
+    config: str
+
+
 class OcrEngine:
     """Wrapper around pytesseract for OCR text extraction."""
+
+    TESSERACT_CONFIGS = (
+        "--psm 6 --oem 3",   # Uniform block of text.
+        "--psm 4 --oem 3",   # Single column, variable text sizes.
+        "--psm 3 --oem 3",   # Fully automatic page segmentation.
+        "--psm 11 --oem 3",  # Sparse text.
+    )
 
     def __init__(self, lang: str = "ind+eng"):
         """
@@ -71,37 +87,85 @@ class OcrEngine:
         Returns:
             dict with 'text' and 'confidence'
         """
-        # Get detailed data with confidence scores
+        candidates = [
+            self._extract_with_config(image, config)
+            for config in self.TESSERACT_CONFIGS
+        ]
+        best = self._choose_best_candidate(candidates)
+
+        return {
+            "text": best.text,
+            "confidence": round(best.confidence, 2),
+            "word_count": best.word_count,
+            "ocr_config": best.config,
+        }
+
+    def _extract_with_config(self, image: Image.Image, config: str) -> OcrCandidate:
+        """Run Tesseract once with a specific page segmentation config."""
         data = pytesseract.image_to_data(
             image,
             lang=self.lang,
-            config="--psm 6 --oem 3",
+            config=config,
             output_type=pytesseract.Output.DICT,
         )
 
-        # Extract full text
         text = pytesseract.image_to_string(
             image,
             lang=self.lang,
-            config="--psm 6 --oem 3",
+            config=config,
         )
 
-        # Calculate average confidence (only for words with conf > 0)
         confidences = [
-            int(c) for c in data["conf"] if int(c) > 0
+            value
+            for value in (self._parse_confidence(raw) for raw in data.get("conf", []))
+            if value > 0
         ]
-        avg_confidence = (
-            sum(confidences) / len(confidences) if confidences else 0.0
+
+        avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+        avg_confidence = max(0.0, min(100.0, avg_confidence))
+
+        return OcrCandidate(
+            text=self._clean_text(text),
+            confidence=avg_confidence,
+            word_count=len(confidences),
+            config=config,
         )
 
-        # Clean up the text
-        text = self._clean_text(text)
+    def _choose_best_candidate(self, candidates: list[OcrCandidate]) -> OcrCandidate:
+        """
+        Pick the best OCR result without being fooled by tiny high-confidence outputs.
 
-        return {
-            "text": text,
-            "confidence": round(avg_confidence, 2),
-            "word_count": len(confidences),
-        }
+        Tesseract can occasionally return one or two very confident words while
+        missing most of the document. We only compare confidence among candidates
+        that retain at least half of the maximum detected word count.
+        """
+        if not candidates:
+            return OcrCandidate(text="", confidence=0.0, word_count=0, config="")
+
+        max_words = max(candidate.word_count for candidate in candidates)
+        min_words = max(3, int(max_words * 0.5))
+        comparable = [
+            candidate
+            for candidate in candidates
+            if candidate.word_count >= min_words
+        ] or candidates
+
+        return max(
+            comparable,
+            key=lambda candidate: (
+                candidate.confidence,
+                candidate.word_count,
+                len(candidate.text),
+            ),
+        )
+
+    @staticmethod
+    def _parse_confidence(value) -> float:
+        """Parse Tesseract confidence values, which may be '-1' or float strings."""
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return -1.0
 
     def _clean_text(self, text: str) -> str:
         """Clean OCR output text."""

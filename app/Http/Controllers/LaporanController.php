@@ -584,7 +584,7 @@ class LaporanController extends Controller
             [$min, $max] = explode('-', $bucket);
             $count = $baseQuery()
                 ->where('ocr_status', 'completed')
-                ->whereBetween('ocr_confidence', [(float) $min / 100, (float) $max / 100])
+                ->whereBetween('ocr_confidence', [(float) $min, (float) $max])
                 ->count();
             $confidenceBuckets[] = ['range' => $bucket . '%', 'count' => $count];
         }
@@ -595,7 +595,7 @@ class LaporanController extends Controller
             [$min, $max] = explode('-', $bucket);
             $count = $baseQuery()
                 ->whereNotNull('ai_confidence_score')
-                ->whereBetween('ai_confidence_score', [(float) $min / 100, (float) $max / 100])
+                ->whereBetween('ai_confidence_score', [(float) $min, (float) $max])
                 ->count();
             $aiConfidenceBuckets[] = ['range' => $bucket . '%', 'count' => $count];
         }
@@ -606,7 +606,7 @@ class LaporanController extends Controller
             'pending' => $ocrPending,
             'processing' => $ocrProcessing,
             'failed' => $ocrFailed,
-            'avg_confidence' => $avgOcrConfidence ? round($avgOcrConfidence * 100, 1) : 0,
+            'avg_confidence' => $avgOcrConfidence ? round($avgOcrConfidence, 1) : 0,
             'success_rate' => ($ocrCompleted + $ocrFailed) > 0
                 ? round(($ocrCompleted / ($ocrCompleted + $ocrFailed)) * 100, 1) : 0,
         ];
@@ -616,7 +616,7 @@ class LaporanController extends Controller
             'accepted' => $aiAccepted,
             'rejected' => $aiRejected,
             'pending' => $aiPending,
-            'avg_confidence' => $avgAiConfidence ? round($avgAiConfidence * 100, 1) : 0,
+            'avg_confidence' => $avgAiConfidence ? round($avgAiConfidence, 1) : 0,
             'acceptance_rate' => ($aiAccepted + $aiRejected) > 0
                 ? round(($aiAccepted / ($aiAccepted + $aiRejected)) * 100, 1) : 0,
         ];

@@ -161,7 +161,7 @@ class OcrController extends Controller
             if ($classifyResult['success'] && !empty($classifyResult['predictions'])) {
                 $topPrediction = $classifyResult['predictions'][0];
                 $allPredictions = $classifyResult['predictions'];
-                $confidence = $topPrediction['confidence'] ?? 0;
+                $confidence = max(0, min(100, (float) ($topPrediction['confidence'] ?? 0)));
                 $kodeKlasifikasiKode = $topPrediction['kode_klasifikasi'] ?? null;
                 $kodeKlasifikasiUraian = $topPrediction['uraian'] ?? null;
 
@@ -196,7 +196,7 @@ class OcrController extends Controller
         return response()->json([
             'success' => true,
             'extracted_text' => $ocrResult['text'],
-            'ocr_confidence' => $ocrResult['confidence'],
+            'ocr_confidence' => max(0, min(100, (float) $ocrResult['confidence'])),
             'word_count' => $ocrResult['word_count'] ?? 0,
             'suggestions' => $suggestions,
         ]);
