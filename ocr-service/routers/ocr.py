@@ -79,7 +79,7 @@ async def extract_text(
     file: UploadFile = File(...),
     engine: Optional[str] = Query(
         default=None,
-        description="OCR engine to use: 'tesseract' or 'easyocr'. Defaults to server config.",
+        description="OCR engine to use: 'tesseract'. Defaults to server config.",
     ),
 ):
     """
@@ -87,7 +87,7 @@ async def extract_text(
 
     Args:
         file: Uploaded file (image or PDF)
-        engine: OCR engine to use ('tesseract' or 'easyocr'). Optional.
+        engine: OCR engine to use ('tesseract'). Optional.
 
     Returns:
         JSON with extracted text, confidence, metadata, and engine used
@@ -193,7 +193,7 @@ async def extract_text(
 
 @router.get("/info")
 async def ocr_info():
-    """Get OCR engine information including all available engines."""
+    """Get OCR engine information."""
     return {
         "default_engine": get_default_engine_name(),
         "engines": list_available_engines(),

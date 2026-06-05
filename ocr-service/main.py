@@ -21,15 +21,14 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan: preload OCR engines at startup."""
+    """Application lifespan: preload the OCR engine at startup."""
     from services.engine_factory import preload_all
 
-    gpu = os.environ.get("OCR_EASYOCR_GPU", "true").lower() in ("true", "1", "yes")
     lang = os.environ.get("OCR_LANG", "ind+eng")
 
-    logger.info("Pre-loading OCR engines (lang=%s, gpu=%s) ...", lang, gpu)
-    preload_all(lang=lang, gpu=gpu)
-    logger.info("OCR engines ready.")
+    logger.info("Pre-loading Tesseract OCR engine (lang=%s) ...", lang)
+    preload_all(lang=lang)
+    logger.info("Tesseract OCR engine ready.")
 
     yield  # Application runs here
 
@@ -65,24 +64,23 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint for Laravel to verify service is running."""
-    import shutil
-    from services.easyocr_engine import EasyOcrEngine
     from services.engine_factory import get_default_engine_name
+    from services.ocr_engine import OcrEngine
+    import pytesseract
 
-    tesseract_path = shutil.which("tesseract")
+    OcrEngine()
+    languages = OcrEngine.get_available_languages()
+    version = OcrEngine.get_tesseract_version()
+
     return {
         "status": "healthy",
         "default_engine": get_default_engine_name(),
         "engines": {
             "tesseract": {
-                "available": tesseract_path is not None,
-                "path": tesseract_path,
-            },
-            "easyocr": {
-                "available": EasyOcrEngine.is_available(),
-                "version": EasyOcrEngine.get_version(),
-                "gpu_enabled": os.environ.get("OCR_EASYOCR_GPU", "true").lower()
-                in ("true", "1", "yes"),
+                "available": bool(version or languages),
+                "path": pytesseract.pytesseract.tesseract_cmd,
+                "version": version,
+                "languages": languages,
             },
         },
     }

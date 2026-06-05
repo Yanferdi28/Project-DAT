@@ -36,7 +36,7 @@ def main():
     result = DocumentClassifier.train(data_path)
 
     if result["success"]:
-        print(f"\n✓ Training completed successfully!")
+        print("\nOK: Training completed successfully!")
         print(f"  Samples: {result['samples']}")
         print(f"  Classes: {result['classes']}")
         print(f"  Training Accuracy: {result['training_accuracy']}%")
@@ -45,7 +45,7 @@ def main():
             print(f"    - {name}")
         print(f"\nModel saved to: {os.path.join(os.path.dirname(__file__))}")
     else:
-        print(f"\n✗ Training failed: {result['error']}")
+        print(f"\nERROR: Training failed: {result['error']}")
         sys.exit(1)
 
 

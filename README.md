@@ -6,7 +6,7 @@ Sistem manajemen arsip digital untuk RRI Banjarmasin dengan fitur OCR otomatis d
 
 - **Manajemen Arsip Unit** — CRUD dokumen arsip dengan upload file, metadata lengkap, dan workflow verifikasi multi-tahap (pending → diterima/ditolak → published)
 - **Manajemen Berkas Arsip** — Pengelompokan arsip unit ke dalam berkas arsip dengan informasi retensi dan penyusutan
-- **OCR (Optical Character Recognition)** — Ekstraksi teks otomatis dari dokumen PDF/gambar menggunakan Tesseract OCR via microservice Python
+- **OCR (Optical Character Recognition)** — Ekstraksi teks otomatis dari dokumen PDF/gambar menggunakan Tesseract via microservice Python
 - **Klasifikasi AI** — Prediksi kategori dokumen menggunakan TF-IDF + Naive Bayes (scikit-learn)
 - **Role-Based Access Control** — 3 level akses: Admin, Operator, User dengan 32+ permission granular
 - **Activity Logging** — Audit trail lengkap dengan perbandingan nilai sebelum/sesudah perubahan
@@ -92,6 +92,9 @@ DB_CONNECTION=sqlite
 OCR_SERVICE_URL=http://127.0.0.1:8102
 OCR_ENABLED=true
 OCR_CLASSIFICATION_ENABLED=true
+OCR_ENGINE=tesseract
+OCR_DEFAULT_ENGINE=tesseract
+OCR_LANG=ind+eng
 
 # Queue
 QUEUE_CONNECTION=database

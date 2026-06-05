@@ -19,7 +19,15 @@ class OcrService
         $this->baseUrl = config('ocr.service_url', 'http://127.0.0.1:8102');
         $this->timeout = config('ocr.timeout', 120);
         $this->connectTimeout = config('ocr.connect_timeout', 10);
-        $this->defaultEngine = config('ocr.engine', 'tesseract');
+        $this->defaultEngine = $this->resolveEngine(config('ocr.engine', 'tesseract'));
+    }
+
+    private function resolveEngine(?string $engine = null): string
+    {
+        $engine = strtolower(trim($engine ?: ($this->defaultEngine ?? 'tesseract')));
+        $validEngines = config('ocr.valid_engines', ['tesseract']);
+
+        return in_array($engine, $validEngines, true) ? $engine : 'tesseract';
     }
 
     /**
@@ -43,7 +51,7 @@ class OcrService
      * Extract text from a document file using OCR.
      *
      * @param string $filePath Path relative to the public disk (e.g., 'dokumen-arsip/file.pdf')
-     * @param string|null $engine OCR engine to use ('tesseract' or 'easyocr'). Null = default.
+     * @param string|null $engine OCR engine to use ('tesseract'). Null = default.
      * @return array{success: bool, text: ?string, confidence: ?float, engine_used: ?string, error: ?string}
      */
     public function extractText(string $filePath, ?string $engine = null): array
@@ -74,7 +82,7 @@ class OcrService
                 ];
             }
 
-            $engineParam = $engine ?? $this->defaultEngine;
+            $engineParam = $this->resolveEngine($engine);
 
             $response = Http::timeout($this->timeout)
                 ->connectTimeout($this->connectTimeout)
@@ -211,7 +219,7 @@ class OcrService
      * Extract text from an uploaded file (UploadedFile instance) without storing it first.
      *
      * @param \Illuminate\Http\UploadedFile $file
-     * @param string|null $engine OCR engine to use ('tesseract' or 'easyocr'). Null = default.
+     * @param string|null $engine OCR engine to use ('tesseract'). Null = default.
      * @return array{success: bool, text: ?string, confidence: ?float, engine_used: ?string, error: ?string}
      */
     public function extractTextFromUpload(\Illuminate\Http\UploadedFile $file, ?string $engine = null): array
@@ -228,7 +236,7 @@ class OcrService
                 ];
             }
 
-            $engineParam = $engine ?? $this->defaultEngine;
+            $engineParam = $this->resolveEngine($engine);
 
             $response = Http::timeout($this->timeout)
                 ->connectTimeout($this->connectTimeout)

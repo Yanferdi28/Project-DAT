@@ -37,5 +37,10 @@ __pycache__/
 # RAG / ChromaDB
 ocr-service/chroma_db/
 
+# OCR model cache
+ocr-service/data/ocr_benchmark*.csv
+ocr-service/data/ocr_benchmark*.json
+ocr-service/data/ocr_ground_truth_template*.csv
+
 # Tesseract trained data (large binary)
 *.traineddata
