@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
             
             $table->index('kode_klasifikasi_induk');
+            $table->index('uraian');
         });
 
         // 2. Kategori
@@ -57,7 +59,9 @@ return new class extends Migration
             $table->string('lokasi_fisik')->nullable();
             $table->text('uraian')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             
+            $table->index('nama_berkas');
             $table->index('klasifikasi_id');
             $table->index('unit_pengolah_id');
         });
@@ -99,18 +103,44 @@ return new class extends Migration
             $table->string('no_folder')->nullable();
             $table->string('no_box')->nullable();
             $table->string('dokumen')->nullable();
+
+            // OCR dan saran klasifikasi AI
+            $table->longText('extracted_text')->nullable();
+            $table->string('ocr_status')->nullable();
+            $table->decimal('ocr_confidence', 5, 2)->nullable();
+            $table->text('ocr_error')->nullable();
+            $table->timestamp('ocr_processed_at')->nullable();
+            $table->foreignId('suggested_kode_klasifikasi_id')->nullable()->constrained('kode_klasifikasi')->nullOnDelete();
+            $table->foreignId('suggested_kategori_id')->nullable()->constrained('kategori')->nullOnDelete();
+            $table->foreignId('suggested_sub_kategori_id')->nullable()->constrained('sub_kategori')->nullOnDelete();
+            $table->decimal('ai_confidence_score', 5, 2)->nullable();
+            $table->string('ai_suggestion_status')->nullable();
+
             $table->text('keterangan')->nullable();
             $table->enum('status', ['pending', 'diterima', 'ditolak'])->default('pending');
             $table->text('verifikasi_keterangan')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
 
             // Index untuk performa
             $table->index(['kode_klasifikasi_id', 'status', 'publish_status']);
             $table->index('unit_pengolah_arsip_id');
             $table->index('berkas_arsip_id');
+            $table->index('tanggal');
+            $table->index('kategori_id');
+            $table->index('sub_kategori_id');
+            $table->index('ocr_status');
+            $table->index(['status', 'tanggal']);
+            $table->index(['publish_status', 'created_at']);
             $table->index('created_at');
         });
+
+        if (DB::getDriverName() === 'mysql') {
+            Schema::table('arsip_unit', function (Blueprint $table) {
+                $table->fullText('extracted_text', 'arsip_unit_fulltext_search');
+            });
+        }
 
         // 6. Berita Acara Penyerahan
         Schema::create('berita_acara_penyerahan', function (Blueprint $table) {

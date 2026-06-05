@@ -32,6 +32,10 @@ return new class extends Migration
             $table->timestamp('two_factor_confirmed_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->index('role');
+            $table->index('unit_pengolah_id');
+            $table->index(['role', 'unit_pengolah_id']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
