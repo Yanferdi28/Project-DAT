@@ -74,19 +74,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('laporan/peminjaman', [LaporanController::class, 'laporanPeminjaman'])->name('laporan.peminjaman');
     Route::get('laporan/peminjaman/export', [LaporanController::class, 'exportLaporanPeminjamanPdf'])->name('laporan.peminjaman.export');
 
-    // Laporan Rekap Unit Pengolah, Statistik Klasifikasi, Log Aktivitas (admin only)
+    // Laporan admin only
     Route::middleware('admin')->group(function () {
         Route::get('laporan/rekap-unit-pengolah', [LaporanController::class, 'rekapUnitPengolah'])->name('laporan.rekap-unit-pengolah');
         Route::get('laporan/rekap-unit-pengolah/export', [LaporanController::class, 'exportRekapUnitPengolahPdf'])->name('laporan.rekap-unit-pengolah.export');
         Route::get('laporan/statistik-klasifikasi', [LaporanController::class, 'statistikKlasifikasi'])->name('laporan.statistik-klasifikasi');
         Route::get('laporan/statistik-klasifikasi/export', [LaporanController::class, 'exportStatistikKlasifikasiPdf'])->name('laporan.statistik-klasifikasi.export');
+        Route::get('laporan/statistik-ocr', [LaporanController::class, 'statistikOcr'])->name('laporan.statistik-ocr');
+        Route::get('laporan/statistik-ocr/export', [LaporanController::class, 'exportStatistikOcrPdf'])->name('laporan.statistik-ocr.export');
         Route::get('laporan/log-aktivitas', [LaporanController::class, 'logAktivitas'])->name('laporan.log-aktivitas');
         Route::get('laporan/log-aktivitas/export', [LaporanController::class, 'exportLogAktivitasPdf'])->name('laporan.log-aktivitas.export');
     });
-
-    // Laporan Statistik OCR & AI (all authenticated users)
-    Route::get('laporan/statistik-ocr', [LaporanController::class, 'statistikOcr'])->name('laporan.statistik-ocr');
-    Route::get('laporan/statistik-ocr/export', [LaporanController::class, 'exportStatistikOcrPdf'])->name('laporan.statistik-ocr.export');
 
     // OCR routes
     Route::get('arsip-unit/{arsipUnit}/ocr-result', [OcrController::class, 'result'])->name('arsip-unit.ocr-result');

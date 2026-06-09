@@ -314,14 +314,16 @@ export function AppSidebar({
                                             Log Aktivitas
                                         </Link>
                                     )}
-                                    {/* Statistik OCR & AI - All users */}
-                                    <Link
-                                        href="/laporan/statistik-ocr"
-                                        className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/statistik-ocr') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
-                                    >
-                                        <ScanLine className="h-3.5 w-3.5" />
-                                        Statistik OCR & AI
-                                    </Link>
+                                    {/* Statistik OCR & AI - Admin only */}
+                                    {auth.user?.role === 'admin' && (
+                                        <Link
+                                            href="/laporan/statistik-ocr"
+                                            className={'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-all ' + (isActive('/laporan/statistik-ocr') ? 'bg-blue-50 text-blue-600 font-medium dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800')}
+                                        >
+                                            <ScanLine className="h-3.5 w-3.5" />
+                                            Statistik OCR & AI
+                                        </Link>
+                                    )}
                                 </div>
                             )}
                         </div>

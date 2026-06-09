@@ -41,6 +41,10 @@ ocr-service/chroma_db/
 ocr-service/data/ocr_benchmark*.csv
 ocr-service/data/ocr_benchmark*.json
 ocr-service/data/ocr_ground_truth_template*.csv
+ocr-service/data/training_data.generated.json
+ocr-service/data/training_data_missing_skkad_draft*.csv
+ocr-service/data/training_data_missing_skkad_draft*.json
+ocr-service/models/evaluation_report.json
 
 # Tesseract trained data (large binary)
 *.traineddata

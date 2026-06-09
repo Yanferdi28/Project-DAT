@@ -21,6 +21,10 @@ test('admin can access master data routes', function () {
     $this->actingAs($admin)->get('/activity-log')->assertOk();
     // Rekap Unit Pengolah
     $this->actingAs($admin)->get('/laporan/rekap-unit-pengolah')->assertOk();
+    // Statistik Klasifikasi
+    $this->actingAs($admin)->get('/laporan/statistik-klasifikasi')->assertOk();
+    // Statistik OCR & AI
+    $this->actingAs($admin)->get('/laporan/statistik-ocr')->assertOk();
 });
 
 test('operator cannot access admin-only routes', function () {
@@ -33,6 +37,8 @@ test('operator cannot access admin-only routes', function () {
     $this->actingAs($operator)->get('/users')->assertForbidden();
     $this->actingAs($operator)->get('/activity-log')->assertForbidden();
     $this->actingAs($operator)->get('/laporan/rekap-unit-pengolah')->assertForbidden();
+    $this->actingAs($operator)->get('/laporan/statistik-klasifikasi')->assertForbidden();
+    $this->actingAs($operator)->get('/laporan/statistik-ocr')->assertForbidden();
 });
 
 test('regular user cannot access admin-only routes', function () {
@@ -45,6 +51,8 @@ test('regular user cannot access admin-only routes', function () {
     $this->actingAs($user)->get('/users')->assertForbidden();
     $this->actingAs($user)->get('/activity-log')->assertForbidden();
     $this->actingAs($user)->get('/laporan/rekap-unit-pengolah')->assertForbidden();
+    $this->actingAs($user)->get('/laporan/statistik-klasifikasi')->assertForbidden();
+    $this->actingAs($user)->get('/laporan/statistik-ocr')->assertForbidden();
 });
 
 // ─── OPERATOR+ADMIN ONLY ROUTES ──────────────────────────
@@ -151,6 +159,8 @@ test('guests are redirected to login for all protected routes', function () {
         '/laporan/status-verifikasi',
         '/laporan/berita-acara-penyerahan',
         '/laporan/rekap-unit-pengolah',
+        '/laporan/statistik-klasifikasi',
+        '/laporan/statistik-ocr',
         '/my-profile',
     ];
 

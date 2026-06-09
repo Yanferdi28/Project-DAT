@@ -9,19 +9,17 @@ import {
     Users,
     Shield,
     Eye,
-    PenLine,
-    Trash2,
     CheckCircle,
     XCircle,
     Clock,
     Upload,
-    Download,
     HelpCircle,
     Brain,
     Printer,
     QrCode,
     Search,
     Filter,
+    ArrowLeftRight,
 } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,33 +27,79 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Bantuan', href: '/bantuan' },
 ];
 
+type AccessLevel = 'full' | 'limited' | 'none';
+
 interface RoleFeature {
     feature: string;
-    admin: boolean;
-    operator: boolean;
-    user: boolean;
+    admin: AccessLevel;
+    operator: AccessLevel;
+    user: AccessLevel;
+    note?: string;
 }
 
 const roleFeatures: RoleFeature[] = [
-    { feature: 'Melihat Dashboard & Statistik', admin: true, operator: true, user: true },
-    { feature: 'Melihat Arsip Unit', admin: true, operator: true, user: true },
-    { feature: 'Membuat Arsip Unit', admin: true, operator: false, user: true },
-    { feature: 'Mengedit Arsip Unit', admin: true, operator: false, user: true },
-    { feature: 'Menghapus Arsip Unit', admin: true, operator: false, user: false },
-    { feature: 'Verifikasi Arsip (Terima/Tolak)', admin: true, operator: true, user: false },
-    { feature: 'Publish/Unpublish Arsip', admin: true, operator: true, user: false },
-    { feature: 'Melihat Berkas Arsip', admin: true, operator: true, user: true },
-    { feature: 'Membuat Berkas Arsip', admin: true, operator: false, user: true },
-    { feature: 'Mengedit Berkas Arsip', admin: true, operator: false, user: true },
-    { feature: 'Menghapus Berkas Arsip', admin: true, operator: false, user: true },
-    { feature: 'Export PDF Arsip & Berkas', admin: true, operator: true, user: true },
-    { feature: 'Melihat Laporan', admin: true, operator: true, user: true },
-    { feature: 'Rekap Unit Pengolah', admin: true, operator: false, user: false },
-    { feature: 'Berita Acara Penyerahan', admin: true, operator: true, user: true },
-    { feature: 'Manajemen Pengguna', admin: true, operator: false, user: false },
-    { feature: 'Master Data (Klasifikasi, dll)', admin: true, operator: false, user: false },
-    { feature: 'Activity Log', admin: true, operator: false, user: false },
-    { feature: 'OCR & AI Suggestion', admin: true, operator: true, user: true },
+    {
+        feature: 'Dashboard & statistik ringkas',
+        admin: 'full',
+        operator: 'limited',
+        user: 'limited',
+        note: 'Operator dan User mengikuti cakupan unit pengolah akunnya.',
+    },
+    { feature: 'Melihat Arsip Unit', admin: 'full', operator: 'full', user: 'full' },
+    {
+        feature: 'Membuat Arsip Unit',
+        admin: 'full',
+        operator: 'none',
+        user: 'limited',
+        note: 'User membuat arsip untuk unit pengolahnya sendiri.',
+    },
+    {
+        feature: 'Mengedit/Menghapus Arsip Unit',
+        admin: 'full',
+        operator: 'none',
+        user: 'limited',
+        note: 'User hanya dapat mengubah arsip milik unit pengolahnya.',
+    },
+    { feature: 'Verifikasi Arsip Unit (Pending/Diterima/Ditolak)', admin: 'full', operator: 'full', user: 'none' },
+    { feature: 'Publish/Unpublish Arsip Unit', admin: 'full', operator: 'full', user: 'none' },
+    { feature: 'Memasukkan Arsip Unit ke Berkas', admin: 'full', operator: 'none', user: 'full' },
+    { feature: 'Melihat Berkas Arsip', admin: 'full', operator: 'full', user: 'full' },
+    {
+        feature: 'Membuat Berkas Arsip',
+        admin: 'full',
+        operator: 'none',
+        user: 'limited',
+        note: 'User membuat berkas untuk unit pengolahnya sendiri.',
+    },
+    {
+        feature: 'Mengedit/Menghapus Berkas Arsip',
+        admin: 'full',
+        operator: 'none',
+        user: 'limited',
+        note: 'User hanya dapat mengubah berkas milik unit pengolahnya.',
+    },
+    { feature: 'Tambah/Hapus Arsip Unit dari Berkas', admin: 'full', operator: 'none', user: 'full' },
+    { feature: 'Melihat & Mencatat Peminjaman Arsip', admin: 'full', operator: 'full', user: 'full' },
+    { feature: 'Proses Pengembalian Arsip', admin: 'full', operator: 'full', user: 'full' },
+    { feature: 'Export PDF Arsip, Berkas, dan Laporan', admin: 'full', operator: 'full', user: 'full' },
+    {
+        feature: 'Laporan Umum',
+        admin: 'full',
+        operator: 'full',
+        user: 'full',
+        note: 'Penyusutan, status verifikasi, berita acara, dan peminjaman.',
+    },
+    {
+        feature: 'Laporan Admin',
+        admin: 'full',
+        operator: 'none',
+        user: 'none',
+        note: 'Rekap unit pengolah, statistik klasifikasi, statistik OCR & AI, dan log aktivitas.',
+    },
+    { feature: 'OCR & AI Suggestion', admin: 'full', operator: 'full', user: 'full' },
+    { feature: 'Manajemen Pengguna & Verifikasi Akun', admin: 'full', operator: 'none', user: 'none' },
+    { feature: 'Master Data (Kode Klasifikasi, Unit, Kategori)', admin: 'full', operator: 'none', user: 'none' },
+    { feature: 'Activity Log Operasional', admin: 'full', operator: 'none', user: 'none' },
 ];
 
 export default function BantuanIndex() {
@@ -73,7 +117,7 @@ export default function BantuanIndex() {
                         Panduan Penggunaan Sistem
                     </h1>
                     <p className="mt-2 text-gray-500 dark:text-gray-400">
-                        Sistem Pengelolaan Arsip Digital — LPP RRI Banjarmasin
+                        Sistem Pengelolaan Arsip Digital - LPP RRI Banjarmasin
                     </p>
                 </div>
 
@@ -112,14 +156,14 @@ export default function BantuanIndex() {
                             step={3}
                             icon={<Folder className="h-6 w-6" />}
                             title="Kelola Berkas"
-                            description="Arsip unit yang sudah diterima dapat dikelompokkan ke dalam Berkas Arsip."
+                            description="Admin atau User mengelompokkan arsip unit yang sudah diterima ke dalam Berkas Arsip."
                             color="green"
                         />
                         <StepCard
                             step={4}
-                            icon={<Download className="h-6 w-6" />}
-                            title="Laporan & Export"
-                            description="Cetak laporan, export PDF, dan buat berita acara penyerahan."
+                            icon={<ArrowLeftRight className="h-6 w-6" />}
+                            title="Peminjaman & Laporan"
+                            description="Catat peminjaman/pengembalian, cetak laporan, dan buat berita acara penyerahan."
                             color="purple"
                         />
                     </div>
@@ -159,6 +203,16 @@ export default function BantuanIndex() {
                                 'AI menyarankan kategori & sub kategori',
                                 'Terima atau tolak saran AI',
                                 'Lihat tingkat kepercayaan (confidence) hasil OCR',
+                            ]}
+                        />
+                        <FeatureCard
+                            icon={<ArrowLeftRight className="h-5 w-5 text-cyan-600" />}
+                            title="Peminjaman Arsip"
+                            items={[
+                                'Catat arsip yang sedang dipinjam',
+                                'Pantau status dipinjam, terlambat, dan dikembalikan',
+                                'Proses pengembalian beserta kondisi arsip',
+                                'Export laporan peminjaman ke PDF',
                             ]}
                         />
                         <FeatureCard
@@ -241,16 +295,21 @@ export default function BantuanIndex() {
                                         }
                                     >
                                         <td className="px-4 py-2.5 text-gray-700 dark:text-gray-300">
-                                            {rf.feature}
+                                            <div className="font-medium">{rf.feature}</div>
+                                            {rf.note && (
+                                                <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                                    {rf.note}
+                                                </div>
+                                            )}
                                         </td>
                                         <td className="px-4 py-2.5 text-center">
-                                            <AccessBadge allowed={rf.admin} />
+                                            <AccessBadge level={rf.admin} />
                                         </td>
                                         <td className="px-4 py-2.5 text-center">
-                                            <AccessBadge allowed={rf.operator} />
+                                            <AccessBadge level={rf.operator} />
                                         </td>
                                         <td className="px-4 py-2.5 text-center">
-                                            <AccessBadge allowed={rf.user} />
+                                            <AccessBadge level={rf.user} />
                                         </td>
                                     </tr>
                                 ))}
@@ -283,7 +342,7 @@ export default function BantuanIndex() {
                         </li>
                         <li className="flex items-start gap-2">
                             <Brain className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-500" />
-                            Unggah dokumen saat membuat arsip — sistem akan otomatis melakukan OCR dan memberikan saran kategori.
+                            Unggah dokumen saat membuat arsip - sistem akan otomatis melakukan OCR dan memberikan saran kategori.
                         </li>
                     </ul>
                 </section>
@@ -292,7 +351,7 @@ export default function BantuanIndex() {
     );
 }
 
-/* ─── Sub-components ──────────────────────────────────── */
+/* Sub-components */
 
 function StepCard({
     step,
@@ -379,14 +438,22 @@ function StatusCard({
     );
 }
 
-function AccessBadge({ allowed }: { allowed: boolean }) {
-    return allowed ? (
-        <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400">
-            ✓
-        </span>
-    ) : (
-        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-400 dark:bg-gray-800 dark:text-gray-500">
-            —
+function AccessBadge({ level }: { level: AccessLevel }) {
+    const labels: Record<AccessLevel, string> = {
+        full: 'Ya',
+        limited: 'Terbatas',
+        none: 'Tidak',
+    };
+
+    const styles: Record<AccessLevel, string> = {
+        full: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+        limited: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+        none: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500',
+    };
+
+    return (
+        <span className={`inline-flex min-w-16 items-center justify-center rounded-full px-2 py-0.5 text-xs font-medium ${styles[level]}`}>
+            {labels[level]}
         </span>
     );
 }

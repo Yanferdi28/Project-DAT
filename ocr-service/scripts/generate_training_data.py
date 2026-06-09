@@ -287,6 +287,9 @@ TRAINING_MAP = {
         "Program pembinaan kearsipan di lingkungan LPP RRI",
         "Pelatihan dan pembinaan pengelolaan arsip dinamis",
         "Bimbingan teknis kearsipan dan tata kelola arsip unit",
+        "Sosialisasi pedoman SKKAD dan penerapan klasifikasi keamanan akses arsip dinamis",
+        "Bimbingan teknis sistem klasifikasi keamanan dan akses arsip dinamis bagi pengelola arsip",
+        "Pembinaan penerapan pedoman SKKAD dalam pengelolaan arsip dinamis unit kerja",
     ],
 
     # =====================================================================
@@ -1160,6 +1163,11 @@ TRAINING_MAP = {
         "Perdirut tentang standar operasional prosedur",
         "Peraturan Direksi tentang manajemen sumber daya",
         "Produk hukum Direksi tentang kebijakan internal",
+        "Peraturan Direktur Utama LPP RRI Nomor 03 Tahun 2023 tentang pedoman sistem klasifikasi keamanan dan akses arsip dinamis",
+        "Peraturan Direksi tentang sistem klasifikasi keamanan dan akses arsip dinamis di lingkungan LPP RRI",
+        "Produk hukum internal Perdirut RRI memuat menimbang mengingat memutuskan pedoman kearsipan",
+        "Salinan Peraturan Direktur Utama tentang SKKAD pengelolaan arsip dinamis dan akses publik",
+        "Peraturan Dewan Direksi dengan dasar hukum undang-undang kearsipan tentang klasifikasi keamanan arsip",
     ],
     "HK.02.05|Keputusan Dewan Direksi": [
         "Surat Keputusan Direktur Utama LPP RRI tentang organisasi",

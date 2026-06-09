@@ -11,38 +11,32 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
+import warnings
 from collections import Counter
 from datetime import datetime, timezone
 from typing import Any
 
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
 
+OCR_SERVICE_DIR = os.path.dirname(os.path.dirname(__file__))
+sys.path.insert(0, OCR_SERVICE_DIR)
 
-def build_pipeline() -> Pipeline:
+from services.classifier import build_classifier_pipeline  # noqa: E402
+
+warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
+warnings.filterwarnings("ignore", message="The number of unique classes is greater than 50%")
+
+
+def build_pipeline():
     """Build a pipeline that matches the production classifier."""
-    return Pipeline(
-        [
-            (
-                "tfidf",
-                TfidfVectorizer(
-                    max_features=5000,
-                    ngram_range=(1, 2),
-                    min_df=1,
-                    max_df=0.95,
-                    sublinear_tf=True,
-                ),
-            ),
-            ("classifier", MultinomialNB(alpha=0.1)),
-        ]
-    )
+    return build_classifier_pipeline()
 
 
 def top_confusions(matrix: Any, labels: list[str], top_n: int = 10) -> list[dict[str, Any]]:

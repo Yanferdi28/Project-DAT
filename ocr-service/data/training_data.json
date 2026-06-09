@@ -4390,5 +4390,3957 @@
   {
     "text": "Berita acara pengambilan sumpah jabatan pegawai negeri",
     "label": "KP.01.09|Sumpah Pegawai"
+  },
+  {
+    "label": "UM.02.05|Pembinaan Kearsipan",
+    "text": "Sosialisasi pedoman SKKAD dan penerapan klasifikasi keamanan akses arsip dinamis"
+  },
+  {
+    "label": "UM.02.05|Pembinaan Kearsipan",
+    "text": "Bimbingan teknis sistem klasifikasi keamanan dan akses arsip dinamis bagi pengelola arsip"
+  },
+  {
+    "label": "UM.02.05|Pembinaan Kearsipan",
+    "text": "Pembinaan penerapan pedoman SKKAD dalam pengelolaan arsip dinamis unit kerja"
+  },
+  {
+    "label": "HK.02.04|Peraturan Dewan Direksi",
+    "text": "Peraturan Direktur Utama LPP RRI Nomor 03 Tahun 2023 tentang pedoman sistem klasifikasi keamanan dan akses arsip dinamis"
+  },
+  {
+    "label": "HK.02.04|Peraturan Dewan Direksi",
+    "text": "Peraturan Direksi tentang sistem klasifikasi keamanan dan akses arsip dinamis di lingkungan LPP RRI"
+  },
+  {
+    "label": "HK.02.04|Peraturan Dewan Direksi",
+    "text": "Produk hukum internal Perdirut RRI memuat menimbang mengingat memutuskan pedoman kearsipan"
+  },
+  {
+    "label": "HK.02.04|Peraturan Dewan Direksi",
+    "text": "Salinan Peraturan Direktur Utama tentang SKKAD pengelolaan arsip dinamis dan akses publik"
+  },
+  {
+    "label": "HK.02.04|Peraturan Dewan Direksi",
+    "text": "Peraturan Dewan Direksi dengan dasar hukum undang-undang kearsipan tentang klasifikasi keamanan arsip"
+  },
+  {
+    "text": "Dokumen memorandum of understanding (MOU) di lingkungan LPP RRI",
+    "label": "IT.02|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Nota dinas perihal memorandum of understanding (MOU)",
+    "label": "IT.02|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Berkas arsip memorandum of understanding (MOU) memuat surat, lampiran, dan data pendukung",
+    "label": "IT.02|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Laporan kegiatan terkait memorandum of understanding (MOU)",
+    "label": "IT.02|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.02 tentang memorandum of understanding (MOU)",
+    "label": "IT.02|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Dokumen inventaris peralatan teknik pada bidang daftar barang inventaris di lingkungan LPP RRI",
+    "label": "IT.03.01|Inventaris Peralatan Teknik"
+  },
+  {
+    "text": "Nota dinas perihal inventaris peralatan teknik pada bidang daftar barang inventaris",
+    "label": "IT.03.01|Inventaris Peralatan Teknik"
+  },
+  {
+    "text": "Berkas arsip inventaris peralatan teknik memuat surat, lampiran, dan data pendukung",
+    "label": "IT.03.01|Inventaris Peralatan Teknik"
+  },
+  {
+    "text": "Laporan kegiatan terkait inventaris peralatan teknik pada bidang daftar barang inventaris",
+    "label": "IT.03.01|Inventaris Peralatan Teknik"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.03.01 tentang inventaris peralatan teknik",
+    "label": "IT.03.01|Inventaris Peralatan Teknik"
+  },
+  {
+    "text": "Dokumen inventaris pengadaan barang pada bidang daftar barang inventaris di lingkungan LPP RRI",
+    "label": "IT.03.02|Inventaris Pengadaan Barang"
+  },
+  {
+    "text": "Nota dinas perihal inventaris pengadaan barang pada bidang daftar barang inventaris",
+    "label": "IT.03.02|Inventaris Pengadaan Barang"
+  },
+  {
+    "text": "Berkas arsip inventaris pengadaan barang memuat surat, lampiran, dan data pendukung",
+    "label": "IT.03.02|Inventaris Pengadaan Barang"
+  },
+  {
+    "text": "Laporan kegiatan terkait inventaris pengadaan barang pada bidang daftar barang inventaris",
+    "label": "IT.03.02|Inventaris Pengadaan Barang"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.03.02 tentang inventaris pengadaan barang",
+    "label": "IT.03.02|Inventaris Pengadaan Barang"
+  },
+  {
+    "text": "Dokumen daftar sparepart teknik pada bidang suku cadang (sparepart teknik) di lingkungan LPP RRI",
+    "label": "IT.04.01|Daftar Sparepart Teknik"
+  },
+  {
+    "text": "Nota dinas perihal daftar sparepart teknik pada bidang suku cadang (sparepart teknik)",
+    "label": "IT.04.01|Daftar Sparepart Teknik"
+  },
+  {
+    "text": "Berkas arsip daftar sparepart teknik memuat surat, lampiran, dan data pendukung",
+    "label": "IT.04.01|Daftar Sparepart Teknik"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar sparepart teknik pada bidang suku cadang (sparepart teknik)",
+    "label": "IT.04.01|Daftar Sparepart Teknik"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.04.01 tentang daftar sparepart teknik",
+    "label": "IT.04.01|Daftar Sparepart Teknik"
+  },
+  {
+    "text": "Dokumen software-softcopy pada bidang suku cadang (sparepart teknik) di lingkungan LPP RRI",
+    "label": "IT.04.02|Software-Softcopy"
+  },
+  {
+    "text": "Nota dinas perihal software-softcopy pada bidang suku cadang (sparepart teknik)",
+    "label": "IT.04.02|Software-Softcopy"
+  },
+  {
+    "text": "Berkas arsip software-softcopy memuat surat, lampiran, dan data pendukung",
+    "label": "IT.04.02|Software-Softcopy"
+  },
+  {
+    "text": "Laporan kegiatan terkait software-softcopy pada bidang suku cadang (sparepart teknik)",
+    "label": "IT.04.02|Software-Softcopy"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.04.02 tentang software-softcopy",
+    "label": "IT.04.02|Software-Softcopy"
+  },
+  {
+    "text": "Dokumen handbook manual pada bidang manual book peralatan teknik di lingkungan LPP RRI",
+    "label": "IT.05.01|Handbook Manual"
+  },
+  {
+    "text": "Nota dinas perihal handbook manual pada bidang manual book peralatan teknik",
+    "label": "IT.05.01|Handbook Manual"
+  },
+  {
+    "text": "Berkas arsip handbook manual memuat surat, lampiran, dan data pendukung",
+    "label": "IT.05.01|Handbook Manual"
+  },
+  {
+    "text": "Laporan kegiatan terkait handbook manual pada bidang manual book peralatan teknik",
+    "label": "IT.05.01|Handbook Manual"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.05.01 tentang handbook manual",
+    "label": "IT.05.01|Handbook Manual"
+  },
+  {
+    "text": "Dokumen brosur IT pada bidang manual book peralatan teknik di lingkungan LPP RRI",
+    "label": "IT.05.02|Brosur IT"
+  },
+  {
+    "text": "Nota dinas perihal brosur IT pada bidang manual book peralatan teknik",
+    "label": "IT.05.02|Brosur IT"
+  },
+  {
+    "text": "Berkas arsip brosur IT memuat surat, lampiran, dan data pendukung",
+    "label": "IT.05.02|Brosur IT"
+  },
+  {
+    "text": "Laporan kegiatan terkait brosur IT pada bidang manual book peralatan teknik",
+    "label": "IT.05.02|Brosur IT"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.05.02 tentang brosur IT",
+    "label": "IT.05.02|Brosur IT"
+  },
+  {
+    "text": "Dokumen audio pada bidang SOP peralatan multiplatform di lingkungan LPP RRI",
+    "label": "IT.06.01|Audio"
+  },
+  {
+    "text": "Nota dinas perihal audio pada bidang SOP peralatan multiplatform",
+    "label": "IT.06.01|Audio"
+  },
+  {
+    "text": "Berkas arsip audio memuat surat, lampiran, dan data pendukung",
+    "label": "IT.06.01|Audio"
+  },
+  {
+    "text": "Laporan kegiatan terkait audio pada bidang SOP peralatan multiplatform",
+    "label": "IT.06.01|Audio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.06.01 tentang audio",
+    "label": "IT.06.01|Audio"
+  },
+  {
+    "text": "Dokumen visual pada bidang SOP peralatan multiplatform di lingkungan LPP RRI",
+    "label": "IT.06.02|Visual"
+  },
+  {
+    "text": "Nota dinas perihal visual pada bidang SOP peralatan multiplatform",
+    "label": "IT.06.02|Visual"
+  },
+  {
+    "text": "Berkas arsip visual memuat surat, lampiran, dan data pendukung",
+    "label": "IT.06.02|Visual"
+  },
+  {
+    "text": "Laporan kegiatan terkait visual pada bidang SOP peralatan multiplatform",
+    "label": "IT.06.02|Visual"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi IT.06.02 tentang visual",
+    "label": "IT.06.02|Visual"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.02 tentang surat masuk dan keluar",
+    "label": "KJM.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.03 tentang dokumentasi (foto, audio, video)",
+    "label": "KJM.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen notulen pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.04|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.04|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.04|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.04|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.04 tentang notulen",
+    "label": "KJM.01.04|Notulen"
+  },
+  {
+    "text": "Dokumen materi penyusunan pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Nota dinas perihal materi penyusunan pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Berkas arsip materi penyusunan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Laporan kegiatan terkait materi penyusunan pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.05 tentang materi penyusunan",
+    "label": "KJM.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Dokumen buku petunjuk SOP pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Nota dinas perihal buku petunjuk SOP pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Berkas arsip buku petunjuk SOP memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Laporan kegiatan terkait buku petunjuk SOP pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.06 tentang buku petunjuk SOP",
+    "label": "KJM.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Dokumen juknis kerjasama dan multimedia pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.07|Juknis Kerjasama dan Multimedia"
+  },
+  {
+    "text": "Nota dinas perihal juknis kerjasama dan multimedia pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.07|Juknis Kerjasama dan Multimedia"
+  },
+  {
+    "text": "Berkas arsip juknis kerjasama dan multimedia memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.07|Juknis Kerjasama dan Multimedia"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis kerjasama dan multimedia pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.07|Juknis Kerjasama dan Multimedia"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.07 tentang juknis kerjasama dan multimedia",
+    "label": "KJM.01.07|Juknis Kerjasama dan Multimedia"
+  },
+  {
+    "text": "Dokumen laporan penyusunan pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.08|Laporan Penyusunan"
+  },
+  {
+    "text": "Nota dinas perihal laporan penyusunan pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.08|Laporan Penyusunan"
+  },
+  {
+    "text": "Berkas arsip laporan penyusunan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.08|Laporan Penyusunan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan penyusunan pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.08|Laporan Penyusunan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.08 tentang laporan penyusunan",
+    "label": "KJM.01.08|Laporan Penyusunan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang penyusunan kebijakan kerjasama & multimedia di lingkungan LPP RRI",
+    "label": "KJM.01.09|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.09|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.01.09|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang penyusunan kebijakan kerjasama & multimedia",
+    "label": "KJM.01.09|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.01.09 tentang laporan keuangan",
+    "label": "KJM.01.09|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen notulen rapat pembahasan pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.02|Notulen Rapat Pembahasan"
+  },
+  {
+    "text": "Nota dinas perihal notulen rapat pembahasan pada bidang MOU program siaran",
+    "label": "KJM.02.02|Notulen Rapat Pembahasan"
+  },
+  {
+    "text": "Berkas arsip notulen rapat pembahasan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.02|Notulen Rapat Pembahasan"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen rapat pembahasan pada bidang MOU program siaran",
+    "label": "KJM.02.02|Notulen Rapat Pembahasan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.02 tentang notulen rapat pembahasan",
+    "label": "KJM.02.02|Notulen Rapat Pembahasan"
+  },
+  {
+    "text": "Dokumen daftar hadir rapat pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.03|Daftar Hadir Rapat"
+  },
+  {
+    "text": "Nota dinas perihal daftar hadir rapat pada bidang MOU program siaran",
+    "label": "KJM.02.03|Daftar Hadir Rapat"
+  },
+  {
+    "text": "Berkas arsip daftar hadir rapat memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.03|Daftar Hadir Rapat"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar hadir rapat pada bidang MOU program siaran",
+    "label": "KJM.02.03|Daftar Hadir Rapat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.03 tentang daftar hadir rapat",
+    "label": "KJM.02.03|Daftar Hadir Rapat"
+  },
+  {
+    "text": "Dokumen naskah MOU pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.04|Naskah MOU"
+  },
+  {
+    "text": "Nota dinas perihal naskah MOU pada bidang MOU program siaran",
+    "label": "KJM.02.04|Naskah MOU"
+  },
+  {
+    "text": "Berkas arsip naskah MOU memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.04|Naskah MOU"
+  },
+  {
+    "text": "Laporan kegiatan terkait naskah MOU pada bidang MOU program siaran",
+    "label": "KJM.02.04|Naskah MOU"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.04 tentang naskah MOU",
+    "label": "KJM.02.04|Naskah MOU"
+  },
+  {
+    "text": "Dokumen daftar hadir penandatangan MOU pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.05|Daftar Hadir Penandatangan MOU"
+  },
+  {
+    "text": "Nota dinas perihal daftar hadir penandatangan MOU pada bidang MOU program siaran",
+    "label": "KJM.02.05|Daftar Hadir Penandatangan MOU"
+  },
+  {
+    "text": "Berkas arsip daftar hadir penandatangan MOU memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.05|Daftar Hadir Penandatangan MOU"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar hadir penandatangan MOU pada bidang MOU program siaran",
+    "label": "KJM.02.05|Daftar Hadir Penandatangan MOU"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.05 tentang daftar hadir penandatangan MOU",
+    "label": "KJM.02.05|Daftar Hadir Penandatangan MOU"
+  },
+  {
+    "text": "Dokumen dokumentasi kegiatan (foto, audio, video) pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.06|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi kegiatan (foto, audio, video) pada bidang MOU program siaran",
+    "label": "KJM.02.06|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi kegiatan (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.06|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi kegiatan (foto, audio, video) pada bidang MOU program siaran",
+    "label": "KJM.02.06|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.06 tentang dokumentasi kegiatan (foto, audio, video)",
+    "label": "KJM.02.06|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan kegiatan pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.07|Laporan Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal laporan kegiatan pada bidang MOU program siaran",
+    "label": "KJM.02.07|Laporan Kegiatan"
+  },
+  {
+    "text": "Berkas arsip laporan kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.07|Laporan Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan kegiatan pada bidang MOU program siaran",
+    "label": "KJM.02.07|Laporan Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.07 tentang laporan kegiatan",
+    "label": "KJM.02.07|Laporan Kegiatan"
+  },
+  {
+    "text": "Dokumen evaluasi MOU pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.08|Evaluasi MOU"
+  },
+  {
+    "text": "Nota dinas perihal evaluasi MOU pada bidang MOU program siaran",
+    "label": "KJM.02.08|Evaluasi MOU"
+  },
+  {
+    "text": "Berkas arsip evaluasi MOU memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.08|Evaluasi MOU"
+  },
+  {
+    "text": "Laporan kegiatan terkait evaluasi MOU pada bidang MOU program siaran",
+    "label": "KJM.02.08|Evaluasi MOU"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.08 tentang evaluasi MOU",
+    "label": "KJM.02.08|Evaluasi MOU"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang MOU program siaran di lingkungan LPP RRI",
+    "label": "KJM.02.09|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang MOU program siaran",
+    "label": "KJM.02.09|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.02.09|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang MOU program siaran",
+    "label": "KJM.02.09|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.02.09 tentang laporan keuangan",
+    "label": "KJM.02.09|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen SK kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.01|SK Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal SK kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.01|SK Kegiatan"
+  },
+  {
+    "text": "Berkas arsip SK kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.01|SK Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.01|SK Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.01 tentang SK kegiatan",
+    "label": "KJM.03.01|SK Kegiatan"
+  },
+  {
+    "text": "Dokumen nodin undangan peserta pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Nota dinas perihal nodin undangan peserta pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Berkas arsip nodin undangan peserta memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Laporan kegiatan terkait nodin undangan peserta pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.02 tentang nodin undangan peserta",
+    "label": "KJM.03.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Dokumen daftar hadir pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.03|Daftar Hadir"
+  },
+  {
+    "text": "Nota dinas perihal daftar hadir pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.03|Daftar Hadir"
+  },
+  {
+    "text": "Berkas arsip daftar hadir memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.03|Daftar Hadir"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar hadir pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.03|Daftar Hadir"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.03 tentang daftar hadir",
+    "label": "KJM.03.03|Daftar Hadir"
+  },
+  {
+    "text": "Dokumen surat-surat pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.04|Surat-surat"
+  },
+  {
+    "text": "Nota dinas perihal surat-surat pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.04|Surat-surat"
+  },
+  {
+    "text": "Berkas arsip surat-surat memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.04|Surat-surat"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat-surat pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.04|Surat-surat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.04 tentang surat-surat",
+    "label": "KJM.03.04|Surat-surat"
+  },
+  {
+    "text": "Dokumen notulen pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.05|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.05|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.05|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.05|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.05 tentang notulen",
+    "label": "KJM.03.05|Notulen"
+  },
+  {
+    "text": "Dokumen materi narsum pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.06|Materi Narsum"
+  },
+  {
+    "text": "Nota dinas perihal materi narsum pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.06|Materi Narsum"
+  },
+  {
+    "text": "Berkas arsip materi narsum memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.06|Materi Narsum"
+  },
+  {
+    "text": "Laporan kegiatan terkait materi narsum pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.06|Materi Narsum"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.06 tentang materi narsum",
+    "label": "KJM.03.06|Materi Narsum"
+  },
+  {
+    "text": "Dokumen dokumentasi kegiatan (foto, audio, video) pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi kegiatan (foto, audio, video) pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi kegiatan (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi kegiatan (foto, audio, video) pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.07 tentang dokumentasi kegiatan (foto, audio, video)",
+    "label": "KJM.03.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.03.08 tentang laporan keuangan",
+    "label": "KJM.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen SK kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.01|SK Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal SK kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.01|SK Kegiatan"
+  },
+  {
+    "text": "Berkas arsip SK kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.01|SK Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.01|SK Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.01 tentang SK kegiatan",
+    "label": "KJM.04.01|SK Kegiatan"
+  },
+  {
+    "text": "Dokumen nodin undangan peserta pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Nota dinas perihal nodin undangan peserta pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Berkas arsip nodin undangan peserta memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Laporan kegiatan terkait nodin undangan peserta pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.02 tentang nodin undangan peserta",
+    "label": "KJM.04.02|Nodin Undangan Peserta"
+  },
+  {
+    "text": "Dokumen daftar hadir pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.03|Daftar Hadir"
+  },
+  {
+    "text": "Nota dinas perihal daftar hadir pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.03|Daftar Hadir"
+  },
+  {
+    "text": "Berkas arsip daftar hadir memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.03|Daftar Hadir"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar hadir pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.03|Daftar Hadir"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.03 tentang daftar hadir",
+    "label": "KJM.04.03|Daftar Hadir"
+  },
+  {
+    "text": "Dokumen surat-surat pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.04|Surat-surat"
+  },
+  {
+    "text": "Nota dinas perihal surat-surat pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.04|Surat-surat"
+  },
+  {
+    "text": "Berkas arsip surat-surat memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.04|Surat-surat"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat-surat pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.04|Surat-surat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.04 tentang surat-surat",
+    "label": "KJM.04.04|Surat-surat"
+  },
+  {
+    "text": "Dokumen notulen pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.05|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.05|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.05|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.05|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.05 tentang notulen",
+    "label": "KJM.04.05|Notulen"
+  },
+  {
+    "text": "Dokumen materi narsum pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.06|Materi Narsum"
+  },
+  {
+    "text": "Nota dinas perihal materi narsum pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.06|Materi Narsum"
+  },
+  {
+    "text": "Berkas arsip materi narsum memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.06|Materi Narsum"
+  },
+  {
+    "text": "Laporan kegiatan terkait materi narsum pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.06|Materi Narsum"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.06 tentang materi narsum",
+    "label": "KJM.04.06|Materi Narsum"
+  },
+  {
+    "text": "Dokumen dokumentasi kegiatan (foto, audio, video) pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi kegiatan (foto, audio, video) pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi kegiatan (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi kegiatan (foto, audio, video) pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.07 tentang dokumentasi kegiatan (foto, audio, video)",
+    "label": "KJM.04.07|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.08|Laporan Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal laporan kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.08|Laporan Kegiatan"
+  },
+  {
+    "text": "Berkas arsip laporan kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.08|Laporan Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.08|Laporan Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.08 tentang laporan kegiatan",
+    "label": "KJM.04.08|Laporan Kegiatan"
+  },
+  {
+    "text": "Dokumen evaluasi kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.09|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal evaluasi kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.09|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Berkas arsip evaluasi kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.09|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait evaluasi kegiatan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.09|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.09 tentang evaluasi kegiatan",
+    "label": "KJM.04.09|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang kemitraan RRI dengan lembaga di tingkat nasional di lingkungan LPP RRI",
+    "label": "KJM.04.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.10|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.04.10|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang kemitraan RRI dengan lembaga di tingkat nasional",
+    "label": "KJM.04.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.04.10 tentang laporan keuangan",
+    "label": "KJM.04.10|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen surat undangan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.01|Surat Undangan"
+  },
+  {
+    "text": "Nota dinas perihal surat undangan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.01|Surat Undangan"
+  },
+  {
+    "text": "Berkas arsip surat undangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.01|Surat Undangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat undangan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.01|Surat Undangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.01 tentang surat undangan",
+    "label": "KJM.05.01|Surat Undangan"
+  },
+  {
+    "text": "Dokumen noutesi rapat pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.02|Noutesi Rapat"
+  },
+  {
+    "text": "Nota dinas perihal noutesi rapat pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.02|Noutesi Rapat"
+  },
+  {
+    "text": "Berkas arsip noutesi rapat memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.02|Noutesi Rapat"
+  },
+  {
+    "text": "Laporan kegiatan terkait noutesi rapat pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.02|Noutesi Rapat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.02 tentang noutesi rapat",
+    "label": "KJM.05.02|Noutesi Rapat"
+  },
+  {
+    "text": "Dokumen daftar hadir pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.03|Daftar Hadir"
+  },
+  {
+    "text": "Nota dinas perihal daftar hadir pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.03|Daftar Hadir"
+  },
+  {
+    "text": "Berkas arsip daftar hadir memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.03|Daftar Hadir"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar hadir pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.03|Daftar Hadir"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.03 tentang daftar hadir",
+    "label": "KJM.05.03|Daftar Hadir"
+  },
+  {
+    "text": "Dokumen penilaian terhadap paket siaran pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.04|Penilaian Terhadap Paket Siaran"
+  },
+  {
+    "text": "Nota dinas perihal penilaian terhadap paket siaran pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.04|Penilaian Terhadap Paket Siaran"
+  },
+  {
+    "text": "Berkas arsip penilaian terhadap paket siaran memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.04|Penilaian Terhadap Paket Siaran"
+  },
+  {
+    "text": "Laporan kegiatan terkait penilaian terhadap paket siaran pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.04|Penilaian Terhadap Paket Siaran"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.04 tentang penilaian terhadap paket siaran",
+    "label": "KJM.05.04|Penilaian Terhadap Paket Siaran"
+  },
+  {
+    "text": "Dokumen berita acara tim juri pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.05|Berita Acara Tim Juri"
+  },
+  {
+    "text": "Nota dinas perihal berita acara tim juri pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.05|Berita Acara Tim Juri"
+  },
+  {
+    "text": "Berkas arsip berita acara tim juri memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.05|Berita Acara Tim Juri"
+  },
+  {
+    "text": "Laporan kegiatan terkait berita acara tim juri pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.05|Berita Acara Tim Juri"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.05 tentang berita acara tim juri",
+    "label": "KJM.05.05|Berita Acara Tim Juri"
+  },
+  {
+    "text": "Dokumen pengunguman seleksi pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.06|Pengunguman Seleksi"
+  },
+  {
+    "text": "Nota dinas perihal pengunguman seleksi pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.06|Pengunguman Seleksi"
+  },
+  {
+    "text": "Berkas arsip pengunguman seleksi memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.06|Pengunguman Seleksi"
+  },
+  {
+    "text": "Laporan kegiatan terkait pengunguman seleksi pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.06|Pengunguman Seleksi"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.06 tentang pengunguman seleksi",
+    "label": "KJM.05.06|Pengunguman Seleksi"
+  },
+  {
+    "text": "Dokumen bukti pengiriman ke luar negeri pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.07|Bukti Pengiriman ke Luar Negeri"
+  },
+  {
+    "text": "Nota dinas perihal bukti pengiriman ke luar negeri pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.07|Bukti Pengiriman ke Luar Negeri"
+  },
+  {
+    "text": "Berkas arsip bukti pengiriman ke luar negeri memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.07|Bukti Pengiriman ke Luar Negeri"
+  },
+  {
+    "text": "Laporan kegiatan terkait bukti pengiriman ke luar negeri pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.07|Bukti Pengiriman ke Luar Negeri"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.07 tentang bukti pengiriman ke luar negeri",
+    "label": "KJM.05.07|Bukti Pengiriman ke Luar Negeri"
+  },
+  {
+    "text": "Dokumen dokumentasi kegiatan (foto, audio, video) pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.08|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi kegiatan (foto, audio, video) pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.08|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi kegiatan (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.08|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi kegiatan (foto, audio, video) pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.08|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.08 tentang dokumentasi kegiatan (foto, audio, video)",
+    "label": "KJM.05.08|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan kegiatan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.09|Laporan Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal laporan kegiatan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.09|Laporan Kegiatan"
+  },
+  {
+    "text": "Berkas arsip laporan kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.09|Laporan Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan kegiatan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.09|Laporan Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.09 tentang laporan kegiatan",
+    "label": "KJM.05.09|Laporan Kegiatan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.10|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.10|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.10 tentang laporan keuangan",
+    "label": "KJM.05.10|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen evaluasi kegiatan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional di lingkungan LPP RRI",
+    "label": "KJM.05.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal evaluasi kegiatan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Berkas arsip evaluasi kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.05.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait evaluasi kegiatan pada bidang seleksi dan pendampingan kompetisi tingkat nasional dan internasional",
+    "label": "KJM.05.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.05.11 tentang evaluasi kegiatan",
+    "label": "KJM.05.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Dokumen surat surat terkait koresponden RRI pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.01|Surat Surat Terkait Koresponden RRI"
+  },
+  {
+    "text": "Nota dinas perihal surat surat terkait koresponden RRI pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.01|Surat Surat Terkait Koresponden RRI"
+  },
+  {
+    "text": "Berkas arsip surat surat terkait koresponden RRI memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.01|Surat Surat Terkait Koresponden RRI"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat surat terkait koresponden RRI pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.01|Surat Surat Terkait Koresponden RRI"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.01 tentang surat surat terkait koresponden RRI",
+    "label": "KJM.06.01|Surat Surat Terkait Koresponden RRI"
+  },
+  {
+    "text": "Dokumen noutesi rapat pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.02|Noutesi Rapat"
+  },
+  {
+    "text": "Nota dinas perihal noutesi rapat pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.02|Noutesi Rapat"
+  },
+  {
+    "text": "Berkas arsip noutesi rapat memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.02|Noutesi Rapat"
+  },
+  {
+    "text": "Laporan kegiatan terkait noutesi rapat pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.02|Noutesi Rapat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.02 tentang noutesi rapat",
+    "label": "KJM.06.02|Noutesi Rapat"
+  },
+  {
+    "text": "Dokumen daftar hadir pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.03|Daftar Hadir"
+  },
+  {
+    "text": "Nota dinas perihal daftar hadir pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.03|Daftar Hadir"
+  },
+  {
+    "text": "Berkas arsip daftar hadir memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.03|Daftar Hadir"
+  },
+  {
+    "text": "Laporan kegiatan terkait daftar hadir pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.03|Daftar Hadir"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.03 tentang daftar hadir",
+    "label": "KJM.06.03|Daftar Hadir"
+  },
+  {
+    "text": "Dokumen lamaran (biodata, audio liputan) calon korespenden pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.04|Lamaran (Biodata, Audio Liputan) Calon Korespenden"
+  },
+  {
+    "text": "Nota dinas perihal lamaran (biodata, audio liputan) calon korespenden pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.04|Lamaran (Biodata, Audio Liputan) Calon Korespenden"
+  },
+  {
+    "text": "Berkas arsip lamaran (biodata, audio liputan) calon korespenden memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.04|Lamaran (Biodata, Audio Liputan) Calon Korespenden"
+  },
+  {
+    "text": "Laporan kegiatan terkait lamaran (biodata, audio liputan) calon korespenden pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.04|Lamaran (Biodata, Audio Liputan) Calon Korespenden"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.04 tentang lamaran (biodata, audio liputan) calon korespenden",
+    "label": "KJM.06.04|Lamaran (Biodata, Audio Liputan) Calon Korespenden"
+  },
+  {
+    "text": "Dokumen penilaian koresponden RRI pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.05|Penilaian Koresponden RRI"
+  },
+  {
+    "text": "Nota dinas perihal penilaian koresponden RRI pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.05|Penilaian Koresponden RRI"
+  },
+  {
+    "text": "Berkas arsip penilaian koresponden RRI memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.05|Penilaian Koresponden RRI"
+  },
+  {
+    "text": "Laporan kegiatan terkait penilaian koresponden RRI pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.05|Penilaian Koresponden RRI"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.05 tentang penilaian koresponden RRI",
+    "label": "KJM.06.05|Penilaian Koresponden RRI"
+  },
+  {
+    "text": "Dokumen berita acara penilaian koresponden pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.06|Berita Acara Penilaian Koresponden"
+  },
+  {
+    "text": "Nota dinas perihal berita acara penilaian koresponden pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.06|Berita Acara Penilaian Koresponden"
+  },
+  {
+    "text": "Berkas arsip berita acara penilaian koresponden memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.06|Berita Acara Penilaian Koresponden"
+  },
+  {
+    "text": "Laporan kegiatan terkait berita acara penilaian koresponden pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.06|Berita Acara Penilaian Koresponden"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.06 tentang berita acara penilaian koresponden",
+    "label": "KJM.06.06|Berita Acara Penilaian Koresponden"
+  },
+  {
+    "text": "Dokumen pengunguman seleksi pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.07|Pengunguman Seleksi"
+  },
+  {
+    "text": "Nota dinas perihal pengunguman seleksi pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.07|Pengunguman Seleksi"
+  },
+  {
+    "text": "Berkas arsip pengunguman seleksi memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.07|Pengunguman Seleksi"
+  },
+  {
+    "text": "Laporan kegiatan terkait pengunguman seleksi pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.07|Pengunguman Seleksi"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.07 tentang pengunguman seleksi",
+    "label": "KJM.06.07|Pengunguman Seleksi"
+  },
+  {
+    "text": "Dokumen audio koresponden untuk seleksi penilaian pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.08|Audio Koresponden Untuk Seleksi Penilaian"
+  },
+  {
+    "text": "Nota dinas perihal audio koresponden untuk seleksi penilaian pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.08|Audio Koresponden Untuk Seleksi Penilaian"
+  },
+  {
+    "text": "Berkas arsip audio koresponden untuk seleksi penilaian memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.08|Audio Koresponden Untuk Seleksi Penilaian"
+  },
+  {
+    "text": "Laporan kegiatan terkait audio koresponden untuk seleksi penilaian pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.08|Audio Koresponden Untuk Seleksi Penilaian"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.08 tentang audio koresponden untuk seleksi penilaian",
+    "label": "KJM.06.08|Audio Koresponden Untuk Seleksi Penilaian"
+  },
+  {
+    "text": "Dokumen dokumentasi kegiatan (foto, audio, video) pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.09|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi kegiatan (foto, audio, video) pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.09|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi kegiatan (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.09|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi kegiatan (foto, audio, video) pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.09|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.09 tentang dokumentasi kegiatan (foto, audio, video)",
+    "label": "KJM.06.09|Dokumentasi Kegiatan (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan kegiatan pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.10|Laporan Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal laporan kegiatan pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.10|Laporan Kegiatan"
+  },
+  {
+    "text": "Berkas arsip laporan kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.10|Laporan Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan kegiatan pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.10|Laporan Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.10 tentang laporan kegiatan",
+    "label": "KJM.06.10|Laporan Kegiatan"
+  },
+  {
+    "text": "Dokumen evaluasi kegiatan pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Nota dinas perihal evaluasi kegiatan pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Berkas arsip evaluasi kegiatan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Laporan kegiatan terkait evaluasi kegiatan pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.11 tentang evaluasi kegiatan",
+    "label": "KJM.06.11|Evaluasi Kegiatan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang seleksi dan pembekalan koresponden RRI di lingkungan LPP RRI",
+    "label": "KJM.06.12|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.12|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.06.12|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang seleksi dan pembekalan koresponden RRI",
+    "label": "KJM.06.12|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.06.12 tentang laporan keuangan",
+    "label": "KJM.06.12|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang bimbingan teknis kerjasama dan multimedia di lingkungan LPP RRI",
+    "label": "KJM.07.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.07.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.07.01 tentang surat masuk dan keluar",
+    "label": "KJM.07.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen SK tim pada bidang bimbingan teknis kerjasama dan multimedia di lingkungan LPP RRI",
+    "label": "KJM.07.02|SK Tim"
+  },
+  {
+    "text": "Nota dinas perihal SK tim pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.02|SK Tim"
+  },
+  {
+    "text": "Berkas arsip SK tim memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.07.02|SK Tim"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.02|SK Tim"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.07.02 tentang SK tim",
+    "label": "KJM.07.02|SK Tim"
+  },
+  {
+    "text": "Dokumen notulen pada bidang bimbingan teknis kerjasama dan multimedia di lingkungan LPP RRI",
+    "label": "KJM.07.03|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.03|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.07.03|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.03|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.07.03 tentang notulen",
+    "label": "KJM.07.03|Notulen"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang bimbingan teknis kerjasama dan multimedia di lingkungan LPP RRI",
+    "label": "KJM.07.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video, materi bimtek dan workshop) memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.07.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.07.04 tentang dokumentasi (foto, audio, video, materi bimtek dan workshop)",
+    "label": "KJM.07.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Dokumen laporan pada bidang bimbingan teknis kerjasama dan multimedia di lingkungan LPP RRI",
+    "label": "KJM.07.05|Laporan"
+  },
+  {
+    "text": "Nota dinas perihal laporan pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.05|Laporan"
+  },
+  {
+    "text": "Berkas arsip laporan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.07.05|Laporan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.05|Laporan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.07.05 tentang laporan",
+    "label": "KJM.07.05|Laporan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang bimbingan teknis kerjasama dan multimedia di lingkungan LPP RRI",
+    "label": "KJM.07.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.06|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.07.06|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang bimbingan teknis kerjasama dan multimedia",
+    "label": "KJM.07.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.07.06 tentang laporan keuangan",
+    "label": "KJM.07.06|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen news pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.02|News"
+  },
+  {
+    "text": "Nota dinas perihal news pada bidang alih media audio/video berita",
+    "label": "KJM.08.02|News"
+  },
+  {
+    "text": "Berkas arsip news memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.02|News"
+  },
+  {
+    "text": "Laporan kegiatan terkait news pada bidang alih media audio/video berita",
+    "label": "KJM.08.02|News"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.02 tentang news",
+    "label": "KJM.08.02|News"
+  },
+  {
+    "text": "Dokumen report on the spot pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.03|Report On the Spot"
+  },
+  {
+    "text": "Nota dinas perihal report on the spot pada bidang alih media audio/video berita",
+    "label": "KJM.08.03|Report On the Spot"
+  },
+  {
+    "text": "Berkas arsip report on the spot memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.03|Report On the Spot"
+  },
+  {
+    "text": "Laporan kegiatan terkait report on the spot pada bidang alih media audio/video berita",
+    "label": "KJM.08.03|Report On the Spot"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.03 tentang report on the spot",
+    "label": "KJM.08.03|Report On the Spot"
+  },
+  {
+    "text": "Dokumen talkshow pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.04|Talkshow"
+  },
+  {
+    "text": "Nota dinas perihal talkshow pada bidang alih media audio/video berita",
+    "label": "KJM.08.04|Talkshow"
+  },
+  {
+    "text": "Berkas arsip talkshow memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.04|Talkshow"
+  },
+  {
+    "text": "Laporan kegiatan terkait talkshow pada bidang alih media audio/video berita",
+    "label": "KJM.08.04|Talkshow"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.04 tentang talkshow",
+    "label": "KJM.08.04|Talkshow"
+  },
+  {
+    "text": "Dokumen editorial pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.05|Editorial"
+  },
+  {
+    "text": "Nota dinas perihal editorial pada bidang alih media audio/video berita",
+    "label": "KJM.08.05|Editorial"
+  },
+  {
+    "text": "Berkas arsip editorial memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.05|Editorial"
+  },
+  {
+    "text": "Laporan kegiatan terkait editorial pada bidang alih media audio/video berita",
+    "label": "KJM.08.05|Editorial"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.05 tentang editorial",
+    "label": "KJM.08.05|Editorial"
+  },
+  {
+    "text": "Dokumen indepth reporting pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.06|Indepth Reporting"
+  },
+  {
+    "text": "Nota dinas perihal indepth reporting pada bidang alih media audio/video berita",
+    "label": "KJM.08.06|Indepth Reporting"
+  },
+  {
+    "text": "Berkas arsip indepth reporting memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.06|Indepth Reporting"
+  },
+  {
+    "text": "Laporan kegiatan terkait indepth reporting pada bidang alih media audio/video berita",
+    "label": "KJM.08.06|Indepth Reporting"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.06 tentang indepth reporting",
+    "label": "KJM.08.06|Indepth Reporting"
+  },
+  {
+    "text": "Dokumen news documenter pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.07|News Documenter"
+  },
+  {
+    "text": "Nota dinas perihal news documenter pada bidang alih media audio/video berita",
+    "label": "KJM.08.07|News Documenter"
+  },
+  {
+    "text": "Berkas arsip news documenter memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.07|News Documenter"
+  },
+  {
+    "text": "Laporan kegiatan terkait news documenter pada bidang alih media audio/video berita",
+    "label": "KJM.08.07|News Documenter"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.07 tentang news documenter",
+    "label": "KJM.08.07|News Documenter"
+  },
+  {
+    "text": "Dokumen news feature pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.08|News Feature"
+  },
+  {
+    "text": "Nota dinas perihal news feature pada bidang alih media audio/video berita",
+    "label": "KJM.08.08|News Feature"
+  },
+  {
+    "text": "Berkas arsip news feature memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.08|News Feature"
+  },
+  {
+    "text": "Laporan kegiatan terkait news feature pada bidang alih media audio/video berita",
+    "label": "KJM.08.08|News Feature"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.08 tentang news feature",
+    "label": "KJM.08.08|News Feature"
+  },
+  {
+    "text": "Dokumen teks berita pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.09|Teks Berita"
+  },
+  {
+    "text": "Nota dinas perihal teks berita pada bidang alih media audio/video berita",
+    "label": "KJM.08.09|Teks Berita"
+  },
+  {
+    "text": "Berkas arsip teks berita memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.09|Teks Berita"
+  },
+  {
+    "text": "Laporan kegiatan terkait teks berita pada bidang alih media audio/video berita",
+    "label": "KJM.08.09|Teks Berita"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.09 tentang teks berita",
+    "label": "KJM.08.09|Teks Berita"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang alih media audio/video berita di lingkungan LPP RRI",
+    "label": "KJM.08.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang alih media audio/video berita",
+    "label": "KJM.08.10|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.08.10|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang alih media audio/video berita",
+    "label": "KJM.08.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.08.10 tentang laporan keuangan",
+    "label": "KJM.08.10|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen lagu pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.02|Lagu"
+  },
+  {
+    "text": "Nota dinas perihal lagu pada bidang alih media audio/video non berita",
+    "label": "KJM.09.02|Lagu"
+  },
+  {
+    "text": "Berkas arsip lagu memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.02|Lagu"
+  },
+  {
+    "text": "Laporan kegiatan terkait lagu pada bidang alih media audio/video non berita",
+    "label": "KJM.09.02|Lagu"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.02 tentang lagu",
+    "label": "KJM.09.02|Lagu"
+  },
+  {
+    "text": "Dokumen jinggle pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.03|Jinggle"
+  },
+  {
+    "text": "Nota dinas perihal jinggle pada bidang alih media audio/video non berita",
+    "label": "KJM.09.03|Jinggle"
+  },
+  {
+    "text": "Berkas arsip jinggle memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.03|Jinggle"
+  },
+  {
+    "text": "Laporan kegiatan terkait jinggle pada bidang alih media audio/video non berita",
+    "label": "KJM.09.03|Jinggle"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.03 tentang jinggle",
+    "label": "KJM.09.03|Jinggle"
+  },
+  {
+    "text": "Dokumen filler pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.04|Filler"
+  },
+  {
+    "text": "Nota dinas perihal filler pada bidang alih media audio/video non berita",
+    "label": "KJM.09.04|Filler"
+  },
+  {
+    "text": "Berkas arsip filler memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.04|Filler"
+  },
+  {
+    "text": "Laporan kegiatan terkait filler pada bidang alih media audio/video non berita",
+    "label": "KJM.09.04|Filler"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.04 tentang filler",
+    "label": "KJM.09.04|Filler"
+  },
+  {
+    "text": "Dokumen sandiwara radio pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.05|Sandiwara Radio"
+  },
+  {
+    "text": "Nota dinas perihal sandiwara radio pada bidang alih media audio/video non berita",
+    "label": "KJM.09.05|Sandiwara Radio"
+  },
+  {
+    "text": "Berkas arsip sandiwara radio memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.05|Sandiwara Radio"
+  },
+  {
+    "text": "Laporan kegiatan terkait sandiwara radio pada bidang alih media audio/video non berita",
+    "label": "KJM.09.05|Sandiwara Radio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.05 tentang sandiwara radio",
+    "label": "KJM.09.05|Sandiwara Radio"
+  },
+  {
+    "text": "Dokumen feature pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.06|Feature"
+  },
+  {
+    "text": "Nota dinas perihal feature pada bidang alih media audio/video non berita",
+    "label": "KJM.09.06|Feature"
+  },
+  {
+    "text": "Berkas arsip feature memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.06|Feature"
+  },
+  {
+    "text": "Laporan kegiatan terkait feature pada bidang alih media audio/video non berita",
+    "label": "KJM.09.06|Feature"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.06 tentang feature",
+    "label": "KJM.09.06|Feature"
+  },
+  {
+    "text": "Dokumen spot pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.07|Spot"
+  },
+  {
+    "text": "Nota dinas perihal spot pada bidang alih media audio/video non berita",
+    "label": "KJM.09.07|Spot"
+  },
+  {
+    "text": "Berkas arsip spot memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.07|Spot"
+  },
+  {
+    "text": "Laporan kegiatan terkait spot pada bidang alih media audio/video non berita",
+    "label": "KJM.09.07|Spot"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.07 tentang spot",
+    "label": "KJM.09.07|Spot"
+  },
+  {
+    "text": "Dokumen greetings pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.08|Greetings"
+  },
+  {
+    "text": "Nota dinas perihal greetings pada bidang alih media audio/video non berita",
+    "label": "KJM.09.08|Greetings"
+  },
+  {
+    "text": "Berkas arsip greetings memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.08|Greetings"
+  },
+  {
+    "text": "Laporan kegiatan terkait greetings pada bidang alih media audio/video non berita",
+    "label": "KJM.09.08|Greetings"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.08 tentang greetings",
+    "label": "KJM.09.08|Greetings"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang alih media audio/video non berita di lingkungan LPP RRI",
+    "label": "KJM.09.09|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang alih media audio/video non berita",
+    "label": "KJM.09.09|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "KJM.09.09|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang alih media audio/video non berita",
+    "label": "KJM.09.09|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KJM.09.09 tentang laporan keuangan",
+    "label": "KJM.09.09|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang multilateral di lingkungan LPP RRI",
+    "label": "KS.02.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Nota dinas perihal sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang multilateral",
+    "label": "KS.02.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Berkas arsip sumber daya dan perangkat teknologi penyiaran terestial analog dan digital memuat surat, lampiran, dan data pendukung",
+    "label": "KS.02.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang multilateral",
+    "label": "KS.02.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.02.01 tentang sumber daya dan perangkat teknologi penyiaran terestial analog dan digital",
+    "label": "KS.02.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Dokumen alih teknologi dan pengembangan sdm pada bidang multilateral di lingkungan LPP RRI",
+    "label": "KS.02.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Nota dinas perihal alih teknologi dan pengembangan sdm pada bidang multilateral",
+    "label": "KS.02.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Berkas arsip alih teknologi dan pengembangan sdm memuat surat, lampiran, dan data pendukung",
+    "label": "KS.02.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Laporan kegiatan terkait alih teknologi dan pengembangan sdm pada bidang multilateral",
+    "label": "KS.02.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.02.02 tentang alih teknologi dan pengembangan sdm",
+    "label": "KS.02.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Dokumen penyelenggaraan siaran radio pada bidang multilateral di lingkungan LPP RRI",
+    "label": "KS.02.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Nota dinas perihal penyelenggaraan siaran radio pada bidang multilateral",
+    "label": "KS.02.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Berkas arsip penyelenggaraan siaran radio memuat surat, lampiran, dan data pendukung",
+    "label": "KS.02.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Laporan kegiatan terkait penyelenggaraan siaran radio pada bidang multilateral",
+    "label": "KS.02.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.02.03 tentang penyelenggaraan siaran radio",
+    "label": "KS.02.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Dokumen aplikasi teknologi digital / multiplatform pada bidang multilateral di lingkungan LPP RRI",
+    "label": "KS.02.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Nota dinas perihal aplikasi teknologi digital / multiplatform pada bidang multilateral",
+    "label": "KS.02.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Berkas arsip aplikasi teknologi digital / multiplatform memuat surat, lampiran, dan data pendukung",
+    "label": "KS.02.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Laporan kegiatan terkait aplikasi teknologi digital / multiplatform pada bidang multilateral",
+    "label": "KS.02.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.02.04 tentang aplikasi teknologi digital / multiplatform",
+    "label": "KS.02.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Dokumen sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang regional di lingkungan LPP RRI",
+    "label": "KS.03.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Nota dinas perihal sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang regional",
+    "label": "KS.03.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Berkas arsip sumber daya dan perangkat teknologi penyiaran terestial analog dan digital memuat surat, lampiran, dan data pendukung",
+    "label": "KS.03.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang regional",
+    "label": "KS.03.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.03.01 tentang sumber daya dan perangkat teknologi penyiaran terestial analog dan digital",
+    "label": "KS.03.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Dokumen alih teknologi dan pengembangan sdm pada bidang regional di lingkungan LPP RRI",
+    "label": "KS.03.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Nota dinas perihal alih teknologi dan pengembangan sdm pada bidang regional",
+    "label": "KS.03.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Berkas arsip alih teknologi dan pengembangan sdm memuat surat, lampiran, dan data pendukung",
+    "label": "KS.03.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Laporan kegiatan terkait alih teknologi dan pengembangan sdm pada bidang regional",
+    "label": "KS.03.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.03.02 tentang alih teknologi dan pengembangan sdm",
+    "label": "KS.03.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Dokumen penyelenggaraan siaran radio pada bidang regional di lingkungan LPP RRI",
+    "label": "KS.03.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Nota dinas perihal penyelenggaraan siaran radio pada bidang regional",
+    "label": "KS.03.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Berkas arsip penyelenggaraan siaran radio memuat surat, lampiran, dan data pendukung",
+    "label": "KS.03.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Laporan kegiatan terkait penyelenggaraan siaran radio pada bidang regional",
+    "label": "KS.03.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.03.03 tentang penyelenggaraan siaran radio",
+    "label": "KS.03.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Dokumen aplikasi teknologi digital / multiplatform pada bidang regional di lingkungan LPP RRI",
+    "label": "KS.03.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Nota dinas perihal aplikasi teknologi digital / multiplatform pada bidang regional",
+    "label": "KS.03.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Berkas arsip aplikasi teknologi digital / multiplatform memuat surat, lampiran, dan data pendukung",
+    "label": "KS.03.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Laporan kegiatan terkait aplikasi teknologi digital / multiplatform pada bidang regional",
+    "label": "KS.03.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.03.04 tentang aplikasi teknologi digital / multiplatform",
+    "label": "KS.03.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Dokumen sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang bilateral di lingkungan LPP RRI",
+    "label": "KS.04.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Nota dinas perihal sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang bilateral",
+    "label": "KS.04.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Berkas arsip sumber daya dan perangkat teknologi penyiaran terestial analog dan digital memuat surat, lampiran, dan data pendukung",
+    "label": "KS.04.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait sumber daya dan perangkat teknologi penyiaran terestial analog dan digital pada bidang bilateral",
+    "label": "KS.04.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.04.01 tentang sumber daya dan perangkat teknologi penyiaran terestial analog dan digital",
+    "label": "KS.04.01|Sumber Daya dan Perangkat Teknologi Penyiaran Terestial Analog dan Digital"
+  },
+  {
+    "text": "Dokumen alih teknologi dan pengembangan sdm pada bidang bilateral di lingkungan LPP RRI",
+    "label": "KS.04.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Nota dinas perihal alih teknologi dan pengembangan sdm pada bidang bilateral",
+    "label": "KS.04.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Berkas arsip alih teknologi dan pengembangan sdm memuat surat, lampiran, dan data pendukung",
+    "label": "KS.04.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Laporan kegiatan terkait alih teknologi dan pengembangan sdm pada bidang bilateral",
+    "label": "KS.04.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.04.02 tentang alih teknologi dan pengembangan sdm",
+    "label": "KS.04.02|Alih Teknologi dan Pengembangan SDM"
+  },
+  {
+    "text": "Dokumen penyelenggaraan siaran radio pada bidang bilateral di lingkungan LPP RRI",
+    "label": "KS.04.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Nota dinas perihal penyelenggaraan siaran radio pada bidang bilateral",
+    "label": "KS.04.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Berkas arsip penyelenggaraan siaran radio memuat surat, lampiran, dan data pendukung",
+    "label": "KS.04.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Laporan kegiatan terkait penyelenggaraan siaran radio pada bidang bilateral",
+    "label": "KS.04.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.04.03 tentang penyelenggaraan siaran radio",
+    "label": "KS.04.03|Penyelenggaraan Siaran Radio"
+  },
+  {
+    "text": "Dokumen aplikasi teknologi digital / multiplatform pada bidang bilateral di lingkungan LPP RRI",
+    "label": "KS.04.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Nota dinas perihal aplikasi teknologi digital / multiplatform pada bidang bilateral",
+    "label": "KS.04.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Berkas arsip aplikasi teknologi digital / multiplatform memuat surat, lampiran, dan data pendukung",
+    "label": "KS.04.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Laporan kegiatan terkait aplikasi teknologi digital / multiplatform pada bidang bilateral",
+    "label": "KS.04.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi KS.04.04 tentang aplikasi teknologi digital / multiplatform",
+    "label": "KS.04.04|Aplikasi Teknologi Digital / Multiplatform"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.02 tentang surat masuk dan keluar",
+    "label": "PPP.01.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.03 tentang dokumentasi (foto, audio, video)",
+    "label": "PPP.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen notulen pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.04|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.04|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.04|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.04|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.04 tentang notulen",
+    "label": "PPP.01.04|Notulen"
+  },
+  {
+    "text": "Dokumen materi penyusunan pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Nota dinas perihal materi penyusunan pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Berkas arsip materi penyusunan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Laporan kegiatan terkait materi penyusunan pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.05 tentang materi penyusunan",
+    "label": "PPP.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Dokumen buku petunjuk SOP pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Nota dinas perihal buku petunjuk SOP pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Berkas arsip buku petunjuk SOP memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Laporan kegiatan terkait buku petunjuk SOP pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.06 tentang buku petunjuk SOP",
+    "label": "PPP.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Dokumen juknis pro 3 pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.07|Juknis Pro 3"
+  },
+  {
+    "text": "Nota dinas perihal juknis pro 3 pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.07|Juknis Pro 3"
+  },
+  {
+    "text": "Berkas arsip juknis pro 3 memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.07|Juknis Pro 3"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis pro 3 pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.07|Juknis Pro 3"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.07 tentang juknis pro 3",
+    "label": "PPP.01.07|Juknis Pro 3"
+  },
+  {
+    "text": "Dokumen juknis media online pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.08|Juknis Media Online"
+  },
+  {
+    "text": "Nota dinas perihal juknis media online pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.08|Juknis Media Online"
+  },
+  {
+    "text": "Berkas arsip juknis media online memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.08|Juknis Media Online"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis media online pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.08|Juknis Media Online"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.08 tentang juknis media online",
+    "label": "PPP.01.08|Juknis Media Online"
+  },
+  {
+    "text": "Dokumen juknis liputan haji pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.09|Juknis Liputan Haji"
+  },
+  {
+    "text": "Nota dinas perihal juknis liputan haji pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.09|Juknis Liputan Haji"
+  },
+  {
+    "text": "Berkas arsip juknis liputan haji memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.09|Juknis Liputan Haji"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis liputan haji pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.09|Juknis Liputan Haji"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.09 tentang juknis liputan haji",
+    "label": "PPP.01.09|Juknis Liputan Haji"
+  },
+  {
+    "text": "Dokumen juknis liputan pemilu pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.10|Juknis Liputan Pemilu"
+  },
+  {
+    "text": "Nota dinas perihal juknis liputan pemilu pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.10|Juknis Liputan Pemilu"
+  },
+  {
+    "text": "Berkas arsip juknis liputan pemilu memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.10|Juknis Liputan Pemilu"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis liputan pemilu pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.10|Juknis Liputan Pemilu"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.10 tentang juknis liputan pemilu",
+    "label": "PPP.01.10|Juknis Liputan Pemilu"
+  },
+  {
+    "text": "Dokumen laporan penyusunan kebijakan pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.11|Laporan Penyusunan Kebijakan"
+  },
+  {
+    "text": "Nota dinas perihal laporan penyusunan kebijakan pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.11|Laporan Penyusunan Kebijakan"
+  },
+  {
+    "text": "Berkas arsip laporan penyusunan kebijakan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.11|Laporan Penyusunan Kebijakan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan penyusunan kebijakan pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.11|Laporan Penyusunan Kebijakan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.11 tentang laporan penyusunan kebijakan",
+    "label": "PPP.01.11|Laporan Penyusunan Kebijakan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang penyusunan kebijakan program produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.01.12|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.12|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.01.12|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang penyusunan kebijakan program produksi pemberitaan",
+    "label": "PPP.01.12|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.01.12 tentang laporan keuangan",
+    "label": "PPP.01.12|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang pemberian bimbingan teknis produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.02.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.02.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.02.01 tentang surat masuk dan keluar",
+    "label": "PPP.02.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen SK tim pada bidang pemberian bimbingan teknis produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.02.02|SK Tim"
+  },
+  {
+    "text": "Nota dinas perihal SK tim pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.02|SK Tim"
+  },
+  {
+    "text": "Berkas arsip SK tim memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.02.02|SK Tim"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.02|SK Tim"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.02.02 tentang SK tim",
+    "label": "PPP.02.02|SK Tim"
+  },
+  {
+    "text": "Dokumen notulen pada bidang pemberian bimbingan teknis produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.02.03|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.03|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.02.03|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.03|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.02.03 tentang notulen",
+    "label": "PPP.02.03|Notulen"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang pemberian bimbingan teknis produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.02.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video, materi bimtek dan workshop) memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.02.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.02.04 tentang dokumentasi (foto, audio, video, materi bimtek dan workshop)",
+    "label": "PPP.02.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Dokumen laporan bimtek pada bidang pemberian bimbingan teknis produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.02.05|Laporan Bimtek"
+  },
+  {
+    "text": "Nota dinas perihal laporan bimtek pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.05|Laporan Bimtek"
+  },
+  {
+    "text": "Berkas arsip laporan bimtek memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.02.05|Laporan Bimtek"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan bimtek pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.05|Laporan Bimtek"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.02.05 tentang laporan bimtek",
+    "label": "PPP.02.05|Laporan Bimtek"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang pemberian bimbingan teknis produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.02.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.06|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.02.06|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang pemberian bimbingan teknis produksi pemberitaan",
+    "label": "PPP.02.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.02.06 tentang laporan keuangan",
+    "label": "PPP.02.06|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen SK tim pada bidang evaluasi dan monitoring produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.03.01|SK Tim"
+  },
+  {
+    "text": "Nota dinas perihal SK tim pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.01|SK Tim"
+  },
+  {
+    "text": "Berkas arsip SK tim memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.03.01|SK Tim"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.01|SK Tim"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.03.01 tentang SK tim",
+    "label": "PPP.03.01|SK Tim"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang evaluasi dan monitoring produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.03.02 tentang surat masuk dan keluar",
+    "label": "PPP.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen notulen pada bidang evaluasi dan monitoring produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.03.03|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.03|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.03.03|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.03|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.03.03 tentang notulen",
+    "label": "PPP.03.03|Notulen"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video) pada bidang evaluasi dan monitoring produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.03.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video) pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.03.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video) pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.03.04 tentang dokumentasi (foto, audio, video)",
+    "label": "PPP.03.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang evaluasi dan monitoring produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.03.05|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.05|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.03.05|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.05|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.03.05 tentang laporan keuangan",
+    "label": "PPP.03.05|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen laporan evaluasi dan monitoring pemberitaan pada bidang evaluasi dan monitoring produksi pemberitaan di lingkungan LPP RRI",
+    "label": "PPP.03.06|Laporan Evaluasi dan Monitoring Pemberitaan"
+  },
+  {
+    "text": "Nota dinas perihal laporan evaluasi dan monitoring pemberitaan pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.06|Laporan Evaluasi dan Monitoring Pemberitaan"
+  },
+  {
+    "text": "Berkas arsip laporan evaluasi dan monitoring pemberitaan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.03.06|Laporan Evaluasi dan Monitoring Pemberitaan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan evaluasi dan monitoring pemberitaan pada bidang evaluasi dan monitoring produksi pemberitaan",
+    "label": "PPP.03.06|Laporan Evaluasi dan Monitoring Pemberitaan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.03.06 tentang laporan evaluasi dan monitoring pemberitaan",
+    "label": "PPP.03.06|Laporan Evaluasi dan Monitoring Pemberitaan"
+  },
+  {
+    "text": "Dokumen SK tim talkshow pada bidang talkshow kalender event di lingkungan LPP RRI",
+    "label": "PPP.04.01|SK Tim Talkshow"
+  },
+  {
+    "text": "Nota dinas perihal SK tim talkshow pada bidang talkshow kalender event",
+    "label": "PPP.04.01|SK Tim Talkshow"
+  },
+  {
+    "text": "Berkas arsip SK tim talkshow memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.04.01|SK Tim Talkshow"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim talkshow pada bidang talkshow kalender event",
+    "label": "PPP.04.01|SK Tim Talkshow"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.04.01 tentang SK tim talkshow",
+    "label": "PPP.04.01|SK Tim Talkshow"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang talkshow kalender event di lingkungan LPP RRI",
+    "label": "PPP.04.02|Surat Masuk dan keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang talkshow kalender event",
+    "label": "PPP.04.02|Surat Masuk dan keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.04.02|Surat Masuk dan keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang talkshow kalender event",
+    "label": "PPP.04.02|Surat Masuk dan keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.04.02 tentang surat masuk dan keluar",
+    "label": "PPP.04.02|Surat Masuk dan keluar"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, video) pada bidang talkshow kalender event di lingkungan LPP RRI",
+    "label": "PPP.04.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, video) pada bidang talkshow kalender event",
+    "label": "PPP.04.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.04.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, video) pada bidang talkshow kalender event",
+    "label": "PPP.04.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.04.03 tentang dokumentasi (foto, video)",
+    "label": "PPP.04.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Dokumen notulen rapat pada bidang talkshow kalender event di lingkungan LPP RRI",
+    "label": "PPP.04.04|Notulen Rapat"
+  },
+  {
+    "text": "Nota dinas perihal notulen rapat pada bidang talkshow kalender event",
+    "label": "PPP.04.04|Notulen Rapat"
+  },
+  {
+    "text": "Berkas arsip notulen rapat memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.04.04|Notulen Rapat"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen rapat pada bidang talkshow kalender event",
+    "label": "PPP.04.04|Notulen Rapat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.04.04 tentang notulen rapat",
+    "label": "PPP.04.04|Notulen Rapat"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang talkshow kalender event di lingkungan LPP RRI",
+    "label": "PPP.04.05|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang talkshow kalender event",
+    "label": "PPP.04.05|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPP.04.05|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang talkshow kalender event",
+    "label": "PPP.04.05|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPP.04.05 tentang laporan keuangan",
+    "label": "PPP.04.05|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video) pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.03 tentang dokumentasi (foto, audio, video)",
+    "label": "PPS.01.03|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen notulen pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.04|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.04|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.04|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.04|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.04 tentang notulen",
+    "label": "PPS.01.04|Notulen"
+  },
+  {
+    "text": "Dokumen materi penyusunan pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Nota dinas perihal materi penyusunan pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Berkas arsip materi penyusunan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Laporan kegiatan terkait materi penyusunan pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.05 tentang materi penyusunan",
+    "label": "PPS.01.05|Materi Penyusunan"
+  },
+  {
+    "text": "Dokumen buku petunjuk SOP pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Nota dinas perihal buku petunjuk SOP pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Berkas arsip buku petunjuk SOP memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Laporan kegiatan terkait buku petunjuk SOP pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.06 tentang buku petunjuk SOP",
+    "label": "PPS.01.06|Buku Petunjuk SOP"
+  },
+  {
+    "text": "Dokumen juknis pro1, 2, dan 4 pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.07|Juknis Pro1, 2, dan 4"
+  },
+  {
+    "text": "Nota dinas perihal juknis pro1, 2, dan 4 pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.07|Juknis Pro1, 2, dan 4"
+  },
+  {
+    "text": "Berkas arsip juknis pro1, 2, dan 4 memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.07|Juknis Pro1, 2, dan 4"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis pro1, 2, dan 4 pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.07|Juknis Pro1, 2, dan 4"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.07 tentang juknis pro1, 2, dan 4",
+    "label": "PPS.01.07|Juknis Pro1, 2, dan 4"
+  },
+  {
+    "text": "Dokumen juknis siaran lebaran pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.08|Juknis Siaran Lebaran"
+  },
+  {
+    "text": "Nota dinas perihal juknis siaran lebaran pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.08|Juknis Siaran Lebaran"
+  },
+  {
+    "text": "Berkas arsip juknis siaran lebaran memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.08|Juknis Siaran Lebaran"
+  },
+  {
+    "text": "Laporan kegiatan terkait juknis siaran lebaran pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.08|Juknis Siaran Lebaran"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.08 tentang juknis siaran lebaran",
+    "label": "PPS.01.08|Juknis Siaran Lebaran"
+  },
+  {
+    "text": "Dokumen laporan penyusunan pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.09|Laporan Penyusunan"
+  },
+  {
+    "text": "Nota dinas perihal laporan penyusunan pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.09|Laporan Penyusunan"
+  },
+  {
+    "text": "Berkas arsip laporan penyusunan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.09|Laporan Penyusunan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan penyusunan pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.09|Laporan Penyusunan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.09 tentang laporan penyusunan",
+    "label": "PPS.01.09|Laporan Penyusunan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang penyusunan kebijakan program produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.01.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.10|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.01.10|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang penyusunan kebijakan program produksi siaran",
+    "label": "PPS.01.10|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.01.10 tentang laporan keuangan",
+    "label": "PPS.01.10|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang royalti dan hak cipta di lingkungan LPP RRI",
+    "label": "PPS.02.01|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang royalti dan hak cipta",
+    "label": "PPS.02.01|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.02.01|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang royalti dan hak cipta",
+    "label": "PPS.02.01|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.02.01 tentang laporan keuangan",
+    "label": "PPS.02.01|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen sertifikat pada bidang royalti dan hak cipta di lingkungan LPP RRI",
+    "label": "PPS.02.02|Sertifikat"
+  },
+  {
+    "text": "Nota dinas perihal sertifikat pada bidang royalti dan hak cipta",
+    "label": "PPS.02.02|Sertifikat"
+  },
+  {
+    "text": "Berkas arsip sertifikat memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.02.02|Sertifikat"
+  },
+  {
+    "text": "Laporan kegiatan terkait sertifikat pada bidang royalti dan hak cipta",
+    "label": "PPS.02.02|Sertifikat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.02.02 tentang sertifikat",
+    "label": "PPS.02.02|Sertifikat"
+  },
+  {
+    "text": "Dokumen SK tim swara kencana pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.01|SK Tim Swara Kencana"
+  },
+  {
+    "text": "Nota dinas perihal SK tim swara kencana pada bidang swara kencana award",
+    "label": "PPS.03.01|SK Tim Swara Kencana"
+  },
+  {
+    "text": "Berkas arsip SK tim swara kencana memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.01|SK Tim Swara Kencana"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim swara kencana pada bidang swara kencana award",
+    "label": "PPS.03.01|SK Tim Swara Kencana"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.01 tentang SK tim swara kencana",
+    "label": "PPS.03.01|SK Tim Swara Kencana"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang swara kencana award",
+    "label": "PPS.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang swara kencana award",
+    "label": "PPS.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.02 tentang surat masuk dan keluar",
+    "label": "PPS.03.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto/video) pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.03|Dokumentasi (Foto/Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto/video) pada bidang swara kencana award",
+    "label": "PPS.03.03|Dokumentasi (Foto/Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto/video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.03|Dokumentasi (Foto/Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto/video) pada bidang swara kencana award",
+    "label": "PPS.03.03|Dokumentasi (Foto/Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.03 tentang dokumentasi (foto/video)",
+    "label": "PPS.03.03|Dokumentasi (Foto/Video)"
+  },
+  {
+    "text": "Dokumen notulen pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.04|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang swara kencana award",
+    "label": "PPS.03.04|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.04|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang swara kencana award",
+    "label": "PPS.03.04|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.04 tentang notulen",
+    "label": "PPS.03.04|Notulen"
+  },
+  {
+    "text": "Dokumen materi teks, audio dan video peserta swaken pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.05|Materi Teks, Audio dan Video Peserta Swaken"
+  },
+  {
+    "text": "Nota dinas perihal materi teks, audio dan video peserta swaken pada bidang swara kencana award",
+    "label": "PPS.03.05|Materi Teks, Audio dan Video Peserta Swaken"
+  },
+  {
+    "text": "Berkas arsip materi teks, audio dan video peserta swaken memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.05|Materi Teks, Audio dan Video Peserta Swaken"
+  },
+  {
+    "text": "Laporan kegiatan terkait materi teks, audio dan video peserta swaken pada bidang swara kencana award",
+    "label": "PPS.03.05|Materi Teks, Audio dan Video Peserta Swaken"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.05 tentang materi teks, audio dan video peserta swaken",
+    "label": "PPS.03.05|Materi Teks, Audio dan Video Peserta Swaken"
+  },
+  {
+    "text": "Dokumen BA penjurian pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.06|BA Penjurian"
+  },
+  {
+    "text": "Nota dinas perihal BA penjurian pada bidang swara kencana award",
+    "label": "PPS.03.06|BA Penjurian"
+  },
+  {
+    "text": "Berkas arsip BA penjurian memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.06|BA Penjurian"
+  },
+  {
+    "text": "Laporan kegiatan terkait BA penjurian pada bidang swara kencana award",
+    "label": "PPS.03.06|BA Penjurian"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.06 tentang BA penjurian",
+    "label": "PPS.03.06|BA Penjurian"
+  },
+  {
+    "text": "Dokumen SK pengumuman pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.07|SK Pengumuman"
+  },
+  {
+    "text": "Nota dinas perihal SK pengumuman pada bidang swara kencana award",
+    "label": "PPS.03.07|SK Pengumuman"
+  },
+  {
+    "text": "Berkas arsip SK pengumuman memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.07|SK Pengumuman"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK pengumuman pada bidang swara kencana award",
+    "label": "PPS.03.07|SK Pengumuman"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.07 tentang SK pengumuman",
+    "label": "PPS.03.07|SK Pengumuman"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang swara kencana award di lingkungan LPP RRI",
+    "label": "PPS.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang swara kencana award",
+    "label": "PPS.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang swara kencana award",
+    "label": "PPS.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.03.08 tentang laporan keuangan",
+    "label": "PPS.03.08|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang bimbingan teknis produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.04.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.04.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.04.01 tentang surat masuk dan keluar",
+    "label": "PPS.04.01|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen SK tim pada bidang bimbingan teknis produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.04.02|SK Tim"
+  },
+  {
+    "text": "Nota dinas perihal SK tim pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.02|SK Tim"
+  },
+  {
+    "text": "Berkas arsip SK tim memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.04.02|SK Tim"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.02|SK Tim"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.04.02 tentang SK tim",
+    "label": "PPS.04.02|SK Tim"
+  },
+  {
+    "text": "Dokumen notulen pada bidang bimbingan teknis produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.04.03|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.03|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.04.03|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.03|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.04.03 tentang notulen",
+    "label": "PPS.04.03|Notulen"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang bimbingan teknis produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.04.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video, materi bimtek dan workshop) memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.04.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video, materi bimtek dan workshop) pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.04.04 tentang dokumentasi (foto, audio, video, materi bimtek dan workshop)",
+    "label": "PPS.04.04|Dokumentasi (Foto, Audio, Video, Materi Bimtek dan Workshop)"
+  },
+  {
+    "text": "Dokumen laporan pada bidang bimbingan teknis produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.04.05|Laporan"
+  },
+  {
+    "text": "Nota dinas perihal laporan pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.05|Laporan"
+  },
+  {
+    "text": "Berkas arsip laporan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.04.05|Laporan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.05|Laporan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.04.05 tentang laporan",
+    "label": "PPS.04.05|Laporan"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang bimbingan teknis produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.04.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.06|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.04.06|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang bimbingan teknis produksi siaran",
+    "label": "PPS.04.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.04.06 tentang laporan keuangan",
+    "label": "PPS.04.06|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen SK tim pada bidang evaluasi dan monitoring produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.05.01|SK Tim"
+  },
+  {
+    "text": "Nota dinas perihal SK tim pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.01|SK Tim"
+  },
+  {
+    "text": "Berkas arsip SK tim memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.05.01|SK Tim"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.01|SK Tim"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.05.01 tentang SK tim",
+    "label": "PPS.05.01|SK Tim"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang evaluasi dan monitoring produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.05.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.05.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.05.02 tentang surat masuk dan keluar",
+    "label": "PPS.05.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen notulen pada bidang evaluasi dan monitoring produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.05.03|Notulen"
+  },
+  {
+    "text": "Nota dinas perihal notulen pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.03|Notulen"
+  },
+  {
+    "text": "Berkas arsip notulen memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.05.03|Notulen"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.03|Notulen"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.05.03 tentang notulen",
+    "label": "PPS.05.03|Notulen"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, audio, video) pada bidang evaluasi dan monitoring produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.05.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, audio, video) pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, audio, video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.05.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, audio, video) pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.05.04 tentang dokumentasi (foto, audio, video)",
+    "label": "PPS.05.04|Dokumentasi (Foto, Audio, Video)"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang evaluasi dan monitoring produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.05.05|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.05|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.05.05|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.05|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.05.05 tentang laporan keuangan",
+    "label": "PPS.05.05|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen laporan evaluasi dan monitoring pada bidang evaluasi dan monitoring produksi siaran di lingkungan LPP RRI",
+    "label": "PPS.05.06|Laporan Evaluasi dan Monitoring"
+  },
+  {
+    "text": "Nota dinas perihal laporan evaluasi dan monitoring pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.06|Laporan Evaluasi dan Monitoring"
+  },
+  {
+    "text": "Berkas arsip laporan evaluasi dan monitoring memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.05.06|Laporan Evaluasi dan Monitoring"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan evaluasi dan monitoring pada bidang evaluasi dan monitoring produksi siaran",
+    "label": "PPS.05.06|Laporan Evaluasi dan Monitoring"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.05.06 tentang laporan evaluasi dan monitoring",
+    "label": "PPS.05.06|Laporan Evaluasi dan Monitoring"
+  },
+  {
+    "text": "Dokumen SK tim pagelaran pada bidang pagelaran musik dan hiburan di lingkungan LPP RRI",
+    "label": "PPS.06.01|SK Tim Pagelaran"
+  },
+  {
+    "text": "Nota dinas perihal SK tim pagelaran pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.01|SK Tim Pagelaran"
+  },
+  {
+    "text": "Berkas arsip SK tim pagelaran memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.06.01|SK Tim Pagelaran"
+  },
+  {
+    "text": "Laporan kegiatan terkait SK tim pagelaran pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.01|SK Tim Pagelaran"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.06.01 tentang SK tim pagelaran",
+    "label": "PPS.06.01|SK Tim Pagelaran"
+  },
+  {
+    "text": "Dokumen surat masuk dan keluar pada bidang pagelaran musik dan hiburan di lingkungan LPP RRI",
+    "label": "PPS.06.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nota dinas perihal surat masuk dan keluar pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Berkas arsip surat masuk dan keluar memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.06.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Laporan kegiatan terkait surat masuk dan keluar pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.06.02 tentang surat masuk dan keluar",
+    "label": "PPS.06.02|Surat Masuk dan Keluar"
+  },
+  {
+    "text": "Dokumen dokumentasi (foto, video) pada bidang pagelaran musik dan hiburan di lingkungan LPP RRI",
+    "label": "PPS.06.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Nota dinas perihal dokumentasi (foto, video) pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Berkas arsip dokumentasi (foto, video) memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.06.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Laporan kegiatan terkait dokumentasi (foto, video) pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.06.03 tentang dokumentasi (foto, video)",
+    "label": "PPS.06.03|Dokumentasi (Foto, Video)"
+  },
+  {
+    "text": "Dokumen notulen rapat pada bidang pagelaran musik dan hiburan di lingkungan LPP RRI",
+    "label": "PPS.06.04|Notulen Rapat"
+  },
+  {
+    "text": "Nota dinas perihal notulen rapat pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.04|Notulen Rapat"
+  },
+  {
+    "text": "Berkas arsip notulen rapat memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.06.04|Notulen Rapat"
+  },
+  {
+    "text": "Laporan kegiatan terkait notulen rapat pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.04|Notulen Rapat"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.06.04 tentang notulen rapat",
+    "label": "PPS.06.04|Notulen Rapat"
+  },
+  {
+    "text": "Dokumen kontrak artis (SPK artis) pada bidang pagelaran musik dan hiburan di lingkungan LPP RRI",
+    "label": "PPS.06.05|Kontrak Artis (SPK Artis)"
+  },
+  {
+    "text": "Nota dinas perihal kontrak artis (SPK artis) pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.05|Kontrak Artis (SPK Artis)"
+  },
+  {
+    "text": "Berkas arsip kontrak artis (SPK artis) memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.06.05|Kontrak Artis (SPK Artis)"
+  },
+  {
+    "text": "Laporan kegiatan terkait kontrak artis (SPK artis) pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.05|Kontrak Artis (SPK Artis)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.06.05 tentang kontrak artis (SPK artis)",
+    "label": "PPS.06.05|Kontrak Artis (SPK Artis)"
+  },
+  {
+    "text": "Dokumen laporan keuangan pada bidang pagelaran musik dan hiburan di lingkungan LPP RRI",
+    "label": "PPS.06.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nota dinas perihal laporan keuangan pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.06|Laporan Keuangan"
+  },
+  {
+    "text": "Berkas arsip laporan keuangan memuat surat, lampiran, dan data pendukung",
+    "label": "PPS.06.06|Laporan Keuangan"
+  },
+  {
+    "text": "Laporan kegiatan terkait laporan keuangan pada bidang pagelaran musik dan hiburan",
+    "label": "PPS.06.06|Laporan Keuangan"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi PPS.06.06 tentang laporan keuangan",
+    "label": "PPS.06.06|Laporan Keuangan"
+  },
+  {
+    "text": "Dokumen katalog genset pada bidang katalog di lingkungan LPP RRI",
+    "label": "STO.01.02|Katalog Genset"
+  },
+  {
+    "text": "Nota dinas perihal katalog genset pada bidang katalog",
+    "label": "STO.01.02|Katalog Genset"
+  },
+  {
+    "text": "Berkas arsip katalog genset memuat surat, lampiran, dan data pendukung",
+    "label": "STO.01.02|Katalog Genset"
+  },
+  {
+    "text": "Laporan kegiatan terkait katalog genset pada bidang katalog",
+    "label": "STO.01.02|Katalog Genset"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.01.02 tentang katalog genset",
+    "label": "STO.01.02|Katalog Genset"
+  },
+  {
+    "text": "Dokumen katalog tower pada bidang katalog di lingkungan LPP RRI",
+    "label": "STO.01.03|Katalog Tower"
+  },
+  {
+    "text": "Nota dinas perihal katalog tower pada bidang katalog",
+    "label": "STO.01.03|Katalog Tower"
+  },
+  {
+    "text": "Berkas arsip katalog tower memuat surat, lampiran, dan data pendukung",
+    "label": "STO.01.03|Katalog Tower"
+  },
+  {
+    "text": "Laporan kegiatan terkait katalog tower pada bidang katalog",
+    "label": "STO.01.03|Katalog Tower"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.01.03 tentang katalog tower",
+    "label": "STO.01.03|Katalog Tower"
+  },
+  {
+    "text": "Dokumen spesifikasi genset pada bidang spesifikasi peralatan di lingkungan LPP RRI",
+    "label": "STO.02.02|Spesifikasi Genset"
+  },
+  {
+    "text": "Nota dinas perihal spesifikasi genset pada bidang spesifikasi peralatan",
+    "label": "STO.02.02|Spesifikasi Genset"
+  },
+  {
+    "text": "Berkas arsip spesifikasi genset memuat surat, lampiran, dan data pendukung",
+    "label": "STO.02.02|Spesifikasi Genset"
+  },
+  {
+    "text": "Laporan kegiatan terkait spesifikasi genset pada bidang spesifikasi peralatan",
+    "label": "STO.02.02|Spesifikasi Genset"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.02.02 tentang spesifikasi genset",
+    "label": "STO.02.02|Spesifikasi Genset"
+  },
+  {
+    "text": "Dokumen spesifikasi tower pada bidang spesifikasi peralatan di lingkungan LPP RRI",
+    "label": "STO.02.03|Spesifikasi Tower"
+  },
+  {
+    "text": "Nota dinas perihal spesifikasi tower pada bidang spesifikasi peralatan",
+    "label": "STO.02.03|Spesifikasi Tower"
+  },
+  {
+    "text": "Berkas arsip spesifikasi tower memuat surat, lampiran, dan data pendukung",
+    "label": "STO.02.03|Spesifikasi Tower"
+  },
+  {
+    "text": "Laporan kegiatan terkait spesifikasi tower pada bidang spesifikasi peralatan",
+    "label": "STO.02.03|Spesifikasi Tower"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.02.03 tentang spesifikasi tower",
+    "label": "STO.02.03|Spesifikasi Tower"
+  },
+  {
+    "text": "Dokumen spesifikasi grounding pada bidang spesifikasi peralatan di lingkungan LPP RRI",
+    "label": "STO.02.04|Spesifikasi Grounding"
+  },
+  {
+    "text": "Nota dinas perihal spesifikasi grounding pada bidang spesifikasi peralatan",
+    "label": "STO.02.04|Spesifikasi Grounding"
+  },
+  {
+    "text": "Berkas arsip spesifikasi grounding memuat surat, lampiran, dan data pendukung",
+    "label": "STO.02.04|Spesifikasi Grounding"
+  },
+  {
+    "text": "Laporan kegiatan terkait spesifikasi grounding pada bidang spesifikasi peralatan",
+    "label": "STO.02.04|Spesifikasi Grounding"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.02.04 tentang spesifikasi grounding",
+    "label": "STO.02.04|Spesifikasi Grounding"
+  },
+  {
+    "text": "Dokumen sertifikat peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.03|SERTIFIKAT PERALATAN TEKNIK"
+  },
+  {
+    "text": "Nota dinas perihal sertifikat peralatan teknik",
+    "label": "STO.03|SERTIFIKAT PERALATAN TEKNIK"
+  },
+  {
+    "text": "Berkas arsip sertifikat peralatan teknik memuat surat, lampiran, dan data pendukung",
+    "label": "STO.03|SERTIFIKAT PERALATAN TEKNIK"
+  },
+  {
+    "text": "Laporan kegiatan terkait sertifikat peralatan teknik",
+    "label": "STO.03|SERTIFIKAT PERALATAN TEKNIK"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.03 tentang sertifikat peralatan teknik",
+    "label": "STO.03|SERTIFIKAT PERALATAN TEKNIK"
+  },
+  {
+    "text": "Dokumen standar peralatan teknik multimedia pada bidang standar peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.04.01|Standar Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Nota dinas perihal standar peralatan teknik multimedia pada bidang standar peralatan teknik",
+    "label": "STO.04.01|Standar Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Berkas arsip standar peralatan teknik multimedia memuat surat, lampiran, dan data pendukung",
+    "label": "STO.04.01|Standar Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Laporan kegiatan terkait standar peralatan teknik multimedia pada bidang standar peralatan teknik",
+    "label": "STO.04.01|Standar Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.04.01 tentang standar peralatan teknik multimedia",
+    "label": "STO.04.01|Standar Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Dokumen standar peralatan teknik studio pada bidang standar peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.04.02|Standar Peralatan Teknik Studio"
+  },
+  {
+    "text": "Nota dinas perihal standar peralatan teknik studio pada bidang standar peralatan teknik",
+    "label": "STO.04.02|Standar Peralatan Teknik Studio"
+  },
+  {
+    "text": "Berkas arsip standar peralatan teknik studio memuat surat, lampiran, dan data pendukung",
+    "label": "STO.04.02|Standar Peralatan Teknik Studio"
+  },
+  {
+    "text": "Laporan kegiatan terkait standar peralatan teknik studio pada bidang standar peralatan teknik",
+    "label": "STO.04.02|Standar Peralatan Teknik Studio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.04.02 tentang standar peralatan teknik studio",
+    "label": "STO.04.02|Standar Peralatan Teknik Studio"
+  },
+  {
+    "text": "Dokumen standar peralatan teknik siaran luar pada bidang standar peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.04.03|Standar Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Nota dinas perihal standar peralatan teknik siaran luar pada bidang standar peralatan teknik",
+    "label": "STO.04.03|Standar Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Berkas arsip standar peralatan teknik siaran luar memuat surat, lampiran, dan data pendukung",
+    "label": "STO.04.03|Standar Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Laporan kegiatan terkait standar peralatan teknik siaran luar pada bidang standar peralatan teknik",
+    "label": "STO.04.03|Standar Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.04.03 tentang standar peralatan teknik siaran luar",
+    "label": "STO.04.03|Standar Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Dokumen SOP peralatan teknik studio pada bidang SOP peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.05.01|SOP Peralatan Teknik Studio"
+  },
+  {
+    "text": "Nota dinas perihal SOP peralatan teknik studio pada bidang SOP peralatan teknik",
+    "label": "STO.05.01|SOP Peralatan Teknik Studio"
+  },
+  {
+    "text": "Berkas arsip SOP peralatan teknik studio memuat surat, lampiran, dan data pendukung",
+    "label": "STO.05.01|SOP Peralatan Teknik Studio"
+  },
+  {
+    "text": "Laporan kegiatan terkait SOP peralatan teknik studio pada bidang SOP peralatan teknik",
+    "label": "STO.05.01|SOP Peralatan Teknik Studio"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.05.01 tentang SOP peralatan teknik studio",
+    "label": "STO.05.01|SOP Peralatan Teknik Studio"
+  },
+  {
+    "text": "Dokumen SOP peralatan teknik siaran luar pada bidang SOP peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.05.02|SOP Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Nota dinas perihal SOP peralatan teknik siaran luar pada bidang SOP peralatan teknik",
+    "label": "STO.05.02|SOP Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Berkas arsip SOP peralatan teknik siaran luar memuat surat, lampiran, dan data pendukung",
+    "label": "STO.05.02|SOP Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Laporan kegiatan terkait SOP peralatan teknik siaran luar pada bidang SOP peralatan teknik",
+    "label": "STO.05.02|SOP Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.05.02 tentang SOP peralatan teknik siaran luar",
+    "label": "STO.05.02|SOP Peralatan Teknik Siaran Luar"
+  },
+  {
+    "text": "Dokumen SOP peralatan teknik multimedia pada bidang SOP peralatan teknik di lingkungan LPP RRI",
+    "label": "STO.05.03|SOP Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Nota dinas perihal SOP peralatan teknik multimedia pada bidang SOP peralatan teknik",
+    "label": "STO.05.03|SOP Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Berkas arsip SOP peralatan teknik multimedia memuat surat, lampiran, dan data pendukung",
+    "label": "STO.05.03|SOP Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Laporan kegiatan terkait SOP peralatan teknik multimedia pada bidang SOP peralatan teknik",
+    "label": "STO.05.03|SOP Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.05.03 tentang SOP peralatan teknik multimedia",
+    "label": "STO.05.03|SOP Peralatan Teknik Multimedia"
+  },
+  {
+    "text": "Dokumen tanda terima barang di lingkungan LPP RRI",
+    "label": "STO.06|TANDA TERIMA BARANG"
+  },
+  {
+    "text": "Nota dinas perihal tanda terima barang",
+    "label": "STO.06|TANDA TERIMA BARANG"
+  },
+  {
+    "text": "Berkas arsip tanda terima barang memuat surat, lampiran, dan data pendukung",
+    "label": "STO.06|TANDA TERIMA BARANG"
+  },
+  {
+    "text": "Laporan kegiatan terkait tanda terima barang",
+    "label": "STO.06|TANDA TERIMA BARANG"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi STO.06 tentang tanda terima barang",
+    "label": "STO.06|TANDA TERIMA BARANG"
+  },
+  {
+    "text": "Dokumen katalog antena pada bidang katalog di lingkungan LPP RRI",
+    "label": "TX.01.02|Katalog Antena"
+  },
+  {
+    "text": "Nota dinas perihal katalog antena pada bidang katalog",
+    "label": "TX.01.02|Katalog Antena"
+  },
+  {
+    "text": "Berkas arsip katalog antena memuat surat, lampiran, dan data pendukung",
+    "label": "TX.01.02|Katalog Antena"
+  },
+  {
+    "text": "Laporan kegiatan terkait katalog antena pada bidang katalog",
+    "label": "TX.01.02|Katalog Antena"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.01.02 tentang katalog antena",
+    "label": "TX.01.02|Katalog Antena"
+  },
+  {
+    "text": "Dokumen katalog stl pada bidang katalog di lingkungan LPP RRI",
+    "label": "TX.01.03|Katalog STL"
+  },
+  {
+    "text": "Nota dinas perihal katalog stl pada bidang katalog",
+    "label": "TX.01.03|Katalog STL"
+  },
+  {
+    "text": "Berkas arsip katalog stl memuat surat, lampiran, dan data pendukung",
+    "label": "TX.01.03|Katalog STL"
+  },
+  {
+    "text": "Laporan kegiatan terkait katalog stl pada bidang katalog",
+    "label": "TX.01.03|Katalog STL"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.01.03 tentang katalog stl",
+    "label": "TX.01.03|Katalog STL"
+  },
+  {
+    "text": "Dokumen spesifikasi antena pada bidang spesifikasi pemancar di lingkungan LPP RRI",
+    "label": "TX.02.02|Spesifikasi Antena"
+  },
+  {
+    "text": "Nota dinas perihal spesifikasi antena pada bidang spesifikasi pemancar",
+    "label": "TX.02.02|Spesifikasi Antena"
+  },
+  {
+    "text": "Berkas arsip spesifikasi antena memuat surat, lampiran, dan data pendukung",
+    "label": "TX.02.02|Spesifikasi Antena"
+  },
+  {
+    "text": "Laporan kegiatan terkait spesifikasi antena pada bidang spesifikasi pemancar",
+    "label": "TX.02.02|Spesifikasi Antena"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.02.02 tentang spesifikasi antena",
+    "label": "TX.02.02|Spesifikasi Antena"
+  },
+  {
+    "text": "Dokumen spesifikasi stl pada bidang spesifikasi pemancar di lingkungan LPP RRI",
+    "label": "TX.02.03|Spesifikasi STL"
+  },
+  {
+    "text": "Nota dinas perihal spesifikasi stl pada bidang spesifikasi pemancar",
+    "label": "TX.02.03|Spesifikasi STL"
+  },
+  {
+    "text": "Berkas arsip spesifikasi stl memuat surat, lampiran, dan data pendukung",
+    "label": "TX.02.03|Spesifikasi STL"
+  },
+  {
+    "text": "Laporan kegiatan terkait spesifikasi stl pada bidang spesifikasi pemancar",
+    "label": "TX.02.03|Spesifikasi STL"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.02.03 tentang spesifikasi stl",
+    "label": "TX.02.03|Spesifikasi STL"
+  },
+  {
+    "text": "Dokumen spesifikasi up-link dan down-link pada bidang spesifikasi pemancar di lingkungan LPP RRI",
+    "label": "TX.02.04|Spesifikasi Up-Link dan Down-Link"
+  },
+  {
+    "text": "Nota dinas perihal spesifikasi up-link dan down-link pada bidang spesifikasi pemancar",
+    "label": "TX.02.04|Spesifikasi Up-Link dan Down-Link"
+  },
+  {
+    "text": "Berkas arsip spesifikasi up-link dan down-link memuat surat, lampiran, dan data pendukung",
+    "label": "TX.02.04|Spesifikasi Up-Link dan Down-Link"
+  },
+  {
+    "text": "Laporan kegiatan terkait spesifikasi up-link dan down-link pada bidang spesifikasi pemancar",
+    "label": "TX.02.04|Spesifikasi Up-Link dan Down-Link"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.02.04 tentang spesifikasi up-link dan down-link",
+    "label": "TX.02.04|Spesifikasi Up-Link dan Down-Link"
+  },
+  {
+    "text": "Dokumen sertifikat peralatan pemancar di lingkungan LPP RRI",
+    "label": "TX.03|SERTIFIKAT PERALATAN PEMANCAR"
+  },
+  {
+    "text": "Nota dinas perihal sertifikat peralatan pemancar",
+    "label": "TX.03|SERTIFIKAT PERALATAN PEMANCAR"
+  },
+  {
+    "text": "Berkas arsip sertifikat peralatan pemancar memuat surat, lampiran, dan data pendukung",
+    "label": "TX.03|SERTIFIKAT PERALATAN PEMANCAR"
+  },
+  {
+    "text": "Laporan kegiatan terkait sertifikat peralatan pemancar",
+    "label": "TX.03|SERTIFIKAT PERALATAN PEMANCAR"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.03 tentang sertifikat peralatan pemancar",
+    "label": "TX.03|SERTIFIKAT PERALATAN PEMANCAR"
+  },
+  {
+    "text": "Dokumen izin stasiun (isr) di lingkungan LPP RRI",
+    "label": "TX.04|IZIN STASIUN (ISR)"
+  },
+  {
+    "text": "Nota dinas perihal izin stasiun (isr)",
+    "label": "TX.04|IZIN STASIUN (ISR)"
+  },
+  {
+    "text": "Berkas arsip izin stasiun (isr) memuat surat, lampiran, dan data pendukung",
+    "label": "TX.04|IZIN STASIUN (ISR)"
+  },
+  {
+    "text": "Laporan kegiatan terkait izin stasiun (isr)",
+    "label": "TX.04|IZIN STASIUN (ISR)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.04 tentang izin stasiun (isr)",
+    "label": "TX.04|IZIN STASIUN (ISR)"
+  },
+  {
+    "text": "Dokumen pembayaran bhp di lingkungan LPP RRI",
+    "label": "TX.05|PEMBAYARAN BHP"
+  },
+  {
+    "text": "Nota dinas perihal pembayaran bhp",
+    "label": "TX.05|PEMBAYARAN BHP"
+  },
+  {
+    "text": "Berkas arsip pembayaran bhp memuat surat, lampiran, dan data pendukung",
+    "label": "TX.05|PEMBAYARAN BHP"
+  },
+  {
+    "text": "Laporan kegiatan terkait pembayaran bhp",
+    "label": "TX.05|PEMBAYARAN BHP"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.05 tentang pembayaran bhp",
+    "label": "TX.05|PEMBAYARAN BHP"
+  },
+  {
+    "text": "Dokumen AM analog-digital pada bidang masterplan pemancar di lingkungan LPP RRI",
+    "label": "TX.06.01|AM Analog-Digital"
+  },
+  {
+    "text": "Nota dinas perihal AM analog-digital pada bidang masterplan pemancar",
+    "label": "TX.06.01|AM Analog-Digital"
+  },
+  {
+    "text": "Berkas arsip AM analog-digital memuat surat, lampiran, dan data pendukung",
+    "label": "TX.06.01|AM Analog-Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait AM analog-digital pada bidang masterplan pemancar",
+    "label": "TX.06.01|AM Analog-Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.06.01 tentang AM analog-digital",
+    "label": "TX.06.01|AM Analog-Digital"
+  },
+  {
+    "text": "Dokumen FM analog-digital pada bidang masterplan pemancar di lingkungan LPP RRI",
+    "label": "TX.06.02|FM Analog-Digital"
+  },
+  {
+    "text": "Nota dinas perihal FM analog-digital pada bidang masterplan pemancar",
+    "label": "TX.06.02|FM Analog-Digital"
+  },
+  {
+    "text": "Berkas arsip FM analog-digital memuat surat, lampiran, dan data pendukung",
+    "label": "TX.06.02|FM Analog-Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait FM analog-digital pada bidang masterplan pemancar",
+    "label": "TX.06.02|FM Analog-Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.06.02 tentang FM analog-digital",
+    "label": "TX.06.02|FM Analog-Digital"
+  },
+  {
+    "text": "Dokumen sw analog-digital pada bidang masterplan pemancar di lingkungan LPP RRI",
+    "label": "TX.06.03|SW Analog-Digital"
+  },
+  {
+    "text": "Nota dinas perihal sw analog-digital pada bidang masterplan pemancar",
+    "label": "TX.06.03|SW Analog-Digital"
+  },
+  {
+    "text": "Berkas arsip sw analog-digital memuat surat, lampiran, dan data pendukung",
+    "label": "TX.06.03|SW Analog-Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait sw analog-digital pada bidang masterplan pemancar",
+    "label": "TX.06.03|SW Analog-Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.06.03 tentang sw analog-digital",
+    "label": "TX.06.03|SW Analog-Digital"
+  },
+  {
+    "text": "Dokumen DAB+ pada bidang masterplan pemancar di lingkungan LPP RRI",
+    "label": "TX.06.04|DAB+"
+  },
+  {
+    "text": "Nota dinas perihal DAB+ pada bidang masterplan pemancar",
+    "label": "TX.06.04|DAB+"
+  },
+  {
+    "text": "Berkas arsip DAB+ memuat surat, lampiran, dan data pendukung",
+    "label": "TX.06.04|DAB+"
+  },
+  {
+    "text": "Laporan kegiatan terkait DAB+ pada bidang masterplan pemancar",
+    "label": "TX.06.04|DAB+"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.06.04 tentang DAB+",
+    "label": "TX.06.04|DAB+"
+  },
+  {
+    "text": "Dokumen DRM pada bidang masterplan pemancar di lingkungan LPP RRI",
+    "label": "TX.06.05|DRM"
+  },
+  {
+    "text": "Nota dinas perihal DRM pada bidang masterplan pemancar",
+    "label": "TX.06.05|DRM"
+  },
+  {
+    "text": "Berkas arsip DRM memuat surat, lampiran, dan data pendukung",
+    "label": "TX.06.05|DRM"
+  },
+  {
+    "text": "Laporan kegiatan terkait DRM pada bidang masterplan pemancar",
+    "label": "TX.06.05|DRM"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.06.05 tentang DRM",
+    "label": "TX.06.05|DRM"
+  },
+  {
+    "text": "Dokumen data pengukur coverage pada bidang data coverange area di lingkungan LPP RRI",
+    "label": "TX.07.01|Data Pengukur Coverage"
+  },
+  {
+    "text": "Nota dinas perihal data pengukur coverage pada bidang data coverange area",
+    "label": "TX.07.01|Data Pengukur Coverage"
+  },
+  {
+    "text": "Berkas arsip data pengukur coverage memuat surat, lampiran, dan data pendukung",
+    "label": "TX.07.01|Data Pengukur Coverage"
+  },
+  {
+    "text": "Laporan kegiatan terkait data pengukur coverage pada bidang data coverange area",
+    "label": "TX.07.01|Data Pengukur Coverage"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.07.01 tentang data pengukur coverage",
+    "label": "TX.07.01|Data Pengukur Coverage"
+  },
+  {
+    "text": "Dokumen data survey lokasi pada bidang data coverange area di lingkungan LPP RRI",
+    "label": "TX.07.02|Data Survey Lokasi"
+  },
+  {
+    "text": "Nota dinas perihal data survey lokasi pada bidang data coverange area",
+    "label": "TX.07.02|Data Survey Lokasi"
+  },
+  {
+    "text": "Berkas arsip data survey lokasi memuat surat, lampiran, dan data pendukung",
+    "label": "TX.07.02|Data Survey Lokasi"
+  },
+  {
+    "text": "Laporan kegiatan terkait data survey lokasi pada bidang data coverange area",
+    "label": "TX.07.02|Data Survey Lokasi"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.07.02 tentang data survey lokasi",
+    "label": "TX.07.02|Data Survey Lokasi"
+  },
+  {
+    "text": "Dokumen SOP pemancar analog pada bidang SOP pemancar di lingkungan LPP RRI",
+    "label": "TX.08.01|SOP Pemancar Analog"
+  },
+  {
+    "text": "Nota dinas perihal SOP pemancar analog pada bidang SOP pemancar",
+    "label": "TX.08.01|SOP Pemancar Analog"
+  },
+  {
+    "text": "Berkas arsip SOP pemancar analog memuat surat, lampiran, dan data pendukung",
+    "label": "TX.08.01|SOP Pemancar Analog"
+  },
+  {
+    "text": "Laporan kegiatan terkait SOP pemancar analog pada bidang SOP pemancar",
+    "label": "TX.08.01|SOP Pemancar Analog"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.08.01 tentang SOP pemancar analog",
+    "label": "TX.08.01|SOP Pemancar Analog"
+  },
+  {
+    "text": "Dokumen SOP pemancar digital pada bidang SOP pemancar di lingkungan LPP RRI",
+    "label": "TX.08.02|SOP Pemancar Digital"
+  },
+  {
+    "text": "Nota dinas perihal SOP pemancar digital pada bidang SOP pemancar",
+    "label": "TX.08.02|SOP Pemancar Digital"
+  },
+  {
+    "text": "Berkas arsip SOP pemancar digital memuat surat, lampiran, dan data pendukung",
+    "label": "TX.08.02|SOP Pemancar Digital"
+  },
+  {
+    "text": "Laporan kegiatan terkait SOP pemancar digital pada bidang SOP pemancar",
+    "label": "TX.08.02|SOP Pemancar Digital"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.08.02 tentang SOP pemancar digital",
+    "label": "TX.08.02|SOP Pemancar Digital"
+  },
+  {
+    "text": "Dokumen memorandum of understanding (MOU) di lingkungan LPP RRI",
+    "label": "TX.09|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Nota dinas perihal memorandum of understanding (MOU)",
+    "label": "TX.09|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Berkas arsip memorandum of understanding (MOU) memuat surat, lampiran, dan data pendukung",
+    "label": "TX.09|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Laporan kegiatan terkait memorandum of understanding (MOU)",
+    "label": "TX.09|MEMORANDUM OF UNDERSTANDING (MOU)"
+  },
+  {
+    "text": "Nomor surat menggunakan kode klasifikasi TX.09 tentang memorandum of understanding (MOU)",
+    "label": "TX.09|MEMORANDUM OF UNDERSTANDING (MOU)"
   }
 ]

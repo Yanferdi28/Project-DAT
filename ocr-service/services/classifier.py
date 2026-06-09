@@ -1,5 +1,5 @@
 """
-Document Classifier using TF-IDF + Naive Bayes / SVM
+Document Classifier using word and character TF-IDF + Logistic Regression
 Classifies extracted text into document categories.
 """
 
@@ -10,14 +10,45 @@ import joblib
 import numpy as np
 from typing import Optional
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import FeatureUnion, Pipeline
 
 logger = logging.getLogger(__name__)
 
 
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models")
+
+
+def build_classifier_pipeline() -> Pipeline:
+    """Build a text classifier that is more robust to OCR noise."""
+    return Pipeline([
+        ("features", FeatureUnion([
+            ("word", TfidfVectorizer(
+                analyzer="word",
+                max_features=12000,
+                ngram_range=(1, 3),
+                min_df=1,
+                max_df=0.98,
+                sublinear_tf=True,
+                strip_accents="unicode",
+            )),
+            ("char", TfidfVectorizer(
+                analyzer="char_wb",
+                max_features=18000,
+                ngram_range=(3, 5),
+                min_df=1,
+                sublinear_tf=True,
+                strip_accents="unicode",
+            )),
+        ])),
+        ("classifier", LogisticRegression(
+            max_iter=2000,
+            C=8.0,
+            class_weight="balanced",
+            solver="lbfgs",
+        )),
+    ])
 
 
 class DocumentClassifier:
@@ -73,11 +104,13 @@ class DocumentClassifier:
 
             # Get top 3 predictions
             top_indices = np.argsort(probabilities)[::-1][:3]
+            confidence_scores = self._decision_confidences(probabilities, top_indices)
 
             predictions = []
-            for idx in top_indices:
+            for position, idx in enumerate(top_indices):
                 label = self.label_encoder.inverse_transform([idx])[0]
-                confidence = round(max(0.0, min(100.0, float(probabilities[idx]) * 100)), 2)
+                raw_probability = round(max(0.0, min(100.0, float(probabilities[idx]) * 100)), 2)
+                confidence = confidence_scores[position]
 
                 # Parse label: format is "kode_klasifikasi|uraian"
                 parts = label.split("|", 1)
@@ -85,6 +118,7 @@ class DocumentClassifier:
                     "kode_klasifikasi": parts[0] if len(parts) > 0 else None,
                     "uraian": parts[1] if len(parts) > 1 else label,
                     "confidence": confidence,
+                    "raw_probability": raw_probability,
                 }
                 predictions.append(prediction)
 
@@ -100,6 +134,35 @@ class DocumentClassifier:
                 "error": str(e),
                 "predictions": [],
             }
+
+    @staticmethod
+    def _decision_confidences(probabilities, top_indices) -> list[float]:
+        """
+        Convert multiclass probabilities into user-facing decision confidence.
+
+        With hundreds of labels, absolute probabilities can look tiny even when
+        the top class is clearly separated. This score combines absolute model
+        probability, top-k share, and the gap to the next candidate.
+        """
+        if len(top_indices) == 0:
+            return []
+
+        top_values = [max(0.0, float(probabilities[idx])) for idx in top_indices]
+        top_mass = sum(top_values) or 1.0
+        scores = []
+
+        for position, value in enumerate(top_values):
+            if position > 0:
+                scores.append(round(max(0.0, min(100.0, value * 100)), 2))
+                continue
+
+            next_value = top_values[position + 1] if position + 1 < len(top_values) else 0.0
+            share = value / top_mass
+            margin = (value - next_value) / value if value > 0 else 0.0
+            decision = (0.35 * value) + (0.45 * share) + (0.20 * max(0.0, margin))
+            scores.append(round(max(0.0, min(100.0, decision * 100)), 2))
+
+        return scores
 
     @staticmethod
     def train(training_data_path: Optional[str] = None) -> dict:
@@ -136,17 +199,7 @@ class DocumentClassifier:
         label_encoder = LabelEncoder()
         y = label_encoder.fit_transform(labels)
 
-        # Create pipeline: TF-IDF + Naive Bayes
-        pipeline = Pipeline([
-            ("tfidf", TfidfVectorizer(
-                max_features=5000,
-                ngram_range=(1, 2),
-                min_df=1,
-                max_df=0.95,
-                sublinear_tf=True,
-            )),
-            ("classifier", MultinomialNB(alpha=0.1)),
-        ])
+        pipeline = build_classifier_pipeline()
 
         # Train
         pipeline.fit(texts, y)
