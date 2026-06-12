@@ -154,6 +154,7 @@ export default function Create() {
                                         options={kodeKlasifikasis.map((kode) => ({
                                             value: kode.id.toString(),
                                             label: `${kode.kode_klasifikasi} - ${kode.uraian}`,
+                                            searchValue: `${kode.kode_klasifikasi} ${kode.uraian}`,
                                         }))}
                                         value={data.klasifikasi_id}
                                         onValueChange={handleKlasifikasiChange}

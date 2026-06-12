@@ -33,6 +33,14 @@ test('operator can view berkas arsip index', function () {
 test('berkas arsip index supports search', function () {
     $admin = createAdmin();
     $master = $this->masterData;
+    $kodeSdm = \App\Models\KodeKlasifikasi::create([
+        'kode_klasifikasi' => 'KP.04.04',
+        'uraian' => 'Kenaikan Pangkat Struktural dan Fungsional',
+        'retensi_aktif' => 2,
+        'retensi_inaktif' => 3,
+        'status_akhir' => 'Musnah',
+        'klasifikasi_keamanan' => 'Biasa',
+    ]);
 
     BerkasArsip::create([
         'nama_berkas' => 'Berkas Keuangan 2025',
@@ -42,7 +50,7 @@ test('berkas arsip index supports search', function () {
 
     BerkasArsip::create([
         'nama_berkas' => 'Berkas SDM',
-        'klasifikasi_id' => $master['kodeKlasifikasi']->id,
+        'klasifikasi_id' => $kodeSdm->id,
         'unit_pengolah_id' => $master['unitPengolah']->id,
     ]);
 
@@ -50,6 +58,20 @@ test('berkas arsip index supports search', function () {
         ->get('/berkas-arsip?search=Keuangan')
         ->assertOk()
         ->assertInertia(fn ($page) => $page->has('berkasArsips.data', 1));
+
+    $this->actingAs($admin)
+        ->get('/berkas-arsip?search=KP.04.04')
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->has('berkasArsips.data', 1)
+            ->where('berkasArsips.data.0.nama_berkas', 'Berkas SDM'));
+
+    $this->actingAs($admin)
+        ->get('/berkas-arsip?search=Pangkat Struktural')
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->has('berkasArsips.data', 1)
+            ->where('berkasArsips.data.0.nama_berkas', 'Berkas SDM'));
 });
 
 // ─── CREATE ───────────────────────────────────────────────

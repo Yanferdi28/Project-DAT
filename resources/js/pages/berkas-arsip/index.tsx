@@ -4,6 +4,7 @@ import { FileText, Plus, Search, Edit, Trash2, Printer, QrCode } from 'lucide-re
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Combobox } from '@/components/ui/combobox';
 import {
     Dialog,
     DialogContent,
@@ -143,6 +144,15 @@ export default function BerkasArsipIndex() {
     const selectedBerkasForQr = berkasArsips.data.filter((item) => selectedIds.has(item.nomor_berkas));
 
     const canCreateEdit = auth.user?.role !== 'operator';
+    const klasifikasiOptions = kodeKlasifikasis.map((kode) => ({
+        value: kode.id.toString(),
+        label: `${kode.kode_klasifikasi} - ${kode.uraian}`,
+        searchValue: `${kode.kode_klasifikasi} ${kode.uraian}`,
+    }));
+    const klasifikasiFilterOptions = [
+        { value: '', label: 'Semua Klasifikasi', searchValue: 'semua klasifikasi' },
+        ...klasifikasiOptions,
+    ];
     
     // Check if user can edit/delete a specific berkas arsip
     // Admin can edit/delete all, regular users can only edit/delete their own unit's berkas
@@ -287,7 +297,7 @@ export default function BerkasArsipIndex() {
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                                 <Input
                                     type="text"
-                                    placeholder={'Cari nomor berkas atau keterangan...'}
+                                    placeholder={'Cari nama berkas, uraian, lokasi, atau kode klasifikasi...'}
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     className="pl-10"
@@ -295,18 +305,15 @@ export default function BerkasArsipIndex() {
                             </div>
 
                             <div>
-                                <select
+                                <Combobox
+                                    options={klasifikasiFilterOptions}
                                     value={filterKlasifikasi}
-                                    onChange={(e) => setFilterKlasifikasi(e.target.value)}
-                                    className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
-                                >
-                                    <option value="">{'Semua Klasifikasi'}</option>
-                                    {kodeKlasifikasis.map((kode) => (
-                                        <option key={kode.id} value={kode.id}>
-                                            {kode.kode_klasifikasi} - {kode.uraian}
-                                        </option>
-                                    ))}
-                                </select>
+                                    onValueChange={setFilterKlasifikasi}
+                                    placeholder="Semua Klasifikasi"
+                                    searchPlaceholder="Cari kode atau uraian klasifikasi..."
+                                    emptyMessage="Klasifikasi tidak ditemukan."
+                                    className="w-full"
+                                />
                             </div>
 
                             <div>
@@ -621,18 +628,15 @@ export default function BerkasArsipIndex() {
                             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Filter Kode Klasifikasi
                             </label>
-                            <select
+                            <Combobox
+                                options={klasifikasiFilterOptions}
                                 value={exportKlasifikasi}
-                                onChange={(e) => setExportKlasifikasi(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
-                            >
-                                <option value="">Semua Klasifikasi</option>
-                                {kodeKlasifikasis.map((kode) => (
-                                    <option key={kode.id} value={kode.id}>
-                                        {kode.kode_klasifikasi} - {kode.uraian}
-                                    </option>
-                                ))}
-                            </select>
+                                onValueChange={setExportKlasifikasi}
+                                placeholder="Semua Klasifikasi"
+                                searchPlaceholder="Cari kode atau uraian klasifikasi..."
+                                emptyMessage="Klasifikasi tidak ditemukan."
+                                className="w-full"
+                            />
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4">

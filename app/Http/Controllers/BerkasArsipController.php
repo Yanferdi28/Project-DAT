@@ -37,6 +37,19 @@ class BerkasArsipController extends Controller
         return $user->unit_pengolah_id;
     }
 
+    private function applySearchFilter($query, string $search): void
+    {
+        $query->where(function ($q) use ($search) {
+            $q->where('nama_berkas', 'like', "%{$search}%")
+                ->orWhere('uraian', 'like', "%{$search}%")
+                ->orWhere('lokasi_fisik', 'like', "%{$search}%")
+                ->orWhereHas('kodeKlasifikasi', function ($kodeQuery) use ($search) {
+                    $kodeQuery->where('kode_klasifikasi', 'like', "%{$search}%")
+                        ->orWhere('uraian', 'like', "%{$search}%");
+                });
+        });
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -54,11 +67,7 @@ class BerkasArsipController extends Controller
             // Users can now see all berkas arsip (no filter by unit_pengolah)
             // Edit/delete is restricted in their respective methods
             ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('nama_berkas', 'like', "%{$search}%")
-                        ->orWhere('uraian', 'like', "%{$search}%")
-                        ->orWhere('lokasi_fisik', 'like', "%{$search}%");
-                });
+                $this->applySearchFilter($query, $search);
             })
             ->when($filterKlasifikasi, function ($query, $filterKlasifikasi) {
                 $query->where('klasifikasi_id', $filterKlasifikasi);
@@ -296,12 +305,7 @@ class BerkasArsipController extends Controller
 
         // Apply filters
         if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_berkas', 'like', "%{$search}%")
-                    ->orWhere('uraian', 'like', "%{$search}%")
-                    ->orWhere('lokasi_fisik', 'like', "%{$search}%");
-            });
+            $this->applySearchFilter($query, $request->search);
         }
 
         if ($request->has('klasifikasi_id') && $request->klasifikasi_id != '') {
@@ -379,12 +383,7 @@ class BerkasArsipController extends Controller
 
         // Apply filters
         if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_berkas', 'like', "%{$search}%")
-                    ->orWhere('uraian', 'like', "%{$search}%")
-                    ->orWhere('lokasi_fisik', 'like', "%{$search}%");
-            });
+            $this->applySearchFilter($query, $request->search);
         }
 
         if ($request->has('klasifikasi_id') && $request->klasifikasi_id != '') {
