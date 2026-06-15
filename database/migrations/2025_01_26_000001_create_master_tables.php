@@ -96,7 +96,7 @@ return new class extends Migration
             $table->integer('jumlah_nilai');
             $table->string('jumlah_satuan');
             $table->string('tingkat_perkembangan')->nullable();
-            $table->string('skkaad')->nullable();
+            $table->string('klasifikasi_keamanan')->nullable();
             $table->string('ruangan')->nullable();
             $table->string('no_filling')->nullable();
             $table->string('no_laci')->nullable();

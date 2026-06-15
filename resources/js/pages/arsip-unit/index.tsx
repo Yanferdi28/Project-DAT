@@ -52,7 +52,7 @@ interface ArsipUnit {
     tingkat_perkembangan: string;
     retensi_aktif: number | null;
     retensi_inaktif: number | null;
-    skkaad: string | null;
+    klasifikasi_keamanan: string | null;
     ruangan: string | null;
     no_filling: string | null;
     no_laci: string | null;

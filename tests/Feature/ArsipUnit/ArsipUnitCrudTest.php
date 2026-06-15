@@ -175,6 +175,7 @@ test('admin can create arsip unit', function () {
         'jumlah_satuan' => 'lembar',
         'tingkat_perkembangan' => 'asli',
         'indeks' => 'IDX-001',
+        'klasifikasi_keamanan' => 'Musnah',
     ];
 
     $this->actingAs($admin)
@@ -185,6 +186,7 @@ test('admin can create arsip unit', function () {
         'uraian_informasi' => 'Uraian test arsip unit',
         'status' => 'pending',
         'publish_status' => 'draft',
+        'klasifikasi_keamanan' => $master['kodeKlasifikasi']->klasifikasi_keamanan,
     ]);
 });
 
@@ -304,12 +306,14 @@ test('admin can update arsip unit', function () {
             'jumlah_nilai' => 2,
             'jumlah_satuan' => 'jilid',
             'tingkat_perkembangan' => 'salinan',
+            'klasifikasi_keamanan' => 'Permanen',
         ])
         ->assertRedirect();
 
     $arsip->refresh();
     expect($arsip->uraian_informasi)->toBe('Updated');
     expect($arsip->jumlah_satuan)->toBe('jilid');
+    expect($arsip->klasifikasi_keamanan)->toBe($master['kodeKlasifikasi']->klasifikasi_keamanan);
 });
 
 test('manual kode correction marks ai suggestion as corrected', function () {
@@ -355,6 +359,42 @@ test('manual kode correction marks ai suggestion as corrected', function () {
     $arsip->refresh();
     expect($arsip->kode_klasifikasi_id)->toBe($correctKode->id);
     expect($arsip->ai_suggestion_status)->toBe('corrected');
+});
+
+test('accepting ai kode suggestion updates klasifikasi keamanan', function () {
+    $admin = createAdmin();
+    $master = $this->masterData;
+    $suggestedKode = KodeKlasifikasi::create([
+        'kode_klasifikasi' => 'TS.03',
+        'uraian' => 'Rahasia Klasifikasi',
+        'retensi_aktif' => 2,
+        'retensi_inaktif' => 3,
+        'status_akhir' => 'Permanen',
+        'klasifikasi_keamanan' => 'Rahasia',
+    ]);
+
+    $arsip = ArsipUnit::create([
+        'kode_klasifikasi_id' => $master['kodeKlasifikasi']->id,
+        'suggested_kode_klasifikasi_id' => $suggestedKode->id,
+        'unit_pengolah_arsip_id' => $master['unitPengolah']->id,
+        'kategori_id' => $master['kategori']->id,
+        'sub_kategori_id' => $master['subKategori']->id,
+        'uraian_informasi' => 'Original',
+        'tanggal' => '2025-06-15',
+        'jumlah_nilai' => 1,
+        'jumlah_satuan' => 'lembar',
+        'tingkat_perkembangan' => 'asli',
+        'klasifikasi_keamanan' => 'Biasa',
+    ]);
+
+    $this->actingAs($admin)
+        ->post("/arsip-unit/{$arsip->id_berkas}/ocr-accept")
+        ->assertRedirect();
+
+    $arsip->refresh();
+    expect($arsip->kode_klasifikasi_id)->toBe($suggestedKode->id);
+    expect($arsip->klasifikasi_keamanan)->toBe('Rahasia');
+    expect($arsip->ai_suggestion_status)->toBe('accepted');
 });
 
 test('operator cannot update arsip unit', function () {

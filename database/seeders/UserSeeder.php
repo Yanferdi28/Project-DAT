@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\UnitPengolah;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -13,37 +14,32 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin User
-        User::firstOrCreate(
-            ['email' => 'admin@example.com'],
-            [
-                'name' => 'Administrator',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-                'email_verified_at' => now(),
-            ]
-        );
+        $this->seedUser('admin@example.com', 'Administrator', 'admin', 'TATA USAHA UMUM');
+        $this->seedUser('operator@example.com', 'Operator', 'operator', 'KMB');
+        $this->seedUser('user@example.com', 'Regular User', 'user', 'SIARAN');
+    }
 
-        // Operator User
-        User::firstOrCreate(
-            ['email' => 'operator@example.com'],
-            [
-                'name' => 'Operator',
-                'password' => Hash::make('password'),
-                'role' => 'operator',
-                'email_verified_at' => now(),
-            ]
-        );
+    private function seedUser(string $email, string $name, string $role, string $unitName): void
+    {
+        $user = User::firstOrNew(['email' => $email]);
 
-        // Regular User
-        User::firstOrCreate(
-            ['email' => 'user@example.com'],
-            [
-                'name' => 'Regular User',
-                'password' => Hash::make('password'),
-                'role' => 'user',
-                'email_verified_at' => now(),
-            ]
-        );
+        $user->fill([
+            'name' => $name,
+            'role' => $role,
+            'unit_pengolah_id' => $this->unitId($unitName),
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ]);
+
+        if (!$user->exists || !$user->password) {
+            $user->password = Hash::make('password');
+        }
+
+        $user->save();
+    }
+
+    private function unitId(string $unitName): ?int
+    {
+        return UnitPengolah::where('nama_unit', $unitName)->value('id')
+            ?? UnitPengolah::query()->value('id');
     }
 }

@@ -37,7 +37,7 @@ class ArsipUnitUpdateRequest extends FormRequest
             'jumlah_nilai' => 'required|integer|min:1',
             'jumlah_satuan' => 'required|in:lembar,jilid,bundle',
             'tingkat_perkembangan' => 'required|in:asli,salinan,tembusan,pertinggal',
-            'skkaad' => 'nullable|string|max:255',
+            'klasifikasi_keamanan' => 'nullable|string|max:255',
             'ruangan' => 'nullable|string|max:255',
             'no_filling' => 'nullable|string|max:255',
             'no_laci' => 'nullable|string|max:255',

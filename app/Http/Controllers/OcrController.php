@@ -76,9 +76,13 @@ class OcrController extends Controller
             return redirect()->back()->with('error', 'Tidak ada saran klasifikasi AI.');
         }
 
+        $klasifikasiKeamanan = \App\Models\KodeKlasifikasi::whereKey($arsipUnit->suggested_kode_klasifikasi_id)
+            ->value('klasifikasi_keamanan');
+
         // Apply the AI suggestion to the actual kode_klasifikasi field
         $arsipUnit->update([
             'kode_klasifikasi_id' => $arsipUnit->suggested_kode_klasifikasi_id,
+            'klasifikasi_keamanan' => $klasifikasiKeamanan,
             'ai_suggestion_status' => 'accepted',
         ]);
 

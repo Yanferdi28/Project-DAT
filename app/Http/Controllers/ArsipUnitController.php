@@ -61,6 +61,25 @@ class ArsipUnitController extends Controller
     }
 
     /**
+     * Keep klasifikasi keamanan aligned with Kode Klasifikasi.
+     */
+    private function applyKlasifikasiKeamanan(array $validated): array
+    {
+        if (empty($validated['kode_klasifikasi_id'])) {
+            return $validated;
+        }
+
+        $klasifikasiKeamanan = KodeKlasifikasi::whereKey($validated['kode_klasifikasi_id'])
+            ->value('klasifikasi_keamanan');
+
+        if ($klasifikasiKeamanan) {
+            $validated['klasifikasi_keamanan'] = $klasifikasiKeamanan;
+        }
+
+        return $validated;
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request): Response
@@ -150,7 +169,7 @@ class ArsipUnitController extends Controller
         $userUnitPengolahId = $this->getUserUnitPengolahId();
 
         return Inertia::render('arsip-unit/create', [
-            'kodeKlasifikasis' => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian', 'retensi_aktif', 'retensi_inaktif', 'status_akhir')
+            'kodeKlasifikasis' => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian', 'retensi_aktif', 'retensi_inaktif', 'status_akhir', 'klasifikasi_keamanan')
                 ->orderBy('kode_klasifikasi')
                 ->get(),
             'unitPengolahs' => UnitPengolah::all(),
@@ -176,6 +195,7 @@ class ArsipUnitController extends Controller
         }
 
         $validated = $request->validated();
+        $validated = $this->applyKlasifikasiKeamanan($validated);
 
         // Handle file upload
         if ($request->hasFile('dokumen')) {
@@ -240,7 +260,7 @@ class ArsipUnitController extends Controller
 
         return Inertia::render('arsip-unit/edit', [
             'arsipUnit' => $arsipUnit,
-            'kodeKlasifikasis' => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian', 'retensi_aktif', 'retensi_inaktif', 'status_akhir')
+            'kodeKlasifikasis' => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian', 'retensi_aktif', 'retensi_inaktif', 'status_akhir', 'klasifikasi_keamanan')
                 ->orderBy('kode_klasifikasi')
                 ->get(),
             'unitPengolahs' => UnitPengolah::all(),
@@ -266,6 +286,7 @@ class ArsipUnitController extends Controller
 
         $validated = $request->validated();
         $validated = $this->applyAiCorrectionStatus($validated, $arsipUnit);
+        $validated = $this->applyKlasifikasiKeamanan($validated);
 
         // Handle file upload
         $newFileUploaded = false;

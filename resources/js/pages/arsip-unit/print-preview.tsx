@@ -42,7 +42,7 @@ interface ArsipUnit {
     no_box?: string;
     keterangan?: string;
     status?: string;
-    skkaad?: string;
+    klasifikasi_keamanan?: string;
     retensi_aktif?: number;
     retensi_inaktif?: number;
     kode_klasifikasi?: KodeKlasifikasi;
@@ -337,7 +337,7 @@ export default function PrintPreview() {
                                     <th rowSpan={2} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">UNIT PENGOLAH</th>
                                     <th rowSpan={2} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">RETENSI AKTIF</th>
                                     <th rowSpan={2} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">RETENSI INAKTIF</th>
-                                    <th rowSpan={2} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">SKKAAD</th>
+                                    <th rowSpan={2} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">Klasifikasi Keamanan</th>
                                     <th colSpan={5} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">LOKASI FISIK</th>
                                     <th rowSpan={2} className="px-1 py-2 text-center font-semibold text-gray-700 border border-gray-300">KETERANGAN</th>
                                 </tr>
@@ -388,7 +388,7 @@ export default function PrintPreview() {
                                                 {arsip.retensi_inaktif ?? '-'}
                                             </td>
                                             <td className="px-1 py-1 border border-gray-200 text-gray-900">
-                                                {arsip.skkaad || '-'}
+                                                {arsip.klasifikasi_keamanan || '-'}
                                             </td>
                                             <td className="px-1 py-1 border border-gray-200 text-center text-gray-900">
                                                 {arsip.ruangan || '-'}

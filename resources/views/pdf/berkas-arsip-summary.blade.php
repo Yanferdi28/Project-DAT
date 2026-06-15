@@ -79,7 +79,7 @@
                 <th style="width: 6%;">JUMLAH ITEM</th>
                 <th style="width: 6%;">RETENSI AKTIF</th>
                 <th style="width: 6%;">RETENSI INAKTIF</th>
-                <th style="width: 7%;">SKKAAD</th>
+                <th style="width: 7%;">KLASIFIKASI KEAMANAN</th>
                 <th style="width: 8%;">STATUS AKHIR</th>
                 <th style="width: 10%;">LOKASI FISIK</th>
                 <th style="width: 10%;">KETERANGAN</th>
@@ -113,8 +113,7 @@
                     // Status akhir based on penyusutan_akhir
                     $statusAkhir = $berkas->penyusutan_akhir ?: '-';
                     
-                    // SKKAAD from kodeKlasifikasi or berkas
-                    $skkaad = $berkas->kodeKlasifikasi->status_akhir ?? '-';
+                    $klasifikasiKeamanan = $berkas->kodeKlasifikasi->klasifikasi_keamanan ?? '-';
                 @endphp
                 <tr>
                     <td class="text-center">{{ $counter++ }}</td>
@@ -125,7 +124,7 @@
                     <td class="text-center">{{ $berkas->arsipUnits->count() }}</td>
                     <td class="text-center">{{ $berkas->retensi_aktif ?: '-' }}</td>
                     <td class="text-center">{{ $berkas->retensi_inaktif ?: '-' }}</td>
-                    <td class="text-center">{{ $skkaad }}</td>
+                    <td class="text-center">{{ $klasifikasiKeamanan }}</td>
                     <td class="text-center">{{ $statusAkhir }}</td>
                     <td>{{ $berkas->lokasi_fisik ?: '-' }}</td>
                     <td>{{ $berkas->keterangan ?? '-' }}</td>

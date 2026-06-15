@@ -38,6 +38,7 @@ interface KodeKlasifikasi {
     retensi_aktif: number | null;
     retensi_inaktif: number | null;
     status_akhir: string | null;
+    klasifikasi_keamanan: string | null;
 }
 
 interface UnitPengolah {
@@ -91,7 +92,7 @@ export default function Create({
         jumlah_nilai: '',
         jumlah_satuan: 'lembar',
         tingkat_perkembangan: 'asli',
-        skkaad: '',
+        klasifikasi_keamanan: '',
         ruangan: '',
         no_filling: '',
         no_laci: '',
@@ -111,7 +112,7 @@ export default function Create({
     const [isScanning, setIsScanning] = useState(false);
     const [scanResult, setScanResult] = useState<OcrScanResultData | null>(null);
 
-    // Auto-fill retensi and skkaad when kode_klasifikasi changes
+    // Auto-fill retensi and klasifikasi keamanan when kode_klasifikasi changes
     useEffect(() => {
         if (data.kode_klasifikasi_id) {
             const selected = kodeKlasifikasis.find(
@@ -122,7 +123,7 @@ export default function Create({
                     ...prev,
                     retensi_aktif: selected.retensi_aktif?.toString() || '',
                     retensi_inaktif: selected.retensi_inaktif?.toString() || '',
-                    skkaad: selected.status_akhir || '',
+                    klasifikasi_keamanan: selected.klasifikasi_keamanan || '',
                 }));
             }
         }
@@ -659,18 +660,18 @@ export default function Create({
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Otomatis terisi dari Kode Klasifikasi</p>
                                     </div>
 
-                                    {/* SKKAAD - Auto filled */}
+                                    {/* Klasifikasi Keamanan - Auto filled */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="skkaad">{'SKKAAD'}</Label>
+                                        <Label htmlFor="klasifikasi_keamanan">{'Klasifikasi Keamanan'}</Label>
                                         <Input
-                                            id="skkaad"
+                                            id="klasifikasi_keamanan"
                                             type="text"
-                                            value={data.skkaad}
-                                            onChange={(e) => setData({ ...data, skkaad: e.target.value })}
+                                            value={data.klasifikasi_keamanan}
+                                            onChange={(e) => setData({ ...data, klasifikasi_keamanan: e.target.value })}
                                             disabled
                                             className="bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
                                         />
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">Otomatis terisi dari Kode Klasifikasi</p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">Otomatis terisi dari klasifikasi keamanan pada Kode Klasifikasi</p>
                                     </div>
                                 </div>
                             </CardContent>

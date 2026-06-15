@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Kategori;
 use App\Models\SubKategori;
+use Illuminate\Database\Seeder;
 
 class KategoriSeeder extends Seeder
 {
@@ -24,7 +24,7 @@ class KategoriSeeder extends Seeder
 
         $kategoriMap = [];
         foreach ($mainCategories as $nama => $deskripsi) {
-            $kategori = Kategori::firstOrCreate(
+            $kategori = Kategori::updateOrCreate(
                 ['nama_kategori' => $nama],
                 ['deskripsi' => $deskripsi]
             );
@@ -105,9 +105,12 @@ class KategoriSeeder extends Seeder
             $kategoriId = $kategoriMap[$kategoriNama];
             
             foreach ($subKategoris as $namaSub) {
-                SubKategori::firstOrCreate(
-                    ['nama_sub_kategori' => $namaSub],
-                    ['kategori_id' => $kategoriId]
+                SubKategori::updateOrCreate(
+                    [
+                        'kategori_id' => $kategoriId,
+                        'nama_sub_kategori' => $namaSub,
+                    ],
+                    ['deskripsi' => null]
                 );
             }
         }

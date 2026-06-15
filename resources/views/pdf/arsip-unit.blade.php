@@ -90,7 +90,7 @@
                 <th rowspan="2" style="width: 8%;">UNIT PENGOLAH</th>
                 <th rowspan="2" style="width: 4%;">RETENSI AKTIF</th>
                 <th rowspan="2" style="width: 4%;">RETENSI INAKTIF</th>
-                <th rowspan="2" style="width: 5%;">SKKAAD</th>
+                <th rowspan="2" style="width: 5%;">KLASIFIKASI KEAMANAN</th>
                 <th colspan="5" class="lokasi-header">LOKASI FISIK</th>
                 <th rowspan="2" style="width: 7%;">KETERANGAN</th>
             </tr>
@@ -115,7 +115,7 @@
                 <td>{{ $arsip->unitPengolah->nama_unit ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->retensi_aktif ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->retensi_inaktif ?? '-' }}</td>
-                <td>{{ $arsip->skkaad ?? '-' }}</td>
+                <td>{{ $arsip->klasifikasi_keamanan ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->ruangan ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->no_filling ?? '-' }}</td>
                 <td class="text-center">{{ $arsip->no_laci ?? '-' }}</td>

@@ -23,6 +23,7 @@ interface KodeKlasifikasi {
     kode_klasifikasi: string;
     nama_klasifikasi: string;
     status_akhir?: string;
+    klasifikasi_keamanan?: string;
 }
 
 interface UnitPengolah {
@@ -335,7 +336,7 @@ export default function PrintPreview() {
                                     <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">JUMLAH ITEM</th>
                                     <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">RETENSI AKTIF</th>
                                     <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">RETENSI INAKTIF</th>
-                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">SKKAAD</th>
+                                    <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">Klasifikasi Keamanan</th>
                                     <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">STATUS AKHIR</th>
                                     <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">LOKASI FISIK</th>
                                     <th className="px-2 py-2 text-center font-semibold text-gray-700 border border-gray-300">KETERANGAN</th>
@@ -372,7 +373,7 @@ export default function PrintPreview() {
                                                 {berkas.retensi_inaktif ?? '-'}
                                             </td>
                                             <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
-                                                {berkas.kode_klasifikasi?.status_akhir || '-'}
+                                                {berkas.kode_klasifikasi?.klasifikasi_keamanan || '-'}
                                             </td>
                                             <td className="px-2 py-1 border border-gray-200 text-center text-gray-900">
                                                 {berkas.penyusutan_akhir || '-'}

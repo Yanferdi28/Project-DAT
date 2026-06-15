@@ -94,7 +94,7 @@
                 <th rowspan="2" style="width: 3%;">JML ITEM</th>
                 <th rowspan="2" style="width: 3%;">RET AKTIF</th>
                 <th rowspan="2" style="width: 3%;">RET INAKTIF</th>
-                <th rowspan="2" style="width: 5%;">SKKAAD</th>
+                <th rowspan="2" style="width: 5%;">KLASIFIKASI KEAMANAN</th>
                 <th rowspan="2" style="width: 5%;">STATUS AKHIR</th>
                 <th rowspan="2" style="width: 5%;">LOKASI BERKAS</th>
                 <th colspan="5" style="width: 15%;">LOKASI ARSIP</th>
@@ -116,7 +116,7 @@
                     $totalItems = $arsipUnits->count();
                     $kodeKlasifikasi = $berkas->kodeKlasifikasi ? $berkas->kodeKlasifikasi->kode_klasifikasi : '-';
                     $tanggalBuat = $berkas->created_at ? \Carbon\Carbon::parse($berkas->created_at)->format('d/m/Y') : '-';
-                    $skkaad = $berkas->kodeKlasifikasi->status_akhir ?? '-';
+                    $klasifikasiKeamanan = $berkas->kodeKlasifikasi->klasifikasi_keamanan ?? '-';
                     $statusAkhir = $berkas->penyusutan_akhir ?: '-';
                 @endphp
                 
@@ -134,7 +134,7 @@
                     <td class="text-center">{{ $totalItems }}</td>
                     <td class="text-center">{{ $berkas->retensi_aktif ?? '-' }}</td>
                     <td class="text-center">{{ $berkas->retensi_inaktif ?? '-' }}</td>
-                    <td class="text-center">{{ $skkaad }}</td>
+                    <td class="text-center">{{ $klasifikasiKeamanan }}</td>
                     <td class="text-center">{{ $statusAkhir }}</td>
                     <td>{{ $berkas->lokasi_fisik ?: '-' }}</td>
                     <td class="text-center"></td>

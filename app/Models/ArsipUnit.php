@@ -57,7 +57,7 @@ class ArsipUnit extends Model
         'jumlah_nilai',
         'jumlah_satuan',
         'tingkat_perkembangan',
-        'skkaad',
+        'klasifikasi_keamanan',
         'ruangan',
         'no_filling',
         'no_laci',

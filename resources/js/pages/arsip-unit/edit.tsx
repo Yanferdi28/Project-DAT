@@ -37,6 +37,7 @@ interface KodeKlasifikasi {
     retensi_aktif: number | null;
     retensi_inaktif: number | null;
     status_akhir: string | null;
+    klasifikasi_keamanan: string | null;
 }
 
 interface UnitPengolah {
@@ -70,7 +71,7 @@ interface ArsipUnit {
     jumlah_nilai: number;
     jumlah_satuan: string;
     tingkat_perkembangan: string | null;
-    skkaad: string | null;
+    klasifikasi_keamanan: string | null;
     ruangan: string | null;
     no_filling: string | null;
     no_laci: string | null;
@@ -113,7 +114,7 @@ export default function Edit({
         jumlah_nilai: arsipUnit.jumlah_nilai.toString(),
         jumlah_satuan: arsipUnit.jumlah_satuan,
         tingkat_perkembangan: arsipUnit.tingkat_perkembangan || '',
-        skkaad: arsipUnit.skkaad || '',
+        klasifikasi_keamanan: arsipUnit.klasifikasi_keamanan || '',
         ruangan: arsipUnit.ruangan || '',
         no_filling: arsipUnit.no_filling || '',
         no_laci: arsipUnit.no_laci || '',
@@ -149,7 +150,7 @@ export default function Edit({
         error?: string;
     } | null>(null);
 
-    // Auto-fill retensi and skkaad when kode_klasifikasi changes
+    // Auto-fill retensi and klasifikasi keamanan when kode_klasifikasi changes
     useEffect(() => {
         if (data.kode_klasifikasi_id) {
             const selected = kodeKlasifikasis.find(
@@ -160,7 +161,7 @@ export default function Edit({
                     ...prev,
                     retensi_aktif: selected.retensi_aktif?.toString() || '',
                     retensi_inaktif: selected.retensi_inaktif?.toString() || '',
-                    skkaad: selected.status_akhir || '',
+                    klasifikasi_keamanan: selected.klasifikasi_keamanan || '',
                 }));
             }
         }
@@ -680,18 +681,18 @@ export default function Edit({
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Otomatis terisi dari Kode Klasifikasi</p>
                                     </div>
 
-                                    {/* SKKAAD - Auto filled */}
+                                    {/* Klasifikasi Keamanan - Auto filled */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="skkaad">{'SKKAAD'}</Label>
+                                        <Label htmlFor="klasifikasi_keamanan">{'Klasifikasi Keamanan'}</Label>
                                         <Input
-                                            id="skkaad"
+                                            id="klasifikasi_keamanan"
                                             type="text"
-                                            value={data.skkaad}
-                                            onChange={(e) => setData({ ...data, skkaad: e.target.value })}
+                                            value={data.klasifikasi_keamanan}
+                                            onChange={(e) => setData({ ...data, klasifikasi_keamanan: e.target.value })}
                                             disabled
                                             className="bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
                                         />
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">Otomatis terisi dari Kode Klasifikasi</p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">Otomatis terisi dari klasifikasi keamanan pada Kode Klasifikasi</p>
                                     </div>
                                 </div>
                             </CardContent>

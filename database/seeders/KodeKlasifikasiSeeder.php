@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\KodeKlasifikasi;
+use Illuminate\Database\Seeder;
 
 class KodeKlasifikasiSeeder extends Seeder
 {
@@ -15,10 +14,6 @@ class KodeKlasifikasiSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        KodeKlasifikasi::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
         $data = [
             ['kode_klasifikasi' => 'PR', 'kode_klasifikasi_induk' => null, 'uraian' => 'Program dan Evaluasi', 'retensi_aktif' => 0, 'retensi_inaktif' => 0, 'status_akhir' => 'Permanen', 'klasifikasi_keamanan' => 'Biasa'],
             ['kode_klasifikasi' => 'PR.01.01', 'kode_klasifikasi_induk' => 'PR', 'uraian' => 'Perencanaan Kegiatan', 'retensi_aktif' => 2, 'retensi_inaktif' => 3, 'status_akhir' => 'Permanen', 'klasifikasi_keamanan' => 'Terbatas'],
@@ -599,7 +594,18 @@ class KodeKlasifikasiSeeder extends Seeder
         ];
 
         foreach (array_chunk($data, 100) as $chunk) {
-            KodeKlasifikasi::insert($chunk);
+            KodeKlasifikasi::upsert(
+                $chunk,
+                ['kode_klasifikasi'],
+                [
+                    'kode_klasifikasi_induk',
+                    'uraian',
+                    'retensi_aktif',
+                    'retensi_inaktif',
+                    'status_akhir',
+                    'klasifikasi_keamanan',
+                ]
+            );
         }
     }
 }

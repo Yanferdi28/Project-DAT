@@ -54,7 +54,7 @@ interface ArsipUnit {
     jumlah_nilai: number;
     jumlah_satuan: string;
     tingkat_perkembangan: string;
-    skkaad: string | null;
+    klasifikasi_keamanan: string | null;
     ruangan: string | null;
     no_filling: string | null;
     no_laci: string | null;
@@ -300,12 +300,12 @@ export default function Show({ arsipUnit, userUnitPengolahId, ocrEnabled, auth }
                                         <p className="mt-1 text-sm">{formatTingkatPerkembangan(arsipUnit.tingkat_perkembangan)}</p>
                                     </div>
 
-                                    {arsipUnit.skkaad && (
+                                    {arsipUnit.klasifikasi_keamanan && (
                                         <>
                                             <Separator />
                                             <div>
-                                                <label className="text-sm font-medium text-muted-foreground">{'SKKAAD'}</label>
-                                                <p className="mt-1 text-sm">{arsipUnit.skkaad}</p>
+                                                <label className="text-sm font-medium text-muted-foreground">{'Klasifikasi Keamanan'}</label>
+                                                <p className="mt-1 text-sm">{arsipUnit.klasifikasi_keamanan}</p>
                                             </div>
                                         </>
                                     )}
