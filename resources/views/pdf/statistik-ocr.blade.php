@@ -277,6 +277,8 @@
         </tbody>
     </table>
 
+    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
+
     <div class="footer">
         Dicetak pada: {{ \Carbon\Carbon::now()->translatedFormat('d F Y H:i') }} WIB
     </div>

@@ -281,7 +281,7 @@
                     <div class="sign-title">PIHAK PERTAMA</div>
                     <div class="sign-title">Yang Menyerahkan</div>
                     <div class="sign-name">
-                        (.................................................)
+                        {{ $beritaAcara->dibuatOleh->name ?? '(.................................................)' }}
                     </div>
                     <div class="sign-jabatan">{{ $beritaAcara->unitPengolahAsal->nama_unit ?? '' }}</div>
                 </td>

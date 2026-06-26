@@ -8,6 +8,7 @@ import os
 import json
 import joblib
 import numpy as np
+import re
 from typing import Optional
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -18,6 +19,18 @@ logger = logging.getLogger(__name__)
 
 
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models")
+CODE_PATTERN = re.compile(
+    r"\b([A-Z]{1,4})\s*[.\-/]?\s*([0-9OIL]{2})(?:\s*[.\-/]?\s*([0-9OIL]{2}))?\b",
+    re.IGNORECASE,
+)
+DIGIT_TRANSLATION = str.maketrans({
+    "O": "0",
+    "o": "0",
+    "I": "1",
+    "i": "1",
+    "L": "1",
+    "l": "1",
+})
 
 
 def build_classifier_pipeline() -> Pipeline:
@@ -101,9 +114,19 @@ class DocumentClassifier:
         try:
             # Get probability predictions
             probabilities = self.pipeline.predict_proba([text])[0]
+            explicit_code, explicit_index = self._find_explicit_code(text)
 
             # Get top 3 predictions
-            top_indices = np.argsort(probabilities)[::-1][:3]
+            model_top_indices = list(np.argsort(probabilities)[::-1][:3])
+
+            if explicit_index is not None:
+                top_indices = [explicit_index] + [
+                    idx for idx in model_top_indices if idx != explicit_index
+                ]
+                top_indices = top_indices[:3]
+            else:
+                top_indices = model_top_indices
+
             confidence_scores = self._decision_confidences(probabilities, top_indices)
 
             predictions = []
@@ -111,6 +134,11 @@ class DocumentClassifier:
                 label = self.label_encoder.inverse_transform([idx])[0]
                 raw_probability = round(max(0.0, min(100.0, float(probabilities[idx]) * 100)), 2)
                 confidence = confidence_scores[position]
+                confidence_source = "model"
+
+                if explicit_index == idx and explicit_code:
+                    confidence = max(confidence, self._explicit_code_confidence(probabilities[idx]))
+                    confidence_source = "explicit_code"
 
                 # Parse label: format is "kode_klasifikasi|uraian"
                 parts = label.split("|", 1)
@@ -119,6 +147,7 @@ class DocumentClassifier:
                     "uraian": parts[1] if len(parts) > 1 else label,
                     "confidence": confidence,
                     "raw_probability": raw_probability,
+                    "confidence_source": confidence_source,
                 }
                 predictions.append(prediction)
 
@@ -163,6 +192,46 @@ class DocumentClassifier:
             scores.append(round(max(0.0, min(100.0, decision * 100)), 2))
 
         return scores
+
+    def _find_explicit_code(self, text: str) -> tuple[Optional[str], Optional[int]]:
+        """Return a valid classification code found explicitly in OCR text."""
+        code_to_index = self._code_to_label_index()
+
+        if not code_to_index:
+            return None, None
+
+        for match in CODE_PATTERN.finditer(text):
+            candidate = self._normalise_code_match(match)
+
+            if candidate in code_to_index:
+                return candidate, code_to_index[candidate]
+
+        return None, None
+
+    def _code_to_label_index(self) -> dict[str, int]:
+        if self.label_encoder is None:
+            return {}
+
+        return {
+            str(label).split("|", 1)[0]: index
+            for index, label in enumerate(self.label_encoder.classes_)
+        }
+
+    @staticmethod
+    def _normalise_code_match(match: re.Match) -> str:
+        prefix = re.sub(r"[^A-Z]", "", match.group(1).upper())
+        first = match.group(2).translate(DIGIT_TRANSLATION)
+        second = match.group(3).translate(DIGIT_TRANSLATION) if match.group(3) else None
+
+        if second:
+            return f"{prefix}.{first}.{second}"
+
+        return f"{prefix}.{first}"
+
+    @staticmethod
+    def _explicit_code_confidence(probability: float) -> float:
+        """A visible valid code is stronger evidence than multiclass probability."""
+        return round(max(90.0, min(99.0, 90.0 + (float(probability) * 10.0))), 2)
 
     @staticmethod
     def train(training_data_path: Optional[str] = None) -> dict:

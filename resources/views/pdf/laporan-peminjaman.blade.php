@@ -119,16 +119,7 @@
             padding-top: 15px;
             border-top: 1px solid #ccc;
         }
-        .signature-section {
-            float: right;
-            width: 200px;
-            text-align: center;
-        }
-        .signature-line {
-            margin-top: 60px;
-            border-top: 1px solid #333;
-            padding-top: 5px;
-        }
+
     </style>
 </head>
 <body>
@@ -226,16 +217,11 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p style="font-size: 8pt; color: #666; float: left;">
+        <p style="font-size: 8pt; color: #666;">
             Laporan ini digenerate oleh sistem pada {{ \Carbon\Carbon::now()->translatedFormat('d F Y, H:i') }} WIB
         </p>
-        <div class="signature-section">
-            <p>{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-            <p>Mengetahui,</p>
-            <div class="signature-line">
-                <p>_______________________</p>
-            </div>
-        </div>
     </div>
+
+    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
 </body>
 </html>

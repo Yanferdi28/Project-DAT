@@ -140,3 +140,33 @@ test('rekap unit pengolah PDF export works', function () {
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });
+
+test('signature block displays the report creator name and unit', function () {
+    $unit = UnitPengolah::create(['nama_unit' => 'Unit Pembuat Laporan']);
+    $creator = createAdmin([
+        'name' => 'Pembuat Laporan Test',
+        'unit_pengolah_id' => $unit->id,
+    ])->load('unitPengolah');
+
+    $html = view('pdf.partials.report-signature', ['reportCreator' => $creator])
+        ->render();
+
+    expect($html)
+        ->toContain('Dibuat oleh,')
+        ->toContain('Pembuat Laporan Test')
+        ->toContain('Unit Pembuat Laporan');
+});
+
+test('additional report PDF export includes creator data', function (string $url) {
+    $admin = createAdmin(['name' => 'Admin Pembuat Laporan']);
+
+    $this->actingAs($admin)
+        ->get($url)
+        ->assertOk()
+        ->assertHeader('content-type', 'application/pdf');
+})->with([
+    'statistik klasifikasi' => '/laporan/statistik-klasifikasi/export',
+    'log aktivitas' => '/laporan/log-aktivitas/export',
+    'statistik OCR' => '/laporan/statistik-ocr/export',
+    'peminjaman' => '/laporan/peminjaman/export',
+]);

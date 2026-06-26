@@ -173,5 +173,7 @@
             @endforeach
         </tbody>
     </table>
+
+    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
 </body>
 </html>

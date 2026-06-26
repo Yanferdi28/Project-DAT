@@ -300,6 +300,8 @@
     </div>
     @endif
 
+    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
+
     <div class="footer">
         <table style="border: none; width: 100%;">
             <tr>

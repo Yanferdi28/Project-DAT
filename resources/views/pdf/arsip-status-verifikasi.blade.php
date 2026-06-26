@@ -201,9 +201,8 @@
                 <tr>
                     <th style="width: 3%;">NO</th>
                     <th style="width: 8%;">KODE KLASIFIKASI</th>
-                    <th style="width: 8%;">NO ITEM</th>
-                    <th style="width: 18%;">URAIAN INFORMASI</th>
-                    <th style="width: 8%;">UNIT PENGOLAH</th>
+                    <th style="width: 24%;">URAIAN INFORMASI</th>
+                    <th style="width: 10%;">UNIT PENGOLAH</th>
                     <th style="width: 7%;">TANGGAL</th>
                     <th style="width: 7%;">STATUS</th>
                     <th style="width: 7%;">PUBLISH</th>
@@ -217,7 +216,6 @@
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $arsip->kodeKlasifikasi->kode_klasifikasi ?? '-' }}</td>
-                    <td>{{ $arsip->no_item_arsip ?? '-' }}</td>
                     <td>{{ Str::limit($arsip->uraian_informasi, 50) ?? '-' }}</td>
                     <td>{{ $arsip->unitPengolah->nama_unit ?? '-' }}</td>
                     <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d/m/Y') : '-' }}</td>
@@ -252,12 +250,11 @@
                 <tr>
                     <th style="width: 3%;">NO</th>
                     <th style="width: 10%;">KODE KLASIFIKASI</th>
-                    <th style="width: 8%;">NO ITEM</th>
-                    <th style="width: 22%;">URAIAN INFORMASI</th>
-                    <th style="width: 12%;">UNIT PENGOLAH</th>
+                    <th style="width: 30%;">URAIAN INFORMASI</th>
+                    <th style="width: 14%;">UNIT PENGOLAH</th>
                     <th style="width: 10%;">TANGGAL</th>
-                    <th style="width: 8%;">PUBLISH</th>
-                    <th style="width: 10%;">DIBUAT</th>
+                    <th style="width: 9%;">PUBLISH</th>
+                    <th style="width: 12%;">DIBUAT</th>
                     <th style="width: 12%;">LOKASI</th>
                 </tr>
             </thead>
@@ -266,7 +263,6 @@
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $arsip->kodeKlasifikasi->kode_klasifikasi ?? '-' }}</td>
-                    <td>{{ $arsip->no_item_arsip ?? '-' }}</td>
                     <td>{{ Str::limit($arsip->uraian_informasi, 55) ?? '-' }}</td>
                     <td>{{ $arsip->unitPengolah->nama_unit ?? '-' }}</td>
                     <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d/m/Y') : '-' }}</td>
@@ -290,9 +286,8 @@
                 <tr>
                     <th style="width: 3%;">NO</th>
                     <th style="width: 9%;">KODE KLASIFIKASI</th>
-                    <th style="width: 7%;">NO ITEM</th>
-                    <th style="width: 18%;">URAIAN INFORMASI</th>
-                    <th style="width: 10%;">UNIT PENGOLAH</th>
+                    <th style="width: 23%;">URAIAN INFORMASI</th>
+                    <th style="width: 12%;">UNIT PENGOLAH</th>
                     <th style="width: 8%;">TANGGAL</th>
                     <th style="width: 7%;">PUBLISH</th>
                     <th style="width: 10%;">DIVERIFIKASI OLEH</th>
@@ -305,7 +300,6 @@
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $arsip->kodeKlasifikasi->kode_klasifikasi ?? '-' }}</td>
-                    <td>{{ $arsip->no_item_arsip ?? '-' }}</td>
                     <td>{{ Str::limit($arsip->uraian_informasi, 40) ?? '-' }}</td>
                     <td>{{ $arsip->unitPengolah->nama_unit ?? '-' }}</td>
                     <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d/m/Y') : '-' }}</td>
@@ -332,9 +326,8 @@
                 <tr>
                     <th style="width: 3%;">NO</th>
                     <th style="width: 9%;">KODE KLASIFIKASI</th>
-                    <th style="width: 7%;">NO ITEM</th>
-                    <th style="width: 18%;">URAIAN INFORMASI</th>
-                    <th style="width: 10%;">UNIT PENGOLAH</th>
+                    <th style="width: 23%;">URAIAN INFORMASI</th>
+                    <th style="width: 12%;">UNIT PENGOLAH</th>
                     <th style="width: 8%;">TANGGAL</th>
                     <th style="width: 10%;">DITOLAK OLEH</th>
                     <th style="width: 8%;">TGL TOLAK</th>
@@ -346,7 +339,6 @@
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $arsip->kodeKlasifikasi->kode_klasifikasi ?? '-' }}</td>
-                    <td>{{ $arsip->no_item_arsip ?? '-' }}</td>
                     <td>{{ Str::limit($arsip->uraian_informasi, 40) ?? '-' }}</td>
                     <td>{{ $arsip->unitPengolah->nama_unit ?? '-' }}</td>
                     <td class="text-center">{{ $arsip->tanggal ? \Carbon\Carbon::parse($arsip->tanggal)->format('d/m/Y') : '-' }}</td>
@@ -371,6 +363,8 @@
         </div>
         @endif
     @endif
+
+    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
 
     <div class="footer">
         <table style="border: none; width: 100%;">

@@ -413,11 +413,12 @@ class BerkasArsipController extends Controller
 
         // Get format type
         $format = $request->input('format', 'detail');
+        $reportCreator = $request->user()->loadMissing('unitPengolah');
         
         if ($format === 'summary') {
-            $pdf = Pdf::loadView('pdf.berkas-arsip-summary', compact('berkasArsips', 'unitPengolah', 'dariTanggal', 'sampaiTanggal'));
+            $pdf = Pdf::loadView('pdf.berkas-arsip-summary', compact('berkasArsips', 'unitPengolah', 'dariTanggal', 'sampaiTanggal', 'reportCreator'));
         } else {
-            $pdf = Pdf::loadView('pdf.berkas-arsip-detail', compact('berkasArsips', 'unitPengolah', 'dariTanggal', 'sampaiTanggal'));
+            $pdf = Pdf::loadView('pdf.berkas-arsip-detail', compact('berkasArsips', 'unitPengolah', 'dariTanggal', 'sampaiTanggal', 'reportCreator'));
         }
         
         $pdf->setPaper('a4', 'landscape');
@@ -566,6 +567,7 @@ class BerkasArsipController extends Controller
         
         $totalSegera = count($arsipSegera);
         $totalMendekat = count($arsipMendekat);
+        $reportCreator = $request->user()->loadMissing('unitPengolah');
         
         $pdf = Pdf::loadView('pdf.arsip-penyusutan', compact(
             'arsipSegera',
@@ -576,7 +578,8 @@ class BerkasArsipController extends Controller
             'totalSegera',
             'totalMendekat',
             'totalMusnah',
-            'totalPermanen'
+            'totalPermanen',
+            'reportCreator'
         ));
         
         $pdf->setPaper('a4', 'landscape');

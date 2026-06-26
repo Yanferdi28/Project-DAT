@@ -126,7 +126,9 @@
             @endforeach
         </tbody>
     </table>
-    
+
+    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
+
     <div class="footer">
         Dicetak pada: {{ now()->format('d-m-Y H:i:s') }}
     </div>

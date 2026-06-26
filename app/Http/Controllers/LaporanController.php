@@ -28,6 +28,11 @@ class LaporanController extends Controller
         return $user->unit_pengolah_id;
     }
 
+    private function getReportCreator(Request $request)
+    {
+        return $request->user()->loadMissing('unitPengolah');
+    }
+
     /**
      * Display the rekap per unit pengolah page.
      */
@@ -123,11 +128,14 @@ class LaporanController extends Controller
             'avg_arsip_per_unit' => count($rekapPerUnit) > 0 ? $totalArsip / count($rekapPerUnit) : 0,
         ];
 
+        $reportCreator = $this->getReportCreator($request);
+
         $pdf = Pdf::loadView('pdf.rekap-unit-pengolah', compact(
             'rekapPerUnit',
             'totalStats',
             'dariTanggal',
-            'sampaiTanggal'
+            'sampaiTanggal',
+            'reportCreator'
         ));
 
         $pdf->setPaper('a4', 'portrait');
@@ -221,6 +229,8 @@ class LaporanController extends Controller
             $unitPengolah = UnitPengolah::find($unitPengolahId);
         }
         
+        $reportCreator = $this->getReportCreator($request);
+
         $pdf = Pdf::loadView('pdf.arsip-status-verifikasi', compact(
             'arsipUnits',
             'arsipPending',
@@ -230,7 +240,8 @@ class LaporanController extends Controller
             'filterStatus',
             'unitPengolah',
             'dariTanggal',
-            'sampaiTanggal'
+            'sampaiTanggal',
+            'reportCreator'
         ));
         
         $pdf->setPaper('a4', 'landscape');
@@ -427,13 +438,16 @@ class LaporanController extends Controller
 
         $unitPengolah = $unitPengolahId ? UnitPengolah::find($unitPengolahId) : null;
 
+        $reportCreator = $this->getReportCreator($request);
+
         $pdf = Pdf::loadView('pdf.statistik-klasifikasi', compact(
             'perKlasifikasi',
             'perPrefix',
             'totalArsip',
             'unitPengolah',
             'dariTanggal',
-            'sampaiTanggal'
+            'sampaiTanggal',
+            'reportCreator'
         ));
         $pdf->setPaper('a4', 'portrait');
 
@@ -513,13 +527,16 @@ class LaporanController extends Controller
                 'jumlah' => $item->jumlah,
             ]);
 
+        $reportCreator = $this->getReportCreator($request);
+
         $pdf = Pdf::loadView('pdf.log-aktivitas', compact(
             'logs',
             'stats',
             'perUser',
             'dariTanggal',
             'sampaiTanggal',
-            'action'
+            'action',
+            'reportCreator'
         ));
         $pdf->setPaper('a4', 'landscape');
 
@@ -621,13 +638,16 @@ class LaporanController extends Controller
                 ? round(($aiAccepted / ($aiAccepted + $aiRejected)) * 100, 1) : 0,
         ];
 
+        $reportCreator = $this->getReportCreator($request);
+
         $pdf = Pdf::loadView('pdf.statistik-ocr', compact(
             'ocrStats',
             'aiStats',
             'confidenceBuckets',
             'aiConfidenceBuckets',
             'dariTanggal',
-            'sampaiTanggal'
+            'sampaiTanggal',
+            'reportCreator'
         ));
         $pdf->setPaper('a4', 'portrait');
 
@@ -706,13 +726,16 @@ class LaporanController extends Controller
 
         $unitPengolah = $unitPengolahId ? UnitPengolah::find($unitPengolahId) : null;
 
+        $reportCreator = $this->getReportCreator($request);
+
         $pdf = Pdf::loadView('pdf.laporan-peminjaman', compact(
             'peminjaman',
             'stats',
             'filterStatus',
             'unitPengolah',
             'dariTanggal',
-            'sampaiTanggal'
+            'sampaiTanggal',
+            'reportCreator'
         ));
         $pdf->setPaper('a4', 'landscape');
 

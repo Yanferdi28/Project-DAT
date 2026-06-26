@@ -505,7 +505,9 @@ class ArsipUnitController extends Controller
             $periode = $dari . ' - ' . $sampai;
         }
 
-        $pdf = Pdf::loadView('pdf.arsip-unit', compact('arsipUnits', 'unitPengolah', 'periode'));
+        $reportCreator = $request->user()->loadMissing('unitPengolah');
+
+        $pdf = Pdf::loadView('pdf.arsip-unit', compact('arsipUnits', 'unitPengolah', 'periode', 'reportCreator'));
         $pdf->setPaper('a4', 'landscape');
 
         return $pdf->stream('arsip-unit-' . date('Y-m-d') . '.pdf');
