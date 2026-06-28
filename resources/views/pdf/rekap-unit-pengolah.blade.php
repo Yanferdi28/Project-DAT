@@ -140,8 +140,8 @@
         
         /* Footer */
         .footer {
-            margin-top: 30px;
-            padding-top: 15px;
+            margin-top: 18px;
+            padding-top: 12px;
             border-top: 1px solid #ccc;
         }
 
@@ -270,11 +270,14 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p style="font-size: 8pt; color: #666;">
+        <p style="font-size: 8pt; color: #666; margin: 0;">
             Laporan ini digenerate secara otomatis pada {{ \Carbon\Carbon::now()->translatedFormat('d F Y, H:i') }} WIB
         </p>
+        @include('pdf.partials.report-signature', [
+            'reportCreator' => $reportCreator,
+            'signatureMarginTop' => 10,
+            'signatureSpacerHeight' => 34,
+        ])
     </div>
-
-    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
 </body>
 </html>

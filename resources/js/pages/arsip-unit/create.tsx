@@ -147,6 +147,10 @@ export default function Create({
         return ['pdf', 'jpg', 'jpeg', 'png'].includes(ext);
     };
 
+    const isSelectedFileUnsupportedForOcr = Boolean(
+        ocrEnabled && data.dokumen && fileName && !isOcrEligibleFile(fileName),
+    );
+
     const handleScanDocument = async () => {
         if (!data.dokumen) return;
 
@@ -823,6 +827,16 @@ export default function Create({
                                     </p>
                                     {errors.dokumen && (
                                         <p className="text-sm text-red-600">{errors.dokumen}</p>
+                                    )}
+
+                                    {isSelectedFileUnsupportedForOcr && (
+                                        <div className="mt-3 flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300">
+                                            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
+                                            <p>
+                                                Format dokumen ini bisa diunggah, tetapi tidak didukung untuk OCR.
+                                                Gunakan file PDF, JPG, JPEG, atau PNG jika ingin memakai pindai otomatis.
+                                            </p>
+                                        </div>
                                     )}
 
                                     {/* OCR Scan Button */}

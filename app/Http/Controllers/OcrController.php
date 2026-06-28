@@ -128,9 +128,17 @@ class OcrController extends Controller
      */
     public function scanDocument(Request $request): JsonResponse
     {
-        $request->validate([
-            'dokumen' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
-        ]);
+        $request->validate(
+            [
+                'dokumen' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            ],
+            [
+                'dokumen.required' => 'Pilih dokumen terlebih dahulu untuk dipindai OCR.',
+                'dokumen.file' => 'Dokumen OCR harus berupa file yang valid.',
+                'dokumen.mimes' => 'Format dokumen tidak didukung untuk OCR. Gunakan PDF, JPG, JPEG, atau PNG.',
+                'dokumen.max' => 'Ukuran dokumen untuk OCR maksimal 10 MB.',
+            ],
+        );
 
         $file = $request->file('dokumen');
 

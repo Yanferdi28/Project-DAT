@@ -40,12 +40,16 @@ class BerkasArsipController extends Controller
     private function applySearchFilter($query, string $search): void
     {
         $query->where(function ($q) use ($search) {
-            $q->where('nama_berkas', 'like', "%{$search}%")
+            $q->where('nomor_berkas', 'like', "%{$search}%")
+                ->orWhere('nama_berkas', 'like', "%{$search}%")
                 ->orWhere('uraian', 'like', "%{$search}%")
                 ->orWhere('lokasi_fisik', 'like', "%{$search}%")
                 ->orWhereHas('kodeKlasifikasi', function ($kodeQuery) use ($search) {
                     $kodeQuery->where('kode_klasifikasi', 'like', "%{$search}%")
                         ->orWhere('uraian', 'like', "%{$search}%");
+                })
+                ->orWhereHas('unitPengolah', function ($unitQuery) use ($search) {
+                    $unitQuery->where('nama_unit', 'like', "%{$search}%");
                 });
         });
     }
@@ -55,7 +59,7 @@ class BerkasArsipController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
+        $search = trim((string) $request->input('search', ''));
         $filterKlasifikasi = $request->input('klasifikasi_id');
         $filterUnitPengolah = $request->input('unit_pengolah_id');
         $perPage = $request->input('per_page', 10);

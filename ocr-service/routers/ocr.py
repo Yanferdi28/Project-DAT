@@ -2,11 +2,9 @@
 OCR Router - Handles text extraction endpoints.
 """
 
-import glob
 import io
 import logging
 import os
-import tempfile
 from typing import Optional
 from fastapi import APIRouter, File, Query, UploadFile, HTTPException
 from PIL import Image
@@ -25,53 +23,42 @@ text_cleaner = TextCleaner()
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".tif", ".tiff", ".bmp"}
 
 
-def _find_poppler_path() -> str | None:
-    """Find poppler binary path on Windows via environment or common locations."""
-    env_path = os.environ.get("POPPLER_PATH")
-    if env_path and os.path.isdir(env_path):
-        return env_path
-
-    # Search common install locations with glob to avoid version-specific paths
-    search_patterns = [
-        r"C:\poppler\poppler-*\Library\bin",
-        r"C:\poppler\poppler-*\bin",
-        r"C:\Program Files\poppler*\bin",
-        r"C:\Program Files\poppler*\Library\bin",
-    ]
-    for pattern in search_patterns:
-        matches = sorted(glob.glob(pattern), reverse=True)
-        if matches:
-            return matches[0]
-
-    return None
-
-
-def convert_pdf_to_images(file_bytes: bytes) -> list:
-    """Convert PDF bytes to list of PIL Images."""
+def convert_pdf_to_images(file_bytes: bytes, dpi: int = 300) -> list[Image.Image]:
+    """Convert PDF bytes to PIL Images without requiring Poppler."""
     try:
-        from pdf2image import convert_from_bytes
-        import platform
-
-        kwargs = {"dpi": 300}
-
-        # On Windows, specify poppler path if not in PATH
-        if platform.system() == "Windows":
-            poppler_path = _find_poppler_path()
-            if poppler_path:
-                kwargs["poppler_path"] = poppler_path
-
-        images = convert_from_bytes(file_bytes, **kwargs)
-        return images
+        import pypdfium2 as pdfium
     except ImportError:
         raise HTTPException(
             status_code=500,
-            detail="pdf2image library not installed. Install poppler and pdf2image.",
+            detail="pypdfium2 library not installed. Run: pip install -r ocr-service/requirements.txt",
         )
+
+    pdf = None
+    try:
+        pdf = pdfium.PdfDocument(file_bytes)
+        scale = dpi / 72
+        images: list[Image.Image] = []
+
+        for page_index in range(len(pdf)):
+            page = pdf[page_index]
+            bitmap = None
+            try:
+                bitmap = page.render(scale=scale)
+                images.append(bitmap.to_pil().convert("RGB"))
+            finally:
+                if bitmap is not None:
+                    bitmap.close()
+                page.close()
+
+        return images
     except Exception as e:
         raise HTTPException(
             status_code=400,
             detail=f"Failed to convert PDF: {str(e)}",
         )
+    finally:
+        if pdf is not None:
+            pdf.close()
 
 
 @router.post("/extract")

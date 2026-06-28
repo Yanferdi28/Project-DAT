@@ -20,6 +20,8 @@ if sys.platform == "win32":
 ROOT_DIR = Path(__file__).resolve().parent
 OCR_DIR = ROOT_DIR / "ocr-service"
 VENV_DIR = ROOT_DIR / ".venv"
+OCR_VENV_DIR = OCR_DIR / ".venv"
+VITE_BIN = ROOT_DIR / "node_modules" / ".bin" / ("vite.cmd" if sys.platform == "win32" else "vite")
 
 # Parse .env file to get OCR port
 def _parse_dotenv():
@@ -51,10 +53,14 @@ if sys.platform == "win32":
     if _tesseract_dir.exists() and str(_tesseract_dir) not in os.environ.get("PATH", ""):
         os.environ["PATH"] = str(_tesseract_dir) + os.pathsep + os.environ.get("PATH", "")
 
-# Resolve Python dari venv jika ada
-PYTHON = str(VENV_DIR / ("Scripts" if sys.platform == "win32" else "bin") / "python")
-if not Path(PYTHON).exists() and not Path(PYTHON + ".exe").exists():
-    PYTHON = sys.executable
+# Resolve Python dari OCR venv jika ada, lalu fallback ke root venv / interpreter saat ini
+_venv_bin = "Scripts" if sys.platform == "win32" else "bin"
+PYTHON = sys.executable
+for _venv_dir in (OCR_VENV_DIR, VENV_DIR):
+    _candidate = _venv_dir / _venv_bin / "python"
+    if _candidate.exists() or Path(str(_candidate) + ".exe").exists():
+        PYTHON = str(_candidate)
+        break
 
 SERVICES = [
     {
@@ -71,7 +77,7 @@ SERVICES = [
     },
     {
         "name": "Vite",
-        "cmd": ["npx", "vite"],
+        "cmd": [str(VITE_BIN)],
         "cwd": ROOT_DIR,
         "color": "\033[93m",  # yellow
     },

@@ -95,8 +95,9 @@
             margin-bottom: 8px;
         }
         .signatures {
-            margin-top: 50px;
+            margin-top: 24px;
             page-break-inside: avoid;
+            break-inside: avoid;
         }
         .signatures table {
             width: 100%;
@@ -114,7 +115,7 @@
             margin-bottom: 5px;
         }
         .sign-name {
-            margin-top: 80px;
+            margin-top: 58px;
             font-weight: bold;
             text-decoration: underline;
         }
@@ -122,7 +123,7 @@
             font-size: 11pt;
         }
         .footer {
-            margin-top: 30px;
+            margin-top: 18px;
             text-align: center;
             font-size: 10pt;
             color: #666;

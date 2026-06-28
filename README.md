@@ -35,7 +35,7 @@ Sistem manajemen arsip digital untuk RRI Banjarmasin dengan fitur OCR otomatis d
 - **Tesseract OCR** (pytesseract) — Mesin OCR
 - **OpenCV** — Preprocessing gambar (grayscale, denoise, binarize, deskew)
 - **scikit-learn** — Machine learning (TF-IDF + Multinomial Naive Bayes)
-- **pdf2image** — Konversi PDF ke gambar
+- **pypdfium2** — Konversi PDF ke gambar tanpa Poppler
 
 ### Database
 - **SQLite** (development) / **MySQL 8+** (production)
@@ -47,7 +47,6 @@ Sistem manajemen arsip digital untuk RRI Banjarmasin dengan fitur OCR otomatis d
 - Node.js 20+ & npm
 - Python 3.10+
 - Tesseract OCR ([install](https://github.com/tesseract-ocr/tesseract))
-- Poppler (untuk konversi PDF, [Windows binary](https://github.com/oschwartz10612/poppler-windows))
 
 ## Instalasi
 

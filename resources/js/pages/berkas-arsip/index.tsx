@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { router, Link, usePage } from '@inertiajs/react';
-import { FileText, Plus, Search, Edit, Trash2, Printer, QrCode } from 'lucide-react';
+import { FileText, Plus, Search, Edit, Trash2, Printer, QrCode, Filter, X } from 'lucide-react';
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,7 +99,7 @@ export default function BerkasArsipIndex() {
     const [filterUnitPengolah, setFilterUnitPengolah] = useState<string>(
         isUnitPengolahLocked ? userUnitPengolahId.toString() : (filters.unit_pengolah_id?.toString() || '')
     );
-    const [perPage, setPerPage] = useState(filters.per_page || 10);
+    const [perPage, setPerPage] = useState(Number(filters.per_page || 10));
     
     // Export dialog state
     const [exportDialog, setExportDialog] = useState(false);
@@ -153,6 +153,19 @@ export default function BerkasArsipIndex() {
         { value: '', label: 'Semua Klasifikasi', searchValue: 'semua klasifikasi' },
         ...klasifikasiOptions,
     ];
+    const selectedKlasifikasi = kodeKlasifikasis.find(
+        (kode) => kode.id.toString() === filterKlasifikasi,
+    );
+    const selectedUnitPengolah = unitPengolahs.find(
+        (unit) => unit.id.toString() === filterUnitPengolah,
+    );
+    const lockedUnitPengolahFilter = isUnitPengolahLocked ? String(userUnitPengolahId) : '';
+    const hasResettableFilters = Boolean(
+        search.trim() ||
+        filterKlasifikasi ||
+        (!isUnitPengolahLocked && filterUnitPengolah) ||
+        Number(perPage) !== 10,
+    );
     
     // Check if user can edit/delete a specific berkas arsip
     // Admin can edit/delete all, regular users can only edit/delete their own unit's berkas
@@ -163,16 +176,28 @@ export default function BerkasArsipIndex() {
         return userUnitPengolahId === null || item.unit_pengolah_id === userUnitPengolahId;
     };
 
+    const buildIndexParams = ({
+        nextSearch = search,
+        nextKlasifikasi = filterKlasifikasi,
+        nextUnitPengolah = filterUnitPengolah,
+        nextPerPage = perPage,
+    }: {
+        nextSearch?: string;
+        nextKlasifikasi?: string;
+        nextUnitPengolah?: string;
+        nextPerPage?: number;
+    } = {}) => ({
+        search: nextSearch.trim() || undefined,
+        klasifikasi_id: nextKlasifikasi || undefined,
+        unit_pengolah_id: (isUnitPengolahLocked ? lockedUnitPengolahFilter : nextUnitPengolah) || undefined,
+        per_page: nextPerPage,
+    });
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         router.get(
             '/berkas-arsip',
-            { 
-                search, 
-                klasifikasi_id: filterKlasifikasi || undefined,
-                unit_pengolah_id: filterUnitPengolah || undefined,
-                per_page: perPage
-            },
+            buildIndexParams(),
             { preserveState: true, preserveScroll: true }
         );
     };
@@ -182,22 +207,28 @@ export default function BerkasArsipIndex() {
         setPerPage(newPerPage);
         router.get(
             '/berkas-arsip',
-            { 
-                search, 
-                klasifikasi_id: filterKlasifikasi || undefined,
-                unit_pengolah_id: filterUnitPengolah || undefined,
-                per_page: newPerPage
-            },
+            buildIndexParams({ nextPerPage: newPerPage }),
             { preserveState: true, preserveScroll: true }
         );
     };
 
     const handleReset = () => {
+        const resetUnitPengolah = lockedUnitPengolahFilter;
+
         setSearch('');
         setFilterKlasifikasi('');
-        setFilterUnitPengolah('');
+        setFilterUnitPengolah(resetUnitPengolah);
         setPerPage(10);
-        router.get('/berkas-arsip');
+        router.get(
+            '/berkas-arsip',
+            buildIndexParams({
+                nextSearch: '',
+                nextKlasifikasi: '',
+                nextUnitPengolah: resetUnitPengolah,
+                nextPerPage: 10,
+            }),
+            { preserveState: true, preserveScroll: true },
+        );
     };
 
     const confirmDelete = (item: BerkasArsip) => {
@@ -290,21 +321,54 @@ export default function BerkasArsipIndex() {
                 </div>
 
                 {/* Filters */}
-                <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4 border border-gray-200 dark:border-gray-800">
+                <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                     <form onSubmit={handleSearch} className="space-y-4">
-                        <div className="grid gap-4 md:grid-cols-3">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
-                                <Input
-                                    type="text"
-                                    placeholder={'Cari nama berkas, uraian, lokasi, atau kode klasifikasi...'}
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    className="pl-10"
-                                />
+                        <div className="flex flex-col gap-3 border-b border-gray-100 pb-4 dark:border-gray-800 md:flex-row md:items-center md:justify-between">
+                            <div className="flex items-center gap-2">
+                                <Filter className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                    {'Pencarian & Filter'}
+                                </h2>
                             </div>
 
-                            <div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                <span>{'Tampilkan'}</span>
+                                <select
+                                    value={perPage}
+                                    onChange={(e) => handlePerPageChange(e.target.value)}
+                                    className="h-9 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [&>option]:bg-white [&>option]:text-gray-900 [&>option]:dark:bg-gray-800 [&>option]:dark:text-gray-100"
+                                >
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                <span>{'data'}</span>
+                            </div>
+                        </div>
+
+                        <div className="grid gap-3 lg:grid-cols-12">
+                            <div className="space-y-1.5 lg:col-span-5">
+                                <label className="text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                                    {'Kata kunci'}
+                                </label>
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                                    <Input
+                                        type="text"
+                                        placeholder={'Nama, uraian, lokasi, kode klasifikasi'}
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="pl-10"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-1.5 lg:col-span-4">
+                                <label className="text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                                    {'Klasifikasi'}
+                                </label>
                                 <Combobox
                                     options={klasifikasiFilterOptions}
                                     value={filterKlasifikasi}
@@ -316,12 +380,15 @@ export default function BerkasArsipIndex() {
                                 />
                             </div>
 
-                            <div>
+                            <div className="space-y-1.5 lg:col-span-3">
+                                <label className="text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                                    {'Unit pengolah'}
+                                </label>
                                 <select
                                     value={filterUnitPengolah}
                                     onChange={(e) => !isUnitPengolahLocked && setFilterUnitPengolah(e.target.value)}
                                     disabled={isUnitPengolahLocked}
-                                    className={`w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100 ${isUnitPengolahLocked ? 'cursor-not-allowed opacity-70' : ''}`}
+                                    className={`h-10 w-full rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 [&>option]:bg-white [&>option]:text-gray-900 [&>option]:dark:bg-gray-800 [&>option]:dark:text-gray-100 ${isUnitPengolahLocked ? 'cursor-not-allowed opacity-70' : ''}`}
                                 >
                                     {!isUnitPengolahLocked && <option value="">Semua Unit Pengolah</option>}
                                     {unitPengolahs.map((unit) => (
@@ -330,40 +397,45 @@ export default function BerkasArsipIndex() {
                                         </option>
                                     ))}
                                 </select>
-                                {isUnitPengolahLocked && (
-                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                        Unit pengolah terkunci sesuai akun Anda
-                                    </p>
-                                )}
                             </div>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-4 justify-between">
-                            <div className="flex items-center gap-3">
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'Tampilkan'}</label>
-                                <select
-                                    value={perPage}
-                                    onChange={(e) => handlePerPageChange(e.target.value)}
-                                    className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-gray-100"
-                                >
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{'data'}</label>
+                        <div className="flex flex-col gap-3 border-t border-gray-100 pt-4 dark:border-gray-800 lg:flex-row lg:items-center lg:justify-between">
+                            <div className="flex min-h-8 flex-wrap items-center gap-2 text-xs">
+                                {search.trim() && (
+                                    <span className="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                        Pencarian: {search.trim()}
+                                    </span>
+                                )}
+                                {selectedKlasifikasi && (
+                                    <span className="rounded-md bg-blue-50 px-2 py-1 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300">
+                                        Klasifikasi: {selectedKlasifikasi.kode_klasifikasi}
+                                    </span>
+                                )}
+                                {selectedUnitPengolah && (
+                                    <span className="rounded-md bg-emerald-50 px-2 py-1 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
+                                        Unit: {selectedUnitPengolah.nama_unit}
+                                        {isUnitPengolahLocked ? ' (terkunci)' : ''}
+                                    </span>
+                                )}
+                                {!search.trim() && !selectedKlasifikasi && !selectedUnitPengolah && (
+                                    <span className="text-gray-500 dark:text-gray-400">
+                                        {'Tidak ada filter aktif'}
+                                    </span>
+                                )}
                             </div>
-                            <div className="flex gap-2">
-                                <Button type="submit">
-                                    <Search className="h-4 w-4 mr-2" />
-                                    {'Cari'}
-                                </Button>
-                                {(search || filterKlasifikasi || filterUnitPengolah) && (
+
+                            <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+                                {hasResettableFilters && (
                                     <Button type="button" variant="outline" onClick={handleReset}>
+                                        <X className="mr-2 h-4 w-4" />
                                         {'Reset'}
                                     </Button>
                                 )}
+                                <Button type="submit">
+                                    <Search className="mr-2 h-4 w-4" />
+                                    {'Terapkan'}
+                                </Button>
                             </div>
                         </div>
                     </form>
