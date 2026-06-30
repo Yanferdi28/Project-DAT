@@ -2,8 +2,8 @@
 Evaluate document classifier quality with validation metrics.
 
 Usage:
-    python models/evaluate_classifier.py
-    python models/evaluate_classifier.py --data ocr-service/data/training_data.generated.json
+    .\ocr-service\.venv\Scripts\python.exe .\ocr-service\models\evaluate_classifier.py --data .\ocr-service\data\training_data.generated.json
+    ./ocr-service/.venv/bin/python ocr-service/models/evaluate_classifier.py --data ocr-service/data/training_data.generated.json
 """
 
 from __future__ import annotations
@@ -22,6 +22,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
@@ -29,6 +31,7 @@ OCR_SERVICE_DIR = os.path.dirname(os.path.dirname(__file__))
 sys.path.insert(0, OCR_SERVICE_DIR)
 
 from services.classifier import build_classifier_pipeline  # noqa: E402
+from services.classifier import normalize_training_label  # noqa: E402
 
 warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 warnings.filterwarnings("ignore", message="The number of unique classes is greater than 50%")
@@ -37,6 +40,33 @@ warnings.filterwarnings("ignore", message="The number of unique classes is great
 def build_pipeline():
     """Build a pipeline that matches the production classifier."""
     return build_classifier_pipeline()
+
+
+def load_training_rows(data_path: str) -> tuple[list[str], list[str]]:
+    with open(data_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    rows = [
+        (
+            str(item.get("text", "")).strip(),
+            normalize_training_label(item.get("label")),
+        )
+        for item in data
+        if isinstance(item, dict)
+    ]
+
+    texts = [text for text, label in rows if text and label]
+    labels = [label for text, label in rows if text and label]
+
+    return texts, labels
+
+
+def metric_summary(values: Any) -> dict[str, Any]:
+    return {
+        "mean": round(float(values.mean()), 4),
+        "std": round(float(values.std()), 4),
+        "folds": [round(float(value), 4) for value in values],
+    }
 
 
 def top_confusions(matrix: Any, labels: list[str], top_n: int = 10) -> list[dict[str, Any]]:
@@ -62,15 +92,11 @@ def top_confusions(matrix: Any, labels: list[str], top_n: int = 10) -> list[dict
     return pairs[:top_n]
 
 
-def evaluate(data_path: str, test_size: float, random_state: int) -> dict[str, Any]:
+def evaluate(data_path: str, test_size: float, random_state: int, cv_folds: int) -> dict[str, Any]:
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"Training data not found: {data_path}")
 
-    with open(data_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    texts = [item["text"] for item in data if item.get("text") and item.get("label")]
-    labels = [item["label"] for item in data if item.get("text") and item.get("label")]
+    texts, labels = load_training_rows(data_path)
 
     if len(texts) < 5:
         raise ValueError("Need at least 5 valid samples for evaluation")
@@ -97,6 +123,7 @@ def evaluate(data_path: str, test_size: float, random_state: int) -> dict[str, A
             "macro_f1": round(float(f1_score(encoded, train_pred, average="macro", zero_division=0)), 4),
         },
         "holdout": None,
+        "cross_validation": None,
     }
 
     if min_class_count < 2 or len(label_encoder.classes_) < 2:
@@ -148,6 +175,36 @@ def evaluate(data_path: str, test_size: float, random_state: int) -> dict[str, A
         },
     }
 
+    if cv_folds > 1:
+        if min_class_count < cv_folds or len(label_encoder.classes_) < 2:
+            report["cross_validation"] = {
+                "available": False,
+                "reason": f"{cv_folds}-fold stratified CV needs at least {cv_folds} samples in every class.",
+                "min_class_count": int(min_class_count),
+            }
+        else:
+            splitter = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
+            cv_scores = cross_validate(
+                build_pipeline(),
+                texts,
+                encoded,
+                cv=splitter,
+                scoring={
+                    "accuracy": "accuracy",
+                    "macro_f1": "f1_macro",
+                    "weighted_f1": "f1_weighted",
+                },
+            )
+
+            report["cross_validation"] = {
+                "available": True,
+                "folds": cv_folds,
+                "random_state": random_state,
+                "accuracy": metric_summary(cv_scores["test_accuracy"]),
+                "macro_f1": metric_summary(cv_scores["test_macro_f1"]),
+                "weighted_f1": metric_summary(cv_scores["test_weighted_f1"]),
+            }
+
     return report
 
 
@@ -165,10 +222,11 @@ def main() -> int:
     )
     parser.add_argument("--test-size", type=float, default=0.2, help="Test split ratio")
     parser.add_argument("--random-state", type=int, default=42, help="Random seed")
+    parser.add_argument("--cv-folds", type=int, default=0, help="Run stratified cross validation with N folds")
 
     args = parser.parse_args()
 
-    result = evaluate(args.data, args.test_size, args.random_state)
+    result = evaluate(args.data, args.test_size, args.random_state, max(args.cv_folds, 0))
 
     os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
     with open(args.output, "w", encoding="utf-8") as f:
@@ -188,6 +246,14 @@ def main() -> int:
         print(f"Holdout weighted_f1: {holdout['weighted_f1']}")
     else:
         print("Holdout evaluation unavailable:", holdout.get("reason", "Unknown reason"))
+
+    cross_validation = result.get("cross_validation") or {}
+    if cross_validation.get("available"):
+        print(f"{cross_validation['folds']}-fold CV accuracy: {cross_validation['accuracy']['mean']}")
+        print(f"{cross_validation['folds']}-fold CV macro_f1: {cross_validation['macro_f1']['mean']}")
+        print(f"{cross_validation['folds']}-fold CV weighted_f1: {cross_validation['weighted_f1']['mean']}")
+    elif cross_validation:
+        print("Cross validation unavailable:", cross_validation.get("reason", "Unknown reason"))
 
     return 0
 

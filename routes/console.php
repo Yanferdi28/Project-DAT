@@ -8,11 +8,21 @@ use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\Str;
 
 /**
+ * Normalise a training label to its classification code.
+ */
+$normalizeTrainingLabel = function (?string $label): string {
+    $label = trim((string) $label);
+    $code = trim(Str::before($label, '|'));
+
+    return Str::upper((string) preg_replace('/\s+/', '', $code));
+};
+
+/**
  * Build training rows from labeled archive records.
  *
  * @return array<int, array{text: string, label: string}>
  */
-$buildTrainingRows = function (bool $acceptedOnly, int $minTextLength): array {
+$buildTrainingRows = function (bool $acceptedOnly, int $minTextLength) use ($normalizeTrainingLabel): array {
     $rows = [];
 
     ArsipUnit::query()
@@ -26,7 +36,7 @@ $buildTrainingRows = function (bool $acceptedOnly, int $minTextLength): array {
             });
         })
         ->orderBy('id_berkas')
-        ->chunk(200, function ($items) use (&$rows, $minTextLength) {
+        ->chunk(200, function ($items) use (&$rows, $minTextLength, $normalizeTrainingLabel) {
             foreach ($items as $item) {
                 if (!$item->kodeKlasifikasi) {
                     continue;
@@ -43,11 +53,7 @@ $buildTrainingRows = function (bool $acceptedOnly, int $minTextLength): array {
 
                 $rows[] = [
                     'text' => $text,
-                    'label' => sprintf(
-                        '%s|%s',
-                        $item->kodeKlasifikasi->kode_klasifikasi,
-                        $item->kodeKlasifikasi->uraian
-                    ),
+                    'label' => $normalizeTrainingLabel($item->kodeKlasifikasi->kode_klasifikasi),
                 ];
             }
         });
@@ -63,7 +69,7 @@ Artisan::command('ai:export-training-data
     {--path=ocr-service/data/training_data.generated.json : Relative path for exported JSON}
     {--accepted-only : Use only rows accepted by AI, manually corrected, or manually finalized}
     {--seed-from=ocr-service/data/training_data.json : Optional seed JSON merged into exported dataset}
-    {--min-text=30 : Minimum extracted text length}', function () use ($buildTrainingRows) {
+    {--min-text=30 : Minimum extracted text length}', function () use ($buildTrainingRows, $normalizeTrainingLabel) {
     $relativePath = (string) $this->option('path');
     $acceptedOnly = (bool) $this->option('accepted-only');
     $minTextLength = max((int) $this->option('min-text'), 10);
@@ -83,13 +89,13 @@ Artisan::command('ai:export-training-data
                             && !empty($row['text'])
                             && !empty($row['label']);
                     })
-                    ->map(function ($row) {
+                    ->map(function ($row) use ($normalizeTrainingLabel) {
                         return [
                             'text' => Str::of((string) $row['text'])
                                 ->replaceMatches('/\s+/', ' ')
                                 ->trim()
                                 ->value(),
-                            'label' => trim((string) $row['label']),
+                            'label' => $normalizeTrainingLabel((string) $row['label']),
                         ];
                     })
                     ->unique(function ($row) {

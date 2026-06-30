@@ -4,8 +4,10 @@ Run this script to train or retrain the classification model.
 
 Usage:
     python train_classifier.py
+    python train_classifier.py --data ../data/training_data.generated.json
 """
 
+import argparse
 import os
 import sys
 
@@ -16,15 +18,23 @@ from services.classifier import DocumentClassifier
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Train OCR document classifier")
+    parser.add_argument(
+        "--data",
+        default=os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "data",
+            "training_data.json",
+        ),
+        help="Path to training data JSON",
+    )
+    args = parser.parse_args()
+
     print("=" * 60)
     print("Document Classifier Training")
     print("=" * 60)
 
-    data_path = os.path.join(
-        os.path.dirname(os.path.dirname(__file__)),
-        "data",
-        "training_data.json",
-    )
+    data_path = os.path.abspath(args.data)
 
     print(f"\nTraining data: {data_path}")
 

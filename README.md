@@ -198,6 +198,8 @@ Opsi penting:
 - `--seed-from=ocr-service/data/training_data.json` gabungkan data seed agar dataset tidak kosong
 - `--min-text=30` panjang minimal teks OCR
 
+Dataset export memakai `kode_klasifikasi` sebagai label utama. Label lama berbentuk `kode_klasifikasi|uraian` otomatis dinormalisasi ke kode, sehingga duplikasi seperti `HM.01.06`, `KJM.02.01`, dan `PPS.01.02` tergabung dalam kelas yang sama.
+
 ### 2. Retrain model classifier via API OCR service
 
 Pastikan OCR service aktif di `OCR_SERVICE_URL`, lalu jalankan:
@@ -217,10 +219,19 @@ Command ini akan:
 Gunakan script evaluasi untuk melihat metrik holdout (accuracy, macro F1, weighted F1, classification report, confusion matrix):
 
 ```bash
-python ocr-service/models/evaluate_classifier.py --data ocr-service/data/training_data.generated.json
+# Windows / PowerShell
+.\ocr-service\.venv\Scripts\python.exe .\ocr-service\models\evaluate_classifier.py --data .\ocr-service\data\training_data.generated.json --test-size 0.2 --cv-folds 5
+
+# Linux / macOS
+./ocr-service/.venv/bin/python ocr-service/models/evaluate_classifier.py --data ocr-service/data/training_data.generated.json --test-size 0.2 --cv-folds 5
 ```
 
 Laporan evaluasi disimpan di `ocr-service/models/evaluation_report.json`.
+Jika muncul error dependency seperti `No module named 'sklearn'`, pastikan menjalankan script dengan Python dari virtualenv OCR atau install ulang dependency:
+
+```bash
+.\ocr-service\.venv\Scripts\python.exe -m pip install -r .\ocr-service\requirements.txt
+```
 
 ### 4. Retrain otomatis mingguan
 

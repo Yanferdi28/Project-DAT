@@ -31,6 +31,17 @@ DIGIT_TRANSLATION = str.maketrans({
     "L": "1",
     "l": "1",
 })
+LABEL_CODE_PATTERN = re.compile(r"^\s*([A-Z]{1,4}\.[0-9]{2}(?:\.[0-9]{2})?)\b", re.IGNORECASE)
+
+
+def normalize_training_label(label: object) -> str:
+    """Use the classification code as the canonical training label."""
+    raw_label = str(label or "").strip()
+    code_part = raw_label.split("|", 1)[0].strip()
+    code_part = re.sub(r"\s+", "", code_part).upper()
+
+    match = LABEL_CODE_PATTERN.match(code_part)
+    return match.group(1).upper() if match else code_part
 
 
 def build_classifier_pipeline() -> Pipeline:
@@ -132,6 +143,7 @@ class DocumentClassifier:
             predictions = []
             for position, idx in enumerate(top_indices):
                 label = self.label_encoder.inverse_transform([idx])[0]
+                kode_klasifikasi, uraian = self._parse_label(label)
                 raw_probability = round(max(0.0, min(100.0, float(probabilities[idx]) * 100)), 2)
                 confidence = confidence_scores[position]
                 confidence_source = "model"
@@ -140,11 +152,9 @@ class DocumentClassifier:
                     confidence = max(confidence, self._explicit_code_confidence(probabilities[idx]))
                     confidence_source = "explicit_code"
 
-                # Parse label: format is "kode_klasifikasi|uraian"
-                parts = label.split("|", 1)
                 prediction = {
-                    "kode_klasifikasi": parts[0] if len(parts) > 0 else None,
-                    "uraian": parts[1] if len(parts) > 1 else label,
+                    "kode_klasifikasi": kode_klasifikasi,
+                    "uraian": uraian,
                     "confidence": confidence,
                     "raw_probability": raw_probability,
                     "confidence_source": confidence_source,
@@ -213,9 +223,18 @@ class DocumentClassifier:
             return {}
 
         return {
-            str(label).split("|", 1)[0]: index
+            self._parse_label(label)[0]: index
             for index, label in enumerate(self.label_encoder.classes_)
         }
+
+    @staticmethod
+    def _parse_label(label: object) -> tuple[str, Optional[str]]:
+        label_text = str(label or "").strip()
+        parts = label_text.split("|", 1)
+        kode_klasifikasi = normalize_training_label(parts[0])
+        uraian = parts[1].strip() if len(parts) > 1 and parts[1].strip() else None
+
+        return kode_klasifikasi, uraian
 
     @staticmethod
     def _normalise_code_match(match: re.Match) -> str:
@@ -258,8 +277,15 @@ class DocumentClassifier:
         with open(training_data_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        texts = [item["text"] for item in data]
-        labels = [item["label"] for item in data]
+        texts = []
+        labels = []
+        for item in data:
+            text = str(item.get("text", "")).strip()
+            label = normalize_training_label(item.get("label"))
+
+            if text and label:
+                texts.append(text)
+                labels.append(label)
 
         if len(texts) < 5:
             return {"success": False, "error": "Need at least 5 training samples"}
