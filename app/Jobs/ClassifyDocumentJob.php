@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\ArsipUnit;
 use App\Models\KodeKlasifikasi;
+use App\Services\AiClassificationSuggestionService;
 use App\Services\OcrService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,7 +37,10 @@ class ClassifyDocumentJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(OcrService $ocrService): void
+    public function handle(
+        OcrService $ocrService,
+        AiClassificationSuggestionService $aiClassificationSuggestionService,
+    ): void
     {
         $arsipUnit = ArsipUnit::find($this->arsipUnitId);
 
@@ -81,6 +85,10 @@ class ClassifyDocumentJob implements ShouldQueue
                 'ai_confidence_score' => $confidence,
                 'ai_suggestion_status' => null, // pending review
             ]);
+
+            if ($arsipUnit->status === 'diterima') {
+                $aiClassificationSuggestionService->acceptPendingSuggestion($arsipUnit->refresh());
+            }
 
             Log::info("ClassifyDocumentJob: Classification completed for ArsipUnit #{$this->arsipUnitId} - Suggested kode_klasifikasi: {$kodeKlasifikasiCode} (confidence: {$confidence}%)");
         } else {

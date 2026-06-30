@@ -1,9 +1,12 @@
 <?php
 
+use App\Jobs\ClassifyDocumentJob;
 use App\Models\ArsipUnit;
 use App\Models\BerkasArsip;
 use App\Models\KodeKlasifikasi;
 use App\Models\User;
+use App\Services\AiClassificationSuggestionService;
+use App\Services\OcrService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -498,6 +501,101 @@ test('operator can update arsip unit verification status', function () {
 
     $arsip->refresh();
     expect($arsip->status)->toBe('diterima');
+});
+
+test('accepting arsip unit status automatically accepts pending ai suggestion', function () {
+    $operator = createOperator();
+    $master = $this->masterData;
+    $suggestedKode = KodeKlasifikasi::create([
+        'kode_klasifikasi' => 'TS.04',
+        'uraian' => 'Klasifikasi Otomatis',
+        'retensi_aktif' => 2,
+        'retensi_inaktif' => 3,
+        'status_akhir' => 'Permanen',
+        'klasifikasi_keamanan' => 'Rahasia',
+    ]);
+
+    $arsip = ArsipUnit::create([
+        'kode_klasifikasi_id' => $master['kodeKlasifikasi']->id,
+        'suggested_kode_klasifikasi_id' => $suggestedKode->id,
+        'ai_suggestion_status' => null,
+        'unit_pengolah_arsip_id' => $master['unitPengolah']->id,
+        'kategori_id' => $master['kategori']->id,
+        'sub_kategori_id' => $master['subKategori']->id,
+        'uraian_informasi' => 'Pending verification with AI suggestion',
+        'tanggal' => '2025-06-15',
+        'jumlah_nilai' => 1,
+        'jumlah_satuan' => 'lembar',
+        'status' => 'pending',
+        'klasifikasi_keamanan' => 'Biasa',
+    ]);
+
+    $this->actingAs($operator)
+        ->patch("/arsip-unit/{$arsip->id_berkas}/status", [
+            'status' => 'diterima',
+        ])
+        ->assertRedirect();
+
+    $arsip->refresh();
+    expect($arsip->status)->toBe('diterima');
+    expect($arsip->kode_klasifikasi_id)->toBe($suggestedKode->id);
+    expect($arsip->klasifikasi_keamanan)->toBe('Rahasia');
+    expect($arsip->ai_suggestion_status)->toBe('accepted');
+});
+
+test('classification job automatically accepts suggestion when arsip unit is already accepted', function () {
+    $master = $this->masterData;
+    $suggestedKode = KodeKlasifikasi::create([
+        'kode_klasifikasi' => 'TS.05',
+        'uraian' => 'Klasifikasi Dari Job',
+        'retensi_aktif' => 2,
+        'retensi_inaktif' => 3,
+        'status_akhir' => 'Permanen',
+        'klasifikasi_keamanan' => 'Rahasia',
+    ]);
+
+    $arsip = ArsipUnit::create([
+        'kode_klasifikasi_id' => $master['kodeKlasifikasi']->id,
+        'unit_pengolah_arsip_id' => $master['unitPengolah']->id,
+        'kategori_id' => $master['kategori']->id,
+        'sub_kategori_id' => $master['subKategori']->id,
+        'uraian_informasi' => 'Accepted before classification',
+        'tanggal' => '2025-06-15',
+        'jumlah_nilai' => 1,
+        'jumlah_satuan' => 'lembar',
+        'status' => 'diterima',
+        'klasifikasi_keamanan' => 'Biasa',
+        'extracted_text' => 'contoh teks hasil ocr',
+    ]);
+
+    $ocrService = \Mockery::mock(OcrService::class);
+    $ocrService->shouldReceive('classifyText')
+        ->once()
+        ->with('contoh teks hasil ocr')
+        ->andReturn([
+            'success' => true,
+            'top_prediction' => [
+                'kode_klasifikasi' => $suggestedKode->kode_klasifikasi,
+                'confidence' => 95,
+            ],
+            'predictions' => [
+                [
+                    'kode_klasifikasi' => $suggestedKode->kode_klasifikasi,
+                    'confidence' => 95,
+                ],
+            ],
+        ]);
+
+    (new ClassifyDocumentJob($arsip->id_berkas))->handle(
+        $ocrService,
+        app(AiClassificationSuggestionService::class),
+    );
+
+    $arsip->refresh();
+    expect($arsip->suggested_kode_klasifikasi_id)->toBe($suggestedKode->id);
+    expect($arsip->kode_klasifikasi_id)->toBe($suggestedKode->id);
+    expect($arsip->klasifikasi_keamanan)->toBe('Rahasia');
+    expect($arsip->ai_suggestion_status)->toBe('accepted');
 });
 
 test('user cannot update arsip unit verification status', function () {

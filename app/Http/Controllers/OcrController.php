@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ProcessOcrJob;
 use App\Models\ArsipUnit;
+use App\Services\AiClassificationSuggestionService;
 use App\Services\OcrService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,7 +13,8 @@ use Illuminate\Http\Request;
 class OcrController extends Controller
 {
     public function __construct(
-        protected OcrService $ocrService
+        protected OcrService $ocrService,
+        protected AiClassificationSuggestionService $aiClassificationSuggestionService,
     ) {}
 
     /**
@@ -76,15 +78,7 @@ class OcrController extends Controller
             return redirect()->back()->with('error', 'Tidak ada saran klasifikasi AI.');
         }
 
-        $klasifikasiKeamanan = \App\Models\KodeKlasifikasi::whereKey($arsipUnit->suggested_kode_klasifikasi_id)
-            ->value('klasifikasi_keamanan');
-
-        // Apply the AI suggestion to the actual kode_klasifikasi field
-        $arsipUnit->update([
-            'kode_klasifikasi_id' => $arsipUnit->suggested_kode_klasifikasi_id,
-            'klasifikasi_keamanan' => $klasifikasiKeamanan,
-            'ai_suggestion_status' => 'accepted',
-        ]);
+        $this->aiClassificationSuggestionService->acceptSuggestion($arsipUnit);
 
         return redirect()->back()->with('success', 'Saran klasifikasi AI diterima dan diterapkan.');
     }

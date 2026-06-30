@@ -8,23 +8,23 @@
     @endphp
     <style>
         @page {
-            margin: 15mm 10mm;
+            margin: 10mm 8mm;
         }
         body {
             font-family: Arial, sans-serif;
-            font-size: 9pt;
-            line-height: 1.3;
+            font-size: 8.5pt;
+            line-height: 1.2;
             color: #1a365d;
         }
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border-bottom: 2px solid #1a365d;
-            padding-bottom: 15px;
+            padding-bottom: 8px;
         }
         .header h3 {
-            margin: 3px 0;
-            font-size: 14pt;
+            margin: 2px 0;
+            font-size: 13pt;
             font-weight: bold;
             color: #1a365d;
         }
@@ -35,26 +35,26 @@
         }
         .section-title {
             background-color: #e9ecef;
-            padding: 8px 12px;
+            padding: 6px 10px;
             font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 7px;
             border-left: 4px solid #1a365d;
-            font-size: 11pt;
+            font-size: 9pt;
         }
         .summary-box {
             display: table;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         .summary-item {
             display: table-cell;
-            padding: 10px;
+            padding: 6px 8px;
             text-align: center;
             border: 1px solid #1a365d;
         }
         .summary-item .number {
-            font-size: 18pt;
+            font-size: 15pt;
             font-weight: bold;
             color: #1a365d;
         }
@@ -71,11 +71,11 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         th, td {
             border: 1px solid #1a365d;
-            padding: 6px 8px;
+            padding: 4px 7px;
             vertical-align: middle;
         }
         th {
@@ -91,33 +91,33 @@
         .text-center { text-align: center; }
         .bar-container {
             background-color: #e2e8f0;
-            height: 14px;
-            border-radius: 7px;
+            height: 10px;
+            border-radius: 5px;
             overflow: hidden;
         }
         .bar-fill-blue {
             background-color: #3182ce;
             height: 100%;
-            border-radius: 7px;
+            border-radius: 5px;
         }
         .bar-fill-purple {
             background-color: #805ad5;
             height: 100%;
-            border-radius: 7px;
+            border-radius: 5px;
         }
         .highlight-box {
-            padding: 15px;
+            padding: 9px;
             border-radius: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             text-align: center;
         }
         .highlight-box .big-number {
-            font-size: 24pt;
+            font-size: 20pt;
             font-weight: bold;
         }
         .highlight-box .label {
-            font-size: 10pt;
-            margin-top: 5px;
+            font-size: 8pt;
+            margin-top: 3px;
         }
         .two-col {
             display: table;
@@ -130,12 +130,12 @@
             vertical-align: top;
         }
         .footer {
-            margin-top: 20px;
+            margin-top: 6px;
             text-align: right;
             font-size: 8pt;
             color: #666;
             border-top: 1px solid #ddd;
-            padding-top: 10px;
+            padding-top: 6px;
         }
     </style>
 </head>
@@ -277,10 +277,14 @@
         </tbody>
     </table>
 
-    @include('pdf.partials.report-signature', ['reportCreator' => $reportCreator])
-
     <div class="footer">
         Dicetak pada: {{ \Carbon\Carbon::now()->translatedFormat('d F Y H:i') }} WIB
     </div>
+
+    @include('pdf.partials.report-signature', [
+        'reportCreator' => $reportCreator,
+        'signatureMarginTop' => 4,
+        'signatureSpacerHeight' => 18,
+    ])
 </body>
 </html>

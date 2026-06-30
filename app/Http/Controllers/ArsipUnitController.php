@@ -12,6 +12,7 @@ use App\Models\UnitPengolah;
 use App\Models\BerkasArsip;
 use App\Models\Kategori;
 use App\Models\SubKategori;
+use App\Services\AiClassificationSuggestionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -339,7 +340,11 @@ class ArsipUnitController extends Controller
     /**
      * Update the status of the specified resource.
      */
-    public function updateStatus(Request $request, ArsipUnit $arsipUnit): RedirectResponse
+    public function updateStatus(
+        Request $request,
+        ArsipUnit $arsipUnit,
+        AiClassificationSuggestionService $aiClassificationSuggestionService,
+    ): RedirectResponse
     {
         $validated = $request->validate([
             'status' => 'required|in:pending,diterima,ditolak',
@@ -362,6 +367,10 @@ class ArsipUnitController extends Controller
 
         $oldStatus = $arsipUnit->status;
         $arsipUnit->update($updateData);
+
+        if ($validated['status'] === 'diterima') {
+            $aiClassificationSuggestionService->acceptPendingSuggestion($arsipUnit->refresh());
+        }
 
         ActivityLog::log(
             'status_changed',
