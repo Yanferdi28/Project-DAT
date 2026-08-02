@@ -9,11 +9,15 @@ import json
 import joblib
 import numpy as np
 import re
+import warnings
 from typing import Optional
+from sklearn.exceptions import InconsistentVersionWarning
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import FeatureUnion, Pipeline
+
+warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
 
 logger = logging.getLogger(__name__)
 

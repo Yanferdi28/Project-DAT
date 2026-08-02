@@ -21,7 +21,6 @@ ROOT_DIR = Path(__file__).resolve().parent
 OCR_DIR = ROOT_DIR / "ocr-service"
 VENV_DIR = ROOT_DIR / ".venv"
 OCR_VENV_DIR = OCR_DIR / ".venv"
-VITE_BIN = ROOT_DIR / "node_modules" / ".bin" / ("vite.cmd" if sys.platform == "win32" else "vite")
 
 # Parse .env file to get OCR port
 def _parse_dotenv():
@@ -77,13 +76,13 @@ SERVICES = [
     },
     {
         "name": "Vite",
-        "cmd": [str(VITE_BIN)],
+        "cmd": ["npm", "run", "dev"],
         "cwd": ROOT_DIR,
         "color": "\033[93m",  # yellow
     },
     {
         "name": "OCR",
-        "cmd": [PYTHON, "-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", OCR_PORT, "--reload"],
+        "cmd": [PYTHON, "-u", "-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", OCR_PORT, "--reload"],
         "cwd": OCR_DIR,
         "color": "\033[92m",  # green
     },
@@ -130,7 +129,7 @@ def check_prerequisites():
     missing = []
     if not shutil.which("php"):
         missing.append("php")
-    if not shutil.which("node"):
+    if not shutil.which("node") and not shutil.which("npm"):
         missing.append("node / npm")
     if missing:
         print(f"{RED}[ERROR]{RESET} Tools berikut belum terinstall: {', '.join(missing)}")
@@ -139,11 +138,11 @@ def check_prerequisites():
     # Cek vendor & node_modules
     if not (ROOT_DIR / "vendor" / "autoload.php").exists():
         print(f"{BOLD}[SETUP]{RESET} Menjalankan composer install...")
-        subprocess.run(["composer", "install"], cwd=ROOT_DIR, check=True)
+        subprocess.run(_resolve_cmd(["composer", "install"]), cwd=ROOT_DIR, check=True)
 
     if not (ROOT_DIR / "node_modules").exists():
         print(f"{BOLD}[SETUP]{RESET} Menjalankan npm install...")
-        subprocess.run(["npm", "install"], cwd=ROOT_DIR, check=True)
+        subprocess.run(_resolve_cmd(["npm", "install"]), cwd=ROOT_DIR, check=True)
 
     # Bersihkan port dari proses zombie sebelumnya
     for port in [8000, int(OCR_PORT)]:
@@ -151,13 +150,21 @@ def check_prerequisites():
 
 
 def prefix_output(proc, name, color):
-    """Baca stdout dari process dan tambahkan prefix berwarna."""
+    """Baca stdout dari process dan tambahkan prefix berwarna secara real-time."""
     tag = f"{color}{BOLD}[{name:>7}]{RESET} "
     try:
         for line in iter(proc.stdout.readline, ""):
             if not line:
                 break
-            print(f"{tag}{line}", end="", flush=True)
+            # Tangani \r (carriage return) dari progress bar / CLI updates agar prefix tidak terdistorsi
+            clean_lines = line.replace("\r\n", "\n").replace("\r", "\n").splitlines(keepends=True)
+            for subline in clean_lines:
+                if subline == "\n":
+                    print(f"{tag}\n", end="", flush=True)
+                elif subline.strip():
+                    if not subline.endswith("\n"):
+                        subline += "\n"
+                    print(f"{tag}{subline}", end="", flush=True)
     except (ValueError, OSError):
         pass
 
@@ -179,6 +186,11 @@ def start_all():
     print(f"{BOLD}Starting services...{RESET}\n")
 
     env = os.environ.copy()
+    # Force unbuffered output so logs appear instantly
+    env["PYTHONUNBUFFERED"] = "1"
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["FORCE_COLOR"] = "1"
+    env["NPM_CONFIG_COLOR"] = "always"
 
     for svc in SERVICES:
         resolved_cmd = _resolve_cmd(svc["cmd"])
@@ -187,6 +199,7 @@ def start_all():
             cwd=svc["cwd"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
+            bufsize=1,  # Line buffered
             text=True,
             encoding="utf-8",
             errors="replace",
