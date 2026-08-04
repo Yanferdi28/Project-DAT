@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { Link, router, usePage } from '@inertiajs/react';
-import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye, Search, QrCode } from 'lucide-react';
+import { ArrowLeft, SquarePen, Plus, Trash2, FileText, Eye, Search, QrCode, Check } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { QrCodeLabelDialog } from '@/components/qr-code-label';
@@ -12,13 +12,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 
 interface KodeKlasifikasi {
     id: number;
@@ -93,7 +86,7 @@ export default function Show() {
         open: false,
         arsipUnit: null,
     });
-    const [selectedArsipUnitId, setSelectedArsipUnitId] = useState<string>('');
+    const [selectedArsipUnitIds, setSelectedArsipUnitIds] = useState<number[]>([]);
     const [arsipUnitSearch, setArsipUnitSearch] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [isRemoving, setIsRemoving] = useState(false);
@@ -116,17 +109,17 @@ export default function Show() {
         );
     });
 
-    const handleAddArsipUnit = () => {
-        if (!selectedArsipUnitId) return;
+    const handleBulkAddArsipUnits = () => {
+        if (selectedArsipUnitIds.length === 0) return;
 
         setIsAdding(true);
         router.post(
-            `/berkas-arsip/${berkasArsip.nomor_berkas}/add-arsip-unit`,
-            { arsip_unit_id: selectedArsipUnitId },
+            `/berkas-arsip/${berkasArsip.nomor_berkas}/bulk-add-arsip-unit`,
+            { arsip_unit_ids: selectedArsipUnitIds },
             {
                 onSuccess: () => {
                     setAddDialog(false);
-                    setSelectedArsipUnitId('');
+                    setSelectedArsipUnitIds([]);
                     setArsipUnitSearch('');
                 },
                 onFinish: () => {
@@ -134,6 +127,20 @@ export default function Show() {
                 },
             }
         );
+    };
+
+    const toggleArsipUnit = (id: number) => {
+        setSelectedArsipUnitIds((prev) =>
+            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+        );
+    };
+
+    const toggleSelectAll = () => {
+        if (selectedArsipUnitIds.length === filteredArsipUnits.length) {
+            setSelectedArsipUnitIds([]);
+        } else {
+            setSelectedArsipUnitIds(filteredArsipUnits.map((a) => a.id_berkas));
+        }
     };
 
     const handleRemoveArsipUnit = () => {
@@ -188,9 +195,7 @@ export default function Show() {
         return arsip.uraian_informasi || 'Tanpa uraian informasi';
     };
 
-    const selectedArsipUnit = availableArsipUnits.find(
-        (arsip) => arsip.id_berkas.toString() === selectedArsipUnitId
-    );
+
 
     return (
         <AppLayout
@@ -463,20 +468,17 @@ export default function Show() {
             </div>
 
             {/* Add Arsip Unit Dialog */}
-            <Dialog open={addDialog} onOpenChange={setAddDialog}>
+            <Dialog open={addDialog} onOpenChange={(open) => { setAddDialog(open); if (!open) { setSelectedArsipUnitIds([]); setArsipUnitSearch(''); } }}>
                 <DialogContent className="w-[calc(100vw-2rem)] overflow-hidden sm:max-w-xl">
                     <DialogHeader className="min-w-0">
                         <DialogTitle>Tambah Arsip Unit ke Berkas</DialogTitle>
                         <DialogDescription className="max-w-full">
-                            Pilih arsip unit yang akan ditambahkan ke berkas arsip ini. Hanya arsip unit dengan kode klasifikasi dan unit pengolah yang sama yang ditampilkan.
+                            Centang arsip unit yang ingin ditambahkan. Hanya arsip unit dengan kode klasifikasi dan unit pengolah yang sama yang ditampilkan.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="min-w-0 py-4">
-                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Arsip Unit
-                        </label>
                         {availableArsipUnits.length > 0 ? (
-                            <div className="min-w-0 space-y-2">
+                            <div className="min-w-0 space-y-3">
                                 <div className="relative min-w-0">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                                     <input
@@ -487,46 +489,70 @@ export default function Show() {
                                         className="block w-full min-w-0 rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
                                     />
                                 </div>
-                                {filteredArsipUnits.length === 0 ? (
-                                    <div className="rounded-lg border border-gray-300 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-800">
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                                            Tidak ada arsip unit yang cocok dengan pencarian "{arsipUnitSearch}"
-                                        </p>
+                                {filteredArsipUnits.length > 0 && (
+                                    <div className="flex items-center justify-between">
+                                        <button
+                                            type="button"
+                                            onClick={toggleSelectAll}
+                                            className="text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                                        >
+                                            {selectedArsipUnitIds.length === filteredArsipUnits.length ? 'Batal pilih semua' : 'Pilih semua'}
+                                        </button>
+                                        {selectedArsipUnitIds.length > 0 && (
+                                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                {selectedArsipUnitIds.length} dipilih
+                                            </span>
+                                        )}
                                     </div>
-                                ) : (
-                                    <Select value={selectedArsipUnitId} onValueChange={setSelectedArsipUnitId}>
-                                        <SelectTrigger className="h-10 w-full min-w-0 max-w-full overflow-hidden">
-                                            {selectedArsipUnit ? (
-                                                <SelectValue className="min-w-0 flex-1 overflow-hidden">
-                                                    <span className="block min-w-0 max-w-full truncate text-left">
-                                                        {getArsipUnitTitle(selectedArsipUnit)}
-                                                    </span>
-                                                </SelectValue>
-                                            ) : (
-                                                <SelectValue className="min-w-0 flex-1 overflow-hidden" placeholder="Pilih arsip unit..." />
-                                            )}
-                                        </SelectTrigger>
-                                        <SelectContent className="w-[var(--radix-select-trigger-width)] max-w-[calc(100vw-2rem)]">
-                                            {filteredArsipUnits.map((arsip) => (
-                                                <SelectItem
-                                                    key={arsip.id_berkas}
-                                                    value={arsip.id_berkas.toString()}
-                                                    textValue={getArsipUnitTitle(arsip)}
-                                                    className="min-w-0 items-start py-2 pr-8"
-                                                >
-                                                    <div className="min-w-0 max-w-full overflow-hidden">
-                                                        <span className="block truncate font-medium text-gray-900 dark:text-gray-100">
-                                                            {getArsipUnitTitle(arsip)}
-                                                        </span>
-                                                        <span className="mt-0.5 block truncate text-xs text-gray-500 dark:text-gray-400">
-                                                            {getArsipUnitSummary(arsip)}
-                                                        </span>
-                                                    </div>
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
                                 )}
+                                <div className="max-h-72 space-y-1 overflow-y-auto rounded-lg border border-gray-200 p-1 dark:border-gray-700">
+                                    {filteredArsipUnits.length === 0 ? (
+                                        <div className="p-3">
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                Tidak ada arsip unit yang cocok dengan pencarian "{arsipUnitSearch}"
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        filteredArsipUnits.map((arsip) => {
+                                            const isChecked = selectedArsipUnitIds.includes(arsip.id_berkas);
+                                            return (
+                                                <button
+                                                    key={arsip.id_berkas}
+                                                    type="button"
+                                                    onClick={() => toggleArsipUnit(arsip.id_berkas)}
+                                                    className={`flex w-full items-start gap-3 rounded-md px-3 py-2.5 text-left transition-colors ${
+                                                        isChecked
+                                                            ? 'bg-blue-50 dark:bg-blue-900/20'
+                                                            : 'hover:bg-gray-50 dark:hover:bg-gray-800'
+                                                    }`}
+                                                >
+                                                    <div className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
+                                                        isChecked
+                                                            ? 'border-blue-600 bg-blue-600 text-white'
+                                                            : 'border-gray-300 dark:border-gray-600'
+                                                    }`}>
+                                                        {isChecked && <Check className="h-3 w-3" />}
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <div className="flex items-center gap-2">
+                                                            {arsip.kode_klasifikasi && (
+                                                                <span className="inline-flex shrink-0 items-center rounded bg-blue-100 px-1.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
+                                                                    {arsip.kode_klasifikasi.kode_klasifikasi}
+                                                                </span>
+                                                            )}
+                                                            <span className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                                {getArsipUnitTitle(arsip)}
+                                                            </span>
+                                                        </div>
+                                                        <p className="mt-0.5 truncate text-xs text-gray-500 dark:text-gray-400">
+                                                            {getArsipUnitSummary(arsip)}
+                                                        </p>
+                                                    </div>
+                                                </button>
+                                            );
+                                        })
+                                    )}
+                                </div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">
                                     Menampilkan {filteredArsipUnits.length} dari {availableArsipUnits.length} arsip unit
                                 </p>
@@ -541,7 +567,7 @@ export default function Show() {
                         <button
                             onClick={() => {
                                 setAddDialog(false);
-                                setSelectedArsipUnitId('');
+                                setSelectedArsipUnitIds([]);
                                 setArsipUnitSearch('');
                             }}
                             disabled={isAdding}
@@ -550,11 +576,11 @@ export default function Show() {
                             {'Batal'}
                         </button>
                         <button
-                            onClick={handleAddArsipUnit}
-                            disabled={isAdding || !selectedArsipUnitId}
+                            onClick={handleBulkAddArsipUnits}
+                            disabled={isAdding || selectedArsipUnitIds.length === 0}
                             className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {isAdding ? 'Menyimpan...' : 'Tambahkan'}
+                            {isAdding ? 'Menyimpan...' : `Tambahkan ${selectedArsipUnitIds.length > 0 ? `(${selectedArsipUnitIds.length})` : ''}`}
                         </button>
                     </DialogFooter>
                 </DialogContent>

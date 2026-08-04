@@ -70,7 +70,7 @@ SERVICES = [
     },
     {
         "name": "Queue",
-        "cmd": ["php", "artisan", "queue:listen", "--tries=1"],
+        "cmd": ["php", "artisan", "queue:listen", "--tries=1", "--timeout=300"],
         "cwd": ROOT_DIR,
         "color": "\033[95m",  # magenta
     },
@@ -82,7 +82,7 @@ SERVICES = [
     },
     {
         "name": "OCR",
-        "cmd": [PYTHON, "-u", "-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", OCR_PORT, "--reload"],
+        "cmd": [PYTHON, "-u", "-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", OCR_PORT, "--reload", "--reload-include", "*.py"],
         "cwd": OCR_DIR,
         "color": "\033[92m",  # green
     },

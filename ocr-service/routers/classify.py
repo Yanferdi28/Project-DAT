@@ -46,7 +46,8 @@ async def predict_category(request: ClassifyRequest):
     
     # Fallback to regex extraction if LLM is not configured or fails
     if not extracted_fields:
-        extracted_fields = extractor.extract_all(request.text)
+        extractor_instance = TextFieldExtractor()
+        extracted_fields = extractor_instance.extract_all(request.text)
 
     result = classifier.predict(request.text)
 

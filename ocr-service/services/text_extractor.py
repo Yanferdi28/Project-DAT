@@ -43,10 +43,13 @@ class TextFieldExtractor:
                 "uraian_informasi": None,
             }
 
+        # Remove OCR page headers like "--- Halaman 1 ---"
+        clean_text = re.sub(r'---\s*Halaman\s*\d+\s*---', '', text, flags=re.IGNORECASE)
+
         return {
-            "indeks": self.extract_indeks(text),
-            "tanggal": self.extract_tanggal(text),
-            "uraian_informasi": self.extract_uraian_informasi(text),
+            "indeks": self.extract_indeks(clean_text),
+            "tanggal": self.extract_tanggal(clean_text),
+            "uraian_informasi": self.extract_uraian_informasi(clean_text),
         }
 
     # ------------------------------------------------------------------
@@ -55,35 +58,57 @@ class TextFieldExtractor:
 
     def extract_indeks(self, text: str) -> Optional[str]:
         """
-        Extract the document subject / perihal (what the document is about).
-        This is NOT the document number — it is the brief topic description.
+        Extract the document subject / perihal combined with document date.
+        Format: [Perihal/Judul], [Tanggal Dokumen]
         """
-        # Strategy 1: Look for labeled subject fields (highest priority)
-        # These patterns allow optional colon and OCR artifacts before the colon
-        labeled = self._try_labeled_indeks(text)
-        if labeled:
-            return labeled[:255]
+        if not text or len(text.strip()) < 5:
+            return None
 
-        # Strategy 2: Document-type specific extraction
-        doctype = self._try_doctype_indeks(text)
-        if doctype:
-            return doctype[:255]
+        # 1. Primary subject from Perihal / Hal / Ringkasan / Title
+        subject = self._try_labeled_indeks(text) or self._try_doctype_indeks(text)
 
-        # Strategy 3: Fallback — first meaningful content line
-        lines = self._get_meaningful_lines(text)
-        for line in lines[:10]:
-            if self._is_structural_line(line):
-                continue
-            if len(line) >= 15:
-                return self._clean_field(line)[:255]
+        if not subject:
+            # Fallback — first meaningful content line
+            lines = self._get_meaningful_lines(text)
+            for line in lines[:10]:
+                if self._is_structural_line(line):
+                    continue
+                if len(line) >= 15:
+                    subject = self._clean_field(line)
+                    break
 
-        return None
+        if not subject:
+            return None
+
+        # 2. Extract document date string from execution date (e.g. 20 Juli 2026)
+        iso_date = self.extract_tanggal(text)
+        date_str = None
+        if iso_date:
+            parts = iso_date.split('-')
+            if len(parts) == 3:
+                y, m, d = int(parts[0]), int(parts[1]), int(parts[2])
+                month_names_inv = {
+                    1: "Januari", 2: "Februari", 3: "Maret", 4: "April",
+                    5: "Mei", 6: "Juni", 7: "Juli", 8: "Agustus",
+                    9: "September", 10: "Oktober", 11: "November", 12: "Desember"
+                }
+                m_name = month_names_inv.get(m, str(m))
+                date_str = f"{d} {m_name} {y}"
+
+        # 3. Combine subject + date
+        subject = self._clean_indeks_title(subject)
+        if date_str and date_str.lower() not in subject.lower():
+            indeks = f"{subject}, {date_str}"
+        else:
+            indeks = subject
+
+        return self._clean_field(indeks)[:255]
 
     def _try_labeled_indeks(self, text: str) -> Optional[str]:
         """Try extracting indeks from explicitly labeled fields."""
         patterns = [
-            # "Perihal:" / "Hal:" — common in nota dinas, surat
-            (r'(?:Perihal|Hal)\s*[^a-zA-Z\n]{0,3}\s*[:]\s*(.+?)(?:\n|$)', re.IGNORECASE),
+            # "Perihal:" / "Hal:" — common in nota dinas, surat (excludes "Hal-hal")
+            (r'\b(?:Perihal|Hal)(?!-hal)\b\s*[^a-zA-Z\n]{0,3}\s*[:]\s*(.+?)(?:\n|$)', re.IGNORECASE),
             # "Ringkasan Isi" — used in disposisi. Colon may have OCR artifacts
             (r'Ringkasan\s+Isi\s*[^a-zA-Z\n]{0,5}[:]\s*(.+?)(?:\n\s*\n|\nLampiran|\nDiteruskan|$)', re.IGNORECASE | re.DOTALL),
             # "Ringkasan Isi" without colon — OCR may drop it entirely
@@ -103,6 +128,14 @@ class TextFieldExtractor:
 
     def _try_doctype_indeks(self, text: str) -> Optional[str]:
         """Try extracting indeks from document type title patterns."""
+        # For SURAT KESEPAKATAN KERJASAMA / PERJANJIAN KERJASAMA — grab full title block
+        match = re.search(
+            r'((?:SURAT\s+KESEPAKATAN|PERJANJIAN)\s+KERJASAMA.+?)(?:\n\s*Nomor|\n\s*NOMOR|\n\s*Pada\s+hari|\n\s*Yang\s+bertanda)',
+            text, re.DOTALL | re.IGNORECASE,
+        )
+        if match:
+            return self._clean_field(match.group(1))
+
         # For NOTA KESEPAKATAN — grab the full title block
         match = re.search(
             r'(NOTA\s+KESEPAKATAN\s+.+?)(?:\n\s*Nomor|\n\s*Pada\s+hari)',
@@ -128,9 +161,27 @@ class TextFieldExtractor:
     def extract_tanggal(self, text: str) -> Optional[str]:
         """
         Extract document date and return in ISO format (YYYY-MM-DD).
-        Prioritizes formal date fields (Dikeluarkan/Ditetapkan, Tgl.Penerimaan)
-        over inline dates to get the document's own date, not referenced dates.
+        Prioritizes event/execution date over letter signing/creation date.
         """
+        norm_text = text.replace('–', '-').replace('—', '-').replace('s/d', '-').replace('s.d.', '-')
+
+        # Strategy 0 (Highest Priority): Event / Execution Date (Pelaksanaan / Hari/Tanggal / pada tanggal ...)
+        execution_patterns = [
+            # "Hari/Tanggal : Senin, 20 Juli 2026" or "Tanggal Pelaksanaan : 20 Juli 2026"
+            rf'(?:Hari\s*/\s*Tangg?al|Tangg?al\s+Pelaksanaan|Pelaksanaan|Dilaksanakan\s+(?:pada)?)\s*[:]?\s*(?:[A-Za-z]+,\s*)?(\d{{1,2}})\s*(?:-\s*\d{{1,2}})?\s+({_BULAN_NAMES})\s+(\d{{4}})',
+            # "pada tanggal 24 - 28 Juli 2023" -> 24 Juli 2023
+            rf'\bpada\s+tangg?al\s+(?:[A-Za-z]+,\s*)?(\d{{1,2}})\s*(?:-\s*\d{{1,2}})?\s+({_BULAN_NAMES})\s+(\d{{4}})',
+            # "pada hari ... tanggal 20 Juli 2026"
+            rf'\bpada\b[^\n]*?\btangg?al\s+(\d{{1,2}})\s*(?:-\s*\d{{1,2}})?\s+({_BULAN_NAMES})\s+(\d{{4}})',
+        ]
+        for pattern in execution_patterns:
+            match = re.search(pattern, norm_text, re.IGNORECASE)
+            if match:
+                day, month_str, year = match.group(1), match.group(2), match.group(3)
+                parsed = self._parse_date(f"{day} {month_str} {year}")
+                if parsed:
+                    return parsed
+
         # Strategy 1: Formal issuance date ("Dikeluarkan di..., tanggal...")
         # These are the most authoritative dates on a document
         issuance_patterns = [
@@ -315,92 +366,139 @@ class TextFieldExtractor:
     def extract_uraian_informasi(self, text: str) -> Optional[str]:
         """
         Extract document description/summary.
-        Provides a more detailed summary than indeks.
+        Provides a comprehensive, informative summary of the document's contents.
         """
-        # Strategy 1: "Menimbang" section (SK, Surat Tugas)
-        match = re.search(
-            r'Menimbang\s*[^a-zA-Z\n]{0,3}[:]\s*(?:a[.\s]*)?\s*(?:bahwa\s+)?(.+?)(?:\n\s*b[.\s]|\n\s*Mengingat|\n\s*Dasar)',
-            text,
-            re.IGNORECASE | re.DOTALL,
-        )
-        if match:
-            result = self._clean_field(match.group(1))
-            if result and len(result) >= 20:
-                return result[:255]
-
-        # Strategy 2: "Ringkasan Isi" (disposisi) — colon may have OCR artifacts
-        match = re.search(
-            r'Ringkasan\s+Isi\s*[^a-zA-Z\n]{0,5}[:]\s*(.+?)(?:\nLampiran|\nDiteruskan|\n\s*\n|$)',
-            text,
-            re.IGNORECASE | re.DOTALL,
-        )
-        if match:
-            result = self._clean_field(match.group(1))
-            if result and len(result) >= 10:
-                return result[:255]
-
-        # Strategy 2b: "Ringkasan Isi" without colon
-        match = re.search(
-            r'Ringkasan\s+Isi\s+([A-Z].+?)(?:\nLampiran|\nDiteruskan|\n\s*\n|$)',
-            text,
-            re.IGNORECASE | re.DOTALL,
-        )
-        if match:
-            result = self._clean_field(match.group(1))
-            if result and len(result) >= 10:
-                return result[:255]
-
-        # Strategy 3: "Perihal:" / "Hal:"
-        match = re.search(
-            r'(?:Perihal|Hal)\s*[^a-zA-Z\n]{0,3}[:]\s*(.+?)(?:\n|$)',
-            text,
-            re.IGNORECASE,
-        )
-        if match:
-            result = self._clean_field(match.group(1))
-            if result and len(result) >= 10:
-                return result[:255]
-
-        # Strategy 4: "Bersepakat" clause (MOU/perjanjian)
-        match = re.search(
-            r'(?:Bersepakat|Sepakat|Menyepakati)\s+(.+?)(?:\n\s*\n|\n(?:Pelaksanaan|Pasal)|$)',
-            text,
-            re.IGNORECASE | re.DOTALL,
-        )
-        if match:
-            result = self._clean_field(match.group(0))  # Include "Bersepakat" for context
-            if result and len(result) >= 20:
-                return result[:255]
-
-        # Strategy 5: First meaningful paragraph (skip structural lines)
-        lines = self._get_meaningful_lines(text)
-        content_lines = []
-        for line in lines:
-            if self._is_structural_line(line):
-                continue
-            if len(line) < 15:
-                continue
-            # Skip all-uppercase short lines (headers)
-            if line.isupper() and len(line) < 80:
-                continue
-            content_lines.append(line)
-
-        if not content_lines:
+        if not text or len(text.strip()) < 10:
             return None
 
-        summary_parts = []
-        total_len = 0
-        for line in content_lines[:3]:
-            if total_len + len(line) > 255:
-                break
-            summary_parts.append(line)
-            total_len += len(line) + 1
+        lines = [l.strip() for l in text.split('\n') if l.strip()]
 
-        return ' '.join(summary_parts)[:255] if summary_parts else None
+        # 1. Extract document type title (e.g. NOTA DINAS, SURAT TUGAS, SURAT KEPUTUSAN, etc.)
+        doctype = None
+        for l in lines[:12]:
+            if re.search(r'\b(NOTA DINAS|SURAT TUGAS|SURAT KEPUTUSAN|KEPUTUSAN|PERJANJIAN KERJASAMA|PERJANJIAN|BERITA ACARA|SURAT EDARAN|PERATURAN|LAPORAN)\b', l, re.I):
+                if len(l) < 100:
+                    doctype = self._clean_field(l)
+                    break
+
+        # 2. Extract Perihal/Hal/Tentang
+        perihal = None
+        m_perihal = re.search(r'\b(?:Perihal|Hal|Tentang)(?!-hal)\b\s*[:]\s*(.+?)(?:\n|$)', text, re.I)
+        if m_perihal:
+            candidate = self._clean_field(m_perihal.group(1))
+            if candidate and not re.search(r'^(LPP|RADIO|REPUBLIK|KEPUTUSAN|LEMBAGA|hal\b)', candidate, re.I):
+                perihal = candidate
+
+        # 3. Extract explicit summary fields if available
+        ringkasan = None
+        m_ringkasan = re.search(
+            r'Ringkasan\s+Isi\s*[^a-zA-Z\n]{0,5}[:]?\s*(.+?)(?:\nLampiran|\nDiteruskan|\n\s*\n|$)',
+            text, re.I | re.S
+        )
+        if m_ringkasan:
+            ringkasan = self._clean_field(m_ringkasan.group(1))
+
+        menimbang = None
+        m_menimbang = re.search(
+            r'Menimbang\s*[^a-zA-Z\n]{0,3}[:]\s*(?:a[.\s]*)?\s*(?:bahwa\s+)?(.+?)(?:\n\s*b[.\s]|\n\s*Mengingat|\n\s*Dasar|$)',
+            text, re.I | re.S
+        )
+        if m_menimbang:
+            menimbang = self._clean_field(m_menimbang.group(1))
+
+        # 4. Extract body content lines
+        body_parts = []
+        in_body = False
+        stop_patterns = r'^(Demikian|Ditetapkan di|Dikeluarkan di|Dokumen ini telah|Tembusan:|Yogyakarta,|\bBanjarmasin,|\bJakarta,|\bNIP\b|SURAT PERMINTAAN|Pihak Pertama|Pihak Kedua)'
+        start_patterns = r'^(Sehubungan|Dalam rangka|Berdasarkan|Menimbang|Dengan ini|Pada hari|Untuk selanjutnya|MEMBERI PERINTAH|MEMUTUSKAN|Menetapkan|Kedua belah pihak)'
+
+        for l in lines:
+            if in_body and re.search(stop_patterns, l, re.I):
+                break
+            if re.search(start_patterns, l, re.I):
+                in_body = True
+            if in_body:
+                if not re.search(r'^(LEMBAGA|RADIO|REPUBLIK|BANJARMASIN|YOGYAKARTA|Nomor|Kepada|Dari|Tanggal|Tembusan)', l, re.I):
+                    if len(l) >= 5 and not self._is_structural_line(l):
+                        body_parts.append(l)
+
+        # Fallback body lines if no explicit body trigger matched
+        if not body_parts and not ringkasan and not menimbang:
+            for l in lines:
+                if self._is_structural_line(l):
+                    continue
+                if len(l) >= 15:
+                    body_parts.append(l)
+
+        # Build combined informative summary
+        summary_components = []
+        if doctype:
+            summary_components.append(doctype.title() + ".")
+        if perihal and (not doctype or perihal.lower() not in doctype.lower()):
+            summary_components.append(f"Perihal: {perihal}.")
+        if ringkasan:
+            summary_components.append(f"Ringkasan Isi: {ringkasan}.")
+        elif menimbang:
+            summary_components.append(f"Menimbang: {menimbang}.")
+
+        if body_parts:
+            body_str = self._clean_field(' '.join(body_parts))
+            if body_str:
+                summary_components.append(body_str)
+
+        result = ' '.join(summary_components).strip()
+        if not result or len(result) < 10:
+            return None
+
+        # Clean OCR artifacts, addresses, phone/email metadata for an LLM-like summary
+        cleaned_result = self._clean_uraian_text(result)
+        if not cleaned_result or len(cleaned_result) < 10:
+            return None
+
+        # Return up to 1000 characters for a rich, full summary
+        return cleaned_result[:1000]
 
     # ------------------------------------------------------------------
     # Utility
     # ------------------------------------------------------------------
+
+    def _clean_indeks_title(self, subject: Optional[str]) -> Optional[str]:
+        """Strip Kop Surat institutional noise and truncate run-on clauses to keep indeks concise."""
+        if not subject:
+            return subject
+        # Truncate run-on secondary clauses or detail field labels
+        subject = re.split(
+            r'\b(?:berkaitan\s+dengan|Nama\s+Acara|Tanggal\s*:|Tempat\s*:|Untuk\s+selanjutnya|dengan\s+ketentuan|Lp\s+RADIO)\b',
+            subject, flags=re.IGNORECASE
+        )[0]
+        # Strip Kop Surat header noise from title
+        subject = re.sub(r'^Lp\s+', '', subject, flags=re.IGNORECASE)
+        subject = re.sub(r'\s+Lp\s+', ' ', subject, flags=re.IGNORECASE)
+        subject = re.sub(r'RADIO\s+REPUBLIK\s+INDONESIA\s+\w+', '', subject, flags=re.IGNORECASE)
+        subject = re.sub(r'LPP\s+RRI\s+\w+', '', subject, flags=re.IGNORECASE)
+        # Collapse whitespace and punctuation artifacts
+        subject = re.sub(r'\s+', ' ', subject).strip(' ,.-:;!\'\"‘')
+        if len(subject) > 100:
+            subject = subject[:100].rsplit(' ', 1)[0]
+        return subject.title()
+
+    def _clean_uraian_text(self, text: Optional[str]) -> Optional[str]:
+        """Clean OCR symbol artifacts and boilerplate metadata for neat LLM-like output."""
+        if not text:
+            return text
+        # Fix OCR typos and symbol artifacts
+        text = text.replace('‘', "'").replace('’', "'").replace('—', '-').replace('|', '').replace('~', '')
+        # Remove Kop Surat addresses, phone/fax, emails
+        text = re.sub(r'Jalan\s+[^,\n]+(?:,\s*\w+)*', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'Jl\.[^,\n]+(?:,\s*\w+)*', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'(?:Telepon|Telp|Faksimile|Fax|Email|e-mail)\s*[:]?\s*[^\s,]+', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'Sekali\s+Di\s+Udara[^\n]*', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'Dipindai\s+dengan[^\n]*', '', text, flags=re.IGNORECASE)
+        # Fix double spaces and punctuation formatting
+        text = re.sub(r'\s+', ' ', text).strip()
+        text = re.sub(r'\s+([.,;:?])', r'\1', text)
+        text = re.sub(r'([.,;:])([A-Za-z])', r'\1 \2', text)
+        return text
 
     def _is_structural_line(self, line: str) -> bool:
         """Check if a line is a structural/header line to skip."""
@@ -467,6 +565,9 @@ class TextFieldExtractor:
             return None
         # Collapse whitespace and newlines into single spaces
         cleaned = re.sub(r'\s+', ' ', raw).strip()
+        # Remove page header artifacts like "--- Halaman 1 ---" or "aman 1 ---"
+        cleaned = re.sub(r'---\s*Halaman\s*\d+\s*---', '', cleaned, flags=re.IGNORECASE).strip()
+        cleaned = re.sub(r'^\s*aman\s*\d+.*', '', cleaned, flags=re.IGNORECASE).strip()
         # Remove trailing punctuation
         cleaned = cleaned.rstrip('.,;:')
         # Remove leading OCR artifacts (special chars before text)

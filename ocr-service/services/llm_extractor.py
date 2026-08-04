@@ -4,6 +4,7 @@ LLM Extractor - Uses Gemini API to extract and correct OCR text into structured 
 
 import os
 import json
+import re
 import logging
 from typing import Optional
 from dotenv import load_dotenv
@@ -25,8 +26,8 @@ class LLMExtractor:
         if self.is_configured:
             # Initialize client and models
             self.client = genai.Client(api_key=API_KEY)
-            self.model_primary = 'gemini-3.1-flash-lite'
-            self.model_fallback = 'gemini-2.5-flash'
+            self.model_primary = 'gemini-3.5-flash-lite'
+            self.model_fallback = 'gemini-3.1-flash-lite'
 
     def extract_all(self, text: str) -> Optional[dict]:
         """
@@ -39,9 +40,9 @@ class LLMExtractor:
         prompt = f"""Anda adalah asisten sistem arsip RRI. Berikut adalah teks hasil OCR dari sebuah dokumen. 
 Koreksi teks ini jika ada salah baca (typo) karena OCR yang kurang sempurna, lalu ekstrak informasi berikut ke dalam format JSON:
 
-1. "indeks": Garis besar atau perihal dokumen (dokumen ini tentang apa). BUKAN nomor surat.
+1. "indeks": Judul atau perihal dokumen SECARA SINGKAT dan jelas (maksimal 5-8 kata saja), lalu diakhiri dengan koma dan tanggal jika ada. Contoh: "Perjanjian Kerjasama Media Partner, 13 Juni 2024" atau "Apel Kedisiplinan, 20 Juli 2026". DILARANG memasukkan deskripsi panjang, rincian acara, lokasi, atau frasa run-on seperti "berkaitan dengan acara...".
 2. "tanggal": Tanggal dokumen dikeluarkan atau ditetapkan. Format harus YYYY-MM-DD.
-3. "uraian_informasi": Ringkasan detail dari isi/konteks dokumen.
+3. "uraian_informasi": Rangkuman lengkap dan rinci mengenai isi dokumen, konteks, pihak-pihak/petugas terkait, jadwal, serta poin-poin penting dari dokumen tersebut. BUKAN hanya 1-2 kata perihal. Jangan mengulang perihal/indeks secara singkat.
 
 Aturan penting:
 - Output HANYA JSON murni tanpa markdown block (```json).
@@ -78,10 +79,22 @@ Teks OCR:
             result_json = response.text.strip()
             data = json.loads(result_json)
             
+            raw_indeks = data.get("indeks")
+            if raw_indeks:
+                from services.text_extractor import TextFieldExtractor
+                raw_indeks = TextFieldExtractor()._clean_indeks_title(raw_indeks)
+
+            uraian = data.get("uraian_informasi")
+            # If LLM generated an AI complaint instead of document summary, fallback to Regex
+            complaint_patterns = r'(?:tidak\s+memungkinkan|terfragmentasi|terpotong|karakter\s+acak|tidak\s+lengkap|gagal\s+membaca|potongan\s+karakter|sangat\s+buruk|tidak\s+dapat\s+dibaca|tidak\s+dapat\s+diekstrak|teks\s+hasil\s+ocr|tidak\s+dapat\s+merangkum)'
+            if uraian and re.search(complaint_patterns, str(uraian), re.I):
+                logging.warning(f"Model {model_name} returned OCR complaint text. Rejecting LLM output for Regex fallback.")
+                return None
+
             return {
-                "indeks": data.get("indeks"),
+                "indeks": raw_indeks,
                 "tanggal": data.get("tanggal"),
-                "uraian_informasi": data.get("uraian_informasi"),
+                "uraian_informasi": uraian,
             }
         except Exception as e:
             logging.error(f"Model {model_name} failed: {str(e)}")

@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Download, Calendar, FileText, FolderOpen, User, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { ArrowLeft, Download, Calendar, FileText, FolderOpen, User, CheckCircle, XCircle, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -179,12 +179,20 @@ export default function Show({ arsipUnit, userUnitPengolahId, ocrEnabled, auth }
                                 </Link>
                             )}
                             {arsipUnit.dokumen && (
-                                <a href={`/storage/${arsipUnit.dokumen}`} target="_blank" rel="noopener noreferrer">
-                                    <Button variant="outline" size="sm">
-                                        <Download className="mr-2 h-4 w-4" />
-                                        {'Download Dokumen'}
-                                    </Button>
-                                </a>
+                                <>
+                                    <a href={`/file/preview/${arsipUnit.dokumen}`} target="_blank" rel="noopener noreferrer">
+                                        <Button variant="outline" size="sm">
+                                            <Eye className="mr-2 h-4 w-4" />
+                                            {'Lihat Dokumen'}
+                                        </Button>
+                                    </a>
+                                    <a href={`/storage/${arsipUnit.dokumen}`} download>
+                                        <Button variant="outline" size="sm">
+                                            <Download className="mr-2 h-4 w-4" />
+                                            {'Download'}
+                                        </Button>
+                                    </a>
+                                </>
                             )}
                         </div>
                     </div>

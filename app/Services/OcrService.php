@@ -56,6 +56,7 @@ class OcrService
      */
     public function extractText(string $filePath, ?string $engine = null): array
     {
+        @set_time_limit(180);
         try {
             $fullPath = Storage::disk('public')->path($filePath);
 
@@ -224,6 +225,7 @@ class OcrService
      */
     public function extractTextFromUpload(\Illuminate\Http\UploadedFile $file, ?string $engine = null): array
     {
+        @set_time_limit(180);
         try {
             $maxSize = config('ocr.max_file_size', 10 * 1024 * 1024);
             if ($file->getSize() > $maxSize) {

@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('berkas-arsip/export/penyusutan', [BerkasArsipController::class, 'exportPenyusutanPdf'])->name('berkas-arsip.export-penyusutan');
     Route::resource('berkas-arsip', BerkasArsipController::class);
     Route::post('berkas-arsip/{berkasArsip}/add-arsip-unit', [BerkasArsipController::class, 'addArsipUnit'])->name('berkas-arsip.add-arsip-unit');
+    Route::post('berkas-arsip/{berkasArsip}/bulk-add-arsip-unit', [BerkasArsipController::class, 'bulkAddArsipUnits'])->name('berkas-arsip.bulk-add-arsip-unit');
     Route::delete('berkas-arsip/{berkasArsip}/remove-arsip-unit/{arsipUnit}', [BerkasArsipController::class, 'removeArsipUnit'])->name('berkas-arsip.remove-arsip-unit');
 
     // Peminjaman Arsip routes (accessible by all authenticated users)

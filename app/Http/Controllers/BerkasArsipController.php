@@ -269,6 +269,27 @@ class BerkasArsipController extends Controller
     }
 
     /**
+     * Bulk add multiple arsip units to berkas arsip.
+     */
+    public function bulkAddArsipUnits(Request $request, BerkasArsip $berkasArsip)
+    {
+        $this->checkRestrictedRole();
+
+        $validated = $request->validate([
+            'arsip_unit_ids' => 'required|array|min:1',
+            'arsip_unit_ids.*' => 'exists:arsip_unit,id_berkas',
+        ]);
+
+        \App\Models\ArsipUnit::whereIn('id_berkas', $validated['arsip_unit_ids'])
+            ->update(['berkas_arsip_id' => $berkasArsip->nomor_berkas]);
+
+        $count = count($validated['arsip_unit_ids']);
+
+        return redirect()->back()
+            ->with('success', "{$count} arsip unit berhasil ditambahkan ke berkas arsip.");
+    }
+
+    /**
      * Remove arsip unit from berkas arsip.
      */
     public function removeArsipUnit(BerkasArsip $berkasArsip, \App\Models\ArsipUnit $arsipUnit)

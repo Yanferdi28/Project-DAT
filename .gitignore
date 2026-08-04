@@ -28,6 +28,7 @@ yarn-error.log
 /.zed
 /.antigravitycli
 /docs-reference
+/Docs RRI
 
 # Python
 __pycache__/

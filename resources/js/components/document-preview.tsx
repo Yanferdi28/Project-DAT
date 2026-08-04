@@ -195,7 +195,7 @@ export function DocumentPreview({
                 ) : isPdf(dokumen) ? (
                     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
                         <iframe
-                            src={`${storageUrl}#view=FitH`}
+                            src={`${previewUrl}#view=FitH`}
                             className="w-full min-h-[300px]"
                             title="PDF Preview"
                             style={{ border: 'none' }}

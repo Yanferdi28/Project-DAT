@@ -122,6 +122,8 @@ class OcrController extends Controller
      */
     public function scanDocument(Request $request): JsonResponse
     {
+        @set_time_limit(180);
+
         $request->validate(
             [
                 'dokumen' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
