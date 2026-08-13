@@ -419,6 +419,10 @@ class ArsipUnitController extends Controller
      */
     public function assignToBerkas(Request $request, ArsipUnit $arsipUnit): RedirectResponse
     {
+        if ($request->user()->role === 'operator') {
+            abort(403, 'Operator tidak memiliki akses untuk memasukkan arsip ke berkas.');
+        }
+
         $validated = $request->validate([
             'berkas_arsip_id' => 'required|exists:berkas_arsip,nomor_berkas',
         ]);

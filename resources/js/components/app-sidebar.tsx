@@ -375,6 +375,12 @@ export function AppSidebar({
                                             <p className="truncate text-xs text-gray-600 dark:text-gray-400">
                                                 {auth.user?.email}
                                             </p>
+                                            {(auth.user as any)?.unit_pengolah && (
+                                                <p className="truncate text-xs text-blue-600 dark:text-blue-400">
+                                                    <Building2 className="mr-1 inline h-3 w-3" />
+                                                    {(auth.user as any).unit_pengolah.nama_unit}
+                                                </p>
+                                            )}
                                         </div>
                                         <ChevronDown className={'h-4 w-4 text-gray-500 transition-transform ' + (isProfileMenuOpen ? 'rotate-180' : '')} />
                                     </>

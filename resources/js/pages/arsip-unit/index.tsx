@@ -593,7 +593,7 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
                                 <ContentSearch
                                     value={contentSearch}
                                     onChange={setContentSearch}
-                                    onSearch={() => handleSearch({ preventDefault: () => {} } as React.FormEvent)}
+                                    onSearch={() => handleSearch({ preventDefault: () => { } } as React.FormEvent)}
                                     onClear={() => {
                                         setContentSearch('');
                                         router.get('/arsip-unit', { search, status, publish_status: publishStatus, per_page: perPage }, { preserveState: true, preserveScroll: true });
@@ -668,7 +668,7 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
                                             {'OCR'}
                                         </th>
                                     )}
-                                    <th className="sticky right-0 bg-gray-100 dark:bg-gray-800 px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-[-2px_0_4px_rgba(0,0,0,0.1)]">
+                                    <th className="sticky right-0 bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                         {'Aksi'}
                                     </th>
                                 </tr>
@@ -825,7 +825,7 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
                                                     <OcrStatusBadge status={item.ocr_status as any} />
                                                 </td>
                                             )}
-                                            <td className="sticky right-0 bg-white dark:bg-gray-900 px-6 py-4 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]" onClick={(e) => e.stopPropagation()}>
+                                            <td className="sticky right-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm px-6 py-4" onClick={(e) => e.stopPropagation()}>
                                                 <div className="flex items-center justify-center gap-2">
                                                     {canAssignBerkas && (
                                                         <Button
