@@ -207,15 +207,22 @@ class OcrEngine:
             return pytesseract.get_languages()
         except Exception:
             return []
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 class EasyOcrEngine:
     """Wrapper around EasyOCR for text extraction."""
 
     def __init__(self, lang: list[str] = None, gpu: bool = False):
+<<<<<<< Updated upstream
         if lang is None:
             lang = ["en"]
         self.lang = lang
+=======
+        self.lang = lang or ["en"]
+>>>>>>> Stashed changes
         self.gpu = gpu
         self._reader = None
 
@@ -242,6 +249,7 @@ class EasyOcrEngine:
 
         lines = []
         confidences = []
+<<<<<<< Updated upstream
         for res in results:
             if len(res) >= 3:
                 text = str(res[1]).strip()
@@ -249,6 +257,14 @@ class EasyOcrEngine:
                 if text:
                     lines.append(text)
                     confidences.append(prob * 100.0)
+=======
+
+        for bbox, text, prob in results:
+            cleaned = str(text).strip()
+            if cleaned:
+                lines.append(cleaned)
+                confidences.append(float(prob) * 100.0)
+>>>>>>> Stashed changes
 
         combined_text = "\n".join(lines)
         avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
@@ -313,5 +329,8 @@ class PaddleOcrEngine:
             "word_count": len(" ".join(lines).split()) if lines else 0,
             "ocr_config": f"PaddleOCR lang={self.lang}",
         }
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
