@@ -66,7 +66,7 @@ async def extract_text(
     file: UploadFile = File(...),
     engine: Optional[str] = Query(
         default=None,
-        description="OCR engine to use: 'tesseract'. Defaults to server config.",
+        description="OCR engine to use: 'tesseract', 'easyocr', or 'paddleocr'. Defaults to server config.",
     ),
 ):
     """

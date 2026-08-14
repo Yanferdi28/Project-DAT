@@ -59,6 +59,6 @@ return [
     'tesseract_lang' => env('OCR_TESSERACT_LANG', 'ind+eng'),
 
     // Valid OCR engine options
-    'valid_engines' => ['tesseract'],
+    'valid_engines' => ['tesseract', 'easyocr', 'paddleocr'],
 
 ];

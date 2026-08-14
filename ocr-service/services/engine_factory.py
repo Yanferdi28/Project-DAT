@@ -1,4 +1,4 @@
-"""OCR engine factory for the Tesseract-only runtime."""
+"""OCR engine factory supporting Tesseract, EasyOCR, and PaddleOCR."""
 
 import logging
 import os
@@ -6,7 +6,7 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-VALID_ENGINES = ("tesseract",)
+VALID_ENGINES = ("tesseract", "easyocr", "paddleocr")
 
 _engine_cache: dict = {}
 
@@ -26,11 +26,9 @@ def get_default_engine_name() -> str:
     return name
 
 
-def get_engine(name: Optional[str] = None, lang: str = "ind+eng", gpu: Optional[bool] = None):
+def get_engine(name: Optional[str] = None, lang: str = "ind+eng", gpu: Optional[bool] = False):
     """
-    Return a Tesseract OCR engine instance.
-
-    The gpu argument is kept for backwards-compatible callers and ignored.
+    Return an OCR engine instance (tesseract, easyocr, paddleocr).
     """
     if name is None:
         name = get_default_engine_name()
@@ -42,19 +40,30 @@ def get_engine(name: Optional[str] = None, lang: str = "ind+eng", gpu: Optional[
             f"Unknown OCR engine '{name}'. Valid options: {', '.join(VALID_ENGINES)}"
         )
 
-    if name in _engine_cache:
-        return _engine_cache[name]
+    cache_key = f"{name}_{lang}_{bool(gpu)}"
+    if cache_key in _engine_cache:
+        return _engine_cache[cache_key]
 
-    from services.ocr_engine import OcrEngine
+    from services.ocr_engine import OcrEngine, EasyOcrEngine, PaddleOcrEngine
 
-    engine = OcrEngine(lang=lang)
-    _engine_cache[name] = engine
-    logger.info("Tesseract engine initialised (lang=%s).", lang)
+    if name == "tesseract":
+        engine = OcrEngine(lang=lang)
+    elif name == "easyocr":
+        easy_langs = ["en"]
+        engine = EasyOcrEngine(lang=easy_langs, gpu=bool(gpu))
+    elif name == "paddleocr":
+        paddle_lang = "id" if ("ind" in lang or "id" in lang) else "en"
+        engine = PaddleOcrEngine(lang=paddle_lang, gpu=bool(gpu))
+    else:
+        raise ValueError(f"Engine '{name}' is not supported.")
+
+    _engine_cache[cache_key] = engine
+    logger.info("Engine '%s' initialised (lang=%s).", name, lang)
     return engine
 
 
-def preload_all(lang: str = "ind+eng", gpu: bool = True, paddle_gpu: bool = False):
-    """Pre-load the Tesseract engine at startup."""
+def preload_all(lang: str = "ind+eng", gpu: bool = False, paddle_gpu: bool = False):
+    """Pre-load default Tesseract engine at startup."""
     try:
         get_engine("tesseract", lang=lang)
     except Exception as exc:
@@ -62,19 +71,46 @@ def preload_all(lang: str = "ind+eng", gpu: bool = True, paddle_gpu: bool = Fals
 
 
 def list_available_engines() -> list[dict]:
-    """Return metadata about the supported OCR engine."""
+    """Return metadata about supported OCR engines."""
+    results = []
+
+    # 1. Tesseract
     try:
         from services.ocr_engine import OcrEngine
-
-        OcrEngine()
-        languages = OcrEngine.get_available_languages()
         version = OcrEngine.get_tesseract_version()
-
-        return [{
+        languages = OcrEngine.get_available_languages()
+        results.append({
             "name": "tesseract",
             "available": bool(version or languages),
             "version": version,
             "languages": languages,
-        }]
+        })
     except Exception:
-        return [{"name": "tesseract", "available": False}]
+        results.append({"name": "tesseract", "available": False})
+
+    # 2. EasyOCR
+    try:
+        import easyocr
+        results.append({
+            "name": "easyocr",
+            "available": True,
+            "version": getattr(easyocr, "__version__", "installed"),
+            "languages": ["id", "en"],
+        })
+    except Exception:
+        results.append({"name": "easyocr", "available": False})
+
+    # 3. PaddleOCR
+    try:
+        import paddleocr
+        results.append({
+            "name": "paddleocr",
+            "available": True,
+            "version": getattr(paddleocr, "__version__", "installed"),
+            "languages": ["id", "en"],
+        })
+    except Exception:
+        results.append({"name": "paddleocr", "available": False})
+
+    return results
+

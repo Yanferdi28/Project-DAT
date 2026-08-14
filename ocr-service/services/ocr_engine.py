@@ -3,12 +3,15 @@ Tesseract OCR Engine Wrapper
 Handles text extraction with confidence scoring.
 """
 
+import os
 import logging
 import pytesseract
 from PIL import Image
 from typing import Optional
 import platform
 from dataclasses import dataclass
+
+os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "True"
 
 logger = logging.getLogger(__name__)
 
@@ -204,3 +207,111 @@ class OcrEngine:
             return pytesseract.get_languages()
         except Exception:
             return []
+
+
+class EasyOcrEngine:
+    """Wrapper around EasyOCR for text extraction."""
+
+    def __init__(self, lang: list[str] = None, gpu: bool = False):
+        if lang is None:
+            lang = ["en"]
+        self.lang = lang
+        self.gpu = gpu
+        self._reader = None
+
+    def _get_reader(self):
+        if self._reader is None:
+            import easyocr
+            logger.info("Initializing EasyOCR reader (lang=%s, gpu=%s)...", self.lang, self.gpu)
+            self._reader = easyocr.Reader(self.lang, gpu=self.gpu, verbose=False)
+        return self._reader
+
+    def extract_text(self, image: Image.Image) -> dict:
+        """
+        Extract text from a preprocessed PIL image using EasyOCR.
+        """
+        import numpy as np
+
+        reader = self._get_reader()
+
+        if image.mode != "RGB":
+            image = image.convert("RGB")
+        img_np = np.array(image)
+
+        results = reader.readtext(img_np)
+
+        lines = []
+        confidences = []
+        for res in results:
+            if len(res) >= 3:
+                text = str(res[1]).strip()
+                prob = float(res[2])
+                if text:
+                    lines.append(text)
+                    confidences.append(prob * 100.0)
+
+        combined_text = "\n".join(lines)
+        avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+
+        return {
+            "text": combined_text,
+            "confidence": round(avg_confidence, 2),
+            "word_count": len(" ".join(lines).split()) if lines else 0,
+            "ocr_config": f"EasyOCR lang={self.lang}",
+        }
+
+
+class PaddleOcrEngine:
+    """Wrapper around PaddleOCR for text extraction."""
+
+    def __init__(self, lang: str = "en", gpu: bool = False):
+        self.lang = lang
+        self.gpu = gpu
+        self._ocr = None
+
+    def _get_ocr(self):
+        if self._ocr is None:
+            from paddleocr import PaddleOCR
+            logger.info("Initializing PaddleOCR instance (lang=%s)...", self.lang)
+            self._ocr = PaddleOCR(lang=self.lang, enable_mkldnn=False)
+        return self._ocr
+
+    def extract_text(self, image: Image.Image) -> dict:
+        """
+        Extract text from a preprocessed PIL image using PaddleOCR.
+        """
+        import numpy as np
+
+        ocr = self._get_ocr()
+
+        if image.mode != "RGB":
+            image = image.convert("RGB")
+        img_np = np.array(image)
+
+        results = list(ocr.predict(img_np))
+
+        lines = []
+        confidences = []
+
+        if results:
+            res_dict = results[0]
+            if isinstance(res_dict, dict):
+                rec_texts = res_dict.get("rec_texts", [])
+                rec_scores = res_dict.get("rec_scores", [])
+                for text, score in zip(rec_texts, rec_scores):
+                    cleaned = str(text).strip()
+                    if cleaned:
+                        lines.append(cleaned)
+                        confidences.append(float(score) * 100.0)
+
+        combined_text = "\n".join(lines)
+        avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+
+        return {
+            "text": combined_text,
+            "confidence": round(avg_confidence, 2),
+            "word_count": len(" ".join(lines).split()) if lines else 0,
+            "ocr_config": f"PaddleOCR lang={self.lang}",
+        }
+
+

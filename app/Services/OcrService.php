@@ -25,7 +25,7 @@ class OcrService
     private function resolveEngine(?string $engine = null): string
     {
         $engine = strtolower(trim($engine ?: ($this->defaultEngine ?? 'tesseract')));
-        $validEngines = config('ocr.valid_engines', ['tesseract']);
+        $validEngines = config('ocr.valid_engines', ['tesseract', 'easyocr', 'paddleocr']);
 
         return in_array($engine, $validEngines, true) ? $engine : 'tesseract';
     }
