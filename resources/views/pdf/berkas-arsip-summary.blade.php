@@ -61,6 +61,9 @@
         @if($unitPengolah)
             <p>UNIT PENGOLAH: {{ strtoupper($unitPengolah->nama_unit) }}</p>
         @endif
+        @if(isset($kodeKlasifikasi) && $kodeKlasifikasi)
+            <p>KODE KLASIFIKASI: {{ $kodeKlasifikasi->kode_klasifikasi }} - {{ $kodeKlasifikasi->uraian ?? $kodeKlasifikasi->nama_klasifikasi }}</p>
+        @endif
         @if($dariTanggal && $sampaiTanggal)
             <p>PERIODE: {{ \Carbon\Carbon::parse($dariTanggal)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($sampaiTanggal)->translatedFormat('d F Y') }}</p>
         @else

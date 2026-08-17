@@ -72,6 +72,9 @@
         @if(isset($unitPengolah))
             <p>UNIT PENGOLAH: {{ $unitPengolah }}</p>
         @endif
+        @if(isset($kodeKlasifikasi) && $kodeKlasifikasi)
+            <p>KODE KLASIFIKASI: {{ $kodeKlasifikasi->kode_klasifikasi }} - {{ $kodeKlasifikasi->uraian ?? $kodeKlasifikasi->nama_klasifikasi }}</p>
+        @endif
         @if(isset($periode))
             <p>PERIODE: {{ $periode }}</p>
         @endif

@@ -354,11 +354,28 @@ test('admin can access berkas arsip print preview', function () {
         ->assertOk();
 });
 
+test('admin can filter berkas arsip print preview by kode klasifikasi', function () {
+    $admin = createAdmin();
+
+    $this->actingAs($admin)
+        ->get('/berkas-arsip/print-preview?klasifikasi_id=' . $this->masterData['kodeKlasifikasi']->id)
+        ->assertOk();
+});
+
 test('admin can export berkas arsip PDF', function () {
     $admin = createAdmin();
 
     $this->actingAs($admin)
         ->get('/berkas-arsip/export/pdf')
+        ->assertOk()
+        ->assertHeader('content-type', 'application/pdf');
+});
+
+test('admin can export berkas arsip PDF with kode klasifikasi filter', function () {
+    $admin = createAdmin();
+
+    $this->actingAs($admin)
+        ->get('/berkas-arsip/export/pdf?klasifikasi_id=' . $this->masterData['kodeKlasifikasi']->id)
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });

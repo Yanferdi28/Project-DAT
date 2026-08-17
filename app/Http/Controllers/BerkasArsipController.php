@@ -436,14 +436,21 @@ class BerkasArsipController extends Controller
             $unitPengolah = UnitPengolah::find($request->unit_pengolah_id);
         }
 
+        // Get kode klasifikasi for header
+        $kodeKlasifikasi = null;
+        $klasifikasiId = $request->input('klasifikasi_id') ?: $request->input('kode_klasifikasi_id');
+        if (!empty($klasifikasiId)) {
+            $kodeKlasifikasi = KodeKlasifikasi::find($klasifikasiId);
+        }
+
         // Get format type
         $format = $request->input('format', 'detail');
         $reportCreator = $request->user()->loadMissing('unitPengolah');
         
         if ($format === 'summary') {
-            $pdf = Pdf::loadView('pdf.berkas-arsip-summary', compact('berkasArsips', 'unitPengolah', 'dariTanggal', 'sampaiTanggal', 'reportCreator'));
+            $pdf = Pdf::loadView('pdf.berkas-arsip-summary', compact('berkasArsips', 'unitPengolah', 'kodeKlasifikasi', 'dariTanggal', 'sampaiTanggal', 'reportCreator'));
         } else {
-            $pdf = Pdf::loadView('pdf.berkas-arsip-detail', compact('berkasArsips', 'unitPengolah', 'dariTanggal', 'sampaiTanggal', 'reportCreator'));
+            $pdf = Pdf::loadView('pdf.berkas-arsip-detail', compact('berkasArsips', 'unitPengolah', 'kodeKlasifikasi', 'dariTanggal', 'sampaiTanggal', 'reportCreator'));
         }
         
         $pdf->setPaper('a4', 'landscape');

@@ -15,12 +15,13 @@ import {
 interface KodeKlasifikasi {
     id: number;
     kode_klasifikasi: string;
-    nama_klasifikasi: string;
+    uraian?: string;
+    nama_klasifikasi?: string;
 }
 
 interface UnitPengolah {
     id: number;
-    nama: string;
+    nama?: string;
     nama_unit?: string;
 }
 
@@ -52,12 +53,15 @@ interface ArsipUnit {
 
 interface Props {
     arsipUnits: ArsipUnit[];
+    kodeKlasifikasis?: KodeKlasifikasi[];
     unitPengolahs: UnitPengolah[];
     filters: {
         dari_tanggal?: string;
         sampai_tanggal?: string;
         status?: string;
         unit_pengolah_id?: string;
+        kode_klasifikasi_id?: string;
+        klasifikasi_id?: string;
     };
     userUnitPengolahId?: number | null;
     userUnitPengolah?: UnitPengolah | null;
@@ -65,7 +69,7 @@ interface Props {
 }
 
 export default function PrintPreview() {
-    const { arsipUnits, unitPengolahs, filters, userUnitPengolahId, userUnitPengolah, userName } = usePage<{ props: Props }>().props as unknown as Props;
+    const { arsipUnits, kodeKlasifikasis = [], unitPengolahs, filters, userUnitPengolahId, userUnitPengolah, userName } = usePage<{ props: Props }>().props as unknown as Props;
     const printRef = useRef<HTMLDivElement>(null);
     
     // Local filter state
@@ -74,6 +78,7 @@ export default function PrintPreview() {
         sampai_tanggal: filters.sampai_tanggal || '',
         status: filters.status || '',
         unit_pengolah_id: filters.unit_pengolah_id || '',
+        kode_klasifikasi_id: filters.kode_klasifikasi_id || filters.klasifikasi_id || '',
     });
 
     const handleDownloadPDF = () => {
@@ -82,6 +87,7 @@ export default function PrintPreview() {
         if (localFilters.sampai_tanggal) params.append('sampai_tanggal', localFilters.sampai_tanggal);
         if (localFilters.status) params.append('status', localFilters.status);
         if (localFilters.unit_pengolah_id) params.append('unit_pengolah_id', localFilters.unit_pengolah_id);
+        if (localFilters.kode_klasifikasi_id) params.append('kode_klasifikasi_id', localFilters.kode_klasifikasi_id);
         
         window.location.href = `/arsip-unit/export/pdf?${params.toString()}`;
     };
@@ -92,6 +98,7 @@ export default function PrintPreview() {
         if (localFilters.sampai_tanggal) params.append('sampai_tanggal', localFilters.sampai_tanggal);
         if (localFilters.status) params.append('status', localFilters.status);
         if (localFilters.unit_pengolah_id) params.append('unit_pengolah_id', localFilters.unit_pengolah_id);
+        if (localFilters.kode_klasifikasi_id) params.append('kode_klasifikasi_id', localFilters.kode_klasifikasi_id);
         
         router.visit(`/arsip-unit/print-preview?${params.toString()}`);
     };
@@ -102,6 +109,7 @@ export default function PrintPreview() {
             sampai_tanggal: '',
             status: '',
             unit_pengolah_id: '',
+            kode_klasifikasi_id: '',
         });
         router.visit('/arsip-unit/print-preview');
     };
@@ -114,7 +122,13 @@ export default function PrintPreview() {
     const getUnitPengolahName = () => {
         if (!localFilters.unit_pengolah_id) return 'Semua';
         const unit = unitPengolahs.find(u => u.id === parseInt(localFilters.unit_pengolah_id!));
-        return unit ? unit.nama : 'Semua';
+        return unit ? (unit.nama_unit || unit.nama || 'Semua') : 'Semua';
+    };
+
+    const getKlasifikasiName = () => {
+        if (!localFilters.kode_klasifikasi_id) return 'Semua';
+        const klasifikasi = kodeKlasifikasis.find(k => k.id === parseInt(localFilters.kode_klasifikasi_id!));
+        return klasifikasi ? `${klasifikasi.kode_klasifikasi} - ${klasifikasi.uraian || klasifikasi.nama_klasifikasi}` : 'Semua';
     };
 
     const getStatusLabel = (status?: string) => {
@@ -217,7 +231,27 @@ export default function PrintPreview() {
                             <Filter className="h-5 w-5 text-gray-500" />
                             <h3 className="font-semibold text-gray-900 dark:text-white">Filter Laporan</h3>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="klasifikasi" className="text-gray-700 dark:text-gray-300">Kode Klasifikasi</Label>
+                                <Select
+                                    value={localFilters.kode_klasifikasi_id}
+                                    onValueChange={(value) => setLocalFilters(prev => ({ ...prev, kode_klasifikasi_id: value === 'all' ? '' : value }))}
+                                >
+                                    <SelectTrigger id="klasifikasi" className="bg-white dark:bg-gray-800">
+                                        <SelectValue placeholder="Semua Klasifikasi" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Semua Klasifikasi</SelectItem>
+                                        {kodeKlasifikasis.map((k) => (
+                                            <SelectItem key={k.id} value={k.id.toString()}>
+                                                {k.kode_klasifikasi} - {k.uraian || k.nama_klasifikasi}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
                             <div className="space-y-2">
                                 <Label htmlFor="unit_pengolah" className="text-gray-700 dark:text-gray-300">Unit Pengolah</Label>
                                 <Select
@@ -231,7 +265,7 @@ export default function PrintPreview() {
                                         <SelectItem value="all">Semua Unit</SelectItem>
                                         {unitPengolahs.map((u) => (
                                             <SelectItem key={u.id} value={u.id.toString()}>
-                                                {u.nama}
+                                                {u.nama_unit || u.nama}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
@@ -307,6 +341,11 @@ export default function PrintPreview() {
                         {localFilters.unit_pengolah_id && (
                             <p className="text-sm text-black mt-1">
                                 UNIT PENGOLAH: {getUnitPengolahName()}
+                            </p>
+                        )}
+                        {localFilters.kode_klasifikasi_id && (
+                            <p className="text-sm text-black mt-1">
+                                KODE KLASIFIKASI: {getKlasifikasiName()}
                             </p>
                         )}
                         <p className="text-sm text-black mt-1">

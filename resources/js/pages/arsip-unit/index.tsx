@@ -20,13 +20,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { OcrStatusBadge } from '@/components/ocr-status-badge';
 import { ContentSearch } from '@/components/content-search';
+import { Combobox } from '@/components/ui/combobox';
 
 // Helper function for status translation
 const getStatusLabel = (status: string) => {
@@ -135,6 +132,7 @@ interface PageProps {
     };
     berkasArsips: BerkasArsip[];
     unitPengolahs: UnitPengolah[];
+    kodeKlasifikasis?: KodeKlasifikasi[];
     filters: {
         search?: string;
         content_search?: string;
@@ -157,7 +155,7 @@ interface PageProps {
     [key: string]: any;
 }
 
-export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips, unitPengolahs, filters, flash }: PageProps) {
+export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips, unitPengolahs, kodeKlasifikasis, filters, flash }: PageProps) {
     const { auth, userUnitPengolahId, ocrEnabled } = usePage<PageProps>().props;
     const [search, setSearch] = useState(filters.search || '');
     const [contentSearch, setContentSearch] = useState(filters.content_search || '');
@@ -173,6 +171,7 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
     const [dariTanggal, setDariTanggal] = useState('');
     const [sampaiTanggal, setSampaiTanggal] = useState('');
     const [exportStatus, setExportStatus] = useState('');
+    const [exportKlasifikasi, setExportKlasifikasi] = useState('');
     const [exportUnitPengolah, setExportUnitPengolah] = useState(
         isUnitPengolahLocked ? userUnitPengolahId!.toString() : ''
     );
@@ -239,14 +238,27 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
         );
     }) || [];
 
-    // Load unitPengolahs lazily when export dialog opens
+    // Load unitPengolahs and kodeKlasifikasis lazily when export dialog opens
     const openExportDialog = () => {
         setExportDialog(true);
-        if (!unitPengolahs || unitPengolahs.length === 0) {
+        const reloadProps: string[] = [];
+        if (!unitPengolahs || unitPengolahs.length === 0) reloadProps.push('unitPengolahs');
+        if (!kodeKlasifikasis || kodeKlasifikasis.length === 0) reloadProps.push('kodeKlasifikasis');
+        if (reloadProps.length > 0) {
             setIsLoadingUnits(true);
-            router.reload({ only: ['unitPengolahs'], onFinish: () => setIsLoadingUnits(false) });
+            router.reload({ only: reloadProps, onFinish: () => setIsLoadingUnits(false) });
         }
     };
+
+    const klasifikasiOptions = (kodeKlasifikasis || []).map((kode) => ({
+        value: kode.id.toString(),
+        label: `${kode.kode_klasifikasi} - ${kode.uraian || kode.nama_klasifikasi || ''}`,
+        searchValue: `${kode.kode_klasifikasi} ${kode.uraian || kode.nama_klasifikasi || ''}`,
+    }));
+    const klasifikasiFilterOptions = [
+        { value: '', label: 'Semua Klasifikasi', searchValue: 'semua klasifikasi' },
+        ...klasifikasiOptions,
+    ];
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -405,6 +417,7 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
         if (sampaiTanggal) params.append('sampai_tanggal', sampaiTanggal);
         if (exportStatus) params.append('status', exportStatus);
         if (exportUnitPengolah) params.append('unit_pengolah_id', exportUnitPengolah);
+        if (exportKlasifikasi) params.append('kode_klasifikasi_id', exportKlasifikasi);
 
         window.open(`/arsip-unit/export/pdf?${params.toString()}`, '_blank');
         setExportDialog(false);
@@ -1090,6 +1103,21 @@ export default function ArsipUnitIndex({ arsipUnits, statusSummary, berkasArsips
                                     onChange={(e) => setSampaiTanggal(e.target.value)}
                                 />
                             </div>
+                        </div>
+
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Filter Kode Klasifikasi
+                            </label>
+                            <Combobox
+                                options={klasifikasiFilterOptions}
+                                value={exportKlasifikasi}
+                                onValueChange={setExportKlasifikasi}
+                                placeholder="Semua Klasifikasi"
+                                searchPlaceholder="Cari kode atau uraian klasifikasi..."
+                                emptyMessage="Klasifikasi tidak ditemukan."
+                                className="w-full"
+                            />
                         </div>
 
                         <div>

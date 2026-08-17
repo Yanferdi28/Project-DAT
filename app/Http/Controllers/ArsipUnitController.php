@@ -155,6 +155,7 @@ class ArsipUnitController extends Controller
             'statusSummary' => $statusSummary,
             'berkasArsips' => Inertia::lazy(fn() => $berkasArsipsQuery->orderBy('nama_berkas')->get()),
             'unitPengolahs' => Inertia::lazy(fn() => UnitPengolah::select('id', 'nama_unit')->orderBy('nama_unit')->get()),
+            'kodeKlasifikasis' => Inertia::lazy(fn() => KodeKlasifikasi::select('id', 'kode_klasifikasi', 'uraian')->orderBy('kode_klasifikasi')->get()),
             'userUnitPengolahId' => $userUnitPengolahId,
             'ocrEnabled' => config('ocr.enabled', true),
         ]);
@@ -444,6 +445,13 @@ class ArsipUnitController extends Controller
 
         // Users can now see all arsip units (no filter by unit_pengolah)
 
+        // Filter kode klasifikasi
+        if ($request->has('kode_klasifikasi_id') && $request->kode_klasifikasi_id != '') {
+            $query->where('kode_klasifikasi_id', $request->kode_klasifikasi_id);
+        } elseif ($request->has('klasifikasi_id') && $request->klasifikasi_id != '') {
+            $query->where('kode_klasifikasi_id', $request->klasifikasi_id);
+        }
+
         // Filter tanggal
         if ($request->has('dari_tanggal') && $request->dari_tanggal != '') {
             $query->where('tanggal', '>=', $request->dari_tanggal);
@@ -471,8 +479,9 @@ class ArsipUnitController extends Controller
 
         return Inertia::render('arsip-unit/print-preview', [
             'arsipUnits' => $arsipUnits,
+            'kodeKlasifikasis' => KodeKlasifikasi::orderBy('kode_klasifikasi')->get(),
             'unitPengolahs' => UnitPengolah::all(),
-            'filters' => $request->only(['dari_tanggal', 'sampai_tanggal', 'status', 'unit_pengolah_id']),
+            'filters' => $request->only(['dari_tanggal', 'sampai_tanggal', 'status', 'unit_pengolah_id', 'kode_klasifikasi_id', 'klasifikasi_id']),
             'userUnitPengolahId' => $userUnitPengolahId,
             'userUnitPengolah' => $userUnitPengolah,
             'userName' => $user->name,
@@ -485,6 +494,14 @@ class ArsipUnitController extends Controller
     public function exportPdf(Request $request)
     {
         $query = ArsipUnit::with(['kodeKlasifikasi', 'unitPengolah']);
+
+        // Filter kode klasifikasi
+        $kodeKlasifikasi = null;
+        $klasifikasiId = $request->input('kode_klasifikasi_id') ?: $request->input('klasifikasi_id');
+        if (!empty($klasifikasiId)) {
+            $query->where('kode_klasifikasi_id', $klasifikasiId);
+            $kodeKlasifikasi = KodeKlasifikasi::find($klasifikasiId);
+        }
 
         // Filter tanggal
         if ($request->has('dari_tanggal') && $request->dari_tanggal != '') {
@@ -520,7 +537,7 @@ class ArsipUnitController extends Controller
 
         $reportCreator = $request->user()->loadMissing('unitPengolah');
 
-        $pdf = Pdf::loadView('pdf.arsip-unit', compact('arsipUnits', 'unitPengolah', 'periode', 'reportCreator'));
+        $pdf = Pdf::loadView('pdf.arsip-unit', compact('arsipUnits', 'unitPengolah', 'kodeKlasifikasi', 'periode', 'reportCreator'));
         $pdf->setPaper('a4', 'landscape');
 
         return $pdf->stream('arsip-unit-' . date('Y-m-d') . '.pdf');

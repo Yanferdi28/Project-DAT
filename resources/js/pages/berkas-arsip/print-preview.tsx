@@ -21,14 +21,15 @@ import {
 interface KodeKlasifikasi {
     id: number;
     kode_klasifikasi: string;
-    nama_klasifikasi: string;
+    uraian?: string;
+    nama_klasifikasi?: string;
     status_akhir?: string;
     klasifikasi_keamanan?: string;
 }
 
 interface UnitPengolah {
     id: number;
-    nama: string;
+    nama?: string;
     nama_unit?: string;
 }
 
@@ -115,13 +116,13 @@ export default function PrintPreview() {
     const getKlasifikasiName = () => {
         if (!localFilters.klasifikasi_id) return 'Semua';
         const klasifikasi = kodeKlasifikasis.find(k => k.id === parseInt(localFilters.klasifikasi_id!));
-        return klasifikasi ? `${klasifikasi.kode_klasifikasi} - ${klasifikasi.nama_klasifikasi}` : 'Semua';
+        return klasifikasi ? `${klasifikasi.kode_klasifikasi} - ${klasifikasi.uraian || klasifikasi.nama_klasifikasi}` : 'Semua';
     };
 
     const getUnitPengolahName = () => {
         if (!localFilters.unit_pengolah_id) return 'Semua';
         const unit = unitPengolahs.find(u => u.id === parseInt(localFilters.unit_pengolah_id!));
-        return unit ? unit.nama : 'Semua';
+        return unit ? (unit.nama_unit || unit.nama || 'Semua') : 'Semua';
     };
 
     return (
@@ -231,7 +232,7 @@ export default function PrintPreview() {
                                         <SelectItem value="all">Semua Klasifikasi</SelectItem>
                                         {kodeKlasifikasis.map((k) => (
                                             <SelectItem key={k.id} value={k.id.toString()}>
-                                                {k.kode_klasifikasi} - {k.nama_klasifikasi}
+                                                {k.kode_klasifikasi} - {k.uraian || k.nama_klasifikasi}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
@@ -251,7 +252,7 @@ export default function PrintPreview() {
                                         <SelectItem value="all">Semua Unit</SelectItem>
                                         {unitPengolahs.map((u) => (
                                             <SelectItem key={u.id} value={u.id.toString()}>
-                                                {u.nama}
+                                                {u.nama_unit || u.nama}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
@@ -308,6 +309,11 @@ export default function PrintPreview() {
                         {localFilters.unit_pengolah_id && (
                             <p className="text-sm text-black mt-1">
                                 UNIT PENGOLAH: {getUnitPengolahName()}
+                            </p>
+                        )}
+                        {localFilters.klasifikasi_id && (
+                            <p className="text-sm text-black mt-1">
+                                KODE KLASIFIKASI: {getKlasifikasiName()}
                             </p>
                         )}
                         <p className="text-sm text-black mt-1">

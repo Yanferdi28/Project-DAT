@@ -657,11 +657,28 @@ test('admin can access print preview', function () {
         ->assertOk();
 });
 
+test('admin can filter print preview by kode klasifikasi', function () {
+    $admin = createAdmin();
+
+    $this->actingAs($admin)
+        ->get('/arsip-unit/print-preview?kode_klasifikasi_id=' . $this->masterData['kodeKlasifikasi']->id)
+        ->assertOk();
+});
+
 test('admin can export arsip unit PDF', function () {
     $admin = createAdmin();
 
     $this->actingAs($admin)
         ->get('/arsip-unit/export/pdf')
+        ->assertOk()
+        ->assertHeader('content-type', 'application/pdf');
+});
+
+test('admin can export arsip unit PDF with kode klasifikasi filter', function () {
+    $admin = createAdmin();
+
+    $this->actingAs($admin)
+        ->get('/arsip-unit/export/pdf?kode_klasifikasi_id=' . $this->masterData['kodeKlasifikasi']->id)
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });
