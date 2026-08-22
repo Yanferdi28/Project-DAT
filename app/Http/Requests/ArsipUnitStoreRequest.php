@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ArsipUnitStoreRequest extends FormRequest
 {
@@ -17,10 +18,23 @@ class ArsipUnitStoreRequest extends FormRequest
             'kode_klasifikasi_id' => 'required|exists:kode_klasifikasi,id',
             'unit_pengolah_arsip_id' => 'required|exists:unit_pengolah,id',
             'kategori_id' => 'required|exists:kategori,id',
-            'sub_kategori_id' => 'required|exists:sub_kategori,id',
+            'sub_kategori_id' => [
+                'required',
+                Rule::exists('sub_kategori', 'id')->where('kategori_id', $this->kategori_id),
+            ],
             'retensi_aktif' => 'nullable|integer|min:0',
             'retensi_inaktif' => 'nullable|integer|min:0',
             'indeks' => 'nullable|string|max:255',
+            'no_item_arsip' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('arsip_unit', 'no_item_arsip')
+                    ->where(function ($query) {
+                        return $query->where('unit_pengolah_arsip_id', $this->unit_pengolah_arsip_id)
+                            ->whereNull('deleted_at');
+                    }),
+            ],
             'uraian_informasi' => 'required|string',
             'tanggal' => 'required|date',
             'jumlah_nilai' => 'required|integer|min:1',
@@ -44,6 +58,8 @@ class ArsipUnitStoreRequest extends FormRequest
             'unit_pengolah_arsip_id.required' => 'Unit pengolah harus dipilih.',
             'kategori_id.required' => 'Kategori harus dipilih.',
             'sub_kategori_id.required' => 'Sub kategori harus dipilih.',
+            'sub_kategori_id.exists' => 'Sub kategori yang dipilih tidak sesuai dengan kategori.',
+            'no_item_arsip.unique' => 'Nomor item arsip sudah terdaftar pada unit pengolah ini.',
             'uraian_informasi.required' => 'Uraian informasi harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
             'jumlah_nilai.required' => 'Jumlah harus diisi.',

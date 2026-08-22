@@ -288,7 +288,13 @@ class LaporanController extends Controller
             'tanggal_penyerahan' => 'required|date',
             'keterangan' => 'nullable|string',
             'arsip_ids' => 'required|array|min:1',
-            'arsip_ids.*' => 'exists:arsip_unit,id_berkas',
+            'arsip_ids.*' => 'distinct|exists:arsip_unit,id_berkas',
+        ], [
+            'unit_pengolah_asal_id.required' => 'Unit pengolah asal harus dipilih.',
+            'tanggal_penyerahan.required' => 'Tanggal penyerahan harus diisi.',
+            'arsip_ids.required' => 'Minimal satu arsip harus dipilih.',
+            'arsip_ids.min' => 'Minimal satu arsip harus dipilih.',
+            'arsip_ids.*.distinct' => 'Terdapat arsip duplikat yang dipilih.',
         ]);
 
         try {

@@ -35,7 +35,10 @@ class UnitPengolahController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_unit' => 'required|string|max:255',
+            'nama_unit' => 'required|string|max:255|unique:unit_pengolah,nama_unit',
+        ], [
+            'nama_unit.required' => 'Nama unit pengolah harus diisi.',
+            'nama_unit.unique' => 'Nama unit pengolah sudah terdaftar.',
         ]);
 
         UnitPengolah::create($validated);
@@ -54,7 +57,10 @@ class UnitPengolahController extends Controller
     public function update(Request $request, UnitPengolah $unitPengolah)
     {
         $validated = $request->validate([
-            'nama_unit' => 'required|string|max:255',
+            'nama_unit' => 'required|string|max:255|unique:unit_pengolah,nama_unit,' . $unitPengolah->id,
+        ], [
+            'nama_unit.required' => 'Nama unit pengolah harus diisi.',
+            'nama_unit.unique' => 'Nama unit pengolah sudah terdaftar.',
         ]);
 
         $unitPengolah->update($validated);

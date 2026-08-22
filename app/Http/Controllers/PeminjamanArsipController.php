@@ -105,7 +105,19 @@ class PeminjamanArsipController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'arsip_unit_id' => 'required|exists:arsip_unit,id_berkas',
+            'arsip_unit_id' => [
+                'required',
+                'exists:arsip_unit,id_berkas',
+                function ($attribute, $value, $fail) {
+                    $isCurrentlyBorrowed = PeminjamanArsip::where('arsip_unit_id', $value)
+                        ->whereIn('status', ['dipinjam', 'terlambat'])
+                        ->exists();
+
+                    if ($isCurrentlyBorrowed) {
+                        $fail('Arsip ini sedang dalam status dipinjam dan belum dikembalikan.');
+                    }
+                },
+            ],
             'peminjam_id' => 'nullable|exists:users,id',
             'unit_pengolah_id' => 'nullable|exists:unit_pengolah,id',
             'nama_peminjam' => 'required|string|max:255',
@@ -114,6 +126,14 @@ class PeminjamanArsipController extends Controller
             'tanggal_pinjam' => 'required|date',
             'tanggal_harus_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
             'catatan' => 'nullable|string',
+        ], [
+            'arsip_unit_id.required' => 'Arsip harus dipilih.',
+            'arsip_unit_id.exists' => 'Arsip yang dipilih tidak valid.',
+            'nama_peminjam.required' => 'Nama peminjam harus diisi.',
+            'tujuan_peminjaman.required' => 'Tujuan peminjaman harus diisi.',
+            'tanggal_pinjam.required' => 'Tanggal pinjam harus diisi.',
+            'tanggal_harus_kembali.required' => 'Tanggal harus kembali harus diisi.',
+            'tanggal_harus_kembali.after_or_equal' => 'Tanggal harus kembali tidak boleh sebelum tanggal pinjam.',
         ]);
 
         $validated['status'] = 'dipinjam';

@@ -38,8 +38,11 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255',
+            'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori',
             'deskripsi' => 'nullable|string',
+        ], [
+            'nama_kategori.required' => 'Nama kategori harus diisi.',
+            'nama_kategori.unique' => 'Nama kategori sudah terdaftar.',
         ]);
 
         Kategori::create($validated);
@@ -58,8 +61,11 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255',
+            'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori,' . $kategori->id,
             'deskripsi' => 'nullable|string',
+        ], [
+            'nama_kategori.required' => 'Nama kategori harus diisi.',
+            'nama_kategori.unique' => 'Nama kategori sudah terdaftar.',
         ]);
 
         $kategori->update($validated);

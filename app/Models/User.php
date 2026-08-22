@@ -71,9 +71,44 @@ class User extends Authenticatable
     /**
      * Get the unit pengolah that the user belongs to.
      */
-    public function unitPengolah()
+    public function unitPengolah(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(UnitPengolah::class);
+    }
+
+    public function arsipVerified(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ArsipUnit::class, 'verified_by');
+    }
+
+    public function arsipVerifikasiOleh(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ArsipUnit::class, 'verifikasi_oleh');
+    }
+
+    public function peminjamanDicatat(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PeminjamanArsip::class, 'dicatat_oleh');
+    }
+
+    public function peminjamanDikembalikan(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PeminjamanArsip::class, 'dikembalikan_oleh');
+    }
+
+    public function peminjamanUser(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PeminjamanArsip::class, 'peminjam_id');
+    }
+
+    public function beritaAcaraDibuat(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BeritaAcaraPenyerahan::class, 'dibuat_oleh');
+    }
+
+    public function activityLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ActivityLog::class, 'user_id');
     }
 
     /**

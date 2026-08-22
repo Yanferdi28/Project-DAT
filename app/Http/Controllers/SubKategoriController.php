@@ -54,8 +54,18 @@ class SubKategoriController extends Controller
     {
         $validated = $request->validate([
             'kategori_id' => 'required|exists:kategori,id',
-            'nama_sub_kategori' => 'required|string|max:255',
+            'nama_sub_kategori' => [
+                'required',
+                'string',
+                'max:255',
+                \Illuminate\Validation\Rule::unique('sub_kategori', 'nama_sub_kategori')
+                    ->where('kategori_id', $request->kategori_id),
+            ],
             'deskripsi' => 'nullable|string',
+        ], [
+            'kategori_id.required' => 'Kategori harus dipilih.',
+            'nama_sub_kategori.required' => 'Nama sub kategori harus diisi.',
+            'nama_sub_kategori.unique' => 'Sub kategori dengan nama ini sudah ada pada kategori yang dipilih.',
         ]);
 
         SubKategori::create($validated);
@@ -78,8 +88,19 @@ class SubKategoriController extends Controller
     {
         $validated = $request->validate([
             'kategori_id' => 'required|exists:kategori,id',
-            'nama_sub_kategori' => 'required|string|max:255',
+            'nama_sub_kategori' => [
+                'required',
+                'string',
+                'max:255',
+                \Illuminate\Validation\Rule::unique('sub_kategori', 'nama_sub_kategori')
+                    ->where('kategori_id', $request->kategori_id)
+                    ->ignore($subKategori->id),
+            ],
             'deskripsi' => 'nullable|string',
+        ], [
+            'kategori_id.required' => 'Kategori harus dipilih.',
+            'nama_sub_kategori.required' => 'Nama sub kategori harus diisi.',
+            'nama_sub_kategori.unique' => 'Sub kategori dengan nama ini sudah ada pada kategori yang dipilih.',
         ]);
 
         $subKategori->update($validated);

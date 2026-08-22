@@ -140,6 +140,23 @@ class ArsipUnit extends Model
         return $this->belongsTo(KodeKlasifikasi::class, 'suggested_kode_klasifikasi_id');
     }
 
+    public function peminjaman(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PeminjamanArsip::class, 'arsip_unit_id', 'id_berkas');
+    }
+
+    public function beritaAcara(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(
+            BeritaAcaraPenyerahan::class,
+            'berita_acara_arsip',
+            'arsip_unit_id',
+            'berita_acara_id',
+            'id_berkas',
+            'id'
+        )->withPivot('keterangan_item')->withTimestamps();
+    }
+
     /**
      * Scope: search by extracted text content (full-text search).
      */
