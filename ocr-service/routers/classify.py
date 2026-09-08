@@ -83,7 +83,12 @@ async def train_model(request: TrainRequest = TrainRequest()):
 @router.get("/status")
 async def classifier_status():
     """Check if classification model is trained and ready."""
-    return {
+    status = {
         "model_loaded": classifier.is_loaded,
         "status": "ready" if classifier.is_loaded else "not_trained",
+        "architecture": "two_stage" if classifier._is_two_stage else "single_stage",
     }
+    if classifier._is_two_stage:
+        status["groups"] = len(classifier.stage1_encoder.classes_) if classifier.stage1_encoder else 0
+        status["stage2_classifiers"] = len(classifier.stage2_pipelines)
+    return status

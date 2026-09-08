@@ -20,9 +20,18 @@ class DummyPipeline:
 
 
 def make_classifier():
+    """Create a classifier with dummy models for testing.
+
+    Uses the flat_pipeline/flat_encoder (legacy mode) since
+    group_pipeline is None — this triggers single-stage fallback.
+    """
     classifier = DocumentClassifier.__new__(DocumentClassifier)
-    classifier.pipeline = DummyPipeline()
-    classifier.label_encoder = DummyEncoder()
+    classifier.flat_pipeline = DummyPipeline()
+    classifier.flat_encoder = DummyEncoder()
+    classifier.group_pipeline = None
+    classifier.group_encoder = None
+    classifier.group_to_indices = {}
+    classifier.label_uraian_map = {}
     classifier.is_loaded = True
     return classifier
 

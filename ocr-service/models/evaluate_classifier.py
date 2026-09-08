@@ -1,9 +1,15 @@
 """
-Evaluate document classifier quality with validation metrics.
+Evaluate the group-constrained document classifier quality.
+
+Reports:
+    - Stage 1 (group): How well the classifier predicts the document group.
+    - Flat (unconstrained): Baseline flat classifier accuracy over all classes.
+    - Group-constrained: Combined accuracy — group prediction constrains
+      the flat classifier's output to only consider classes in that group.
 
 Usage:
-    .\ocr-service\.venv\Scripts\python.exe .\ocr-service\models\evaluate_classifier.py --data .\ocr-service\data\training_data.generated.json
-    ./ocr-service/.venv/bin/python ocr-service/models/evaluate_classifier.py --data ocr-service/data/training_data.generated.json
+    .\\ocr-service\\.venv\\Scripts\\python.exe .\\ocr-service\\models\\evaluate_classifier.py --data .\\ocr-service\\data\\training_data.json
+    ./ocr-service/.venv/bin/python ocr-service/models/evaluate_classifier.py --data ocr-service/data/training_data.json
 """
 
 from __future__ import annotations
@@ -13,14 +19,13 @@ import json
 import os
 import sys
 import warnings
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Any
 
 from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import StratifiedKFold
@@ -31,15 +36,12 @@ OCR_SERVICE_DIR = os.path.dirname(os.path.dirname(__file__))
 sys.path.insert(0, OCR_SERVICE_DIR)
 
 from services.classifier import build_classifier_pipeline  # noqa: E402
+from services.classifier import build_flat_pipeline  # noqa: E402
 from services.classifier import normalize_training_label  # noqa: E402
+from services.classifier import extract_group  # noqa: E402
 
 warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 warnings.filterwarnings("ignore", message="The number of unique classes is greater than 50%")
-
-
-def build_pipeline():
-    """Build a pipeline that matches the production classifier."""
-    return build_classifier_pipeline()
 
 
 def load_training_rows(data_path: str) -> tuple[list[str], list[str]]:
@@ -69,27 +71,17 @@ def metric_summary(values: Any) -> dict[str, Any]:
     }
 
 
-def top_confusions(matrix: Any, labels: list[str], top_n: int = 10) -> list[dict[str, Any]]:
-    """Return the most frequent misclassification pairs from confusion matrix."""
-    pairs: list[dict[str, Any]] = []
+def _compute_top_confusions(true_labels: list[str], pred_labels: list[str], top_n: int = 10) -> list[dict]:
+    """Compute top misclassification pairs."""
+    pairs: Counter = Counter()
+    for true, pred in zip(true_labels, pred_labels):
+        if true != pred:
+            pairs[(true, pred)] += 1
 
-    for actual_idx, actual_label in enumerate(labels):
-        for predicted_idx, predicted_label in enumerate(labels):
-            if actual_idx == predicted_idx:
-                continue
-
-            count = int(matrix[actual_idx][predicted_idx])
-            if count > 0:
-                pairs.append(
-                    {
-                        "actual": actual_label,
-                        "predicted": predicted_label,
-                        "count": count,
-                    }
-                )
-
-    pairs.sort(key=lambda item: item["count"], reverse=True)
-    return pairs[:top_n]
+    return [
+        {"actual": actual, "predicted": predicted, "count": count}
+        for (actual, predicted), count in pairs.most_common(top_n)
+    ]
 
 
 def evaluate(data_path: str, test_size: float, random_state: int, cv_folds: int) -> dict[str, Any]:
@@ -101,109 +93,162 @@ def evaluate(data_path: str, test_size: float, random_state: int, cv_folds: int)
     if len(texts) < 5:
         raise ValueError("Need at least 5 valid samples for evaluation")
 
-    counts = Counter(labels)
-    min_class_count = min(counts.values()) if counts else 0
-
-    label_encoder = LabelEncoder()
-    encoded = label_encoder.fit_transform(labels)
-
-    # Baseline resubstitution metric for visibility (not for model selection).
-    full_pipeline = build_pipeline()
-    full_pipeline.fit(texts, encoded)
-    train_pred = full_pipeline.predict(texts)
+    groups = [extract_group(lbl) for lbl in labels]
+    group_counts = Counter(groups)
+    label_counts = Counter(labels)
+    min_group_count = min(group_counts.values()) if group_counts else 0
+    min_class_count = min(label_counts.values()) if label_counts else 0
 
     report: dict[str, Any] = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "data_path": os.path.abspath(data_path),
         "samples": len(texts),
-        "classes": len(label_encoder.classes_),
-        "class_distribution": dict(sorted(counts.items(), key=lambda item: item[0])),
-        "resubstitution": {
-            "accuracy": round(float(accuracy_score(encoded, train_pred)), 4),
-            "macro_f1": round(float(f1_score(encoded, train_pred, average="macro", zero_division=0)), 4),
-        },
-        "holdout": None,
-        "cross_validation": None,
+        "detail_classes": len(set(labels)),
+        "group_classes": len(set(groups)),
+        "group_distribution": dict(sorted(group_counts.items())),
     }
 
-    if min_class_count < 2 or len(label_encoder.classes_) < 2:
-        report["holdout"] = {
-            "available": False,
-            "reason": "Holdout stratified split needs at least 2 samples in every class.",
-            "min_class_count": int(min_class_count),
+    # ---- Stage 1: Group-level evaluation ----
+    group_encoder = LabelEncoder()
+    y_groups = group_encoder.fit_transform(groups)
+
+    s1_full = build_classifier_pipeline(n_classes=len(group_encoder.classes_))
+    s1_full.fit(texts, y_groups)
+    s1_full_pred = s1_full.predict(texts)
+
+    report["stage1_resubstitution"] = {
+        "accuracy": round(float(accuracy_score(y_groups, s1_full_pred)), 4),
+        "macro_f1": round(float(f1_score(y_groups, s1_full_pred, average="macro", zero_division=0)), 4),
+    }
+
+    # ---- Flat classifier: Resubstitution ----
+    flat_encoder = LabelEncoder()
+    y_flat = flat_encoder.fit_transform(labels)
+
+    flat_full = build_flat_pipeline()
+    flat_full.fit(texts, y_flat)
+    flat_full_pred = flat_full.predict(texts)
+
+    report["flat_resubstitution"] = {
+        "accuracy": round(float(accuracy_score(y_flat, flat_full_pred)), 4),
+        "macro_f1": round(float(f1_score(y_flat, flat_full_pred, average="macro", zero_division=0)), 4),
+    }
+
+    # ---- Holdout evaluation ----
+    if min_group_count >= 2 and min_class_count >= 2:
+        # Split data
+        (
+            X_train, X_test,
+            y_groups_train, y_groups_test,
+            y_flat_train, y_flat_test,
+            groups_train, groups_test,
+            labels_train, labels_test,
+        ) = train_test_split(
+            texts, y_groups, y_flat, groups, labels,
+            test_size=test_size,
+            random_state=random_state,
+            stratify=y_flat,
+        )
+
+        # Train Stage 1 on train split
+        s1_eval = build_classifier_pipeline(n_classes=len(group_encoder.classes_))
+        s1_eval.fit(X_train, y_groups_train)
+        s1_pred = s1_eval.predict(X_test)
+        s1_pred_groups = group_encoder.inverse_transform(s1_pred)
+
+        group_names = [str(name) for name in group_encoder.classes_]
+
+        report["stage1_holdout"] = {
+            "available": True,
+            "test_size": test_size,
+            "train_samples": len(X_train),
+            "test_samples": len(X_test),
+            "accuracy": round(float(accuracy_score(y_groups_test, s1_pred)), 4),
+            "macro_f1": round(float(f1_score(y_groups_test, s1_pred, average="macro", zero_division=0)), 4),
+            "weighted_f1": round(float(f1_score(y_groups_test, s1_pred, average="weighted", zero_division=0)), 4),
         }
-        return report
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        texts,
-        encoded,
-        test_size=test_size,
-        random_state=random_state,
-        stratify=encoded,
-    )
+        # Train flat classifier on train split
+        flat_eval = build_flat_pipeline()
+        flat_eval.fit(X_train, y_flat_train)
+        flat_pred = flat_eval.predict(X_test)
 
-    eval_pipeline = build_pipeline()
-    eval_pipeline.fit(X_train, y_train)
-    y_pred = eval_pipeline.predict(X_test)
+        report["flat_holdout"] = {
+            "available": True,
+            "accuracy": round(float(accuracy_score(y_flat_test, flat_pred)), 4),
+            "macro_f1": round(float(f1_score(y_flat_test, flat_pred, average="macro", zero_division=0)), 4),
+            "weighted_f1": round(float(f1_score(y_flat_test, flat_pred, average="weighted", zero_division=0)), 4),
+        }
 
-    class_names = [str(name) for name in label_encoder.classes_]
+        # ---- Group-constrained evaluation ----
+        # Build group-to-indices mapping from training data
+        group_to_indices: dict[str, list[int]] = defaultdict(list)
+        for idx, code in enumerate(flat_encoder.classes_):
+            group = extract_group(str(code))
+            group_to_indices[group].append(idx)
 
-    c_report = classification_report(
-        y_test,
-        y_pred,
-        target_names=class_names,
-        output_dict=True,
-        zero_division=0,
-    )
+        flat_probs = flat_eval.predict_proba(X_test)
 
-    cm = confusion_matrix(y_test, y_pred)
+        gc_true = []
+        gc_pred = []
 
-    report["holdout"] = {
-        "available": True,
-        "test_size": test_size,
-        "random_state": random_state,
-        "train_samples": len(X_train),
-        "test_samples": len(X_test),
-        "accuracy": round(float(accuracy_score(y_test, y_pred)), 4),
-        "macro_f1": round(float(f1_score(y_test, y_pred, average="macro", zero_division=0)), 4),
-        "weighted_f1": round(float(f1_score(y_test, y_pred, average="weighted", zero_division=0)), 4),
-        "classification_report": c_report,
-        "confusion_matrix": {
-            "labels": class_names,
-            "matrix": cm.tolist(),
-            "top_confusions": top_confusions(cm, class_names),
-        },
-    }
+        for i, (true_label, pred_group) in enumerate(zip(labels_test, s1_pred_groups)):
+            indices = group_to_indices.get(pred_group, [])
+            if indices:
+                best_idx = max(indices, key=lambda idx: flat_probs[i][idx])
+                pred_code = str(flat_encoder.classes_[best_idx])
+            else:
+                # Fallback to unconstrained prediction
+                pred_code = str(flat_encoder.inverse_transform([flat_pred[i]])[0])
 
-    if cv_folds > 1:
-        if min_class_count < cv_folds or len(label_encoder.classes_) < 2:
-            report["cross_validation"] = {
-                "available": False,
-                "reason": f"{cv_folds}-fold stratified CV needs at least {cv_folds} samples in every class.",
-                "min_class_count": int(min_class_count),
-            }
-        else:
+            gc_true.append(true_label)
+            gc_pred.append(pred_code)
+
+        gc_correct = sum(1 for t, p in zip(gc_true, gc_pred) if t == p)
+
+        report["group_constrained_holdout"] = {
+            "available": True,
+            "accuracy": round(gc_correct / len(gc_true), 4) if gc_true else 0,
+            "top_confusions": _compute_top_confusions(gc_true, gc_pred),
+        }
+
+        # Stage 1 CV
+        if cv_folds > 1 and min_group_count >= cv_folds:
             splitter = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
             cv_scores = cross_validate(
-                build_pipeline(),
-                texts,
-                encoded,
-                cv=splitter,
-                scoring={
-                    "accuracy": "accuracy",
-                    "macro_f1": "f1_macro",
-                    "weighted_f1": "f1_weighted",
-                },
+                build_classifier_pipeline(n_classes=len(group_encoder.classes_)),
+                texts, y_groups, cv=splitter,
+                scoring={"accuracy": "accuracy", "macro_f1": "f1_macro", "weighted_f1": "f1_weighted"},
             )
-
-            report["cross_validation"] = {
+            report["stage1_cv"] = {
                 "available": True,
                 "folds": cv_folds,
-                "random_state": random_state,
                 "accuracy": metric_summary(cv_scores["test_accuracy"]),
                 "macro_f1": metric_summary(cv_scores["test_macro_f1"]),
                 "weighted_f1": metric_summary(cv_scores["test_weighted_f1"]),
             }
+
+        # Flat CV
+        if cv_folds > 1 and min_class_count >= cv_folds:
+            splitter = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
+            cv_scores = cross_validate(
+                build_flat_pipeline(),
+                texts, y_flat, cv=splitter,
+                scoring={"accuracy": "accuracy", "macro_f1": "f1_macro", "weighted_f1": "f1_weighted"},
+            )
+            report["flat_cv"] = {
+                "available": True,
+                "folds": cv_folds,
+                "accuracy": metric_summary(cv_scores["test_accuracy"]),
+                "macro_f1": metric_summary(cv_scores["test_macro_f1"]),
+                "weighted_f1": metric_summary(cv_scores["test_weighted_f1"]),
+            }
+
+    else:
+        report["stage1_holdout"] = {
+            "available": False,
+            "reason": "Not enough samples per class for stratified split.",
+        }
 
     return report
 
@@ -232,28 +277,50 @@ def main() -> int:
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
 
-    print("Evaluation completed")
+    print("=" * 60)
+    print("EVALUATION COMPLETED")
+    print("=" * 60)
     print(f"Report: {os.path.abspath(args.output)}")
-    print(f"Samples: {result['samples']}")
-    print(f"Classes: {result['classes']}")
-    print(f"Resubstitution accuracy: {result['resubstitution']['accuracy']}")
-    print(f"Resubstitution macro_f1: {result['resubstitution']['macro_f1']}")
+    print(f"Samples: {result.get('samples')}")
+    print(f"Groups: {result.get('group_classes')}")
+    print(f"Detail classes: {result.get('detail_classes')}")
 
-    holdout = result.get("holdout") or {}
-    if holdout.get("available"):
-        print(f"Holdout accuracy: {holdout['accuracy']}")
-        print(f"Holdout macro_f1: {holdout['macro_f1']}")
-        print(f"Holdout weighted_f1: {holdout['weighted_f1']}")
-    else:
-        print("Holdout evaluation unavailable:", holdout.get("reason", "Unknown reason"))
+    # Resubstitution
+    s1_r = result.get("stage1_resubstitution", {})
+    f_r = result.get("flat_resubstitution", {})
+    print(f"\n--- RESUBSTITUTION ---")
+    print(f"Stage 1 (group) accuracy: {s1_r.get('accuracy')}")
+    print(f"Flat (all classes) accuracy: {f_r.get('accuracy')}")
 
-    cross_validation = result.get("cross_validation") or {}
-    if cross_validation.get("available"):
-        print(f"{cross_validation['folds']}-fold CV accuracy: {cross_validation['accuracy']['mean']}")
-        print(f"{cross_validation['folds']}-fold CV macro_f1: {cross_validation['macro_f1']['mean']}")
-        print(f"{cross_validation['folds']}-fold CV weighted_f1: {cross_validation['weighted_f1']['mean']}")
-    elif cross_validation:
-        print("Cross validation unavailable:", cross_validation.get("reason", "Unknown reason"))
+    # Holdout
+    s1_h = result.get("stage1_holdout", {})
+    f_h = result.get("flat_holdout", {})
+    gc_h = result.get("group_constrained_holdout", {})
+
+    if s1_h.get("available"):
+        print(f"\n--- HOLDOUT (test_size={s1_h.get('test_size')}) ---")
+        print(f"Stage 1 (group) accuracy:            {s1_h['accuracy']}")
+        print(f"Stage 1 (group) macro_f1:             {s1_h['macro_f1']}")
+
+    if f_h.get("available"):
+        print(f"Flat (unconstrained) accuracy:        {f_h['accuracy']}")
+        print(f"Flat (unconstrained) macro_f1:        {f_h['macro_f1']}")
+
+    if gc_h.get("available"):
+        print(f"*** GROUP-CONSTRAINED accuracy:       {gc_h['accuracy']} ***")
+
+    # CV
+    s1_cv = result.get("stage1_cv", {})
+    f_cv = result.get("flat_cv", {})
+
+    if s1_cv.get("available"):
+        print(f"\n--- CROSS-VALIDATION ({s1_cv['folds']}-fold) ---")
+        print(f"Stage 1 (group) CV accuracy:  {s1_cv['accuracy']['mean']} +/- {s1_cv['accuracy']['std']}")
+
+    if f_cv.get("available"):
+        print(f"Flat CV accuracy:             {f_cv['accuracy']['mean']} +/- {f_cv['accuracy']['std']}")
+
+    print("=" * 60)
 
     return 0
 
